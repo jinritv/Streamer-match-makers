@@ -1,0 +1,113 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+<style>
+* {
+    font-family: Andale Mono, monospace;
+}
+.container{
+    width:100%;
+    max-width: 900px;
+    height:600px;
+    padding-top:200px;
+    margin:auto;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: flex-start;
+}
+.questionbox{
+    height:50px;
+    text-align:center;
+}
+.votebox{
+    width:500px;
+    margin:auto;
+}
+p {
+    font-size:22px;
+}
+.left, .right{
+    width: 120px;
+    height:80px;
+    border-radius:5px;
+    font-size:22px;
+    line-height:80px;
+    text-align:center;
+    cursor:pointer;
+}
+.left {
+    float: left;
+    background-color: #ff9c6e;
+}
+.right {
+    float: right;
+    background-color: #95de64;
+}
+</style>
+
+<div class="container">
+    <div class="questionbox">
+        <h1>Question <span id="counter">1</span></h1>
+        <p id="question">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer placerat eget mauris vel euismod. Mauris dui sapien, scelerisque vitae elit a, lobortis scelerisque neque?
+        </p>
+    </div>
+    <div class="votebox">
+        <div class='left'>NO</div>
+        <div class='right'>YES</div>
+    </div>
+</div>
+    
+<script>
+
+var questions = [
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer placerat eget mauris vel euismod. Mauris dui sapien, scelerisque vitae elit a, lobortis scelerisque neque?',
+    'Suspendisse vel felis ac leo ultricies imperdiet at quis diam?',
+    'Nunc ac massa at velit lacinia mollis. Donec gravida urna eget egestas pulvinar?',
+    'Donec vel massa nec tellus eleifend finibus. Sed vitae vulputate lacus. Sed lobortis vitae ipsum quis imperdiet?',
+    'Nulla tempus finibus erat eget consequat. Nunc porttitor pulvinar tincidunt?',
+]
+
+var counter = 0
+const size = questions.length
+
+var counter_obj = $('#counter')
+var question_obj = $('#question')
+
+var runner = (i) => {
+    clearTimeout(loop)
+    if (i==0){
+        question_obj
+            .animate(
+                {opacity: 0, 'margin-top':-20},
+                {queue: false, duration: 'slow'}
+            )
+        loop = setTimeout(() => {runner(1)},1500)
+    }else if (i == 1){
+        question_obj.css({'margin-top': 40})
+        question_obj.text(questions[~~(counter/size)])
+        counter = ((counter+1)%size)
+        loop = setTimeout(() => {runner(2)},200)
+    }else{
+        question_obj
+            .animate(
+                {opacity: 1, 'margin-top':0},
+                {queue: false, duration: 'slow'}
+            )
+        counter_obj.text(counter+1)
+        loop = setTimeout(() => {runner(0)}, 2000)
+    }
+}
+
+var loop = setTimeout(() => {runner(0)}, 2000)
+        
+</script>
+</body>
+</html>
