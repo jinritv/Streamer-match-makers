@@ -15,7 +15,7 @@ function loadStreamerData(){
           console.log(streamers)
           let feature = evaluate(streamers);
           question(feature);
-        //  setupExample3(streamers);
+          setupExample3(streamers);
         },
         complete: function(xhr, status) {
           if (status == 'error') {
@@ -58,47 +58,54 @@ function extractRowData(row_data){
     return row_values;
 }
 
-/*
 
-GLOTTSI -- WIP -- WIP --
+const SLIDERS_PER_ROW = 4;
+let SliderValues = {};
+function setupExample3(){
+  let feature_sliders_html = `<div class="row">`;
+  let feature_weight_values_table_html = ``;
+  
+  let slidersInCurrentRow = 0;
+  let featuresSliders = Object.keys(DATA_MAPPING_STREAMER);
 
-                    var slider = document.getElementById("myRange");
-                    var output = document.getElementById("demo");
-                    output.innerHTML = slider.value; // Display the default slider value
+  featuresSliders.forEach(feature=>{
+    if(slidersInCurrentRow == SLIDERS_PER_ROW){
+      feature_sliders_html += `</div><div class="row">`;
+      slidersInCurrentRow = 0;
+    } else {
+      slidersInCurrentRow += 1;
+    }
+    SliderValues[feature] = "50"
+    feature_sliders_html += createSliderForFeature(feature,DATA_MAPPING_STREAMER[feature].ui_label);
+    feature_weight_values_table_html += createTableRowForFeatureInWeightTable(feature, DATA_MAPPING_STREAMER[feature].ui_label);
+  })
+ 
+  $('#feature-sliders').html(feature_sliders_html);
+  $('#feature-values-table').html(feature_weight_values_table_html);
 
-                    // Update the current slider value (each time you drag the slider handle)
-                    slider.oninput = function() {
-                      output.innerHTML = this.value;
-                    } 
+}
 
-                    var featuresValues = {};
+function updateTableValue(feature,value){
+  SliderValues[feature] = value
+  var td = $(`#${feature}-weight-value`);
+  td.html(value)
+}
 
-                    function setupExample3(rows){
+function createSliderForFeature(feature_id, label, defaultValue = "50"){
+  let slider_html = `<div class="col">
+  <p>${label}</p>
+  <input id="${feature_id}-slider" type="range" min="1" max="100" value="${defaultValue}" class="slider" oninput="updateTableValue('${feature_id.toString()}',this.value)">
+</div>`;
+  return slider_html
+}
 
-
-                      rows.forEach(row=>{
-                        console.log(`example 3 row`,row)
-                      });
-
-                      $('#feature-values-table').html(featuresValues)
-                    }
-
-                    function createSliderForFeature(feature_id, label, defaultValue = "50"){
-                      let slider_html = `<div class="col">
-                      <p>${label}</p>
-                      <input id="${feature_id}-slider" type="range" min="1" max="100" value="${defaultValue}" oninput="val=>console.log(val)" class="slider">
-                    </div>`;
-                      return slider_html
-                    }
-
-                    function setupFeatureWeightTable(feature_id, label, value){
-                      let features_table_html = `<tr>
-                      <th scope="row">${label}</th>
-                      <td id="${feature_id}-weight-value">${value}</td>
-                      </tr>`
-                    return features_table_html
-                    }
-*/
+function createTableRowForFeatureInWeightTable(feature_id, label, defaultValue = "50"){
+  let features_table_html = `<tr>
+  <th scope="row">${label}</th>
+  <td id="${feature_id}-weight-value">${defaultValue}</td>
+  </tr>`
+return features_table_html
+}
 
 
 $(()=>{
@@ -132,6 +139,7 @@ $(()=>{
       reset()
     });
 
+   // attachSlidersToTable();
 })
 
 function reset() {
@@ -274,7 +282,7 @@ const DATA_MAPPING_STREAMER = {
             content.push(e)
           }
         });
-       
+       return content
       }
       return contentString;
     }
@@ -394,7 +402,7 @@ function question(feature) {
   debug += '<br>Yes: ' + JSON.stringify(Array.from(yesFeatures))
   debug += '<br>No: ' + JSON.stringify(Array.from(noFeatures))
   debug += '<br><br>' + JSON.stringify(options)
-  $('#debug').html(debug)
+ // $('#debug').html(debug)
 }
 
 function response(important) {
