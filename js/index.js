@@ -274,7 +274,7 @@ const DATA_MAPPING_STREAMER = {
             content.push(e)
           }
         });
-       
+       return content;
       }
       return contentString;
     }
