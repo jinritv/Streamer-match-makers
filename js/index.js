@@ -12,8 +12,10 @@ function loadStreamerData(){
           var row_data = data.sheets[0].data[0].rowData;
           var rows = extractRowData(row_data);
           let streamers = build_streamer_map(rows);
+          console.log(streamers)
           let feature = evaluate(streamers);
           question(feature);
+          setupExample3(streamers);
         },
         complete: function(xhr, status) {
           if (status == 'error') {
@@ -56,6 +58,56 @@ function extractRowData(row_data){
     return row_values;
 }
 
+
+const SLIDERS_PER_ROW = 4;
+let SliderValues = {};
+function setupExample3(){
+  let feature_sliders_html = `<div class="row">`;
+  let feature_weight_values_table_html = ``;
+  
+  let slidersInCurrentRow = 0;
+  let featuresSliders = Object.keys(DATA_MAPPING_STREAMER);
+
+  featuresSliders.forEach(feature=>{
+    if(slidersInCurrentRow == SLIDERS_PER_ROW){
+      feature_sliders_html += `</div><div class="row">`;
+      slidersInCurrentRow = 0;
+    } else {
+      slidersInCurrentRow += 1;
+    }
+    SliderValues[feature] = "50"
+    feature_sliders_html += createSliderForFeature(feature,DATA_MAPPING_STREAMER[feature].ui_label);
+    feature_weight_values_table_html += createTableRowForFeatureInWeightTable(feature, DATA_MAPPING_STREAMER[feature].ui_label);
+  })
+ 
+  $('#feature-sliders').html(feature_sliders_html);
+  $('#feature-values-table').html(feature_weight_values_table_html);
+
+}
+
+function updateTableValue(feature,value){
+  SliderValues[feature] = value
+  var td = $(`#${feature}-weight-value`);
+  td.html(value)
+}
+
+function createSliderForFeature(feature_id, label, defaultValue = "50"){
+  let slider_html = `<div class="col">
+  <p>${label}</p>
+  <input id="${feature_id}-slider" type="range" min="1" max="100" value="${defaultValue}" class="slider" oninput="updateTableValue('${feature_id.toString()}',this.value)">
+</div>`;
+  return slider_html
+}
+
+function createTableRowForFeatureInWeightTable(feature_id, label, defaultValue = "50"){
+  let features_table_html = `<tr>
+  <th scope="row">${label}</th>
+  <td id="${feature_id}-weight-value">${defaultValue}</td>
+  </tr>`
+return features_table_html
+}
+
+
 $(()=>{
     // once page is loaded
     // search for the data and display it in a view
@@ -87,6 +139,7 @@ $(()=>{
       reset()
     });
 
+   // attachSlidersToTable();
 })
 
 function reset() {
@@ -103,78 +156,155 @@ var currentFeature;
 var yesFeatures = new Set();
 var noFeatures = new Set();
 
+
+const ParsingMethods = {
+  none: (val)=>{return val},
+  string_array: (val) => {return val != undefined ? val.toString().replace(/[^a-z0-9+]+/gi, ' ').split(' ') : []},
+  lowercase_value: (val) => {return(val != undefined) ? val.toLowerCase() : val},
+  bool:(val)=>{return 'TRUE'}
+}
+
+const DATA_MAPPING_STREAMER = {
+  'DOB': {
+    column_name: 'Date of Birth', // the column name in the google sheet
+    ui_label: 'Birth year', // what we use to display in labels in the UI 
+    parsing_method: ParsingMethods.none // how to parse the data from the cell value
+  },
+  'username': {
+    column_name: 'English', 
+    ui_label: 'English username',
+    parsing_method: ParsingMethods.lowercase_value
+  },
+  'alcohol': {
+    column_name: 'Alcohol streaming?', 
+    ui_label: 'Drinking',
+    parsing_method: ParsingMethods.bool
+  },
+  'cam':  {
+    column_name: 'Cam/No Cam', 
+    ui_label: 'Uses camera',
+    parsing_method: ParsingMethods.bool
+  },
+  'viewerEngagement':{
+    column_name: 'Engage with viewers?', 
+    ui_label: 'Viewer engagement',
+    parsing_method: ParsingMethods.bool
+  },
+  'age': {
+    column_name: 'Age', 
+    ui_label: 'Age',
+    parsing_method: ParsingMethods.none
+  },
+  'avgStreamStartTime': {
+    column_name: 'Streaming Time', 
+    ui_label: 'Average stream start time',
+    parsing_method: ParsingMethods.none
+  },
+  'avgStreamLength': {
+    column_name: 'Stream duration', 
+    ui_label: 'Average stream length',
+    parsing_method: ParsingMethods.none
+  },
+  'avgViewerCountPerStream':{
+    column_name: 'avg viewer count\n/stream',
+    ui_label: 'Viewer count',
+    parsing_method: ParsingMethods.none
+  },
+  'followers': {
+    column_name: 'Follower Count',
+    ui_label: 'Followers',
+    parsing_method: ParsingMethods.none
+  },
+  'foreignUsername': {
+    column_name: 'Display (foreign language) Name',
+    ui_label: 'Foreign name',
+    parsing_method: ParsingMethods.none
+  },
+  'voiceStyle': {
+    column_name: 'Voice (1-5)\n5: loud\n1: quiet',
+    ui_label: 'Voice level',
+    parsing_method: ParsingMethods.none
+  },
+  'mainGame': {
+    column_name: 'Main Game',
+    ui_label: 'Main stream topic',
+    parsing_method: ParsingMethods.none
+  },
+  'picture':  {
+    column_name: 'Pictures (please put link)',
+    ui_label: 'Picture',
+    parsing_method: ParsingMethods.none
+  },
+  'languages': {
+    column_name: 'Language\nspoken',
+    ui_label: 'Spoken languages',
+    parsing_method: ParsingMethods.string_array
+  },
+  'ethnicities':{
+    column_name: 'Ethnicity',
+    ui_label: 'Ethnicity',
+    parsing_method: ParsingMethods.string_array
+  },
+  'collaborations':{
+    column_name: 'Common collaborators/co-streamers',
+    ui_label: 'Collaborations',
+    parsing_method: ParsingMethods.string_array
+  },
+  'vibes': {
+    column_name: 'Vibe?',
+    ui_label: 'Vibes',
+    parsing_method: ParsingMethods.string_array
+  },
+  'mature': {
+    column_name: '19 + Maturity',
+    ui_label: '19+ channel',
+    parsing_method: ParsingMethods.bool
+  },
+  'matureJokes': {
+    column_name: 'Does 19+ Jokes?',
+    ui_label: 'Mature jokes',
+    parsing_method: ParsingMethods.bool
+  },
+  'content':{
+    column_name: 'Content type',
+    ui_label: 'Content type',
+    parsing_method: (val)=>{ // we need to figure out how to define the 'content'... 
+      let contentString = 'no content :(';
+      let content = [];
+      if (val != undefined) {
+        contentString = val.toString().split('/').join('$').split(',').join('$').split('$').forEach(e => {
+          e = e.replace('(', '')
+          e = e.replace(')', '')
+          e = e.trim()
+          e = e.toLowerCase()
+  
+          if (e != '') {
+            content.push(e)
+          }
+        });
+       return content
+      }
+      return contentString;
+    }
+  }
+}
+
 function build_streamer_map(rows) {
   // data is not normalized..
-  // garbage code ahead
-  // someone needs to refactor code and data
   // additional classification can help generalize and reduce search space
-
-  var firstRow = true;
   rows.forEach(r => {
-    if(firstRow){
-      console.log("BEFORE",r)
-    }
-
-    // the regex removes all non-letters and replaces with a space... probably not the best way
-    let ethnicities = r['Ethnicity'] != undefined ? r['Ethnicity'].toString().replace(/[^a-z0-9+]+/gi, ' ').split(' ') : [];
-    let languages = r['Language\nspoken'] != undefined ? r['Language\nspoken'].toString().replace(/[^a-z0-9+]+/gi, ' ').split(' ') : [];
-    let collaborations = r['Common collaborators/co-streamers'] != undefined ? r['Common collaborators/co-streamers'].toString().replace(/[^a-z0-9+]+/gi, ' ').split(' ') : [];
-    let vibes = r['Vibe?'] != undefined ? r['Vibe?'].toString().replace(/[^a-z0-9+]+/gi, ' ').split(' ') : [];
-    
-    // not sure how to deal with this
-    temp = r['Content type'];
-    let content = [];
-    if (temp != undefined) {
-      let contentString = temp.toString();
-      console.log(contentString)
-      contentString.split('/').join('$').split(',').join('$').split('$').forEach(e => {
-        e = e.replace('(', '')
-        e = e.replace(')', '')
-        e = e.trim()
-        e = e.toLowerCase()
-
-        if (e != '') {
-          content.push(e)
-        }
-      });
-    }
-
-    function getLowercaseValue(key){return(r[key] != undefined) ? r[key].toLowerCase() : r[key]}
-
-    let streamer = {
-      'username': getLowercaseValue('English'),
-      'alcohol': getLowercaseValue('Alcohol streaming?'),
-      'cam': getLowercaseValue('Cam/No Cam'),
-      'viewerEngagement': getLowercaseValue('Engage with viewers?'),
-      'DOB': r['Date of Birth'],
-      'age': r['Age'],
-      'avgStreamStartTime': r['Streaming Time'],
-      'avgStreamLength': r['Stream duration'],
-      'avgViewerCountPerStream': r['avg viewer count\n/stream'],
-      'followers': r['Follower Count'],
-      'foreignUsername': r['Display (foreign language) Name'],
-      'voiceStyle': r['Voice (1-5)\n5: loud\n1: quiet'],
-      'mainGame': r['Main Game'],
-      'picture': r['Pictures (please put link)'],
-      languages,
-      content,
-      ethnicities,
-      collaborations,
-      vibes,
-      'mature': r['19 + Maturity'] != undefined ? r['19 + Maturity'].toLowerCase() : r['Does 19+ Jokes?'] != undefined ? r['Does 19+ Jokes?'].toLowerCase() : r['Does 19+ Jokes?'],
-    };
-
-    if(firstRow){
-      console.log("AFTER",streamer)
-      firstRow = false;
-    }
   
+    let StreamerFeatures = Object.keys(DATA_MAPPING_STREAMER);
+    let streamer = {};
+    StreamerFeatures.forEach(feature=>{
+      let FeatureMappingInfo = DATA_MAPPING_STREAMER[feature];
+      let feature_value = FeatureMappingInfo.parsing_method(r[FeatureMappingInfo.column_name]);
+      streamer[feature] = feature_value;
+    });
+   
     streamers.set(streamer.username, streamer);
   });
-  /* console.log(JSON.stringify(Array.from(streamers.entries()))) */
-  /* console.log(JSON.stringify(Array.from(ethnicityCount))) */
-  /* console.log(languageCount) */
-  /* console.log(contentCount) */
+ 
   streamers.delete(undefined)
   return streamers
 }
@@ -272,7 +402,7 @@ function question(feature) {
   debug += '<br>Yes: ' + JSON.stringify(Array.from(yesFeatures))
   debug += '<br>No: ' + JSON.stringify(Array.from(noFeatures))
   debug += '<br><br>' + JSON.stringify(options)
-  $('#debug').html(debug)
+ // $('#debug').html(debug)
 }
 
 function response(important) {
