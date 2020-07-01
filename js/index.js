@@ -71,7 +71,7 @@ function setupExample3(){
   featuresSliders.forEach(feature=>{
     if(slidersInCurrentRow == SLIDERS_PER_ROW){
       feature_sliders_html += `</div><div class="row">`;
-      slidersInCurrentRow = 0;
+      slidersInCurrentRow = 1;
     } else {
       slidersInCurrentRow += 1;
     }
