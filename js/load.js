@@ -31,8 +31,8 @@ const ParsingMethods = {
 };
 
 const STREAMER_DATA_FIELDS = {
-    'Year/Date of Birth': {
-        name: 'DOB', // the column name in the google sheet
+    'Year/Date of Birth': { // is the column name in the google sheet
+        name: 'DOB', // the name we will use in our generated JSON for the streamer
         uiLabel: 'Birth year', // what we use to display in labels in the UI
         parsingMethod: ParsingMethods.none // how to parse the data from the cell value
     },
