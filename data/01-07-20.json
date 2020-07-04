@@ -1,0 +1,166 @@
+[
+    {
+        "username": " jinritv",
+        "displayName": "진리",
+        "steamerName": "진리 (jinritv)",
+        "partner": true,
+        "name": "jinri lee",
+        "dateStarted": null,
+        "avgViewerCountPerStream": 60,
+        "followers": 3615,
+        "fulltime": false,
+        "avgStreamLength": null,
+        "age": 21,
+        "DOB": 1999,
+        "languages": [
+            "KR",
+            "EN"
+        ],
+        "ethnicities": [
+            "Korean",
+            "American"
+        ],
+        "location": [
+            "Wisconsin"
+        ],
+        "content": [
+            "raspberry pi research",
+            "stream forcasting",
+            "research other streamers data capture setup",
+            "just chatting"
+        ],
+        "mainGame": "Just Chatting (studying?)",
+        "collaborations": null,
+        "voice": [
+            "Low"
+        ],
+        "cam": true,
+        "frequency": false,
+        "avgStreamStartTime": "7 pm CST",
+        "engage": true,
+        "collaboration": false,
+        "alcohol": false,
+        "vibes": [
+            "Geek",
+            "Cute"
+        ],
+        "pg13": false,
+        "picture": "Where's my picture? =_="
+    },
+    {
+        "username": "1uming",
+        "displayName": "루밍쨩",
+        "steamerName": "루밍쨩 (1uming)",
+        "partner": true,
+        "name": null,
+        "dateStarted": null,
+        "avgViewerCountPerStream": 457,
+        "followers": 107202,
+        "fulltime": null,
+        "avgStreamLength": null,
+        "age": null,
+        "DOB": 1996,
+        "languages": [
+            "KR"
+        ],
+        "ethnicities": [
+            "Korean"
+        ],
+        "location": null,
+        "content": [
+            "just chatting",
+            "game"
+        ],
+        "mainGame": null,
+        "collaborations": null,
+        "voice": null,
+        "cam": null,
+        "frequency": null,
+        "avgStreamStartTime": null,
+        "engage": null,
+        "collaboration": null,
+        "alcohol": null,
+        "vibes": null,
+        "pg13": null,
+        "picture": "https://static-cdn.jtvnw.net/jtv_user_pictures/3af28c7f-4269-4763-a656-b68368d9d71a-profile_image-300x300.jpeg"
+    },
+    {
+        "username": "39daph",
+        "displayName": null,
+        "steamerName": "39daph",
+        "partner": true,
+        "name": "daphne",
+        "dateStarted": null,
+        "avgViewerCountPerStream": 4600,
+        "followers": "386557",
+        "fulltime": null,
+        "avgStreamLength": null,
+        "age": 21,
+        "DOB": null,
+        "languages": [
+            "EN"
+        ],
+        "ethnicities": [
+            "Chinese",
+            "Canadian"
+        ],
+        "location": null,
+        "content": [
+            "gamecall of duty",
+            "god of war",
+            "indie games",
+            "just chatting",
+            "painting"
+        ],
+        "mainGame": null,
+        "collaborations": null,
+        "voice": null,
+        "cam": null,
+        "frequency": null,
+        "avgStreamStartTime": null,
+        "engage": null,
+        "collaboration": null,
+        "alcohol": null,
+        "vibes": null,
+        "pg13": null,
+        "picture": "https://static-cdn.jtvnw.net/jtv_user_pictures/36d4c24a-e555-4941-ab91-8c9e13f7752b-profile_image-300x300.png"
+    },
+    {
+        "username": "9321207_",
+        "displayName": "옥희토끼",
+        "steamerName": "옥희토끼 (9321207_)",
+        "partner": true,
+        "name": null,
+        "dateStarted": null,
+        "avgViewerCountPerStream": 455,
+        "followers": 34847,
+        "fulltime": null,
+        "avgStreamLength": null,
+        "age": null,
+        "DOB": null,
+        "languages": [
+            "KR"
+        ],
+        "ethnicities": [
+            "Korean"
+        ],
+        "location": null,
+        "content": [
+            "just chatting",
+            "game",
+            "music"
+        ],
+        "mainGame": null,
+        "collaborations": null,
+        "voice": null,
+        "cam": null,
+        "frequency": null,
+        "avgStreamStartTime": null,
+        "engage": null,
+        "collaboration": null,
+        "alcohol": null,
+        "vibes": null,
+        "pg13": null,
+        "picture": "https://static-cdn.jtvnw.net/jtv_user_pictures/9321207_-profile_image-bf042128f0a8585b-300x300.png"
+    }
+]
