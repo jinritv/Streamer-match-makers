@@ -1,6 +1,7 @@
 "use strict";
 /******************/
 // sample of how to use streamers data
+// (but do this in a different file after load.js is imported)
 $(() => {
     // callback once streamers data is
     // loaded from the google sheet
@@ -13,6 +14,13 @@ $(() => {
     });
 });
 /******************/
+
+
+/**
+ * The code in this file (load.js) solely has to do
+ * with loading the data from the spreadsheet, nothing
+ * less and nothing more.
+ */
 
 
 const ParsingMethods = {
@@ -159,7 +167,7 @@ const STREAMER_DATA_FIELDS = {
     'Frequency of Streaming': {
         name: 'frequency',
         uiLabel: 'Frequency of Streaming',
-        parsingMethod: ParsingMethods.bool
+        parsingMethod: ParsingMethods.lowercaseValue
     },
     'Engage with viewers?': {
         name: 'engage',
@@ -199,8 +207,8 @@ const STREAMER_DATA_FIELDS = {
  */
 const loadStreamerData = (callback) => {
     const API_KEY = "AIzaSyAmOr96GzDNuwVNiVg7ZVUwDEEC9P4Qz7A"; // TODO: hide this
+    let spreadsheetId = "1yQ7YzuM5FhFB13ChTz77W2VyhzYJnjtqMBAEOwJrebI"; // TODO this too
     let cellRange = "'New DB format ADD INFO IF YOU WANT'!B2:AC463";
-    let spreadsheetId = "1yQ7YzuM5FhFB13ChTz77W2VyhzYJnjtqMBAEOwJrebI";
     let fields = "sheets.data.rowData.values(effectiveValue)";
     let url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}?ranges=${cellRange}&fields=${fields}&key=${API_KEY}`;
 
@@ -208,7 +216,6 @@ const loadStreamerData = (callback) => {
         url: url,
         type: "GET",
         success: function (data) {
-            console.log(data.sheets);
             var rowData = data.sheets[0].data[0].rowData;
             var streamers = getStreamers(rowData);
             callback(streamers);
@@ -251,7 +258,6 @@ const getStreamers = (rowData) => {
         // iterate each data field for a steamer
         row.values.forEach((column, i) => {
             var columnName = columnNames[i]; // column name from spreadsheet
-            console.log(columnName);
             var name = STREAMER_DATA_FIELDS[columnName].name; // JSON appropriate name
             if (column.effectiveValue) { // check if value is null
                  // get the string or number value
@@ -270,3 +276,17 @@ const getStreamers = (rowData) => {
     return streamers;
 };
 
+
+/**
+ * Finds the UI label for a given property name
+ * i.e. "alcohol" -> "Drinking"
+ * Note: getting the ui label may need to be
+ *       reworked as this approach is inefficient
+ **/
+const getUILabel = (name) => {
+    for (var e in STREAMER_DATA_FIELDS) {
+        if (STREAMER_DATA_FIELDS[e].name === name) {
+            return STREAMER_DATA_FIELDS[e].uiLabel;
+        }
+    }
+};
