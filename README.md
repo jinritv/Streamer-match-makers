@@ -26,7 +26,7 @@ It should display the version number of Node installed (v12.18.3).
 
 ## Installing MySQL
 
-Now download the [MySQL Installer](https://https://dev.mysql.com/downloads/), choose the "MySQL Installer for Windows". When the installer asks you what to install, you can select:
+Now download the [MySQL Installer](https://dev.mysql.com/downloads/), choose the "MySQL Installer for Windows". When the installer asks you what to install, you can select:
 
 * **Server Only**: We only need the MySQL server so this is all we need to install.
 
