@@ -111,7 +111,7 @@ return features_table_html
 $(()=>{
     // once page is loaded
     // search for the data and display it in a view
-    loadStreamerData();
+    //loadStreamerData();
 
     $("#streamer-quiz-form").steps({
       headerTag: "h3",
@@ -125,21 +125,6 @@ $(()=>{
     }, 
     });
 
-    $("#yesButton").parent().click(() => {
-      response(true)
-      $('.card').toggleClass('is-flipped');
-    });
-  
-    $("#noButton").parent().click(() => {
-      response(false)
-      $('.card').toggleClass('is-flipped');
-    });
-  
-    $("#resetButton").parent().click(() => {
-      reset()
-    });
-
-   // attachSlidersToTable();
 })
 
 function reset() {
