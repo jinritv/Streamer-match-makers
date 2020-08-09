@@ -5,7 +5,7 @@ var debug = require('debug')('streamer-matcher:server');
 var http = require('http');
 var public = path.join(__dirname, 'public');
 
-const testConnection = require('./backend/mysql');
+const initializeDatabase = require('./backend/mysql');
 
 var port = '3000'
 
@@ -27,18 +27,18 @@ app.get('/database', (req, res) => {
     res.sendFile(path.join(public, 'database.html'));
 });
 
-// Called when the test connection button is pressed
-app.post("/testMySQLConnection", (req, res, next) => {
+// Called when the button is pressed
+app.post("/initializeDatabase", (req, res, next) => {
     
-   const connectionCallback = (err) => {
-       let isConnected = (err == null);
+   const initializationCallback = (err) => {
+       let isSuccessful = (err == null);
        res.json({
            "Error":err,
-           "Connected":isConnected
+           "Success":isSuccessful
         });
     }
 
-    testConnection(req.body, connectionCallback);
+    initializeDatabase(initializationCallback);
 });
 
 app.use(express.static('public'));

@@ -1,25 +1,17 @@
-function testDatabase(){
-    const DB_USERNAME = $('#db-username').val();
-    const DB_PASSWORD = $('#db-password').val();
-    if (DB_USERNAME == "" || DB_PASSWORD == "" ){
-        displayResultMessage("Missing username or password.");
-        return
-    }
-    
+function initializeDatabase(){
+  
+    // Create the database
     $.ajax({
-        beforeSend: console.log("testing db connection"),
-        url:"/testMySQLConnection",
+        beforeSend: displayResultMessage("Setting up database..."),
+        url:"/initializeDatabase",
         type: "POST",
-        data: {
-            Username: DB_USERNAME,
-            Password: DB_PASSWORD
-        },
         success: function (data) { 
-            setIsConnected(data.Connected);
+            console.log(data)
+            setIsConnected(data.Success);
             if(data.Error != null){
-                displayResultMessage(data.Error.sqlMessage);
+                displayOutput(`<br/>${data.Error.sqlMessage}`);
             } else {
-                displayResultMessage("Successfully connected!");
+                displayOutput("<br/>Success.");
             }
         },
         complete: function(xhr, status) {
@@ -28,6 +20,10 @@ function testDatabase(){
           }
         }
       });
+}
+
+function displayOutput(text){
+    $('#connectionMessage').append(text);
 }
 
 function setIsConnected(connected){

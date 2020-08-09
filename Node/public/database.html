@@ -42,26 +42,14 @@
                     <div class="divider-custom-line"></div>
                 </div>
                 <div class="row mb-3">
-                  <span>Test the connection to your local database server:</span>
+                  <span>Create database and streamer table:</span>
                 </div>
         
                 <div class="row align-items-center">
                   <div class="col">
-                    <div class="input-group input-group-sm mb-3" style="max-width: 250px; width: 100%;">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Username</span>
-                      </div>
-                      <input id="db-username" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-                    <div class="input-group input-group-sm mb-3"  style="max-width: 250px; width: 100%;">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-sm">Password</span>
-                      </div>
-                      <input id="db-password" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                    </div>
                     <div class="row align-items-center">
                       <div class="col">
-                        <button id="isConnected" onclick="testDatabase()" class="btn btn-secondary">test connection</button>
+                        <button id="isConnected" onclick="initializeDatabase()" class="btn btn-secondary">Initialize Database</button>
                       </div>
                     </div>
                   </div>

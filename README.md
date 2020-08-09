@@ -94,6 +94,11 @@ Open Command Prompt and `cd` to the location of this project, specifically the `
 
 And it should install the required packages we need (which are defined in the package.json file).
 
+## Add your Username and Password
+
+Edit the Username and Password in the `USER_CREDENTIALS` object in the /Node/backend/mysql.js file
+![user_credentials](https://github.com/glottsi/Streamer-match-makers/blob/master/guide_images/user_cred.png)
+
 Now to start the server run the command `npm start`
 
 The console should now display something like 
@@ -107,13 +112,13 @@ Verify there are no errors on the page, or in the console.
 
 On the home page, click the link called "Database", or navigate in the browser to `localhost:3000/database`
 
-Enter your username and password for the dev account you created. 
+Press the 'Initialize Database' button to connect to the MySQL server and run the database creation query.
 
-The button will turn green and a success message will display if you are successfully connected, Congrats!
-![success](https://github.com/glottsi/Streamer-match-makers/blob/master/guide_images/login_success.png)
+The button will turn green and a success message will display if you are successfully connected, Congrats! It will be red and display an error message if incorrect:
+![server_respon](https://github.com/glottsi/Streamer-match-makers/blob/master/guide_images/initialize_db_results.png)
 
-And red if incorrect:
-![fail](https://github.com/glottsi/Streamer-match-makers/blob/master/guide_images/login_fail.png)
+If you have MySQL Workbench (installable via the MySQL Installer we used to install the server), you can see what this query has created, a database called 'jinritv', and a table called 'streamers'. Right-clicking on the table and choosing the first option 'Select Rows - Limit 1000' will display the first 1000 records in the table, but now it is empty.
+![workbench](https://github.com/glottsi/Streamer-match-makers/blob/master/guide_images/db.png)
 
 ## Project Structure
 I tried to keep the structure as simple as possible, so that anyone who wants to learn can follow along easier. Our Node server doesn't use any view engine, we are only displaying the static html file with the css and js. For now this is the simplest way, until, or if, we need to add something more.
