@@ -115,6 +115,7 @@ On the home page, click the link called "Database", or navigate in the browser t
 Press the 'Initialize Database' button to connect to the MySQL server and run the database creation query.
 
 The button will turn green and a success message will display if you are successfully connected, Congrats! It will be red and display an error message if incorrect:
+
 ![server_respon](https://github.com/glottsi/Streamer-match-makers/blob/db_create_table/guide_images/initialize_db_results.png)
 
 If you have MySQL Workbench (installable via the MySQL Installer we used to install the server), you can see what this query has created, a database called 'jinritv', and a table called 'streamers'. Right-clicking on the table and choosing the first option 'Select Rows - Limit 1000' will display the first 1000 records in the table, but now it is empty.
