@@ -41,7 +41,7 @@ Now go to `localhost:3000` in a web browser.
 
 Verify there are no errors on the page, or in the console.
 
-## Verify MySQL database server connection
+## Verify Postgresql database server connection
 
 On the home page, at the bottom there should be a button called "DEBUG-Get streamer result". This button sends some quiz result values to the server and receives a streamer in response.
 
