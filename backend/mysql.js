@@ -82,7 +82,7 @@ const initializeDatabase = (callback) => {
 
   // Post gresl
 
-  const connectionString = 'postgres://hqrvrkekcyfbzv:d669d5385fdd1a282785b41e49a2c8f6777d4bd9d2fc85fcb2b21c3d817753e1@ec2-35-175-155-248.compute-1.amazonaws.com:5432/d3b19l0h63488d'
+  const connectionString = process.env.DB_URL;
 
   const client = new Client({
     connectionString: connectionString,
@@ -100,14 +100,6 @@ const initializeDatabase = (callback) => {
       callback()
     }
   })
-
-  // client.query(initializeDB, (err, res) => {
-  //   if (err) callback(err);
-    
-  //   // No error
-  //   client.end();
-  // });
-
 }
 
 module.exports = initializeDatabase
