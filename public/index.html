@@ -17,7 +17,6 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="stylesheets/styles.css" rel="stylesheet" />
         <link href="stylesheets/quizstyle.css" rel="stylesheet" />
-        <!-- Remove heading-css and body.css? Seems like they're not used-->
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -27,7 +26,6 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#quiz">Take the quiz</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/database">Database</a></li>
                     </ul>
                 </div>
             </div>
@@ -43,8 +41,6 @@
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
-                <!-- Masthead Subheading-->
-<!--                 <p class="masthead-subheading font-weight-light mb-0">Graphic Artist - Web Designer - Illustrator</p> -->
             </div>
         </header>
         <!-- Portfolio Section-->
@@ -58,13 +54,12 @@
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
+              
                 <!-- Portfolio Grid Items-->
                 <div class="row">
                     <!-- Portfolio Item 1-->
                     <div class="col-md-8 col-lg-12 mb-5">
                       <div class="container center">
-                        
-
                         <form id="streamer-quiz-form" action="#">
                         
                         <h3>Average Viewer Count</h3>
@@ -286,47 +281,24 @@
                 </div>
             </div>
         </section>
-        <!--
-        <section class="page-section contact_me" id="example3">
-        
-            <div id="quiz-slider-example">
-              <div class="card">
-                  <div class='d-flex slidecontainer'>
 
-                    <div class="row">
-                      <div id="feature-sliders" class="col-8">
-
-                      </div>
-                      <div class="col-4">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">Feature</th>
-                              <th scope="col">Weight</th>
-                            </tr>
-                          </thead>
-                          <tbody id="feature-values-table">
-                           
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-
-                  </div>
-                 
-                  </div>
-              </div>
-            </div>
-        </section>
-
-        -->
-     
         <!-- Footer-->
         <footer class="footer text-center">
             <div class="container">
-                <div class="row">
-           
+              <div class="row align-items-center">
+                <div class="col">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <button id="get-result-button" onclick="calculateQuizResult()" class="btn btn-secondary">DEBUG- Get Streamer result</button>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col">
+                  <span id="quiz-results-display"></span>
+                </div>
+              </div>
             </div>
         </footer>
         <!-- Copyright Section-->

@@ -5,7 +5,7 @@ var debug = require('debug')('streamer-matcher:server');
 var http = require('http');
 var public = path.join(__dirname, 'public');
 
-const initializeDatabase = require('./backend/mysql');
+const calculateStreamer = require('./backend/calculate_streamer');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
@@ -26,25 +26,19 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(public, 'index.html'));
 });
 
-// Page to test the database connection
-app.get('/database', (req, res) => {
-    res.sendFile(path.join(public, 'database.html'));
-});
 
 // Called when the button is pressed
-app.post("/initializeDatabase", (req, res, next) => {
+app.post("/calculateStreamer", (req, res, next) => {
     
-   const initializationCallback = (err) => {
-       let isSuccessful = (err == null);
-       res.json({
-           "Error":err,
-           "Success":isSuccessful
-        });
-    }
+  const quizResultsCallback = (results, err) => {
+      res.json({
+          "Error": err,
+          "Results":results
+       });
+   };
 
-    initializeDatabase(initializationCallback);
+   calculateStreamer(req.body, quizResultsCallback);
 });
-
 app.use(express.static('public'));
 
 var server = http.createServer(app);
