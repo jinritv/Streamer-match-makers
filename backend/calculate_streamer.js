@@ -20,14 +20,27 @@ const calculateStreamer = (quizValues, callback) => {
       callback(null, err.message)
     } else {
       console.log('connected')
-      // Return selected streamer
-      var selectedStreamer = {
-        Name: "Jinri",
-        Reason: "Highest overall value"
-      }
-      callback(selectedStreamer, null)
+      // Query database for streamer
+      postGresql.query(streamerQuery, (err, res) => {
+        if (err) {
+          console.log(err.stack)
+          callback(null, err.message)
+        } else {
+          console.log(res.rows[0])
+          // Return selected streamer
+          callback(res.rows[0], null)
+        }
+      })
     }
   })
 }
+
+const streamerQuery = {
+  // give the query a unique name
+  name: 'get-streamer',
+  text: 'SELECT * FROM streamers WHERE id = $1',
+  values: [1],
+}
+
 
 module.exports = calculateStreamer
