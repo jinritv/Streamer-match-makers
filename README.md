@@ -24,7 +24,7 @@ It should display the version number of Node installed (v12.18.3).
 
 ## Verify Node server is working
 
-Now we can test if our Node and MySQL connection is working correctly.
+Create a file called `.env`, and paste the connection string you'll get by asking in the discord. We do not want this public, so please make sure to not commit the `.env` file that contains the connection string.
 
 Open Command Prompt and `cd` to the location of this project. First we must install the required packages. In this folder, run the command 
 
