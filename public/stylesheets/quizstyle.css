@@ -1,38 +1,29 @@
-.slidecontainer {
-    width: 100%;
-  }
-  
-  .slider {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 25px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-  }
-  
-  .slider:hover {
-    opacity: 1;
-  }
-  
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    background: #4CAF50;
-    cursor: pointer;
-  }
-  
-  .slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    background: #4CAF50;
-    cursor: pointer;
-  }
+.bg-primary {
+    background-color: #d8aaeb
+}
 
+.bg-secondary {
+    background-color: #604975
+}
+
+#mainNav .navbar-nav li.nav-item a.nav-link:hover {
+    color:#2e90e0
+}
+
+#mainNav .navbar-nav>li.nav-item>a.nav-link.active,
+#mainNav .navbar-nav>li.nav-item>a.nav-link.active:active,
+#mainNav .navbar-nav>li.nav-item>a.nav-link.active:focus,
+#mainNav .navbar-nav>li.nav-item>a.nav-link.active:hover {
+  color:#fff;
+  background:#2e90e0
+}
+
+.footer {
+    padding-top:5rem;
+    padding-bottom:5rem;
+    background-color:#8d549b;
+    color:#fff
+   }
 
 V#streamer-quiz-form > div.steps.clearfix > ul > li {
 float: left;
@@ -122,13 +113,13 @@ float: left;
 }
 
 .wizard>.steps .current a,.wizard>.steps .current a:hover,.wizard>.steps .current a:active {
-    background: #1abc9c;
+    background: #13709b;
     color: #fff;
     cursor: default
 }
 
 .wizard>.steps .done a,.wizard>.steps .done a:hover,.wizard>.steps .done a:active {
-    background: #d84c6e;
+    background: #8d549b;
     color: #fff
 }
 
@@ -233,7 +224,7 @@ float: left;
 }
 
 .wizard>.actions a,.wizard>.actions a:hover,.wizard>.actions a:active {
-    background: #1abc9c;
+    background: #8d549b;
     color: #fff;
     display: block;
     padding: .5em 1em;
@@ -244,7 +235,7 @@ float: left;
 }
 
 .wizard>.actions .disabled a,.wizard>.actions .disabled a:hover,.wizard>.actions .disabled a:active {
-    background: #d84c6e;
+    background: #8d549b;
     color: #aaa
 }
 
@@ -275,7 +266,7 @@ float: left;
     flex-direction: column;
     padding: 20px;
     margin: 5px;
-    box-shadow: -20px -20px 0px 0px #d84c6e;
+    box-shadow: -20px -20px 0px 0px #2e90e0;
     border-radius: 10px;
     -webkit-animation-name: shadow-show;
     /* Safari 4.0 - 8.0 */
