@@ -12,6 +12,24 @@ $(()=>{
     }, 
     });
 
+
+    
+    var minSlider = document.getElementById("minSlider");
+    var minOutput = document.getElementById("minViewer");
+    minOutput.innerHTML = minSlider.value;
+
+    minSlider.oninput = function () {
+	    minOutput.innerHTML = this.value;
+	}
+	
+    var maxSlider = document.getElementById("maxSlider");
+    var maxOutput = document.getElementById("maxViewer");
+    maxOutput.innerHTML = maxSlider.value;
+
+    maxSlider.oninput = function () {
+    maxOutput.innerHTML = this.value;
+}
+
 });
 
 
