@@ -1,9 +1,22 @@
 .bg-primary {
-    background-color: #d8aaeb
+    background-color: #dab9df!important
 }
 
 .bg-secondary {
-    background-color: #604975
+    background-color: #f8e9fb!important
+}
+
+.primary-color {
+    color: #dab9df !important
+}
+
+.secondary-color {
+    color: #f8e9fb !important
+}
+
+.navbar-brand {
+    color: #000000 !important;
+    font-family: "FF Real Head" !important
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link:hover {
