@@ -28,8 +28,18 @@ $(()=>{
 
     maxSlider.oninput = function () {
     maxOutput.innerHTML = this.value;
-}
+    }
+    
 
+    /*
+    $("#viewerSlider").slider({
+        min: 0,
+        max: 10000,
+        value: [0, 10],
+        focus: true
+    
+    });
+    */
 });
 
 
