@@ -23,6 +23,10 @@
     color:#2e90e0
 }
 
+#jiriLogo {
+    padding: 10px
+}
+
 #mainNav .navbar-nav>li.nav-item>a.nav-link.active,
 #mainNav .navbar-nav>li.nav-item>a.nav-link.active:active,
 #mainNav .navbar-nav>li.nav-item>a.nav-link.active:focus,
