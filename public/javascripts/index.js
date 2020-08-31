@@ -30,7 +30,9 @@ $(()=>{
     maxOutput.innerHTML = this.value;
     }
     
-
+    //starts oage animations
+    animateElements();
+   
     /*
     $("#viewerSlider").slider({
         min: 0,
@@ -42,6 +44,29 @@ $(()=>{
     */
 });
 
+
+function animateElements(){
+  $("#bg-rectangle").addClass("bounce-in-top");
+  $("#bg-rectangle").show();
+  $("#dancing-jinri").addClass("slide-in-right");
+  $("#dancing-jinri").show();
+  $("#logo-container").addClass("slide-in-blurred-left")
+  $("#start-quiz-button").addClass("fade-in");
+  $("#welcome-text").addClass("swing-in-left-fwd")
+}
+
+function prepareQuiz(){
+  console.log("preparing quiz...")
+  $("#welcome-text").removeClass("swing-in-left-fwd")
+  $("#welcome-text").addClass("slide-out-left")
+  $("#dancing-jinri").addClass("slide-out-right")
+  $("#start-quiz-button").addClass("fade-out");
+  setTimeout(()=>{
+    $("#welcome-banner").hide();
+    $("#quiz").addClass("bounce-in-bottom")
+    $("#quiz").show();
+  }, 1000)
+}
 
 function calculateQuizResult(){
   // Fake quiz results to force a streamer response 

@@ -64,6 +64,49 @@
         $(this).removeClass("floating-label-form-group-with-focus");
       });
     });
+
+    animateText();
   
   })(jQuery); // End of use strict
+
+  function animateText(){
+    var index = 0;
+    var words = ['watch?', 'host?', 'follow?', 'raid?'];
+
+    function erase()
+    {
+      var t = keyword.innerHTML;
+      var l = t.length;
+
+      if(l)
+      {
+        keyword.innerHTML = t.substring(0, l-1);
+        setTimeout(erase, 33);
+      }
+      else
+      {
+        index = (index+1)&3;
+        setTimeout(enter, 33);
+      }
+    }
+
+    function enter()
+    {
+      var t = keyword.innerHTML;
+      var l = t.length;
+      var w = words[index];
+
+      if(l < w.length)
+      {
+        keyword.innerHTML += w.charAt(l);
+        setTimeout(enter, 33);
+      }
+      else
+      {
+        setTimeout(erase, 1500);
+      }
+    }
+
+    setTimeout(erase, 1500);
+  }
   
