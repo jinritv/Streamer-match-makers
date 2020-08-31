@@ -22,10 +22,10 @@
 .progress-bar {
     flex-direction:column;
     justify-content:center;
-    color:#fff;
+    color:#5e3f5e;
     text-align:center;
     white-space:nowrap;
-    background-color:#a364b6;
+    background-color:#ffd4ee;
     transition:width .6s ease
    }
 
