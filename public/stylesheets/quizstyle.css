@@ -19,6 +19,16 @@
     font-family: "FF Real Head" !important
 }
 
+.progress-bar {
+    flex-direction:column;
+    justify-content:center;
+    color:#fff;
+    text-align:center;
+    white-space:nowrap;
+    background-color:#a364b6;
+    transition:width .6s ease
+   }
+
 .welcome-container {
     margin-top:150px;
 }

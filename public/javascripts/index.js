@@ -5,11 +5,8 @@ $(()=>{
       bodyTag: "fieldset",
       transitionEffect: "fade",
       transitionEffectSpeed: 500,
-      onStepChanging: function (event, currentIndex, newIndex) { 
-        return true; },
-      onStepChanged: function (event, currentIndex, priorIndex) { 
-        return true;
-    }, 
+      onStepChanging: onChangeQuestion,
+      onStepChanged: onQuestionChanged
     });
 
 
@@ -44,6 +41,54 @@ $(()=>{
     */
 });
 
+function onChangeQuestion (event, currentIndex, newIndex) { 
+  saveResult(currentIndex); 
+  adjustProgress(newIndex);         
+  return true; 
+}
+
+function onQuestionChanged (event, currentIndex, newIndex) { 
+  return true; 
+}
+
+var UsersAnswers = [];
+
+function saveResult(index){
+
+  let saveObject = {};
+
+  switch(index) {
+    case 0:
+      saveObject.rangeMin = $('#question-1 .range-min input').val();
+      saveObject.rangeMax = $('#question-1 .range-max input').val();
+      break;
+    case 1:
+      if ($("#followerCountRadios1").is(":checked")) {
+        saveObject.followerCount = "1000"
+      } else if ($("#followerCountRadios2").is(":checked")) {
+        saveObject.followerCount = "10000"
+      } else if ($("#followerCountRadios3").is(":checked")) {
+        saveObject.followerCount = "100000"
+      }
+      // code block
+      break;
+    default:
+      // code block
+  } 
+
+  UsersAnswers[index] = saveObject;
+  console.log(UsersAnswers)
+}
+
+function adjustProgress(index){
+  let questionNum = index+1;
+  $("#quiz-progress-bar").css("width",`${((questionNum)/10*100)}%`);
+  if(questionNum==10){
+    $('#quiz-progress-bar span').text(`Complete!`);
+  } else {
+    $('#quiz-progress-bar span').text(`${questionNum} of 9`);
+  }
+}
 
 function animateElements(){
   $("#bg-rectangle").addClass("bounce-in-top");
