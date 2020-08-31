@@ -19,6 +19,58 @@
     font-family: "FF Real Head" !important
 }
 
+.progress-bar {
+    flex-direction:column;
+    justify-content:center;
+    color:#5e3f5e;
+    text-align:center;
+    white-space:nowrap;
+    background-color:#ffd4ee;
+    transition:width .6s ease
+   }
+
+.welcome-container {
+    margin-top:150px;
+}
+
+#start-quiz-button {
+    margin-top:48px;
+}
+
+.footer {   
+    position:fixed;
+    left:0px;
+    padding-top: 12px !important;
+    padding-bottom:8px !important;
+    bottom:0px;
+    width:100%;
+    background:#999;
+ }
+
+.btn-primary {
+    color:#fff;
+    background-color:#a364b6;
+    border-color:#bd96bd
+}
+.btn-primary.focus, .btn-primary:focus,.btn-primary:hover {
+    color:#fff;
+    background-color:#bf7dd3;
+    border-color:#5f355f
+}
+.btn-primary.focus,.btn-primary:focus {
+    box-shadow:0 0 0 .2rem rgba(113, 60, 198, 0.5)
+}
+.btn-primary.disabled,.btn-primary:disabled{
+    color:#fff;
+    background-color:#1abc9c;
+    border-color:#1abc9c
+}
+.btn-primary:not(:disabled):not(.disabled).active,.btn-primary:not(:disabled):not(.disabled):active,.show>.btn-primary.dropdown-toggle {
+    color:#fff;
+    background-color:#b569cc;
+    border-color:#5e3f5e
+}
+
 #mainNav .navbar-nav li.nav-item a.nav-link:hover {
     color:#2e90e0
 }
@@ -29,7 +81,8 @@
 
 .colLeft {
     width: 50%;
-    top: 50%
+    margin-top: 125px;
+    top: 50%;
 }
 
 .colRight {
@@ -38,7 +91,7 @@
 
 #bg-rectangle {
     position: absolute;
-    width: 807px;
+    width: 800px;
     height: 700px;
     left: 800px;
     top: -80px;
@@ -60,12 +113,6 @@
   background:#2e90e0
 }
 
-.footer {
-    padding-top:5rem;
-    padding-bottom:5rem;
-    background-color:#8d549b;
-    color:#fff
-   }
 
 V#streamer-quiz-form > div.steps.clearfix > ul > li {
 float: left;
