@@ -124,7 +124,7 @@
 
         <h3>Age</h3>
         <fieldset>
-          <div class="card">
+          <div id="question-3" class="card">
             <legend>Uhhh... Twiri? I prefer streamers of the age...</legend>
 
             <div class="form-check">
@@ -140,7 +140,7 @@
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="ageRadios" id="ageRadios2" value="option3">
+              <input class="form-check-input" type="radio" name="ageRadios" id="ageRadios3" value="option3">
               <label class="form-check-label" for="ageRadios3">
                 30+
               </label>
@@ -149,9 +149,15 @@
         <h3>Language</h3>
         <!--Nadotornado please make this functional fun and unique that people will enjoy!! :D-->
         <fieldset>
-          <div class="card">
+          <div id="question-4" class="card">
             <legend>Uhhh... Twiri? I prefer streamers that speak...</legend>
+<!--
 
+okay so the answers are like "English", "Korean", "Japanese", "Chinese", etc
+so now back to index
+
+
+-->
             <div class="form-check">
               <input class="form-check-input" type="checkbox" name="langRadios" id="langRadios1" value="option1">
               <label class="form-check-label" for="langRadios1">
@@ -187,9 +193,13 @@
 
         <h3>Content</h3>
         <fieldset>
-          <div class="card">
+          <div id="question-5" class="card">
             <legend>Uhhh... Twiri? I prefer streamers who stream... </legend>
 
+            <!---
+            so we need to copy paste these names for the radio buttons,
+            from the id, 
+            -->
             <div>
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="contentRadios" id="contentRadios1"
@@ -259,7 +269,7 @@
                 <input class="form-check-input" type="checkbox" name="contentRadios" id="contentRadios9"
                   value="option9">
                 <label class="form-check-label" for="contentRadios9">
-                  Movies w/ Viewers (Discord)
+                  Movies with Viewers (Discord)
                 </label>
               </div>
 
@@ -294,18 +304,36 @@
 
         <h3>Voice Tone</h3>
         <fieldset>
-          <div class="card">
+          <div id="question-6" class="card">
             <legend>Uhhh... Twiri? I prefer streamers with voice tone...?? </legend>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="voiceRadios" id="voiceRadios1" value="option1">
               <label class="form-check-label" for="voiceRadios1">
-                Chatting
+                1
               </label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="voiceRadios" id="voiceRadios2" value="option2">
               <label class="form-check-label" for="voiceRadios2">
-                Game
+                2
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="voiceRadios" id="voiceRadios3" value="option3">
+              <label class="form-check-label" for="voiceRadios3">
+                3
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="voiceRadios" id="voiceRadios4" value="option4">
+              <label class="form-check-label" for="voiceRadios4">
+                4
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="voiceRadios" id="voiceRadios5" value="option5">
+              <label class="form-check-label" for="voiceRadios5">
+                5
               </label>
             </div>
           </div>
@@ -313,7 +341,7 @@
 
         <h3>Cam</h3>
         <fieldset>
-          <div class="card">
+          <div id="question-7" class="card">
             <legend>Uhhh... Twiri? I prefer streamers that has a cam</legend>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="camRadios" id="camRadios1" value="option1">
@@ -332,7 +360,7 @@
 
         <h3>Mature Streamer</h3>
         <fieldset>
-          <div class="card">
+          <div id="question-8" class="card">
             <legend>Uhhh... Twiri? I prefer streamers that streams mature contents</legend>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="camRadios" id="camRadios1" value="option1">
@@ -349,19 +377,22 @@
           </div>
         </fieldset>
 
-        <h3>Mature Jokes</h3>
+        <h3>Follow only</h3>
         <fieldset>
-          <div class="card">
-            <legend>Uhhh... Twiri? I prefer streamers that do mature content. </legend>
+          <!--
+            uh, so what else do we need to do here, what doesn't get saved yet???
+          -->
+          <div id="question-9" class="card">
+            <legend>Uhhh... Twiri? I prefer streamers that is follow only chat. </legend>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="camRadios" id="camRadios1" value="option1">
-              <label class="form-check-label" for="followerCountRadios1">
+              <input class="form-check-input" type="radio" name="followerRadios" id="followerRadios1" value="option1">
+              <label class="form-check-label" for="followerRadios1">
                 Yes
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="camRadios" id="camRadios2" value="option2">
-              <label class="form-check-label" for="camRadios2">
+              <input class="form-check-input" type="radio" name="followerRadios" id="followerRadios2" value="option2">
+              <label class="form-check-label" for="followerRadios2">
                 No
               </label>
             </div>
