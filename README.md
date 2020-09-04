@@ -1,8 +1,18 @@
 # JinriTV Streamer Matchmakers Project
-Creating a website to match the streamer of your type ver 0
+Creating a website to match the streamer of your type:
 [https://streamer-match-maker.herokuapp.com/](https://streamer-match-maker.herokuapp.com/)
 
-## Getting Started
+# Update Sept 4/
+The main flow for the quiz is complete for the 9 example questions. I've added different examples of quiz elements so we can pick the best ones to use:
+* **Range Slider**: I used Mark's suggestion to add [https://github.com/seiyria/bootstrap-slider](https://github.com/seiyria/bootstrap-slider), it is in use for questions 1 and 3.
+* **'Radio'-type radio buttons**: These are radio buttons (only one selection allowed), with circle-style normal radio button style, used for question 2 and 6.
+* **'Button'-type radio buttons**: These are radio buttons, with a 'button' style, used for questions 7, 8 and 9.
+* **Switches**: These are toggles, which allow for multiple selection, used in questions 4 and 5.
+
+To reset the quiz, refresh the page. 
+
+
+# Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
