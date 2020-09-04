@@ -1,187 +1,211 @@
+// UsersAnswers is a dynamic object that stores the answers to the quiz questions. 
+// Update it as soon as possible (like in the onchange event)
+// and the end of the quiz, this is what is sent to our API to calculate the streamer. 
+var UsersAnswers = {};
+
+// QuestionSettings stores any initialization values, such as mix/max values
+// for the question (if applicable)
+const QuestionSettings = {
+  "average_viewers": {
+    min: 0,
+    max: 10000,
+    suffix: "average viewers"
+  },
+  "follower_count": {
+    1: "Less than 10000",
+    2: "between 10000 and 100000",
+    3: "100000 to 1000000"
+  },
+  "age": {
+    min: 16,
+    max: 100,
+    suffix: "years old"
+  },
+  "voice": {
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5
+  }
+}
+
+// CurrentQuestion represents which question we are on
+var CurrentQuestion = 1;
+
+// LastQuestion is the last question before we send the results
+const LastQuestion = 9;
+
+// Used by the setup functions to display and set callbacks
+const SlidersToInitialize = ["average_viewers", "age"]
+
+// This is called when the page is loaded
 $(() => {
-  // once page is loaded
-  $("#streamer-quiz-form").steps({
-    headerTag: "h3",
-    bodyTag: "fieldset",
-    transitionEffect: "fade",
-    transitionEffectSpeed: 500,
-    onStepChanging: onChangeQuestion,
-    onStepChanged: onQuestionChanged
-  });
+  // setup our bootstrap elements like the sliders
+  setupElements();
 
+  // setup the callbacks for the different events
+  setupCallbacks();
 
-
-  var minSlider = document.getElementById("minSlider");
-  var minOutput = document.getElementById("minViewer");
-  minOutput.innerHTML = minSlider.value;
-
-  minSlider.oninput = function () {
-    minOutput.innerHTML = this.value;
-  }
-
-  var maxSlider = document.getElementById("maxSlider");
-  var maxOutput = document.getElementById("maxViewer");
-  maxOutput.innerHTML = maxSlider.value;
-
-  maxSlider.oninput = function () {
-    maxOutput.innerHTML = this.value;
-  }
-
-  //starts oage animations
+  //starts page animations
   animateElements();
-
-  /*
-  $("#viewerSlider").slider({
-      min: 0,
-      max: 10000,
-      value: [0, 10],
-      focus: true
-  
-  });
-  */
 });
 
-function onChangeQuestion(event, currentIndex, newIndex) {
-  saveResult(currentIndex);
-  adjustProgress(newIndex);
-  return true;
+function setSliderDisplay(slider){
+  let minRange = QuestionSettings[slider].min;
+  let maxRange = QuestionSettings[slider].max;
+
+  let minDefault = Math.floor(maxRange/4);
+  let maxDefault = Math.floor(maxRange/4)*3;
+
+  let displayText = `Between ${minDefault} and ${maxDefault} ${QuestionSettings[slider].suffix}`;
+  $(`#${slider}-slider-display`).text(displayText);
+  $(`#slider_${slider}`).slider({ id: `slider_${slider}`, min: minRange, max: maxRange, range: true, value: [minDefault, maxDefault], tooltip: 'hide' });
 }
 
-function onQuestionChanged(event, currentIndex, newIndex) {
-  return true;
+function setupElements() {
+  // Hides all the questions to start (except for the 1st)
+  for (i = CurrentQuestion + 1; i <= LastQuestion; i++) {
+    $(`#question${i}-container`).hide()
+  }
+  $(`#question-result-container`).hide()
+
+  // Setup the sliders
+  SlidersToInitialize.forEach(slider=>{
+    setSliderDisplay(slider);
+  })
+ 
+  unselectAllRadios();
+  unselectAllSwitches();
 }
 
-var UsersAnswers = [];
+function unselectAllSwitches() {
+  $(`[id^="switch_"]`).prop('checked', "");
+}
 
-function saveResult(index) {
+function unselectAllRadios() {
+  $(`[id^="radio_`).prop('checked', "");
+}
 
-  let saveObject = {};
+function setupCallbacks() {
+  // When the "Find the Streamer" button is pressed,
+  // open the modal and display the quiz
+  $('#quiz-modal').on('shown.bs.modal', function (e) {
+    // start animation for quiz display
+    $("#quiz-content-modal").css("opacity", 100);
+  });
 
-  switch (index) {
-    case 0:
-      saveObject.rangeMin = $('#question-1 .range-min input').val();
-      saveObject.rangeMax = $('#question-1 .range-max input').val();
-      break;
-    case 1:
-      if ($("#followerCountRadios1").is(":checked")) {
-        saveObject.followerCount = "1000"
-      } else if ($("#followerCountRadios2").is(":checked")) {
-        saveObject.followerCount = "10000"
-      } else if ($("#followerCountRadios3").is(":checked")) {
-        saveObject.followerCount = "100000"
+  // When the range is adjusted, display the changes in text, 
+  // and save the value to the UserAnswers array. 
+  // Setup the sliders, assuming 1 slider with 2 values per question
+  SlidersToInitialize.forEach(slider=>{
+    $(`#slider_${slider}`).on("slide", (slideEvt) => {
+      let minRange = slideEvt.value[0];
+      let maxRange = ((slideEvt.value[1] == 10000 && slider == "average_viewers") ? "10000+" : slideEvt.value[1]);
+  
+      let displayText = `Between ${minRange} and ${maxRange} ${QuestionSettings[slider].suffix}`;
+      $(`#${slider}-slider-display`).text(displayText);
+      UsersAnswers[slider] = {
+        min: minRange,
+        max: maxRange
       }
-      // code block
-      break;
-    // down here
-    case 2:
-      if($("#ageRadios1").is(":checked")) {
-        saveObject.ageRatios = "18-20"
-      } else if ($("#ageRadios2").is(":checked")) {
-        saveObject.ageRatios = "20-29"
-      } else if ($("#ageRadios3").is(":checked")) {
-        saveObject.ageRatios = "30+"
-      }
-      break;
-    case 3:
-      if($("#langRadios1").is(":checked")) {
-        saveObject.language = "English"
-      } else if ($("#langRadios2").is(":checked")) {
-        saveObject.language = "Korean"
-      } else if ($("#langRadios3").is(":checked")) {
-        saveObject.language = "Japanese"
-      } else if ($("#langRadios4").is(":checked")) {
-        saveObject.language = "Chinese"
-      } else if ($("#langRadios5").is(":checked")) {
-        saveObject.language = "Thai"
-      }
-     
-      break;
-    case 4:
-      if($("#contentRadios1").is(":checked")) {
-        saveObject.content = "Just Chatting"
-      } else if ($("#contentRadios2").is(":checked")) {
-        saveObject.content = "Games"
-      } else if ($("#contentRadios3").is(":checked")) {
-        saveObject.content = "ASMR"
-      } else if ($("#contentRadios4").is(":checked")) {
-        saveObject.content = "Science & Technology"
-      } else if ($("#contentRadios5").is(":checked")) {
-        saveObject.content = "Cooking"
-      } else if ($("#contentRadios6").is(":checked")) {
-        saveObject.content = "Food"
-      } else if ($("#contentRadios7").is(":checked")) {
-        saveObject.content = "Outdoors"
-      } else if ($("#contentRadios8").is(":checked")) {
-        saveObject.content = "IRL"
-      } else if ($("#contentRadios9").is(":checked")) {
-        saveObject.content = "Movies with Viewers (Discord)"
-      } else if ($("#contentRadios10").is(":checked")) {
-        saveObject.content = "Music"
-      } else if ($("#contentRadios11").is(":checked")) {
-        saveObject.content = "Yoga"
-      } else if ($("#contentRadios12").is(":checked")) {
-        saveObject.content = "Dancing"
-      }
-      break;
-    case 5:
-      // voice tone?
-      if($("#voiceRadios1").is(":checked")) {
-        saveObject.content = "1"
-      } else if ($("#voiceRadios2").is(":checked")) {
-        saveObject.content = "2"
-      } else if ($("#voiceRadios2").is(":checked")) {
-        saveObject.content = "3"
-      } else if ($("#voiceRadios2").is(":checked")) {
-        saveObject.content = "4"
-      } else if ($("#voiceRadios2").is(":checked")) {
-        saveObject.content = "5"
-      } 
-      break;
-    case 6:
-      // has a cam?
-      camRadios1
-      if($("#camRadios1").is(":checked")) {
-        saveObject.cam = true;
-      } else if ($("#camRadios2").is(":checked")) {
-        saveObject.cam = false;
-      }
-      break;
-    case 7:
-      // what is going on here
+    });
+  })
+}
 
-// @jinritv
-// what is this.. we already have camRAdios
+function selectSwitch(question, selection) {
 
+  let selectedSwitch = `#switch_${question}_${selection}`;
+  let selectedSwitches = UsersAnswers[question] == undefined ? [] : UsersAnswers[question]
 
-      if($("#camRadios1").is(":checked")) {
-        saveObject.cam = true;
-      }
-      break;
-    case 8:
-      //follow only?
-      if($("#followRadios1").is(":checked")) {
-        saveObject.follow = true;
-      } else if ($("#followRadios2").is(":checked")) {
-        saveObject.follow = false;
-      }
-      break;
-
-    default:
-    // code block
+  if ($(selectedSwitch).prop("checked") == true) {
+    // add the selection to the list
+    selectedSwitches.push(selection);
+  } else {
+    // remove it from the list
+    var index = selectedSwitches.indexOf(selection);
+    if (index > -1) {
+      selectedSwitches.splice(index, 1);
+    }
   }
 
-  UsersAnswers[index] = saveObject;
+  UsersAnswers[question] = selectedSwitches
   console.log(UsersAnswers)
 }
 
-function adjustProgress(index) {
-  let questionNum = index + 1;
-  $("#quiz-progress-bar").css("width", `${((questionNum) / 10 * 100)}%`);
-  if (questionNum == 10) {
-    $('#quiz-progress-bar span').text(`Complete!`);
+function selectRadio(question, selection) {
+  // unselect previous choices
+  $(`[id^="radio_${question}"]`).prop('checked', "");
+  // select current choice
+  $(`#radio_${question}-${selection}`).prop('checked', "checked");
+  //save the selection
+  UsersAnswers[question] = QuestionSettings[question][selection]
+}
+
+function selectButton(question, selection){
+   // unselect previous choices
+  $(`[id^="button_${question}"]`).removeClass('active');
+    // select current choice
+  $(`#button_${question}_${selection}`).addClass('active');
+    //save the selection
+  UsersAnswers[question] = selection;
+}
+
+function nextQuestion() {
+  console.log(UsersAnswers)
+  // adjusts the display progress bar
+  adjustProgressBar(CurrentQuestion);
+
+  // see if we are on the last question
+  if (CurrentQuestion == LastQuestion) {
+    $('#quiz-modal-label').text(`Results`);
+    $(`#question${CurrentQuestion}-container`).addClass("slide-out-left")
+    $("#continue-button").hide()
+      // wait 250 ms before sliding in next question
+      setTimeout(() => {
+        $(`#question${CurrentQuestion}-container`).hide()
+        $(`#question-result-container`).addClass("slide-in-right")
+        $(`#question-result-container`).show()
+
+        // TODO Send results to API
+        // calculateQuizResult()
+        console.log("complete.")
+      }, 250);
+   
   } else {
-    $('#quiz-progress-bar span').text(`${questionNum} of 9`);
+    // go to next question
+    // slide out current question
+    $(`#question${CurrentQuestion}-container`).addClass("slide-out-left")
+
+    // wait 250 ms before sliding in next question
+    setTimeout(() => {
+      $(`#question${CurrentQuestion}-container`).hide()
+      // increment the question
+      CurrentQuestion += 1;
+      // change the title
+      $('#quiz-modal-label').text(`Question ${CurrentQuestion} of ${LastQuestion}`);
+      // slide in the next
+      $(`#question${CurrentQuestion}-container`).addClass("slide-in-right")
+      $(`#question${CurrentQuestion}-container`).show()
+    }, 250);
   }
+}
+
+function adjustProgressBar(index) {
+  let questionNum = index + 1;
+  $("#quiz-modal-progress-bar").css("width", `${((questionNum) / 10 * 100)}%`);
+  if (questionNum == 10) {
+    // quiz is complete
+    $('#quiz-modal-progress-bar span').text(`Complete!`);
+  }
+}
+
+function openQuizModal() {
+  $("#quiz-modal").modal('show');
+}
+
+function closeQuizModal() {
+  $("#quiz-modal").modal('hide');
 }
 
 function animateElements() {
@@ -191,40 +215,17 @@ function animateElements() {
   $("#dancing-jinri").show();
   $("#logo-container").addClass("slide-in-blurred-left")
   $("#start-quiz-button").addClass("fade-in");
+  $("#start-quiz-button-modal").addClass("fade-in");
   $("#welcome-text").addClass("swing-in-left-fwd")
 }
 
-function prepareQuiz() {
-  console.log("preparing quiz...")
-  $("#welcome-text").removeClass("swing-in-left-fwd")
-  $("#welcome-text").addClass("slide-out-left")
-  $("#dancing-jinri").addClass("slide-out-right")
-  $("#start-quiz-button").addClass("fade-out");
-  setTimeout(() => {
-    $("#welcome-banner").hide();
-    $("#quiz").addClass("bounce-in-bottom")
-    $("#quiz").show();
-  }, 1000)
-}
-
 function calculateQuizResult() {
-  // Fake quiz results to force a streamer response 
-  var quizResults = [
-    true,
-    false,
-    4,
-    5,
-    "high",
-    true,
-    15
-  ];
-
   // Send the results to the server
   $.ajax({
     beforeSend: displayResultMessage(`Sending Quiz Results ${JSON.stringify(quizResults)} to server...`),
     url: "/calculateStreamer",
     type: "POST",
-    data: { quizResults },
+    data: { UsersAnswers },
     success: function (data) {
       console.log(data)
       setSuccess(data.Error == null);
