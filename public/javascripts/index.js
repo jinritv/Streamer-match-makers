@@ -51,12 +51,12 @@ $(() => {
   animateElements();
 });
 
-function setSliderDisplay(slider){
+function setSliderDisplay(slider) {
   let minRange = QuestionSettings[slider].min;
   let maxRange = QuestionSettings[slider].max;
 
-  let minDefault = Math.floor(maxRange/4);
-  let maxDefault = Math.floor(maxRange/4)*3;
+  let minDefault = Math.floor(maxRange / 4);
+  let maxDefault = Math.floor(maxRange / 4) * 3;
 
   let displayText = `Between ${minDefault} and ${maxDefault} ${QuestionSettings[slider].suffix}`;
   $(`#${slider}-slider-display`).text(displayText);
@@ -69,12 +69,14 @@ function setupElements() {
     $(`#question${i}-container`).hide()
   }
   $(`#question-result-container`).hide()
+  $(`#streamer-reveal-container`).hide()
+  $(`#streamer-name`).hide()
 
   // Setup the sliders
-  SlidersToInitialize.forEach(slider=>{
+  SlidersToInitialize.forEach(slider => {
     setSliderDisplay(slider);
   })
- 
+
   unselectAllRadios();
   unselectAllSwitches();
 }
@@ -85,6 +87,13 @@ function unselectAllSwitches() {
 
 function unselectAllRadios() {
   $(`[id^="radio_`).prop('checked', "");
+}
+
+function revealStreamer() {
+  $("#streamer-name").addClass("focus-in-expand");
+
+  $(`#streamer-name`).show()
+
 }
 
 function setupCallbacks() {
@@ -98,11 +107,11 @@ function setupCallbacks() {
   // When the range is adjusted, display the changes in text, 
   // and save the value to the UserAnswers array. 
   // Setup the sliders, assuming 1 slider with 2 values per question
-  SlidersToInitialize.forEach(slider=>{
+  SlidersToInitialize.forEach(slider => {
     $(`#slider_${slider}`).on("slide", (slideEvt) => {
       let minRange = slideEvt.value[0];
       let maxRange = ((slideEvt.value[1] == 10000 && slider == "average_viewers") ? "10000+" : slideEvt.value[1]);
-  
+
       let displayText = `Between ${minRange} and ${maxRange} ${QuestionSettings[slider].suffix}`;
       $(`#${slider}-slider-display`).text(displayText);
       UsersAnswers[slider] = {
@@ -142,12 +151,12 @@ function selectRadio(question, selection) {
   UsersAnswers[question] = QuestionSettings[question][selection]
 }
 
-function selectButton(question, selection){
-   // unselect previous choices
+function selectButton(question, selection) {
+  // unselect previous choices
   $(`[id^="button_${question}"]`).removeClass('active');
-    // select current choice
+  // select current choice
   $(`#button_${question}_${selection}`).addClass('active');
-    //save the selection
+  //save the selection
   UsersAnswers[question] = selection;
 }
 
@@ -161,17 +170,16 @@ function nextQuestion() {
     $('#quiz-modal-label').text(`Results`);
     $(`#question${CurrentQuestion}-container`).addClass("slide-out-left")
     $("#continue-button").hide()
-      // wait 250 ms before sliding in next question
-      setTimeout(() => {
-        $(`#question${CurrentQuestion}-container`).hide()
-        $(`#question-result-container`).addClass("slide-in-right")
-        $(`#question-result-container`).show()
+    // wait 250 ms before sliding in next question
+    setTimeout(() => {
+      $(`#question${CurrentQuestion}-container`).hide()
+      $(`#question-result-container`).addClass("slide-in-right")
+      $(`#question-result-container`).show()
 
-        // TODO Send results to API
-        // calculateQuizResult()
-        console.log("complete.")
-      }, 250);
-   
+      calculateQuizResult();
+
+    }, 250);
+
   } else {
     // go to next question
     // slide out current question
@@ -222,18 +230,31 @@ function animateElements() {
 function calculateQuizResult() {
   // Send the results to the server
   $.ajax({
-    beforeSend: displayResultMessage(`Sending Quiz Results ${JSON.stringify(quizResults)} to server...`),
+    beforeSend: displayResultMessage(`Sending Quiz Results ${JSON.stringify(UsersAnswers)} to server...`),
     url: "/calculateStreamer",
     type: "POST",
     data: { UsersAnswers },
     success: function (data) {
       console.log(data)
-      setSuccess(data.Error == null);
-      if (data.Error != null) {
-        displayOutput(`<br/>${data.Error}`);
-      } else {
-        displayOutput(`<br/>Result: ${JSON.stringify(data.Results)}`);
-      }
+      $(`#question-result-container`).addClass("slide-out-left")
+
+      setTimeout(() => {
+        $(`#question-result-container`).hide()
+        if(data.Error != null ){
+          console.log(data.Error.message)
+          $(`#streamer-reveal-container`).show()
+          $('#streamer-name').text(data.Error.message)
+          $('#streamer-name').show()
+        } else {
+          $('#streamer-name').text(data.Results.user_name)
+          $(`#streamer-reveal-container`).addClass("slide-in-right")
+          $(`#streamer-reveal-container`).show()
+  
+          console.log("complete.")
+        }
+      
+      }, 250);
+
     },
     complete: function (xhr, status) {
       if (status == 'error') {

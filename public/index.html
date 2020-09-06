@@ -367,9 +367,6 @@
                 <span>Allow all</span>
               </button>
             </div>
-
-
-
           </div>
           <!-- QUESTION 9: Mature -->
           <div id="question9-container">
@@ -393,9 +390,7 @@
           </div>
 
           <!-- results page-->
-
           <div id="question-result-container">
-
             <div class="d-flex flex-row mb-3 justify-content-center">
               <svg width="300" height="266" viewBox="0 0 300 266" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -673,13 +668,27 @@
               </svg>
 
             </div>
-            <div class="d-flex flex-row mb-3 justify-content-center">
+            <div class="d-flex flex-row mb-3 justify-content-center align-items-center">
+              <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
               <h4>Matching you with a streamer...</h4>
+              <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
             </div>
-
-
-
           </div>
+             <!-- results page-->
+             <div id="streamer-reveal-container">
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <div class="d-flex flex-column mb-3 justify-content-center">
+                  <img src="images/pausechamp.png" style="height:75%; width:75%;" id="PauseChamp" />
+                </div>
+                <div class="d-flex flex-column mb-3 justify-content-center align-items-center">
+                <!-- username filled in after calculating streamer-->
+                    <span id="streamer-name"></span>
+                </div>
+              </div>
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <button onclick="revealStreamer()" class="btn btn-quiz-answer" id="reveal-streamer-name">Reveal my Streamer!</button>
+              </div>
+            </div>
         </div>
       </div>
       <div class="modal-footer justify-content-center">
@@ -691,6 +700,5 @@
     </div>
   </div>
 </div>
-
 
 </html>
