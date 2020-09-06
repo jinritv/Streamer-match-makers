@@ -2,6 +2,13 @@
 Creating a website to match the streamer of your type:
 [https://streamer-match-maker.herokuapp.com/](https://streamer-match-maker.herokuapp.com/)
 
+# Update Sept 6
+Small update to actually send user's answers to the server, and retreive a streamer from the database. Includes a "results" page with a button to reveal the streamer. 
+
+We're now using kyroskoh's API gateway to interact with the database, but for right now we only retrieve Jinri's record and return it.
+
+Still need to figure out an algorithm, or best strategy to determine the streamer based on the quiz answers.
+
 # Update Sept 4
 The main flow for the quiz is complete for the 9 example questions. I've added different examples of quiz elements so we can pick the best ones to use:
 * **Range Slider**: I used Mark's suggestion to add [https://github.com/seiyria/bootstrap-slider](https://github.com/seiyria/bootstrap-slider), it is in use for questions 1 and 3.
@@ -79,6 +86,7 @@ Contributors please add your name to this readme in the Authors section, sorry i
 * **kalaloon** - inital work, spreadsheet -
 * **kookehs** - initial work, loading data -
 * **Proshuto** - meme captain -
+* **kyroskoh** - providing the DreamFactory database API
 * **your names here**
 
 ### Links
