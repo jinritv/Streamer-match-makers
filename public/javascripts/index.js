@@ -208,6 +208,11 @@ function adjustProgressBar(index) {
   }
 }
 
+function loadImage(){
+  let url = $("#add-streamer_logo_url").val();
+  $("#streamer-picture").attr('src',url)
+}
+
 function openQuizModal() {
   $("#quiz-modal").modal('show');
 }
@@ -281,4 +286,138 @@ function setSuccess(success) {
 
 function displayResultMessage(message) {
   $("#quiz-results-display").text(message);
+}
+
+function openAddStreamerModal() {
+  $("#add-streamer-modal").modal('show');
+}
+
+function closeAddStreamerModal() {
+  $("#add-streamer-modal").modal('hide');
+}
+
+function toggleButton(buttonName){
+  if($(`#button_${buttonName}`).hasClass("active")){
+      // select current choice
+  $(`#button_${buttonName}`).removeClass('active');
+  } else {
+  // select current choice
+  $(`#button_${buttonName}`).addClass('active');
+  }
+
+}
+
+
+
+function addStreamer(){
+
+  let textInputs = {
+    followers: "",
+    voice: "",
+    avg_viewers: "",
+    avg_stream_duration: "",
+    logo_url: "",
+    user_name: "",
+    display_name: "",
+    streamer_name: "",
+  }
+
+  let multipleInputs = {
+    nationality: [],
+    languages: [],
+  }
+
+  
+  let otherInputs = {
+    is_partner: false,
+    is_fulltime: false,
+    uses_cam: false,
+    mature_stream: false,
+   
+  }
+
+  let newStreamer = {
+    ...(()=>{
+      let vals = {}
+      Object.keys(textInputs).forEach(input=>{
+        vals[`${input}`] = $(`#add-streamer_${input}`).val()
+      })
+      return vals
+    })(),
+    ...(()=>{
+      let vals = {}
+      Object.keys(otherInputs).forEach(input=>{
+        vals[`${input}`] = ($(`#button_${input}`).hasClass("active"))
+      })
+      return vals
+    })(),
+    native_language: $("#add_native_language option:selected").val(),
+    location: $("#add_streamer_location option:selected").val(),  
+    password: $("#add_streamer_password").val(),
+    languages: getLanguages(),
+    nationality: getNationalities()
+  }
+
+
+
+  console.log("New streamer:")
+  console.log(newStreamer)
+  createNewStreamer(newStreamer)
+
+}
+const language_switches = [
+  "english",
+  "korean",
+  "japanese",
+  "chinese"
+]
+function getLanguages(){
+  let streamerLanguages = [];
+  language_switches.forEach(language=>{
+    if($(`#switch_add_languages_${language}`).prop("checked") == true){
+      streamerLanguages.push({
+        id: $(`#switch_add_languages_${language}`).val(),
+        native: ($("#add_native_language option:selected").val()==$(`#switch_add_languages_${language}`).val()),
+      })
+    }
+  })
+  return streamerLanguages
+}
+
+
+const nationality_switches = [
+  "american",
+  "korean",
+  "chinese",
+  "japanese",
+  "canadian"
+]
+function getNationalities(){
+  let streamerNationalities = [];
+  nationality_switches.forEach(nationality=>{
+    if($(`#switch_add_nationality_${nationality}`).prop("checked") == true){
+      streamerNationalities.push({
+        id: $(`#switch_add_nationality_${nationality}`).val(),
+      })
+    }
+  })
+  return streamerNationalities
+}
+function createNewStreamer(newStreamer) {
+  // Send the results to the server
+  $.ajax({
+    beforeSend: console.log("sending new streamer..."),
+    url: "/createNewStreamer",
+    type: "POST",
+    data: { newStreamer },
+    success: function (data) {
+      console.log(data)
+
+    },
+    complete: function (xhr, status) {
+      if (status == 'error') {
+        console.log('error')
+      }
+    }
+  });
 }

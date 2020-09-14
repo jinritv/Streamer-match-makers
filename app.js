@@ -6,6 +6,7 @@ var http = require('http');
 var public = path.join(__dirname, 'public');
 
 const calculateStreamer = require('./backend/calculate_streamer');
+const createStreamer = require('./backend/create_streamer')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
@@ -17,7 +18,7 @@ var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 app.set('port', port);
 
@@ -26,8 +27,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(public, 'index.html'));
 });
 
-
-// Called when the button is pressed
+// Called at the end of the quiz
 app.post("/calculateStreamer", (req, res, next) => {
     
   const quizResultsCallback = (results, err) => {
@@ -39,6 +39,23 @@ app.post("/calculateStreamer", (req, res, next) => {
 
    calculateStreamer(req.body, quizResultsCallback);
 });
+
+// Called when a new streamer is added 
+app.post("/createNewStreamer", (req, res, next) => {
+
+  console.log(req.body);
+    
+  const createStreamerCallback = (results, err) => {
+      res.json({
+          "Error": err,
+          "Results":results
+       });
+   };
+
+   createStreamer(req.body.newStreamer, createStreamerCallback);
+});
+
+
 app.use(express.static('public'));
 
 var server = http.createServer(app);
