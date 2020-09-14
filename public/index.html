@@ -39,9 +39,10 @@
       <!-- <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button> -->
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <!--
-                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#quiz">Take the quiz</a></li>
-                     -->
+
+          <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+              onclick="openAddStreamerModal()">Add a Streamer</a></li>
+
         </ul>
       </div>
     </div>
@@ -669,26 +670,37 @@
 
             </div>
             <div class="d-flex flex-row mb-3 justify-content-center align-items-center">
-              <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+              <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
               <h4>Matching you with a streamer...</h4>
-              <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+              <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
             </div>
           </div>
-             <!-- results page-->
-             <div id="streamer-reveal-container">
-              <div class="d-flex flex-row mb-3 justify-content-center">
-                <div class="d-flex flex-column mb-3 justify-content-center">
-                  <img src="images/pausechamp.png" style="height:75%; width:75%;" id="PauseChamp" />
-                </div>
-                <div class="d-flex flex-column mb-3 justify-content-center align-items-center">
-                <!-- username filled in after calculating streamer-->
-                    <span id="streamer-name"></span>
-                </div>
+          <!-- results page-->
+          <div id="streamer-reveal-container">
+            <div class="d-flex flex-row mb-3 justify-content-center">
+              <div class="d-flex flex-column mb-3 justify-content-center">
+                <img src="images/pausechamp.png" style="height:75%; width:75%;" id="PauseChamp" />
               </div>
-              <div class="d-flex flex-row mb-3 justify-content-center">
-                <button onclick="revealStreamer()" class="btn btn-quiz-answer" id="reveal-streamer-name">Reveal my Streamer!</button>
+              <div class="d-flex flex-column mb-3 justify-content-center align-items-center">
+                <!-- username filled in after calculating streamer-->
+                <span id="streamer-name"></span>
               </div>
             </div>
+            <div class="d-flex flex-row mb-3 justify-content-center">
+              <button onclick="revealStreamer()" class="btn btn-quiz-answer" id="reveal-streamer-name">Reveal my
+                Streamer!</button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer justify-content-center">
@@ -700,5 +712,225 @@
     </div>
   </div>
 </div>
+
+<!-- Add Streamer Modal -->
+<div class="modal fade" id="add-streamer-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 80%; width: max-content;" role="document">
+    <div class="modal-content" >
+      <div class="modal-header text-center">
+        <h5 class="modal-title w-100" id="add-streamer-modal-label">Add a Streamer</h5>
+      </div>
+
+      <div class="modal-body">
+        <div class="d-flex flex-column">
+          <!-- QUESTION 1: Average Viewer-->
+          <div id="add-streamer-container">
+            <div class="d-flex flex-row justify-content-center">
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="user_name_input">user_name</span>
+                  </div>
+                  <input id="add-streamer_user_name" type="text" class="form-control" placeholder="Username">
+                </div>
+              </div>
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="display_name_input">display_name</span>
+                  </div>
+                  <input id="add-streamer_display_name" type="text" class="form-control" placeholder="Display Name">
+                </div>
+              </div>
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="streamer_name_input">streamer_name</span>
+                  </div>
+                  <input id="add-streamer_streamer_name" type="text" class="form-control" placeholder="Streamer's name">
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center">
+              <div class="d-flex flex-col">
+                <div class="streamer-image-box">
+                  <img class="streamer-image" id="streamer-picture" />
+                </div>
+               
+              </div>
+              <div class="d-flex flex-col">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="picture_url_input">picture_url</span>
+                  </div>
+                  <input id="add-streamer_logo_url" type="text" class="form-control" placeholder="URL">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" onclick="loadImage()" type="button">load</button>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex flex-col justify-content-center">
+                <div class="btn-group mr-2" role="group" aria-label="First group">
+                  <button id="button_is_partner" type="button" onclick="toggleButton('is_partner')"
+                    class="btn btn-quiz-answer">is_partner</button>
+                  <button id="button_is_fulltime" type="button" onclick="toggleButton('is_fulltime')"
+                    class="btn btn-quiz-answer">is_fulltime</button>
+                  <button id="button_uses_cam" type="button" onclick="toggleButton('uses_cam')"
+                    class="btn btn-quiz-answer">uses_cam</button>
+                  <button id="button_mature_stream" type="button" onclick="toggleButton('mature_stream')"
+                    class="btn btn-quiz-answer">mature_stream</button>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center">
+              <div class="d-flex flex-col justify-content-center">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="add_streamer_location">location</label>
+                  </div>
+                  <select class="custom-select" id="add_streamer_location">
+                    <option selected value="1">USA</option>
+                    <option value="2">Canada</option>
+                    <option value="3">Korea</option>
+                    <option value="4">China</option>
+                    <option value="5">Japan</option>
+                    <option value="6">Taiwan</option>
+                  </select>
+                </div>
+              </div>
+              <div class="d-flex flex-col justify-content-center align-items-center">
+                <span>nationality</span>
+             
+                <div class="custom-control custom-switch add-language-switch" >
+                  <input value=1 type="checkbox" class="custom-control-input" id="switch_add_nationality_american"
+                    onclick="selectSwitch('add_nationality','american')">
+                  <label class="custom-control-label" for="switch_add_nationality_american">American</label>
+                </div>
+                <div class="custom-control custom-switch add-language-switch">
+                  <input value=2 type="checkbox" class="custom-control-input" id="switch_add_nationality_korean"
+                    onclick="selectSwitch('add_nationality','korean')">
+                  <label class="custom-control-label" for="switch_add_nationality_korean">Korean</label>
+                </div>
+            
+            
+                <div class="custom-control custom-switch add-language-switch">
+                  <input value=3 type="checkbox" class="custom-control-input" id="switch_add_nationality_chinese"
+                    onclick="selectSwitch('add_nationality','chinese')">
+                  <label class="custom-control-label" for="switch_add_nationality_chinese">Chinese</label>
+                </div>
+                <div class="custom-control custom-switch add-language-switch">
+                  <input value=4 type="checkbox" class="custom-control-input" id="switch_add_nationality_japanese"
+                    onclick="selectSwitch('add_nationality','japanese')">
+                  <label class="custom-control-label" for="switch_add_nationality_japanese">Japanese</label>
+                </div>
+                <div class="custom-control custom-switch add-language-switch">
+                  <input value=5 type="checkbox" class="custom-control-input" id="switch_add_nationality_canadian"
+                    onclick="selectSwitch('add_nationality','canadian')">
+                  <label class="custom-control-label" for="switch_add_nationality_canadian">Canadian</label>
+                </div>
+
+              </div>
+         
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center">
+            
+                <div class="d-flex flex-col justify-content-center">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="add_native_language">native_language</label>
+                    </div>
+                    <select class="custom-select" id="add_native_language">
+                      <option selected value="1">English</option>
+                      <option value="2">Korean</option>
+                      <option value="3">Japanese</option>
+                      <option value="4">Chinese</option>
+                    
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex flex-col justify-content-center align-items-center">
+                  <span>languages spoken</span>
+             
+                  <div class="custom-control custom-switch add-language-switch" >
+                    <input value=1 type="checkbox" class="custom-control-input" id="switch_add_languages_english"
+                      onclick="selectSwitch('add_languages','english')">
+                    <label class="custom-control-label" for="switch_add_languages_english">English</label>
+                  </div>
+                  <div class="custom-control custom-switch add-language-switch">
+                    <input value=2 type="checkbox" class="custom-control-input" id="switch_add_languages_korean"
+                      onclick="selectSwitch('add_languages','korean')">
+                    <label class="custom-control-label" for="switch_add_languages_korean">Korean</label>
+                  </div>
+              
+                  <div class="custom-control custom-switch add-language-switch">
+                    <input value=3 type="checkbox" class="custom-control-input" id="switch_add_languages_japanese"
+                      onclick="selectSwitch('add_languages','japanese')">
+                    <label class="custom-control-label" for="switch_add_languages_japanese">Japanese</label>
+                  </div>
+                  <div class="custom-control custom-switch add-language-switch">
+                    <input value=4 type="checkbox" class="custom-control-input" id="switch_add_languages_chinese"
+                      onclick="selectSwitch('add_languages','chinese')">
+                    <label class="custom-control-label" for="switch_add_languages_chinese">Chinese</label>
+                  </div>
+                
+                </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="user_name_input">followers</span>
+                  </div>
+                  <input id="add-streamer_followers" type="text" class="form-control" placeholder="# followers">
+                </div>
+              </div>
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="display_name_input">voice</span>
+                  </div>
+                  <input id="add-streamer_voice" type="text" class="form-control" placeholder="voice level (1-5)">
+                </div>
+              </div>
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="streamer_name_input">avg_viewers</span>
+                  </div>
+                  <input id="add-streamer_avg_viewers" type="text" class="form-control" placeholder="avg viewers">
+                </div>
+              </div>
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="user_name_input">avg_stream_duration</span>
+                  </div>
+                  <input id="add-streamer_avg_stream_duration" type="text" class="form-control" placeholder="# followers">
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+              <div class="input-group" style="max-width: 50%;">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="user_name_input">password</span>
+                </div>
+                <input id="add_streamer_password" type="text" class="form-control" placeholder="password">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" onclick="addStreamer()" type="button">add streamer</button>
+                </div>
+              </div>
+         
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
 
 </html>
