@@ -2,6 +2,9 @@
 Creating a website to match the streamer of your type:
 [https://streamer-match-maker.herokuapp.com/](https://streamer-match-maker.herokuapp.com/)
 
+# Update Sept 14
+Really scuffed update, this one includes a new modal to the main page where we can add a streamer to the database. A record is created only for the base 'streamers' table, the rest still needs to be updated. But when we insert a new streamer, we retreive the id, so we can use it in subsequent insert queries for things like nationality, stats, language, etc. 
+
 # Update Sept 6
 Small update to actually send user's answers to the server, and retreive a streamer from the database. Includes a "results" page with a button to reveal the streamer. 
 
