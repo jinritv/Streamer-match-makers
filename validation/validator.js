@@ -1,13 +1,7 @@
-/**
- * Below is schema for the intermediate JSON objects
- * 
- * 
- **/
+
 const { isNotEmpty } = require("../util/objectutil");
 
  
-
-
 // Currently, dataTypes are not used anywhere. It will be removed if no use is found
 const dataTypes = {
   boolean: "boolean",
@@ -18,6 +12,19 @@ const dataTypes = {
 }
 
 
+/**
+ * Schema for the intermediate JSON objects between business logic and ORM.
+ * Each data field has the following properties
+ * 1. DB column name as key (i.g. "user_name", "display_name", "is_partner", etc)
+ * 2. dataType: datatype of the DB column. Currently not in use
+ * 3. required: if this field is required for validation. Validation throws error
+ *    if required is true and value for that field is missing. Default to false.
+ * 4. defaultValue: Default value of the field if missing in input JSON
+ * 5. converter: converter function to validate input and convert to DB-friendly value.
+ *    Type conversion can also occur (i.g. "true" -> true)
+ * 
+ * TODO: The default values for empty fields were randomly set and need to be re-examined.
+ **/
 const dataFields = {
   // streamers table
   "user_name": {
