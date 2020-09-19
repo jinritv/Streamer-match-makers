@@ -42,6 +42,7 @@ These instructions will get you a copy of the project up and running on your loc
 This guide will show how to install these software:
 
 * **Node.js** - The backend environment 
+* **PostgreSQL** - Our choice of database
 
 ## Installing Node.js
 
@@ -53,9 +54,13 @@ After installation, verify that Node was successfully installed by opening up a 
 
 It should display the version number of Node installed (v12.18.3).
 
-## Verify Node server is working
+## Installing PostgreSQL
 
-Create a file called `.env`, and paste the connection string you'll get by asking in the discord. We do not want this public, so please make sure to not commit the `.env` file that contains the connection string.
+Download PostgreSQL [here](https://www.postgresql.org/download/). 
+
+In the project root directory, open `.env` file. Add DB credentials here. Please make sure to not commit the `.env` file that contains the connection string.
+
+## Verify Node server is working
 
 Open Command Prompt and `cd` to the location of this project. First we must install the required packages. In this folder, run the command 
 

@@ -44,4 +44,4 @@ async function testConnection() {
 }
   
 
-  module.exports = { getSequelizeFromConfig, testConnection };
+module.exports = { getSequelizeFromConfig, testConnection };
