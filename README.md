@@ -56,9 +56,13 @@ It should display the version number of Node installed (v12.18.3).
 
 ## Installing PostgreSQL
 
-Download PostgreSQL [here](https://www.postgresql.org/download/). 
+Download PostgreSQL [here](https://www.postgresql.org/download/). When you install, it is strongly recommended including pgAdmin as a part of the installation package.
 
-In the project root directory, open `.env` file. Add DB credentials here. Please make sure to not commit the `.env` file that contains the connection string.
+After the installation is complete, please go to the project root directory and open `.env` file with a text editor. Add DB credentials here. Please make sure to not commit the `.env` file that contains the connection string. (it is ignored by Git by default)
+
+## Verify Postgresql database server connection
+
+Run test_db_connection.js as instructed in admin/README.md, and make sure that the success message is displayed.
 
 ## Verify Node server is working
 
@@ -73,15 +77,9 @@ Now to start the server run the command `npm start`
 The console should now display something like 
 ```  streamer-matcher:server Listening on port 3000 +0ms ```
 
-Now go to `localhost:3000` in a web browser. 
+Now go to [localhost:3000](http://localhost:3000) in a web browser. 
 
 Verify there are no errors on the page, or in the console.
-
-## Verify Postgresql database server connection
-
-Run test_db_connection.js as instructed in admin/README.md
-
-(Is this still true?) ~~On the home page, at the bottom there should be a button called "DEBUG-Get streamer result". This button sends some quiz result values to the server and receives a streamer in response.~~
 
 ## Populate data into DB
 
