@@ -2,7 +2,10 @@
  * Below is schema for the intermediate JSON objects
  * 
  * 
- **/ 
+ **/
+const { isNotEmpty } = require("../util/objectutil");
+
+ 
 
 
 // Currently, dataTypes are not used anywhere. It will be removed if no use is found
@@ -166,7 +169,7 @@ function validateData(data) {
       errors[columnName] = error.message;
     }
   }
-  if(errors && Object.keys(errors).length > 0) {  // Return errors if there is any
+  if(isNotEmpty(errors)) {  // Return errors if there is any
       return [null, errors];
   }
   return [output, null];

@@ -9,21 +9,21 @@
  * 
  */
 
-const { getSequelizeFromConfig, testConnection} = require("../db/db");
+const { getSequelizeFromConfig, testConnection } = require("../db/db");
 const fs = require("fs");
 const { QueryTypes } = require("sequelize");
 const { findOrCreateStreamerFromData } = require("../db/find_or_create_streamer");
-const { validateData } = require("../validation/validator");
 
 // TODO: Is there any lighter alternative to D3-DSV for CSV parsing?
 const d3 = require("d3-dsv");
+const { isNotEmpty, keyCount } = require("../util/objectutil");
 
 // DB schema file
 const dbSchemaFilePath = "../db/db.sql";
 const defaultEncoding = "utf8";
 
 // CSV streamer data file
-const streamerDataFilePath = process.argv[2]// || "C:/Code/streamer/data.csv";  // TODO: accept user input later
+const streamerDataFilePath = process.argv[2]  // Path of downloaded spreadsheet, like "C:/streamer_data.csv";
 const headerRowNum = 1;  // 0-based row index of header columns
 const dataStartRowNum = 4;  // 0-based row index of start of data
 
@@ -43,17 +43,20 @@ async function recreateDatabase() {
     await recreateSchema();
     console.log("Successfully recreated DB schema and tables");
 
-    // Step 2. Populate all data from CSV file
+    // Step 2. Read all streamer data from CSV file
     console.log("Reading CSV file to get streamer data...")
     const csvFileData = fs.readFileSync(streamerDataFilePath, defaultEncoding);
     const csvJsonData = parseCsvDataToJson(csvFileData);
     console.log(`Total ${csvJsonData.length} streamer data are found. Updating DB...`);
 
+    // Step 3. Add streamer data into DB and display any errors for failed inserts.
+    // Note that each DB transaction only adds one streamer. It is possible that some streamers were
+    // added and others were not, but no streamer is "partially" added.
     const errorsByStreamer = await populateData(csvJsonData);
-    const errorCount = Object.keys(errorsByStreamer).length;
+    const errorCount = keyCount(errorsByStreamer);
     if(errorCount) {
-	  console.log("\n\n\n\n");
-	  console.log(`${csvJsonData.length - errorCount} streamers were added to DB`);
+	    console.log("\n\n\n\n");
+	    console.log(`${csvJsonData.length - errorCount} streamers were added to DB`);
       console.log(`${errorCount} streamers are not added to DB`);
       console.log(JSON.stringify(errorsByStreamer, null, 2));
     }
@@ -65,29 +68,29 @@ async function recreateDatabase() {
   }
 }
 
+
 async function recreateSchema() {
   const schemaSql = fs.readFileSync(dbSchemaFilePath, defaultEncoding);
   const sequelize = getSequelizeFromConfig();
-  // Simply dropping tables with sequelize.drop() caused errors when creating tables,
-  // saying that "relation OOO already exists". 
-  // Does PostgresSQL not delete relations upon drop?
-  // Therefore, we have to drop and create the schema itself, not just tables.
+  // Dropping tables with sequelize.drop() caused "relation OOO already exists" errors when creating tables. 
+  // The schema itself, not just tables, had to be dropped and re-created
   await sequelize.dropSchema(postgresSchemaName);
   await sequelize.createSchema(postgresSchemaName);
   await sequelize.query(schemaSql, {type: QueryTypes.RAW});
 }
 
+
 async function populateData(csvJsonData) {
   const errorsByStreamer = {};
   for(let streamerData of csvJsonData) {
     const errors = await findOrCreateStreamerFromData(streamerData);
-    //const [_, errors] = validateData(streamerData);
-    if(errors && Object.keys(errors).length > 0) {
+    if(isNotEmpty(errors)) {
       errorsByStreamer[streamerData.user_name] = errors;
     }
   }
   return errorsByStreamer;
 }
+
 
 // Gets string content of CSV file, parses it into array of {[dbcolumn]:value}
 function parseCsvDataToJson(csvFileData) {
@@ -114,4 +117,6 @@ function parseCsvDataToJson(csvFileData) {
   return csvObjectRows;
 }
 
-recreateDatabase();
+if(require.main === module) {
+  recreateDatabase();
+}

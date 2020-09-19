@@ -3,16 +3,22 @@ const {Op} = require("sequelize");
 const {Streamers, StreamersStats, Languages, Categories} = require("../models/models");
 
 
+/**
+ * Main business logic to find a matching streamer from user answers.
+ * No answer for a question means that user does not have preference,
+ * so no streamer is filtered out for that question.
+ * 
+ * As of September 18, 2020, answers for streamer's age range is ignored,
+ * because there is not enough data in DB and no feasible default value can be set.
+ */
 async function calculateStreamer(quizValues, callback) {
-
-  console.log("quizValues: ");
-  console.log(JSON.stringify(quizValues, null, 2));
-  //callback(null, new Error("temporary error"));
-
+  // User answers passed from frontend
   const prefs = quizValues.UsersAnswers || {};  
+  console.log(`UserAnswers: ${prefs}`);
   
-  const whereQuery = {};
-  const includeQuery = [];
+  // Two different types of queries needed for Sequelize
+  const whereQuery = {};  // fields in streamers table
+  const includeQuery = [];  // fields in other tables
 
   // Build query related to streamers table
   const usesCam = getYesOrNo(prefs.cam);
@@ -62,24 +68,21 @@ async function calculateStreamer(quizValues, callback) {
     });
   }
 
-  // followers_only is ignored. currently not in DB  
-  console.log("WhereQuery: " + JSON.stringify(whereQuery));
-  console.log("IncludeQuery: " + JSON.stringify(includeQuery));
-  
   try {
     const streamers = await Streamers.findAll({where: whereQuery, include: includeQuery});
+    
+    // Usernames of matching streamers
+    const usernames = streamers.map(streamer => streamer.user_name);
+    console.log(`Found ${usernames.length} matching streamers`);
+    console.log(`They are: ${usernames}`);
 
-    console.log(streamers.length);
     if(streamers.length === 0) {
       callback({user_name: "No One!"}, null);
     }
-    else {
-      const usernames = streamers.map(streamer => streamer.user_name);
-      console.log("usernames:" + usernames);
-  
+    else {  
       const result = {
+        // Returns the first one for now if there are multiple ones
         user_name: usernames[0],
-        //logo: "",
       }
       callback(result, null);
     }
@@ -91,6 +94,7 @@ async function calculateStreamer(quizValues, callback) {
 
 
 function getMinMaxViewers(average_viewers) {
+  // Frontend sends no values if user skipped the question.
   if(!average_viewers) {
     return [2500, 7500];
   }
@@ -98,6 +102,7 @@ function getMinMaxViewers(average_viewers) {
   const maxAvgViewer = Number(average_viewers.max || 7500);
   return [minAvgViewer, maxAvgViewer];
 }
+
 
 function getFollowerCountRange(follower_count) {
   if(!follower_count || follower_count === "Less than 10000") {
@@ -124,12 +129,20 @@ function getStreamerAgeRange(ageRange) {
 
 
 function getCategories(contents) {
-  // match frontend content names and backend category names
+  if(!contents) {
+    return [];
+  }
+
+  // Match frontend content names and backend category names
+  // TODO: move this out of function to prevent duplicate creations per function call
   const nameMap = {
     "dancing": ["dancing"],
     "irl": ["irl", "pepega chatting", "just chatting"],
     "music": ["music & performing arts", "singing", "piano", "music"],
     "sciencetech": ["science & technology", "geoguessr"],
+    // HACK: For now, recreated_database.js splites categories in spreadsheet by comma or slash,
+    // resulting in "Just Chatting (yoga, cooking)" splited into "Just Chatting (yoga" and "cooking)"
+    // Should be fixed later
     "yoga": ["just chatting (yoga"],
     "movies": ["movies with viewers on discord"],
     "outdoors": ["irl outdoors", "travel"],
@@ -138,9 +151,6 @@ function getCategories(contents) {
     "ASMR": ["asmr"],
     "games": ["games", "pepega gaming"],
     "justchatting": ["irl", "pepega chatting", "just chatting"],
-  }
-  if(!contents) {
-    return [];
   }
 
   const allCategories = [];
@@ -151,6 +161,7 @@ function getCategories(contents) {
   // Unique categories
   return [...new Set(allCategories)];
 }
+
 
 function getLanguageNames(languages) {
   // Frontend has long language name, DB has short language names.
@@ -175,11 +186,13 @@ function getVoice(voice) {
   return Number(voice.trim()[0]);
 }
 
+
 function getYesOrNo(condition) {
   if(!condition) {
     return false;
   }
   return condition.toString().trim().toLowerCase() === "yes";
 }
+
 
 module.exports = calculateStreamer

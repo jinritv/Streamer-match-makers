@@ -2,6 +2,7 @@ const { getSequelizeFromConfig } = require("./db");
 const { Categories, Languages, Locations, Nationalities, StreamersStats,
   Streamers, Tags, Vibes } = require("../models/models");
 const { validateData } = require("../validation/validator");
+const { isNotEmpty } = require("../util/objectutil");
 
 /**
  * Method to add a streamer to DB (if new) or update it (if exists).
@@ -12,7 +13,7 @@ const { validateData } = require("../validation/validator");
  */
 async function findOrCreateStreamerFromData(streamerData) {
   const [data, errors] = validateData(streamerData);
-  if(errors && Object.keys(errors).length > 0) {
+  if(isNotEmpty(errors)) {
     return { validationErrors: errors };
   }
 
