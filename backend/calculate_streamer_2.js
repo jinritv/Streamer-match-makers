@@ -10,6 +10,8 @@ const {Streamers, StreamersStats, Languages, Categories} = require("../models/mo
  * 
  * As of September 18, 2020, answers for streamer's age range is ignored,
  * because there is not enough data in DB and no feasible default value can be set.
+ * 
+ * Answers for follower_only stream is also ignored. No DB column is defined in diagram
  */
 async function calculateStreamer(quizValues, callback) {
   // User answers passed from frontend
