@@ -1,369 +1,936 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>JinriTV</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="/images/favicon.ico?v=1.1" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" integrity="sha256-6hqHMqXTVEds1R8HgKisLm3l/doneQs+rS1a5NLmwwo=" crossorigin="anonymous" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="stylesheets/styles.css" rel="stylesheet" />
-        <link href="stylesheets/quizstyle.css" rel="stylesheet" />
-    </head>
-    <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-            <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="#page-top">Jiri, Personal Stream Finder</a><!-- <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button> -->
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#quiz">Take the quiz</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- Masthead-->
-        <header class="masthead bg-primary text-white text-center">
-            <div class="container d-flex align-items-center flex-column">
-                
-                <div class="center">
-                  <h1>Don't know who to <span id="keyword">host?</span></h1>
-                  <img src="https://cdn.streamelements.com/uploads/81a0966a-838e-427c-b445-cb2bb1d991d2.gif">
-                </div>
-                <!-- Icon Divider-->
-                <div class="divider-custom divider-light">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-            </div>
-        </header>
-        <!-- Portfolio Section-->
-        <section class="page-section portfolio" id="quiz">
-            <div class="container">
-                <!-- Portfolio Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Streamer Quiz</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-              
-                <!-- Portfolio Grid Items-->
-                <div class="row">
-                    <!-- Portfolio Item 1-->
-                    <div class="col-md-8 col-lg-12 mb-5">
-                      <div class="container center">
-                        <form id="streamer-quiz-form" action="#">
-                        
-                        <h3>Average Viewer Counts</h3>
-                        <!-- Mark, write code for slider -->
-                        <fieldset>
-                          <div class="card">
-                            <legend>Your preferred viewer range?</legend>
-                            <div class="slidecontainer">
-                                <span>Minimum: </span>
-                                <span id="minViewer">1000</span>
-                                <!--
-                                    
-                                i'll get this to work next time lol
-                                maybe add bootstrap-slider to make it look nicer
-                                https://seiyria.com/bootstrap-slider/#example-15
 
-                                -Mark
-                                Will copy this later ty Mark :)
-                                Minimum:
-                                <span>
-                                    <input type="text" id="minViewer" value="10">
-                                </span>
-                                -->
-                                <input type="range" min="0" max="100000" value="10" class="slider" id="minSlider" step="10">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>JinriTV</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico?v=1.1" />
+  <!-- Font Awesome icons (free version)-->
+  <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+  <!-- Google fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+    type="text/css" />
+  <link href="https://db.onlinewebfonts.com/c/1e5b7f8cdbcb1e579a6e53aaadaf0b67?family=FF+Real+Head" rel="stylesheet"
+    type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css"
+    integrity="sha256-6hqHMqXTVEds1R8HgKisLm3l/doneQs+rS1a5NLmwwo=" crossorigin="anonymous" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="stylesheets/styles.css" rel="stylesheet" />
+  <link href="stylesheets/bootstrap-slider.css" rel="stylesheet" />
+  <link href="stylesheets/quizstyle.css" rel="stylesheet" />
 
-                            </div>
-                            <div class="slidecontainer">
-                                <span>Maximum: </span>
-                                <span id="maxViewer">1000</span>
-                                <input type="range" min="10" max="100000" value="1000" class="slider" id="maxSlider" step="10">
-                            </div>
-                          </div>
-                        </fieldset>
-                    
-                        <h3>Follower Count</h3>
-                        <fieldset>
-                          <div class="card">
-                            <legend>Preferred Number of Followers</legend>
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="followerCountRadios" id="followerCountRadios1" value="option1" >
-                            <label class="form-check-label" for="followerCountRadios1">
-                            Less than 1000 
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="followerCountRadios" id="followerCountRadios2" value="option2">
-                            <label class="form-check-label" for="followerCountRadios2">
-                            1000-10,000 
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="followerCountRadios" id="followerCountRadios2" value="option3">
-                            <label class="form-check-label" for="followerCountRadios3">
-                            More than 100,000
-                            </label>
-                          </div>
-                        </div>
-                        </fieldset>
-                      
-                        <h3>Age</h3>
-                        <fieldset>
-                          <div class="card">
-                            <legend>Preferred Age of Collaborator</legend>
-                    
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="ageRadios" id="ageRadios1" value="option1" >
-                            <label class="form-check-label" for="ageRadios1">
-                              18-20
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="ageRadios" id="ageRadios2" value="option2">
-                            <label class="form-check-label" for="ageRadios2">
-                              20-29
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio" name="ageRadios" id="ageRadios2" value="option3">
-                            <label class="form-check-label" for="ageRadios3">
-                              30+
-                            </label>
-                          </div>
-                        </fieldset>
-                        <h3>Language</h3>
-                        <fieldset>
-                          <div class="card">
-                            <legend>Preferred Language</legend>
-                    
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="langRadios" id="langRadios1" value="option1" >
-                              <label class="form-check-label" for="langRadios1">
-                              English
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="langRadios" id="langRadios2" value="option2">
-                              <label class="form-check-label" for="langRadios2">
-                              Korean
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="langRadios" id="langRadios2" value="option3">
-                              <label class="form-check-label" for="langRadios3">
-                              Japanese
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="langRadios" id="langRadios4" value="option4">
-                              <label class="form-check-label" for="langRadios4">
-                              Chinese
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="langRadios" id="langRadios5" value="option5">
-                              <label class="form-check-label" for="langRadios5">
-                              Thai
-                              </label>
-                            </div>
-                         </div>
-                        </fieldset>
-                    
-                        <h3>Content</h3>
-                        <fieldset>
-                          <div class="card">
-                            <legend>Preferred Content</legend>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="contentRadios" id="contentRadios1" value="option1" >
-                              <label class="form-check-label" for="contentRadios1">
-                              Chatting
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="contentRadios" id="contentRadios2" value="option2">
-                              <label class="form-check-label" for="contentRadios2">
-                              Game
-                              </label>
-                            </div>
-                          </div>
-                        </fieldset>
-                        
-                        <h3>Voice Tone</h3>
-                        <fieldset>
-                          <div class="card">
-                            <legend>Preferred Voice Tone</legend>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="voiceRadios" id="voiceRadios1" value="option1" >
-                              <label class="form-check-label" for="voiceRadios1">
-                              Chatting
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="voiceRadios" id="voiceRadios2" value="option2">
-                              <label class="form-check-label" for="voiceRadios2">
-                              Game
-                              </label>
-                            </div>
-                          </div>
-                        </fieldset>
 
-                        <h3>Cam</h3>
-                        <fieldset>
-                        <div class="card">
-                            <legend>Streamer is on Camera</legend>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="camRadios" id="camRadios1" value="option1" >
-                              <label class="form-check-label" for="camRadios1">
-                              Yes
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="camRadios" id="camRadios2" value="option2">
-                              <label class="form-check-label" for="camRadios2">
-                              No
-                              </label>
-                            </div>
-                          </div>
-                        </fieldset>
-                        
-                        <h3>Mature Streamer</h3>
-                        <fieldset>
-                          <div class="card">
-                            <legend>Streamer Content is Mature 18+</legend>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="camRadios" id="camRadios1" value="option1" >
-                              <label class="form-check-label" for="followerCountRadios1">
-                              Yes
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="camRadios" id="camRadios2" value="option2">
-                              <label class="form-check-label" for="camRadios2">
-                              No
-                              </label>
-                            </div>
-                          </div>
-                        </fieldset>
+  <link href="stylesheets/animations.css" rel="stylesheet" />
 
-                        <h3>Mature Jokes</h3>
-                        <fieldset>
-                          <div class="card">
-                            <legend>Streamer Makes Mature Jokes</legend>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="camRadios" id="camRadios1" value="option1" >
-                              <label class="form-check-label" for="followerCountRadios1">
-                              Yes
-                              </label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="camRadios" id="camRadios2" value="option2">
-                              <label class="form-check-label" for="camRadios2">
-                              No
-                              </label>
-                            </div>
-                          </div>
-                        </fieldset>
+</head>
 
-                        <h3>Match Result</h3>
-                        <fieldset>
-                            <legend>You matched with JinriTV!</legend>
-                            <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/e0bbc79b-7c05-473b-a95c-508cd88c5991-profile_image-300x300.png">
-                        </fieldset>
-                    </form>
-                  </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<body id="page-top">
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+    <div class="container" id="logo-container">
+      <img src="https://cdn.discordapp.com/attachments/741373796014882940/742567482774257684/logo.png"
+        style="width:50px;height:50px;margin-right:10px;" id="TwiriLogo" />
+      <a class="navbar-brand js-scroll-trigger" href="#page-top" id="logoText">Twiri, Stream Seeker</a>
+      <!-- <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button> -->
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
 
-        <!-- Footer-->
-        <footer class="footer text-center">
-            <div class="container">
-              <div class="row align-items-center">
-                <div class="col">
-                  <div class="row align-items-center">
-                    <div class="col">
-                      <button id="get-result-button" onclick="calculateQuizResult()" class="btn btn-secondary">DEBUG- Get Streamer result</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row align-items-center">
-                <div class="col">
-                  <span id="quiz-results-display"></span>
-                </div>
-              </div>
-            </div>
-        </footer>
-        <!-- Copyright Section-->
-        <div class="copyright py-4 text-center text-white">
-            <div class="container"><small>Copyright © JinriTV</small></div>
+          <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+              onclick="openAddStreamerModal()">Add a Streamer</a></li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div id="bg-rectangle" style="display: none;">
+  </div>
+  <div class="container d-flex align-items-center flex-column welcome-container" id="welcome-card">
+    <div id="welcome-banner" class="row container-fluid">
+      <div id="welcome-text" class="column colLeft text-center">
+        <h1>Don't know who to</h1>
+        <h1 class="primary-color" id="keyword">host?</h1>
+      </div>
+      <div id="dancing-jinri" class="column colRight text-center" style="display: none;">
+        <img style="border-radius: 12px;"
+          src="https://cdn.streamelements.com/uploads/81a0966a-838e-427c-b445-cb2bb1d991d2.gif">
+      </div>
+    </div>
+    <!-- Button trigger modal -->
+    <div id="quiz-content" class="row container-fluid" style="display: none;">
+      <div class="col">
+        <!-- Icon Divider-->
+        <div class="progress">
+          <div id="quiz-progress-bar" class="progress-bar" role="progressbar" style="width: 10%;"><span>1 of 9</span>
+          </div>
         </div>
-    
-        <!-- Bootstrap core JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
-        <!-- Third party plugin JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js" integrity="sha256-yUWanhHkxj+3ow0qZE6AtzP8lZkwLvPagULL6PnZMz0=" crossorigin="anonymous"></script>
+      </div>
 
-        <!-- Core theme JS-->
-        <script src="javascripts/scripts.js"></script>
-        <script src="javascripts/index.js"></script>
-        <script>
-          var index = 0;
-          var words = ['watch?', 'host?', 'follow?', 'raid?'];
-    
-          function erase()
-          {
-            var t = keyword.innerHTML;
-            var l = t.length;
-    
-            if(l)
-            {
-              keyword.innerHTML = t.substring(0, l-1);
-              setTimeout(erase, 33);
-            }
-            else
-            {
-              index = (index+1)&3;
-              setTimeout(enter, 33);
-            }
-          }
-    
-          function enter()
-          {
-            var t = keyword.innerHTML;
-            var l = t.length;
-            var w = words[index];
-    
-            if(l < w.length)
-            {
-              keyword.innerHTML += w.charAt(l);
-              setTimeout(enter, 33);
-            }
-            else
-            {
-              setTimeout(erase, 1500);
-            }
-          }
-    
-          setTimeout(erase, 1500);
-        </script>
-    </body>
+      <div class="divider-custom">
+        <div class="divider-custom-line"></div>
+        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+        <div class="divider-custom-line"></div>
+      </div>
+
+    </div>
+    <!-- Icon Divider-->
+    <div class="divider-custom divider-light" style="opacity: 0;" id="start-quiz-button-modal">
+
+      <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+      <button type="button" class="btn btn-primary" onclick="openQuizModal()"
+        style="margin-right:12px;margin-left:12px; border-radius: 16px;">Find a Streamer</button>
+      <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+
+    </div>
+
+  </div>
+  <!-- Footer-->
+  <div class="footer text-center bg-secondary">
+    <!-- Copyright Section-->
+    <small style="color:#4d2c4d">Copyright © JinriTV</small>
+  </div>
+  <!-- Bootstrap core JS-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+  <!-- Third party plugin JS-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"
+    integrity="sha256-yUWanhHkxj+3ow0qZE6AtzP8lZkwLvPagULL6PnZMz0=" crossorigin="anonymous"></script>
+
+  <!-- Core theme JS-->
+  <script src="javascripts/bootstrap-slider.min.js"></script>
+  <script src="javascripts/scripts.js"></script>
+  <script src="javascripts/index.js"></script>
+
+</body>
+
+<!-- Modal -->
+<div class="modal fade" id="quiz-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h5 class="modal-title w-100" id="quiz-modal-label">Question 1 of 9</h5>
+      </div>
+      <div class="progress">
+        <div id="quiz-modal-progress-bar" class="progress-bar" role="progressbar" style="width: 10%;"><span></span>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-column">
+          <!-- QUESTION 1: Average Viewer-->
+          <div id="question1-container">
+            <div class="d-flex flex-column mb-3 justify-content-center text-center">
+              <h4>Average Viewer count?</h4>
+              <span id="average_viewers-slider-display">Between 3000 and 7000 average viewers</span>
+            </div>
+            <div class="d-flex flex-row justify-content-center quiz-slider-container">
+              <!-- this is the range slider -->
+              <input id="slider_average_viewers" type="text" /><br />
+            </div>
+
+          </div>
+          <!-- QUESTION 2: Follower Count-->
+          <div id="question2-container">
+            <div class="d-flex flex-row mb-3 justify-content-center">
+              <h4>Uhhh... Twiri? I prefer streamers with follower counts of</h4>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <div class="custom-radio" onclick="selectRadio('follower_count',1)">
+                <input type="radio" class="custom-control-input" id="radio_follower_count-1" name="followers1"
+                  value="10000">
+                <label class="custom-control-label" for="radio_follower_count-1">Less than 10,000</label>
+              </div>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <div class="custom-radio" onclick="selectRadio('follower_count',2)">
+                <input type="radio" class="custom-control-input" id="radio_follower_count-2" name="followers2"
+                  value="100000">
+                <label class="custom-control-label" for="radio_follower_count-2">10,000 to 100,000</label>
+              </div>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <div class="custom-radio" onclick="selectRadio('follower_count',3)">
+                <input type="radio" class="custom-control-input" id="radio_follower_count-3" name="followers3"
+                  value="1000000">
+                <label class="custom-control-label" for="radio_follower_count-3">100,000 to 1,000,000+</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUESTION 3: Age-->
+          <div id="question3-container">
+            <div class="d-flex flex-column mb-3 justify-content-center text-center">
+              <h4>I prefer streamers of the age...</h4>
+              <span id="age-slider-display"></span>
+            </div>
+            <div class="d-flex flex-row justify-content-center quiz-slider-container">
+              <!-- this is the range slider -->
+              <input id="slider_age" type="text" /><br />
+            </div>
+          </div>
+
+          <!-- QUESTION 4: Languages-->
+          <div id="question4-container">
+            <div class="d-flex flex-row mb-3 justify-content-center">
+              <h4>Spoken languages?</h4>
+            </div>
+            <div class="d-flex flex-column mb-3">
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <div class="custom-control custom-switch" style="margin-right:48px;">
+                  <input type="checkbox" class="custom-control-input" id="switch_languages_english"
+                    onclick="selectSwitch('languages','english')">
+                  <label class="custom-control-label" for="switch_languages_english">English</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="switch_languages_korean"
+                    onclick="selectSwitch('languages','korean')">
+                  <label class="custom-control-label" for="switch_languages_korean">Korean</label>
+                </div>
+              </div>
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <div class="custom-control custom-switch" style="margin-right:48px;">
+                  <input type="checkbox" class="custom-control-input" id="switch_languages_chinese"
+                    onclick="selectSwitch('languages','chinese')">
+                  <label class="custom-control-label" for="switch_languages_chinese">Chinese</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="switch_languages_japanese"
+                    onclick="selectSwitch('languages','japanese')">
+                  <label class="custom-control-label" for="switch_languages_japanese">Japanese</label>
+                </div>
+              </div>
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="switch_languages_thai"
+                    onclick="selectSwitch('languages','thai')">
+                  <label class="custom-control-label" for="switch_languages_thai">Thai</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUESTION 5: Content-->
+          <div id="question5-container">
+            <div class="d-flex flex-row mb-3 justify-content-center">
+              <h4>I prefer streamers who stream... </h4>
+            </div>
+            <div class="d-flex flex-column mb-3">
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <div class="custom-control custom-switch" style="margin-right:48px;">
+                  <input type="checkbox" class="custom-control-input" id="switch_content_justchatting"
+                    onclick="selectSwitch('content','justchatting')">
+                  <label class="custom-control-label" for="switch_content_justchatting">Just Chatting</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="switch_content_games"
+                    onclick="selectSwitch('content','games')">
+                  <label class="custom-control-label" for="switch_content_games">Games</label>
+                </div>
+                <div class="custom-control custom-switch" style="margin-left:48px;">
+                  <input type="checkbox" class="custom-control-input" id="switch_content_ASMR"
+                    onclick="selectSwitch('content','ASMR')">
+                  <label class="custom-control-label" for="switch_content_ASMR">ASMR</label>
+                </div>
+              </div>
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <div class="custom-control custom-switch" style="margin-right:48px;">
+                  <input type="checkbox" class="custom-control-input" id="switch_content_sciencetech"
+                    onclick="selectSwitch('content','sciencetech')">
+                  <label class="custom-control-label" for="switch_content_sciencetech">Science & Technology</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="switch_content_food"
+                    onclick="selectSwitch('content','food')">
+                  <label class="custom-control-label" for="switch_content_food">Food</label>
+                </div>
+                <div class="custom-control custom-switch" style="margin-left:48px;">
+                  <input type="checkbox" class="custom-control-input" id="switch_content_cooking"
+                    onclick="selectSwitch('content','cooking')">
+                  <label class="custom-control-label" for="switch_content_cooking">Cooking</label>
+                </div>
+              </div>
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <div class="custom-control custom-switch" style="margin-right:48px;">
+                  <input type="checkbox" class="custom-control-input" id="switch_content_outdoors"
+                    onclick="selectSwitch('content','outdoors')">
+                  <label class="custom-control-label" for="switch_content_outdoors">Outdoors</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="switch_content_irl"
+                    onclick="selectSwitch('content','irl')">
+                  <label class="custom-control-label" for="switch_content_irl">IRL</label>
+                </div>
+                <div class="custom-control custom-switch" style="margin-left:48px;">
+                  <input type="checkbox" class="custom-control-input" id="switch_content_movies"
+                    onclick="selectSwitch('content','movies')">
+                  <label class="custom-control-label" for="switch_content_movies">Movies with wiewers (discord)</label>
+                </div>
+              </div>
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <div class="custom-control custom-switch" style="margin-right:48px;">
+                  <input type="checkbox" class="custom-control-input" id="switch_content_music"
+                    onclick="selectSwitch('content','music')">
+                  <label class="custom-control-label" for="switch_content_music">Music</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="switch_content_dancing"
+                    onclick="selectSwitch('content','dancing')">
+                  <label class="custom-control-label" for="switch_content_dancing">Dancing</label>
+                </div>
+                <div class="custom-control custom-switch" style="margin-left:48px;">
+                  <input type="checkbox" class="custom-control-input" id="switch_content_yoga"
+                    onclick="selectSwitch('content','yoga')">
+                  <label class="custom-control-label" for="switch_content_yoga">Yoga</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUESTION 6: Voice Tone-->
+          <div id="question6-container">
+            <div class="d-flex flex-row mb-3 justify-content-center">
+              <h4>I prefer streamers with voice tone...</h4>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <div class="custom-radio" onclick="selectRadio('voice', 1)">
+                <input type="radio" class="custom-control-input" id="radio_voice-1" name="voice1" value="1">
+                <label class="custom-control-label" for="radio_voice-1">1 (Low)</label>
+              </div>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <div class="custom-radio" onclick="selectRadio('voice', 2)">
+                <input type="radio" class="custom-control-input" id="radio_voice-2" name="voice2" value="2">
+                <label class="custom-control-label" for="radio_voice-2">2</label>
+              </div>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <div class="custom-radio" onclick="selectRadio('voice', 3)">
+                <input type="radio" class="custom-control-input" id="radio_voice-3" name="voice3" value="3">
+                <label class="custom-control-label" for="radio_voice-3">3</label>
+              </div>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <div class="custom-radio" onclick="selectRadio('voice', 4)">
+                <input type="radio" class="custom-control-input" id="radio_voice-4" name="voice4" value="4">
+                <label class="custom-control-label" for="radio_voice-4">4</label>
+              </div>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <div class="custom-radio" onclick="selectRadio('voice', 5)">
+                <input type="radio" class="custom-control-input" id="radio_voice-5" name="voice5" value="5">
+                <label class="custom-control-label" for="radio_voice-5">5 (High)</label>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- QUESTION 7: Cam -->
+          <div id="question7-container">
+            <div class="d-flex flex-row mb-3 justify-content-center">
+              <h4>With a cam?</h4>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <button id="button_cam_yes" type="button" onclick="selectButton('cam','yes')" class="btn btn-quiz-answer">
+                <span>Yes</span>
+              </button>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <button id="button_cam_no" type="button" onclick="selectButton('cam','no')" class="btn btn-quiz-answer">
+                <span>No</span>
+              </button>
+            </div>
+
+          </div>
+          <!-- QUESTION 8: Followers-Only-->
+          <div id="question8-container">
+            <div class="d-flex flex-row mb-3 justify-content-center">
+              <h4>Followers or Subscribers only chat?</h4>>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <button id="button_followers_only_followers" type="button"
+                onclick="selectButton('followers_only','followers')" class="btn btn-quiz-answer">
+                <span>Followers only</span>
+              </button>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <button id="button_followers_only_subscribers" type="button"
+                onclick="selectButton('followers_only','subscribers')" class="btn btn-quiz-answer">
+                <span>Follwers + Subscribers only</span>
+              </button>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <button id="button_followers_only_no" type="button" onclick="selectButton('followers_only','no')"
+                class="btn btn-quiz-answer">
+                <span>Allow all</span>
+              </button>
+            </div>
+          </div>
+          <!-- QUESTION 9: Mature -->
+          <div id="question9-container">
+            <div class="d-flex flex-row mb-3 justify-content-center">
+              <h4>Mature (19+) rating?</h4>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <button id="button_mature_yes" type="button" onclick="selectButton('mature','yes')"
+                class="btn btn-quiz-answer">
+                <span>Yes</span>
+              </button>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+              <button id="button_mature_no" type="button" onclick="selectButton('mature','no')"
+                class="btn btn-quiz-answer">
+                <span>No</span>
+              </button>
+            </div>
+
+
+          </div>
+
+          <!-- results page-->
+          <div id="question-result-container">
+            <div class="d-flex flex-row mb-3 justify-content-center">
+              <svg width="300" height="266" viewBox="0 0 300 266" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M162.395 8.37012H165.738C178.37 8.37319 190.484 13.385 199.415 22.3035C208.346 31.2219 213.363 43.3165 213.363 55.9276V146.655H114.744V55.9276C114.744 49.681 115.977 43.4956 118.372 37.7248C120.767 31.9539 124.277 26.7106 128.702 22.2943C133.127 17.8779 138.38 14.3752 144.161 11.9861C149.943 9.59692 156.139 8.36822 162.395 8.37012Z"
+                  fill="#FFB7D5" />
+                <path
+                  d="M181.959 92.0406V148.067H138.199V92.0406H181.959ZM183.119 90.8828H137.039V149.225H183.119V90.8828Z"
+                  fill="#CA7358" />
+                <path d="M183.119 90.8799H137.039V102.941H183.119V90.8799Z" fill="#CA7358" />
+                <path
+                  d="M136.793 61.7456V148.348H110.454V61.7456H136.793ZM137.952 60.5879H109.294V149.506H137.952V60.5879Z"
+                  fill="#CA7358" />
+                <path
+                  d="M218.133 44.2144V148.067H183.365V44.2144H218.133ZM219.292 43.0566H182.206V149.225H219.292V43.0566Z"
+                  fill="#CA7358" />
+                <path
+                  d="M197.282 57.2217H197.615C198.874 57.2217 200.082 57.7212 200.973 58.6103C201.864 59.4994 202.364 60.7053 202.364 61.9627V72.6487H192.53V61.9627C192.53 61.3398 192.653 60.7231 192.892 60.1477C193.13 59.5723 193.48 59.0495 193.922 58.6093C194.363 58.169 194.887 57.8198 195.463 57.5817C196.04 57.3436 196.658 57.2213 197.282 57.2217Z"
+                  fill="#CA7358" />
+                <path d="M191.408 65.6357H203.489" stroke="#FFB7D5" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M197.282 84.8975H197.615C198.874 84.8975 200.082 85.397 200.973 86.2861C201.864 87.1752 202.364 88.3811 202.364 89.6384V100.324H192.53V89.6384C192.53 89.0156 192.653 88.3989 192.892 87.8235C193.13 87.2481 193.48 86.7253 193.922 86.285C194.363 85.8448 194.887 85.4956 195.463 85.2575C196.04 85.0194 196.658 84.8971 197.282 84.8975Z"
+                  fill="#F5EBDD" />
+                <path d="M191.408 93.3115H203.489" stroke="#FFB7D5" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M197.282 112.573H197.615C198.874 112.573 200.082 113.073 200.973 113.962C201.864 114.851 202.364 116.057 202.364 117.314V128H192.53V117.314C192.53 116.057 193.03 114.851 193.921 113.962C194.811 113.073 196.019 112.573 197.279 112.573H197.282Z"
+                  fill="#F5EBDD" />
+                <path d="M191.408 120.988H203.489" stroke="#FFB7D5" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M197.282 140.25H197.615C198.874 140.25 200.082 140.75 200.973 141.639C201.864 142.528 202.364 143.734 202.364 144.991V154.809H192.53V144.991C192.53 144.368 192.653 143.751 192.892 143.176C193.13 142.601 193.48 142.078 193.922 141.638C194.363 141.197 194.887 140.848 195.463 140.61C196.04 140.372 196.658 140.25 197.282 140.25Z"
+                  fill="#30242A" />
+                <path d="M219.292 43.0566H182.206V47.6847H219.292V43.0566Z" fill="#CA7358" />
+                <path d="M137.952 58.3447H109.294V62.9728H137.952V58.3447Z" fill="#CA7358" />
+                <path d="M155.162 113.883H145.328V126.505H155.162V113.883Z" fill="#F5EBDD" />
+                <path d="M144.203 119.491H156.287" stroke="#FFB7D5" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M150.245 127.066V119.491" stroke="#FFB7D5" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M155.162 136.678H145.328V149.3H155.162V136.678Z" fill="#CA7358" />
+                <path d="M144.203 142.287H156.287" stroke="#FFB7D5" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M150.245 149.862V142.287" stroke="#FFB7D5" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M173.705 113.883H163.871V126.505H173.705V113.883Z" fill="#30242A" />
+                <path d="M162.749 119.491H174.83" stroke="#FFB7D5" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M168.788 127.066V119.491" stroke="#FFB7D5" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M173.705 136.678H163.871V149.3H173.705V136.678Z" fill="#F5EBDD" />
+                <path d="M162.749 142.287H174.83" stroke="#FFB7D5" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M168.788 149.862V142.287" stroke="#FFB7D5" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M143.571 42.6374C147.606 42.6374 150.877 39.3719 150.877 35.3436C150.877 31.3154 147.606 28.0498 143.571 28.0498C139.536 28.0498 136.265 31.3154 136.265 35.3436C136.265 39.3719 139.536 42.6374 143.571 42.6374Z"
+                  fill="#F5EBDD" />
+                <path d="M226.007 146.701H102.101V155.115H226.007V146.701Z" fill="#F5EBDD" />
+                <path
+                  d="M166.011 0H162.106C131.299 0 106.325 24.9321 106.325 55.6877V155.115H221.803V55.6877C221.794 24.9321 196.818 0 166.011 0ZM159.841 146.701H114.744V76.5764H159.841V146.701ZM159.841 68.1625H114.744V55.9743C114.745 43.8002 119.421 32.0898 127.811 23.2549C136.201 14.4199 147.664 9.13315 159.841 8.48341V68.1625ZM213.363 146.701H168.269V76.5764H213.363V146.701ZM213.363 68.1625H168.269V8.48341C180.446 9.13318 191.909 14.42 200.299 23.2551C208.688 32.0901 213.364 43.8005 213.363 55.9743V68.1625Z"
+                  fill="#F5EBDD" />
+                <path
+                  d="M11.2373 265.912C17.4435 265.912 22.4746 260.889 22.4746 254.693C22.4746 248.497 17.4435 243.475 11.2373 243.475C5.0311 243.475 0 248.497 0 254.693C0 260.889 5.0311 265.912 11.2373 265.912Z"
+                  fill="#FFB7D5" />
+                <path
+                  d="M261.852 163.243C261.854 163.553 261.791 163.859 261.667 164.143C260.797 166.12 257.08 166.412 253.384 164.795C250.287 163.443 248.183 161.179 248.093 159.318V184.002H261.861V163.243H261.852Z"
+                  fill="#FFBE21" />
+                <path
+                  d="M256.558 157.642C252.862 156.024 249.151 156.317 248.275 158.294C248.135 158.618 248.072 158.971 248.093 159.324C248.183 161.185 250.287 163.448 253.384 164.8C257.08 166.418 260.791 166.126 261.667 164.149C261.791 163.865 261.854 163.558 261.852 163.249C261.861 161.364 259.73 159.026 256.558 157.642Z"
+                  fill="#A15842" />
+                <path
+                  d="M272.408 171.385C272.319 173.246 270.214 175.509 267.117 176.864C263.418 178.479 259.71 178.189 258.832 176.21C258.709 175.926 258.646 175.621 258.646 175.312V183.996H272.411V171.385H272.408Z"
+                  fill="#FFBE21" />
+                <path
+                  d="M272.226 170.354C271.356 168.377 267.639 168.085 263.94 169.703C260.771 171.089 258.64 173.425 258.646 175.312C258.646 175.621 258.709 175.926 258.832 176.209C259.701 178.189 263.418 178.479 267.117 176.863C270.214 175.509 272.319 173.246 272.408 171.384C272.429 171.031 272.367 170.678 272.226 170.354Z"
+                  fill="#A15842" />
+                <path d="M259.049 184.007V175.593" stroke="#A15842" stroke-width="4" stroke-miterlimit="10"
+                  stroke-linecap="round" />
+                <path d="M254.976 155.815V160.585" stroke="#30242A" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M265.529 167.88V172.928" stroke="#30242A" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M196.026 265.993C195.675 265.993 195.328 265.91 195.015 265.751C194.702 265.592 194.431 265.36 194.225 265.076C194.019 264.792 193.884 264.463 193.83 264.116C193.776 263.769 193.805 263.415 193.916 263.081L200.874 241.912C201.021 241.468 201.304 241.082 201.683 240.808C202.063 240.534 202.519 240.387 202.987 240.387H207.864C208.251 240.386 208.632 240.487 208.968 240.679C209.304 240.872 209.584 241.148 209.78 241.482C209.977 241.815 210.082 242.194 210.086 242.581C210.09 242.968 209.992 243.349 209.803 243.686L197.957 264.856C197.765 265.199 197.486 265.486 197.146 265.686C196.807 265.886 196.42 265.992 196.026 265.993Z"
+                  fill="#30242A" />
+                <path
+                  d="M289.241 265.993C289.593 265.993 289.939 265.91 290.252 265.751C290.565 265.592 290.836 265.36 291.042 265.076C291.248 264.792 291.383 264.463 291.437 264.116C291.491 263.769 291.462 263.415 291.352 263.081L284.394 241.912C284.247 241.469 283.964 241.083 283.585 240.809C283.206 240.535 282.751 240.387 282.283 240.387H277.404C277.017 240.387 276.636 240.489 276.301 240.681C275.965 240.873 275.685 241.15 275.489 241.483C275.293 241.816 275.188 242.195 275.184 242.581C275.179 242.968 275.276 243.349 275.464 243.686L287.31 264.856C287.502 265.199 287.782 265.485 288.122 265.685C288.461 265.885 288.847 265.991 289.241 265.993Z"
+                  fill="#30242A" />
+                <path d="M300 184.008H185.647V249.363H300V184.008Z" fill="#A15842" />
+                <path d="M291.569 192.421H194.075V240.948H291.569V192.421Z" fill="#FFB7D5" />
+                <path d="M242.718 191.582V241.791" stroke="#A15842" stroke-width="4" stroke-miterlimit="10" />
+                <path
+                  d="M254.207 219.626C255.834 219.626 257.153 218.309 257.153 216.685C257.153 215.061 255.834 213.744 254.207 213.744C252.581 213.744 251.262 215.061 251.262 216.685C251.262 218.309 252.581 219.626 254.207 219.626Z"
+                  fill="#30242A" />
+                <path
+                  d="M231.437 219.626C233.064 219.626 234.383 218.309 234.383 216.685C234.383 215.061 233.064 213.744 231.437 213.744C229.81 213.744 228.491 215.061 228.491 216.685C228.491 218.309 229.81 219.626 231.437 219.626Z"
+                  fill="#30242A" />
+                <path d="M45.2042 238.786V243.553H86.5061V238.786H45.2042Z" fill="#A15842" />
+                <path
+                  d="M93.3106 263.528L83.0793 202.239H89.3358C90.0063 202.239 90.6493 201.973 91.1234 201.5C91.5975 201.027 91.8639 200.385 91.8639 199.715C91.8639 199.046 91.5975 198.404 91.1234 197.931C90.6493 197.457 90.0063 197.191 89.3358 197.191H42.4239C41.7534 197.191 41.1104 197.457 40.6363 197.931C40.1621 198.404 39.8958 199.046 39.8958 199.715C39.8958 200.385 40.1621 201.027 40.6363 201.5C41.1104 201.973 41.7534 202.239 42.4239 202.239H48.6311L38.3998 263.528C38.3493 263.831 38.3656 264.142 38.4475 264.438C38.5294 264.735 38.6751 265.01 38.8743 265.245C39.0734 265.479 39.3214 265.668 39.601 265.797C39.8805 265.926 40.1849 265.994 40.493 265.994C40.9774 265.994 41.4472 265.829 41.8244 265.525C42.2015 265.222 42.4633 264.799 42.5659 264.326L56.1226 202.239H75.5878L89.1415 264.326C89.2453 264.799 89.5077 265.222 89.8853 265.525C90.2628 265.828 90.7328 265.994 91.2173 265.994C91.5254 265.994 91.8298 265.926 92.1094 265.797C92.3889 265.668 92.6369 265.479 92.8361 265.245C93.0353 265.01 93.1809 264.735 93.2629 264.438C93.3448 264.142 93.3611 263.831 93.3106 263.528Z"
+                  fill="#FFBE21" />
+                <path
+                  d="M89.3358 202.239C90.0063 202.239 90.6493 201.973 91.1234 201.5C91.5975 201.027 91.8639 200.385 91.8639 199.715C91.8639 199.046 91.5975 198.404 91.1234 197.931C90.6493 197.457 90.0063 197.191 89.3358 197.191H42.4239C41.7534 197.191 41.1104 197.457 40.6363 197.931C40.1622 198.404 39.8958 199.046 39.8958 199.715C39.8958 200.385 40.1622 201.027 40.6363 201.5C41.1104 201.973 41.7534 202.239 42.4239 202.239H48.6311V202.317H56.1168L56.1342 202.239H75.5994L75.6168 202.317H83.1025V202.239H89.3358Z"
+                  fill="#A15842" />
+                <path
+                  d="M92.1161 238.705H121.978C122.349 232.375 123.674 223.978 124.773 212.635C125.75 202.577 126.59 194.134 126.535 187.165C126.443 175.547 96.6737 189.608 96.6737 189.608C96.6737 192.146 97.1868 194.583 97.2013 196.945C97.2361 203.081 94.1224 208.302 91.8987 215.703C88.5269 226.925 91.3363 238.705 91.3363 238.705H92.1161Z"
+                  fill="#4856DF" />
+                <path
+                  d="M123.569 262.826H97.4274C97.0646 262.941 96.7549 263.182 96.5544 263.506C96.3538 263.829 96.2755 264.213 96.3336 264.589C96.3916 264.964 96.5823 265.307 96.8711 265.555C97.1599 265.803 97.5279 265.939 97.9087 265.94L136.378 265.992C136.717 262.259 134.592 259.448 128.597 255.283C125.176 258.244 123.569 262.826 123.569 262.826Z"
+                  fill="#3EC1F3" />
+                <path
+                  d="M127.249 254.377C126.007 253.576 124.934 252.539 124.091 251.326C122.062 248.354 121.633 244.351 121.966 238.704H96.0881C96.1381 242.926 96.443 247.141 97.0013 251.326C97.6623 256.065 98.5553 259.324 99.2714 262.751H97.9117C97.7474 262.75 97.584 262.776 97.4275 262.826H123.57C123.57 262.826 125.176 258.244 128.597 255.3C128.168 254.998 127.718 254.69 127.249 254.377Z"
+                  fill="#A15842" />
+                <path
+                  d="M122.279 233.634C120.679 230.453 119.588 227.042 119.047 223.524C117.154 210.392 118.276 203.66 112.938 197.764H97.3202"
+                  stroke="#30242A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M132.018 239.824L132.047 239.894L155.101 229.115C153.307 223.755 151.431 216.623 148.349 207.289C145.461 198.553 143.551 192.027 141.742 186.976C139.212 188.795 136.092 189.605 132.994 189.246C129.897 188.886 127.046 187.384 125.001 185.034C122.957 182.684 121.865 179.656 121.942 176.544C122.019 173.432 123.258 170.461 125.416 168.215C113.109 162.663 69.3981 159.042 69.3981 159.042L44.6708 155.396C43.3662 157.549 42.2558 160.961 41.6528 164.947H50.2924V174.171C50.2878 176.036 49.5428 177.824 48.2206 179.142C46.8984 180.459 45.1069 181.2 43.2386 181.202H42.7458C42.6298 181.202 42.5138 181.202 42.4008 181.202C44.7607 189.885 50.8316 197.199 63.2228 197.199H113.234C118.571 203.089 117.449 209.821 119.343 222.959C120.891 233.706 128.229 241.628 128.229 241.628L132.018 239.824Z"
+                  fill="#4856DF" />
+                <path
+                  d="M167.139 252.17L144.177 262.567C143.788 262.838 143.516 263.245 143.414 263.708C143.312 264.17 143.388 264.654 143.626 265.063C143.865 265.472 144.249 265.777 144.702 265.917C145.156 266.056 145.645 266.021 146.073 265.817L180.916 249.608C179.55 245.846 176.039 244.399 167.721 242.951L167.365 242.885C166.676 245.934 166.599 249.09 167.139 252.17Z"
+                  fill="#3EC1F3" />
+                <path
+                  d="M167.365 242.873C164.97 242.416 163.091 241.62 161.54 240.416C158.682 238.193 156.931 234.575 155.101 229.128L132.047 239.907C134.001 244.39 136.743 249.105 139.356 253.221C141.637 256.804 143.815 259.927 145.279 262.02L144.447 262.422C144.352 262.468 144.262 262.522 144.177 262.584L167.139 252.187C166.595 249.098 166.672 245.932 167.365 242.873Z"
+                  fill="#A15842" />
+                <path
+                  d="M134.441 189.336C137.063 189.338 139.618 188.512 141.742 186.977C138.144 176.882 135.024 172.676 125.59 168.294L125.416 168.216C123.72 169.981 122.582 172.205 122.141 174.612C121.701 177.018 121.98 179.5 122.941 181.75C123.903 184 125.506 185.918 127.55 187.265C129.595 188.613 131.991 189.331 134.441 189.33V189.336Z"
+                  fill="#3EC1F3" />
+                <path
+                  d="M43.2386 181.202C45.1104 181.202 46.9055 180.46 48.2294 179.139C49.5532 177.818 50.2973 176.026 50.2981 174.157V164.933H41.6585C40.896 169.937 40.9395 175.824 42.4007 181.193C42.5138 181.193 42.6297 181.193 42.7457 181.193L43.2386 181.202Z"
+                  fill="#3EC1F3" />
+                <path d="M112.808 197.891H121.236" stroke="#30242A" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M149.059 108.692C149.059 108.692 133.888 91.3029 115.962 84.9961" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M101.472 91.7892C100.921 90.4607 102.759 88.3768 105.821 86.617C101.675 85.5866 98.7292 83.6676 99.0249 82.0555C99.3207 80.4433 102.753 79.685 106.998 80.1828C104.765 77.4621 103.783 74.863 104.768 73.8152C106.024 72.4751 110.007 74.1654 113.663 77.5779C116.852 80.5591 118.737 83.876 118.337 85.5634C118.113 87.2827 115.176 89.7198 111.141 91.3869C106.499 93.3088 102.176 93.4882 101.472 91.7892Z"
+                  fill="#4756DF" />
+                <path
+                  d="M118.487 90.9638C121.411 90.9638 123.781 88.5976 123.781 85.6787C123.781 82.7598 121.411 80.3936 118.487 80.3936C115.563 80.3936 113.193 82.7598 113.193 85.6787C113.193 88.5976 115.563 90.9638 118.487 90.9638Z"
+                  fill="#30242A" />
+                <path
+                  d="M129.641 92.4853C131.096 91.9461 130.435 86.5611 128.165 80.4575C125.895 74.3539 122.875 69.843 121.421 70.3822C119.966 70.9213 120.627 76.3063 122.897 82.41C125.168 88.5136 128.187 93.0244 129.641 92.4853Z"
+                  fill="#30242A" />
+                <path d="M129.382 93.5459C129.382 93.5459 131.632 99.7167 130.507 106.168" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M88.3559 68.9668C83.5606 74.3532 78.4638 75.5428 78.4638 75.5428C75.1674 71.9538 69.1864 71.9538 68.2732 77.0392C67.2787 82.6746 74.26 84.2259 74.26 84.2259C74.26 84.2259 76.0198 91.4966 73.3207 95.0885C70.9375 98.2723 67.876 98.7962 61.6021 99.4966C69.7778 113.288 78.1275 112.2 80.9079 112.2C87.576 112.2 89.4547 104.475 89.9794 100.492C88.4611 99.9638 86.912 99.5278 85.3407 99.1869L84.442 93.8034C84.442 93.8034 88.6371 95.2969 92.235 93.2043C95.8329 91.1116 96.7317 87.2187 95.5314 81.236C94.8211 77.6904 94.8472 73.3055 94.2383 69.3865C91.8639 69.7888 88.3559 68.9668 88.3559 68.9668Z"
+                  fill="#A15842" />
+                <path
+                  d="M138.234 99.0161C136.961 93.9307 126.996 91.1724 126.996 91.1724C126.996 91.1724 127.594 79.757 125.028 79.3923C123.062 79.1029 121.094 83.8815 119.409 93.1377C117.525 103.482 118.565 122.588 118.565 122.588C118.565 122.588 116.481 120.698 113.524 118.067C113.228 118.663 112.775 119.167 112.213 119.525C111.65 119.882 111.001 120.078 110.335 120.093C110.755 120.625 111.019 121.264 111.095 121.937C111.172 122.61 111.059 123.292 110.769 123.905C110.479 124.517 110.023 125.037 109.453 125.405C108.883 125.773 108.221 125.976 107.543 125.989C107.963 126.521 108.227 127.16 108.303 127.833C108.38 128.506 108.267 129.188 107.977 129.8C107.687 130.413 107.231 130.933 106.661 131.301C106.091 131.669 105.43 131.871 104.751 131.885C105.192 132.443 105.46 133.119 105.521 133.827C105.582 134.536 105.434 135.247 105.094 135.873C104.755 136.498 104.24 137.011 103.612 137.348C102.984 137.684 102.271 137.829 101.562 137.766C107.717 141.766 116.084 146.432 121.659 146.432C150.877 146.42 139.077 102.382 138.234 99.0161Z"
+                  fill="#A15842" />
+                <path
+                  d="M105.174 135.685C105.464 135.073 105.577 134.391 105.501 133.718C105.424 133.045 105.162 132.406 104.742 131.874C105.421 131.86 106.082 131.658 106.652 131.29C107.222 130.922 107.678 130.402 107.968 129.789C108.258 129.177 108.371 128.495 108.295 127.822C108.218 127.148 107.955 126.51 107.534 125.978C108.213 125.964 108.874 125.762 109.444 125.394C110.014 125.026 110.47 124.506 110.76 123.893C111.05 123.281 111.163 122.599 111.087 121.926C111.01 121.253 110.746 120.614 110.326 120.082C110.992 120.067 111.642 119.871 112.204 119.513C112.766 119.156 113.22 118.652 113.515 118.056C108.418 113.523 100.733 106.802 96.6417 103.784C94.6616 102.322 92.1393 101.239 89.9736 100.493C89.4633 104.487 87.5962 112.2 80.9281 112.2C78.1594 112.2 69.7981 113.289 61.6224 99.4971L58.9957 99.7865C49.9502 100.791 45.8333 105.651 43.4096 111.457C41.9107 115.049 40.7105 121.63 40.7105 121.63C39.7805 127.665 39.3018 133.76 39.2783 139.865L51.0403 150.733L82.6183 151.512C85.1464 147.79 89.7851 140.916 91.3159 138.279C93.2816 134.913 93.5628 132.108 93.5628 132.108C93.5628 132.108 96.9375 134.742 101.562 137.749C102.303 137.814 103.046 137.651 103.692 137.282C104.337 136.913 104.855 136.356 105.174 135.685Z"
+                  fill="#FFBE21" />
+                <path
+                  d="M91.6552 62.3818C88.0602 57.8956 78.1681 54.9028 70.3751 60.5873C62.5821 66.2719 63.1822 75.5483 63.4808 79.1403C63.4808 79.1403 55.0906 76.4456 49.095 82.7293C47.3599 84.5257 46.0962 86.7224 45.4164 89.1239C44.7366 91.5255 44.6618 94.0575 45.1985 96.4949C45.1985 96.4949 34.1584 96.1852 32.0101 106.371C30.7895 112.159 33.0683 116.012 35.5964 118.397C37.0791 119.786 38.8113 120.883 40.7019 121.63C40.7019 121.63 41.9021 115.048 43.401 111.456C45.8247 105.65 49.9416 100.79 58.9871 99.7858L61.6138 99.4964C67.8876 98.796 70.9492 98.2634 73.3323 95.0883C76.0285 91.4963 74.26 84.2257 74.26 84.2257C74.26 84.2257 67.2701 82.6743 68.2645 77.0447C69.1662 71.9593 75.1588 71.9593 78.4552 75.5483C78.4552 75.5483 83.552 74.353 88.3472 68.9665C88.3472 68.9665 91.8553 69.7885 94.2471 69.3862C93.8383 66.6887 93.1193 64.214 91.6552 62.3818Z"
+                  fill="#30242A" />
+                <path
+                  d="M138.857 103.014C138.008 102.623 137.5 101.639 137.645 99.7579C137.645 99.7579 135.888 101.958 134.018 100.979C132.148 100.001 132.896 97.8939 132.896 97.8939C132.896 97.8939 131.209 99.0169 129.806 97.6045C128.533 96.3338 129.516 94.2383 129.516 94.2383C129.516 94.2383 127.649 94.9995 126.988 93.6768C126.156 92.0212 127.167 90.2875 128.263 88.959"
+                  stroke="#30242A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M44.665 96.7383C44.9827 98.2379 45.5554 99.672 46.3582 100.979" stroke="black" stroke-width="4"
+                  stroke-miterlimit="10" stroke-linecap="round" />
+                <path d="M118.003 122.95L118.708 131.694" stroke="#30242A" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M92.5771 122.433C94.4123 125.732 94.3891 129.692 94.1513 132.039" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M75.9996 131.694L67.0092 131.976" stroke="#30242A" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M84.2883 94.3562C83.0319 93.8638 81.8062 93.2965 80.6179 92.6572" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M86.5352 102.663L86.0452 99.5635" stroke="#30242A" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M62.8749 79.2539L63.4982 84.429" stroke="black" stroke-width="4" stroke-miterlimit="10"
+                  stroke-linecap="round" />
+                <path d="M92.5771 85.413C91.9422 85.824 89.8374 85.9601 88.8285 84.1279" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M75.7183 79.52L72.909 78.1191" stroke="#30242A" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M88.6893 78.2783C88.2399 78.889 86.1206 80.0728 84.526 78.7212" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M95.5169 77.3965C95.1813 77.4679 94.8349 77.4723 94.4977 77.4096C94.1604 77.3469 93.8387 77.2184 93.5512 77.0312"
+                  stroke="#30242A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M91.716 78.4375C92.0379 79.164 92.3481 79.9657 92.2814 80.2725C92.1825 80.6457 91.9596 80.9742 91.6494 81.2045"
+                  stroke="#30242A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M74.1788 82.9089L70.3432 86.5211C70.1355 86.7166 69.9815 86.962 69.8959 87.2338C69.8102 87.5056 69.7958 87.7948 69.8539 88.0738C69.9121 88.3527 70.0409 88.6122 70.2281 88.8273C70.4152 89.0424 70.6545 89.2061 70.923 89.3026L75.4574 90.909C75.7269 91.0041 76.0163 91.0286 76.298 90.9801C76.5797 90.9316 76.8442 90.8117 77.0662 90.6319C77.2882 90.4521 77.4602 90.2184 77.5658 89.9533C77.6715 89.6881 77.7071 89.4003 77.6695 89.1174L76.9707 83.9075C76.9299 83.6047 76.8064 83.3189 76.6139 83.0813C76.4214 82.8438 76.1671 82.6636 75.879 82.5606C75.5908 82.4575 75.2798 82.4355 74.98 82.4969C74.6802 82.5584 74.403 82.7009 74.1788 82.9089Z"
+                  fill="#F4E6D8" />
+                <path
+                  d="M129.243 83.8701C129.243 83.8701 131.209 82.7471 132.896 83.3086C135.506 84.1769 135.123 86.6024 135.123 86.6024C135.123 86.6024 138.782 85.2854 139.492 89.1465C139.492 89.1465 142.791 89.8846 142.049 93.1784C142.049 93.1784 144.719 93.3202 144.189 96.8137C143.658 100.307 141.324 103.21 139.921 103.21C138.471 103.21 137.448 102.322 137.645 99.7371C137.645 99.7371 135.888 101.937 134.018 100.958C132.148 99.9802 132.896 97.8731 132.896 97.8731C132.896 97.8731 131.209 98.9961 129.806 97.5836C128.533 96.313 129.516 94.2175 129.516 94.2175C129.516 94.2175 127.649 94.9787 126.988 93.656C125.582 90.8513 129.449 87.8354 130.078 86.9266L129.243 83.8701Z"
+                  fill="#A15842" />
+                <path d="M128.408 95.2397C130.339 93.4712 133.627 90.134 135.187 86.6318" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M131.954 99.2764C135.163 96.5522 137.782 93.2038 139.651 89.4355" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M136.92 101.355C137.79 100.296 140.831 96.4896 142.339 93.4766" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M136.375 165.775H87.7152L98.7756 130.889C99.1026 129.862 99.7487 128.966 100.62 128.33C101.492 127.694 102.544 127.352 103.623 127.353H144.742C145.541 127.352 146.329 127.54 147.042 127.9C147.754 128.261 148.372 128.784 148.844 129.428C149.316 130.071 149.63 130.816 149.759 131.604C149.889 132.391 149.831 133.197 149.59 133.958L140.443 162.806C140.168 163.667 139.626 164.419 138.895 164.953C138.163 165.487 137.281 165.775 136.375 165.775Z"
+                  fill="#30242A" />
+                <path
+                  d="M59.474 161.848C59.3305 162.3 59.2957 162.779 59.3724 163.247C59.4491 163.715 59.6353 164.158 59.9157 164.54C60.1962 164.923 60.563 165.234 60.9864 165.449C61.4099 165.663 61.8781 165.775 62.3529 165.775H136.375C137.28 165.773 138.161 165.484 138.891 164.949C139.621 164.414 140.161 163.661 140.434 162.8L140.724 161.848H59.474Z"
+                  fill="#30242A" />
+                <path
+                  d="M128.921 143.561C127.791 142.015 122.65 146.097 122.274 146.435C122.076 146.097 119.403 142.015 117.441 143.561C115.739 144.901 119.47 150.884 120.476 152.409C120.518 152.456 120.569 152.493 120.626 152.518C120.683 152.544 120.744 152.557 120.807 152.557C120.869 152.557 120.931 152.544 120.988 152.518C121.045 152.493 121.095 152.456 121.137 152.409C122.966 150.869 129.904 144.887 128.921 143.561Z"
+                  fill="#FFBE21" />
+                <path
+                  d="M124.225 142.469C124.633 141.16 124.616 139.99 124.187 139.856C123.757 139.723 123.078 140.676 122.669 141.985C122.26 143.295 122.278 144.465 122.707 144.598C123.137 144.732 123.816 143.779 124.225 142.469Z"
+                  fill="#FFBE21" />
+                <path
+                  d="M31.5926 134.146C32.2242 134.389 32.911 134.452 33.5764 134.329C34.2419 134.205 34.8599 133.899 35.3616 133.446C35.421 134.122 35.6687 134.767 36.0764 135.31C36.4842 135.853 37.0359 136.271 37.6691 136.517C38.3024 136.764 38.992 136.828 39.6601 136.704C40.3282 136.579 40.9481 136.271 41.4499 135.813C41.5109 136.488 41.7594 137.133 42.1676 137.675C42.5757 138.216 43.1272 138.634 43.7599 138.879C44.3927 139.125 45.0816 139.19 45.7491 139.066C46.4166 138.942 47.0362 138.634 47.5382 138.178C47.5846 138.711 47.7483 139.227 48.0176 139.69C48.2869 140.152 48.655 140.549 49.0959 140.854C49.5367 141.158 50.0394 141.361 50.5679 141.449C51.0965 141.537 51.638 141.507 52.1537 141.362L56.5373 129.608C58.2256 125.096 59.0259 120.301 58.8943 115.486L58.4507 99.8564C58.4507 99.8564 48.3355 100.696 42.4356 107.99C39.4088 111.732 33.4684 121.619 29.6617 132.369C30.0618 133.18 30.7501 133.814 31.5926 134.146Z"
+                  fill="#FFBE21" />
+                <path
+                  d="M49.8545 141.245C49.2196 141.001 48.6658 140.584 48.2559 140.042C47.846 139.5 47.5963 138.854 47.5352 138.177C47.0332 138.634 46.4136 138.941 45.7461 139.065C45.0786 139.189 44.3897 139.124 43.7569 138.879C43.1242 138.633 42.5727 138.216 42.1646 137.674C41.7564 137.132 41.5079 136.488 41.4469 135.812C40.9451 136.27 40.3252 136.579 39.6571 136.703C38.989 136.827 38.2994 136.763 37.6661 136.517C37.0329 136.27 36.4812 135.852 36.0734 135.309C35.6657 134.767 35.418 134.121 35.3586 133.445C34.9412 133.824 34.4413 134.102 33.8983 134.256C33.3553 134.41 32.7839 134.435 32.2291 134.331C31.6743 134.227 31.1513 133.996 30.7013 133.656C30.2512 133.316 29.8864 132.876 29.6355 132.371C26.3363 141.688 24.6373 151.656 27.8322 158.831C34.7091 174.285 55.3485 168.846 60.2192 167.416C65.0898 165.986 74.5528 161.121 80.8585 161.981C87.1643 162.84 94.3282 165.986 95.4763 161.981C95.4763 161.981 99.3351 161.882 98.1203 158.218C98.1203 158.218 100.06 157.978 100.347 156.548C100.927 153.685 94.0412 151.112 94.0412 151.112C94.0412 151.112 99.4887 151.98 100.634 150.823C102.084 149.376 100.675 147.04 91.7769 144.886C82.0037 142.525 69.1052 143.954 49.9009 147.387L52.1478 141.358C51.3914 141.57 50.5864 141.531 49.8545 141.245Z"
+                  fill="#A15842" />
+                <path d="M56.6125 128.047L50.1966 146.745" stroke="#30242A" stroke-width="4" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M95.772 151.318C92.6582 150.137 87.4745 148.325 83.4504 147.671" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M98.2016 158.067C94.2007 156.27 86.5584 153.008 82.4473 152.395" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M49.9474 146.785C47.7904 147.132 44.4041 147.708 41.0208 148.383" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M95.3574 162.374C92.3567 160.849 86.0336 157.816 81.5891 156.971" stroke="#30242A"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M229.657 125.442C229.657 125.442 227.378 130.56 221.4 130.56C215.422 130.56 213.131 125.442 213.131 125.442C213.131 125.442 196.316 163.822 212.841 184.007H229.926C246.443 163.822 229.657 125.442 229.657 125.442Z"
+                  fill="#3EC1F3" />
+                <path
+                  d="M221.385 130.56C227.364 130.56 229.642 125.442 229.642 125.442H213.117C213.117 125.442 215.404 130.56 221.385 130.56Z"
+                  fill="#30242A" />
+                <path d="M236.829 159.609C227.535 159.774 216.535 163.126 208.069 174.95" stroke="#F5EBDD"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M206.582 150.218C212.821 148.699 224.635 147.251 236.087 149.972" stroke="#F5EBDD"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M236.035 169.462C231.878 169.511 224.192 174.214 225.038 183.694" stroke="#F5EBDD"
+                  stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M220.339 128.858C220.165 124.733 219.066 108.343 212.543 98.7275" stroke="#30242A"
+                  stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" />
+                <path
+                  d="M218.979 116.254C219.813 114.842 215.393 110.696 209.105 106.993C202.818 103.29 197.046 101.432 196.212 102.843C195.378 104.254 199.798 108.4 206.085 112.104C212.372 115.807 218.145 117.665 218.979 116.254Z"
+                  fill="#30242A" />
+                <path
+                  d="M216.538 75.3497C217.762 74.653 217.133 71.2491 215.133 67.7469C213.133 64.2447 210.519 61.9704 209.295 62.6671C208.071 63.3639 208.7 66.7678 210.7 70.27C212.7 73.7722 215.314 76.0465 216.538 75.3497Z"
+                  fill="#30242A" />
+                <path
+                  d="M195.006 90.1977C195.664 88.736 198.76 88.6289 202.523 89.749C200.204 85.6072 199.494 81.7548 201.027 80.762C202.561 79.7692 205.802 81.966 208.646 85.7779C209.148 81.8908 210.505 79.1209 212.125 79.1035C214.172 79.1035 215.848 83.6101 215.868 89.1846C215.881 90.7787 215.739 92.3703 215.445 93.9372C214.553 93.5291 213.572 93.3501 212.593 93.4166C211.613 93.483 210.666 93.7927 209.837 94.3175C209.008 94.8423 208.324 95.5656 207.846 96.4217C207.368 97.2778 207.112 98.2395 207.101 99.2194C205.6 98.852 204.136 98.3462 202.729 97.7085C197.618 95.4249 194.168 92.0645 195.006 90.1977Z"
+                  fill="#4756DF" />
+                <path
+                  d="M209.771 94.3571C210.603 93.8173 211.558 93.4963 212.548 93.4239C213.537 93.3515 214.529 93.5302 215.43 93.9432C214.932 96.5337 214.03 98.4556 212.946 99.0807C211.914 99.8304 209.728 99.8593 207.087 99.2255C207.097 98.2559 207.348 97.3041 207.817 96.4548C208.285 95.6054 208.956 94.8848 209.771 94.3571Z"
+                  fill="#30242A" />
+                <path d="M222.513 128.609C223.313 124.053 227.48 101.717 234.148 89.0801" stroke="#30242A"
+                  stroke-width="4" stroke-miterlimit="10" stroke-linecap="round" />
+                <path
+                  d="M256.655 120.035C257.134 118.557 250.729 115.161 242.348 112.451C233.967 109.74 226.784 108.741 226.305 110.219C225.825 111.697 232.23 115.093 240.611 117.803C248.992 120.514 256.175 121.513 256.655 120.035Z"
+                  fill="#30242A" />
+                <path
+                  d="M232.892 69.4998C234.493 69.3551 236.105 71.9976 236.971 75.8211C239.442 71.769 242.463 69.2625 244.083 70.1105C245.704 70.9586 245.373 74.8544 243.44 79.1989C247.081 77.7314 250.174 77.5462 250.978 78.9412C251.986 80.7184 248.87 84.3914 244.019 87.141C242.636 87.9326 241.18 88.5898 239.671 89.1034C239.588 88.1279 239.263 87.1885 238.725 86.3701C238.187 85.5517 237.452 84.8803 236.589 84.4167C235.725 83.9532 234.759 83.712 233.779 83.7152C232.798 83.7183 231.834 83.9656 230.973 84.4348C230.559 82.9475 230.282 81.4254 230.147 79.8877C229.61 74.3363 230.854 69.685 232.892 69.4998Z"
+                  fill="#4756DF" />
+                <path
+                  d="M236.508 84.3827C237.387 84.8419 238.136 85.5154 238.685 86.3407C239.234 87.166 239.565 88.1163 239.648 89.1035C237.14 89.9399 235.009 90.0991 233.942 89.4624C232.782 88.9327 231.683 87.0427 230.941 84.4348C231.793 83.9683 232.747 83.7193 233.718 83.7102C234.689 83.7011 235.648 83.9322 236.508 84.3827Z"
+                  fill="#30242A" />
+                <path
+                  d="M250.177 95.998V96.0212C248.814 96.5825 247.71 97.6335 247.085 98.967C246.459 100.3 246.357 101.819 246.798 103.225C247.239 104.63 248.192 105.819 249.468 106.557C250.744 107.296 252.251 107.53 253.691 107.214V107.237C246.052 109.625 239.071 109.046 238.096 105.94C237.122 102.835 242.538 98.3859 250.177 95.998Z"
+                  fill="#4756DF" />
+                <path
+                  d="M248.359 105.731C249.03 105.463 249.573 104.952 249.882 104.301C250.191 103.65 250.241 102.906 250.024 102.219C249.806 101.532 249.337 100.952 248.709 100.596C248.082 100.24 247.343 100.133 246.64 100.298C246.833 99.3495 247.257 98.4626 247.875 97.7164C248.493 96.9703 249.286 96.3877 250.183 96.0205L253.697 107.213C252.754 107.421 251.774 107.395 250.843 107.136C249.913 106.878 249.06 106.395 248.359 105.731Z"
+                  fill="#FFB7D5" />
+                <path
+                  d="M250.012 102.229C250.227 102.913 250.177 103.654 249.871 104.302C249.565 104.951 249.025 105.461 248.36 105.731C247.636 105.045 247.099 104.187 246.798 103.236C246.497 102.286 246.443 101.275 246.64 100.299C247.343 100.138 248.08 100.248 248.704 100.606C249.329 100.963 249.796 101.543 250.012 102.229Z"
+                  fill="#30242A" />
+              </svg>
+
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center align-items-center">
+              <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <h4>Matching you with a streamer...</h4>
+              <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+          <!-- results page-->
+          <div id="streamer-reveal-container">
+            <div class="d-flex flex-row mb-3 justify-content-center">
+              <div class="d-flex flex-column mb-3 justify-content-center">
+                <img src="images/pausechamp.png" style="height:75%; width:75%;" id="PauseChamp" />
+              </div>
+              <div class="d-flex flex-column mb-3 justify-content-center align-items-center">
+                <!-- username filled in after calculating streamer-->
+                <span id="streamer-name"></span>
+              </div>
+            </div>
+            <div class="d-flex flex-row mb-3 justify-content-center">
+              <button onclick="revealStreamer()" class="btn btn-quiz-answer" id="reveal-streamer-name">Reveal my
+                Streamer!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button id="continue-button" type="button" onclick="nextQuestion()"
+          class="btn btn-quiz-answer btn-quiz-continue">
+          <span>continue</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Streamer Modal -->
+<div class="modal fade" id="add-streamer-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 80%; width: max-content;" role="document">
+    <div class="modal-content" >
+      <div class="modal-header text-center">
+        <h5 class="modal-title w-100" id="add-streamer-modal-label">Add a Streamer</h5>
+      </div>
+
+      <div class="modal-body">
+        <div class="d-flex flex-column">
+          <!-- QUESTION 1: Average Viewer-->
+          <div id="add-streamer-container">
+            <div class="d-flex flex-row justify-content-center">
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="user_name_input">user_name</span>
+                  </div>
+                  <input id="add-streamer_user_name" type="text" class="form-control" placeholder="Username">
+                </div>
+              </div>
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="display_name_input">display_name</span>
+                  </div>
+                  <input id="add-streamer_display_name" type="text" class="form-control" placeholder="Display Name">
+                </div>
+              </div>
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="streamer_name_input">streamer_name</span>
+                  </div>
+                  <input id="add-streamer_streamer_name" type="text" class="form-control" placeholder="Streamer's name">
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center">
+              <div class="d-flex flex-col">
+                <div class="streamer-image-box">
+                  <img class="streamer-image" id="streamer-picture" />
+                </div>
+               
+              </div>
+              <div class="d-flex flex-col">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="picture_url_input">picture_url</span>
+                  </div>
+                  <input id="add-streamer_logo_url" type="text" class="form-control" placeholder="URL">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" onclick="loadImage()" type="button">load</button>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex flex-col justify-content-center">
+                <div class="btn-group mr-2" role="group" aria-label="First group">
+                  <button id="button_is_partner" type="button" onclick="toggleButton('is_partner')"
+                    class="btn btn-quiz-answer">is_partner</button>
+                  <button id="button_is_fulltime" type="button" onclick="toggleButton('is_fulltime')"
+                    class="btn btn-quiz-answer">is_fulltime</button>
+                  <button id="button_uses_cam" type="button" onclick="toggleButton('uses_cam')"
+                    class="btn btn-quiz-answer">uses_cam</button>
+                  <button id="button_mature_stream" type="button" onclick="toggleButton('mature_stream')"
+                    class="btn btn-quiz-answer">mature_stream</button>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center">
+              <div class="d-flex flex-col justify-content-center">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="add_streamer_location">location</label>
+                  </div>
+                  <select class="custom-select" id="add_streamer_location">
+                    <option selected value="1">USA</option>
+                    <option value="2">Canada</option>
+                    <option value="3">Korea</option>
+                    <option value="4">China</option>
+                    <option value="5">Japan</option>
+                    <option value="6">Taiwan</option>
+                  </select>
+                </div>
+              </div>
+              <div class="d-flex flex-col justify-content-center align-items-center">
+                <span>nationality</span>
+             
+                <div class="custom-control custom-switch add-language-switch" >
+                  <input value=1 type="checkbox" class="custom-control-input" id="switch_add_nationality_american"
+                    onclick="selectSwitch('add_nationality','american')">
+                  <label class="custom-control-label" for="switch_add_nationality_american">American</label>
+                </div>
+                <div class="custom-control custom-switch add-language-switch">
+                  <input value=2 type="checkbox" class="custom-control-input" id="switch_add_nationality_korean"
+                    onclick="selectSwitch('add_nationality','korean')">
+                  <label class="custom-control-label" for="switch_add_nationality_korean">Korean</label>
+                </div>
+            
+            
+                <div class="custom-control custom-switch add-language-switch">
+                  <input value=3 type="checkbox" class="custom-control-input" id="switch_add_nationality_chinese"
+                    onclick="selectSwitch('add_nationality','chinese')">
+                  <label class="custom-control-label" for="switch_add_nationality_chinese">Chinese</label>
+                </div>
+                <div class="custom-control custom-switch add-language-switch">
+                  <input value=4 type="checkbox" class="custom-control-input" id="switch_add_nationality_japanese"
+                    onclick="selectSwitch('add_nationality','japanese')">
+                  <label class="custom-control-label" for="switch_add_nationality_japanese">Japanese</label>
+                </div>
+                <div class="custom-control custom-switch add-language-switch">
+                  <input value=5 type="checkbox" class="custom-control-input" id="switch_add_nationality_canadian"
+                    onclick="selectSwitch('add_nationality','canadian')">
+                  <label class="custom-control-label" for="switch_add_nationality_canadian">Canadian</label>
+                </div>
+
+              </div>
+         
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center">
+            
+                <div class="d-flex flex-col justify-content-center">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" for="add_native_language">native_language</label>
+                    </div>
+                    <select class="custom-select" id="add_native_language">
+                      <option selected value="1">English</option>
+                      <option value="2">Korean</option>
+                      <option value="3">Japanese</option>
+                      <option value="4">Chinese</option>
+                    
+                    </select>
+                  </div>
+                </div>
+                <div class="d-flex flex-col justify-content-center align-items-center">
+                  <span>languages spoken</span>
+             
+                  <div class="custom-control custom-switch add-language-switch" >
+                    <input value=1 type="checkbox" class="custom-control-input" id="switch_add_languages_english"
+                      onclick="selectSwitch('add_languages','english')">
+                    <label class="custom-control-label" for="switch_add_languages_english">English</label>
+                  </div>
+                  <div class="custom-control custom-switch add-language-switch">
+                    <input value=2 type="checkbox" class="custom-control-input" id="switch_add_languages_korean"
+                      onclick="selectSwitch('add_languages','korean')">
+                    <label class="custom-control-label" for="switch_add_languages_korean">Korean</label>
+                  </div>
+              
+                  <div class="custom-control custom-switch add-language-switch">
+                    <input value=3 type="checkbox" class="custom-control-input" id="switch_add_languages_japanese"
+                      onclick="selectSwitch('add_languages','japanese')">
+                    <label class="custom-control-label" for="switch_add_languages_japanese">Japanese</label>
+                  </div>
+                  <div class="custom-control custom-switch add-language-switch">
+                    <input value=4 type="checkbox" class="custom-control-input" id="switch_add_languages_chinese"
+                      onclick="selectSwitch('add_languages','chinese')">
+                    <label class="custom-control-label" for="switch_add_languages_chinese">Chinese</label>
+                  </div>
+                
+                </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="user_name_input">followers</span>
+                  </div>
+                  <input id="add-streamer_followers" type="text" class="form-control" placeholder="# followers">
+                </div>
+              </div>
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="display_name_input">voice</span>
+                  </div>
+                  <input id="add-streamer_voice" type="text" class="form-control" placeholder="voice level (1-5)">
+                </div>
+              </div>
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="streamer_name_input">avg_viewers</span>
+                  </div>
+                  <input id="add-streamer_avg_viewers" type="text" class="form-control" placeholder="avg viewers">
+                </div>
+              </div>
+              <div class="d-flex flex-col">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="user_name_input">avg_stream_duration</span>
+                  </div>
+                  <input id="add-streamer_avg_stream_duration" type="text" class="form-control" placeholder="# followers">
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center">
+              <div class="input-group" style="max-width: 50%;">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="user_name_input">password</span>
+                </div>
+                <input id="add_streamer_password" type="text" class="form-control" placeholder="password">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" onclick="addStreamer()" type="button">add streamer</button>
+                </div>
+              </div>
+         
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
 </html>

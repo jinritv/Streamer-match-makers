@@ -1,13 +1,284 @@
+ .slider-selection {
+	background: #bf7dd3;
+}
+
+
+.slider.slider-horizontal {
+    width: 510px;
+    height: 30px;
+  }
+
+ .slider-handle{ 
+  width: 30px;
+  height: 30px;
+  background: #DAB9DF;
+  border: 2px solid #bf7dd3;
+  }
+
+  .streamer-image-box {
+    width: 100px;
+    height: 100px;
+    border: 5px dashed #DAB9DF;
+  }
+
+  .streamer-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+   .custom-select:focus {
+    border-color:#da91da;
+    outline:0;
+    box-shadow:0 0 0 .2rem rgba(212, 87, 216, 0.288)
+   }
+
+   .custom-select:focus::-ms-value {
+    color:#495057;
+    background-color:#fff
+   }
+   .custom-select[multiple],
+   .custom-select[size]:not([size="1"]) {
+    height:auto;
+    padding-right:.75rem;
+    background-image:none
+   }
+   .custom-select:disabled {
+    color:#6c757d;
+    background-color:#e9ecef
+   }
+
+   .form-control:focus {
+    color:#495057;
+    background-color:#fff;
+    border-color:#da91da;
+    outline:0;
+    box-shadow:0 0 0 .2rem rgba(212, 87, 216, 0.288)
+   }
+   .form-control::-webkit-input-placeholder {
+    color:#6c757d;
+    opacity:1
+   }
+   .form-control::-moz-placeholder {
+    color:#6c757d;
+    opacity:1
+   }
+   .form-control::-ms-input-placeholder {
+    color:#6c757d;
+    opacity:1
+   }
+   .form-control::placeholder {
+    color:#6c757d;
+    opacity:1
+   }
+   .form-control:disabled,
+   .form-control[readonly] {
+    background-color:#e9ecef;
+    opacity:1
+   }
+   select.form-control:focus::-ms-value {
+    color:#495057;
+    background-color:#fff
+   }
+  
+  .custom-control-input:checked~.custom-control-label:before {
+    color:#DAB9DF;
+    border-color:#5f355f;
+    background-color:#DAB9DF;
+   }
+   .custom-control-label:before {
+    pointer-events:none;
+    background-color:#fff;
+    border:.125rem solid #adb5bd;
+   }
+   .custom-control-input {
+    position:absolute;
+    left:0;
+    z-index:-1;
+    width:12px;
+    height:12px;
+    opacity:0
+   }
+ 
+   .custom-control-input:focus~.custom-control-label:before {
+    box-shadow:0 0 0 .2rem rgba(150, 26, 188, 0.25)
+   }
+   .custom-control-input:focus:not(:checked)~.custom-control-label:before {
+    border-color:#5f355f
+   }
+   .custom-control-input:not(:disabled):active~.custom-control-label:before {
+    color:#fff;
+    background-color:#bf7dd3;
+    border-color:#5f355f
+   }
+   .custom-control-input:disabled~.custom-control-label,
+   .custom-control-input[disabled]~.custom-control-label {
+    color:#6c757d
+   }
+   .custom-control-input:disabled~.custom-control-label:before,
+   .custom-control-input[disabled]~.custom-control-label:before {
+    background-color:#e9ecef
+   }
+
 .bg-primary {
-    background-color: #d8aaeb
+    background-color: #dab9df!important
 }
 
 .bg-secondary {
-    background-color: #604975
+    background-color: #f8e9fb!important
+}
+
+.primary-color {
+    color: #dab9df !important
+}
+
+.secondary-color {
+    color: #f8e9fb !important
+}
+
+.add-streamer-input{
+    
+}
+
+.add-language-switch{
+    margin: 24px;
+}
+
+.quiz-button-container{
+    padding-left:30%;
+    padding-right:30%;
+}
+
+.btn-quiz-continue {
+    color:#fff !important;
+    background-color:#DAB9DF !important;
+    border-radius: 100px !important;
+    margin-bottom: 12px;
+    max-width:50%;
+}
+
+.btn-quiz-answer {
+    color:#000000;
+    padding:12px;
+    width:100%;
+ padding-bottom:12px;
+    background-color:#FDF8FE;
+    border-color:#DAB9DF;
+    border-width: 4px;
+}
+.btn-quiz-answer.focus, .btn-quiz-answer:focus,.btn-quiz-answer:hover {
+    color:#fff;
+    background-color:#bf7dd3;
+    border-color:#5f355f
+}
+.btn-quiz-answer.focus,.btn-quiz-answer:focus {
+    box-shadow:0 0 0 .2rem rgba(113, 60, 198, 0.5)
+}
+.btn-quiz-answer.disabled,.btn-quiz-answer:disabled{
+    color:#fff;
+    background-color:#1abc9c;
+    border-color:#1abc9c
+}
+.btn-quiz-answer:not(:disabled):not(.disabled).active,.btn-quiz-answer:not(:disabled):not(.disabled):active,.show>.btn-quiz-answer.dropdown-toggle {
+    color:#fff;
+    background-color:#b569cc;
+    border-color:#5e3f5e
+}
+
+.navbar-brand {
+    color: #000000 !important;
+    font-family: "FF Real Head" !important
+}
+
+.progress {
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+.progress-bar {
+    flex-direction:column;
+    justify-content:center;
+    color:#5e3f5e;
+    text-align:center;
+    white-space:nowrap;
+    background-color:#ffd4ee;
+    transition:width .6s ease
+   }
+
+.welcome-container {
+    margin-top:150px;
+}
+
+#start-quiz-button {
+    margin-top:48px;
+}
+
+.footer {   
+    position:fixed;
+    left:0px;
+    padding-top: 12px !important;
+    padding-bottom:8px !important;
+    bottom:0px;
+    width:100%;
+    background:#999;
+ }
+
+.btn-primary {
+    color:#fff;
+    background-color:#a364b6;
+    border-color:#bd96bd
+}
+.btn-primary.focus, .btn-primary:focus,.btn-primary:hover {
+    color:#fff;
+    background-color:#bf7dd3;
+    border-color:#5f355f
+}
+.btn-primary.focus,.btn-primary:focus {
+    box-shadow:0 0 0 .2rem rgba(113, 60, 198, 0.5)
+}
+.btn-primary.disabled,.btn-primary:disabled{
+    color:#fff;
+    background-color:#1abc9c;
+    border-color:#1abc9c
+}
+.btn-primary:not(:disabled):not(.disabled).active,.btn-primary:not(:disabled):not(.disabled):active,.show>.btn-primary.dropdown-toggle {
+    color:#fff;
+    background-color:#b569cc;
+    border-color:#5e3f5e
 }
 
 #mainNav .navbar-nav li.nav-item a.nav-link:hover {
     color:#2e90e0
+}
+
+#jiriLogo {
+    padding: 10px
+}
+
+.colLeft {
+    width: 50%;
+    margin-top: 125px;
+    top: 50%;
+}
+
+.colRight {
+    width: 50%
+}
+
+#bg-rectangle {
+    position: absolute;
+    width: 800px;
+    height: 700px;
+    left: 800px;
+    top: -80px;
+    background: #F8E9FB;
+    border-radius: 100px;
+    z-index: -1
+}
+
+#logoText {
+    font-size: 24px !important;
+    color: #111111 !important
 }
 
 #mainNav .navbar-nav>li.nav-item>a.nav-link.active,
@@ -18,12 +289,16 @@
   background:#2e90e0
 }
 
-.footer {
-    padding-top:5rem;
-    padding-bottom:5rem;
-    background-color:#8d549b;
-    color:#fff
+.modal-content {
+    min-height: 508px;
+}
+
+.modal-dialog {
+    max-width:40%;
+    margin:1.75rem auto
    }
+
+
 
 V#streamer-quiz-form > div.steps.clearfix > ul > li {
 float: left;
