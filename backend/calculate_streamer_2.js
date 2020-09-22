@@ -1,6 +1,6 @@
 
 const {Op} = require("sequelize");
-const {Streamers, StreamersStats, Languages, Categories} = require("../models/models");
+const {Streamers, StreamersStats, Languages, Categories, StreamersNationalities} = require("../models/models");
 
 
 /**
@@ -84,7 +84,7 @@ async function calculateStreamer(quizValues, callback) {
     else {  
       const result = {
         // Returns the first one for now if there are multiple ones
-        user_name: usernames[0],
+        user_name: usernames.join(","),
       }
       callback(result, null);
     }
