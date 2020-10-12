@@ -23,7 +23,14 @@ function getSequelizeFromConfig() {
         host: dbConfig.host,
         port: dbConfig.port,
         dialect: dbConfig.dialect,
-      }
+        dialectOptions: {
+          ssl: {
+            require: true,
+            rejectUnauthorized: false
+          }
+        }
+      },
+    
     );
   }
   return sequelize;
