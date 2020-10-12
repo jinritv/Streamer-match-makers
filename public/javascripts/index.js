@@ -9,35 +9,33 @@ const QuestionSettings = {
   "average_viewers": {
     min: 0,
     max: 10000,
-    suffix: "average viewers"
-  },
-  "follower_count": {
-    1: "Less than 10000",
-    2: "between 10000 and 100000",
-    3: "100000 to 1000000"
+    suffix: "average viewers",
+    incrementBy: 50
   },
   "age": {
     min: 16,
     max: 100,
-    suffix: "years old"
+    suffix: "years old",
+    incrementBy: 1
   },
-  "voice": {
-    1: 1,
-    2: 2,
-    3: 3,
-    4: 4,
-    5: 5
-  }
 }
 
 // CurrentQuestion represents which question we are on
 var CurrentQuestion = 1;
 
 // LastQuestion is the last question before we send the results
-const LastQuestion = 9;
+const LastQuestion = 5;
 
 // Used by the setup functions to display and set callbacks
 const SlidersToInitialize = ["average_viewers", "age"]
+
+// holds the references to the sliders so we can call 
+// functions on it
+var SLIDERS ={};
+
+// a timer for if the increment/decrement buttons are long-held,
+// since we want to continue to increment/decrement when button is held
+var pressTimer;
 
 // This is called when the page is loaded
 $(() => {
@@ -60,10 +58,15 @@ function setSliderDisplay(slider) {
 
   let displayText = `Between ${minDefault} and ${maxDefault} ${QuestionSettings[slider].suffix}`;
   $(`#${slider}-slider-display`).text(displayText);
-  $(`#slider_${slider}`).slider({ id: `slider_${slider}`, min: minRange, max: maxRange, range: true, value: [minDefault, maxDefault], tooltip: 'hide' });
+  SLIDERS[slider] = $(`#slider_${slider}`).slider({ id: `slider_${slider}`, min: minRange, max: maxRange, range: true, value: [minDefault, maxDefault], tooltip: 'hide' });
+  UsersAnswers[slider] = {
+    min: minDefault,
+    max: maxDefault
+  };
 }
 
 function setupElements() {
+
   // Hides all the questions to start (except for the 1st)
   for (i = CurrentQuestion + 1; i <= LastQuestion; i++) {
     $(`#question${i}-container`).hide()
@@ -71,14 +74,100 @@ function setupElements() {
   $(`#question-result-container`).hide()
   $(`#streamer-reveal-container`).hide()
   $(`#streamer-name`).hide()
+  $(`#watchtime-weekdays`).hide()
+  $(`#watchtime-weekends`).hide()
+  
+  $('.time').clockTimePicker({
+    onClose: function() {
+      // adjust time
+      let watchTime = {
+        watchesWeekend: ($(`#switch_watchtime_weekends`).prop("checked") == true),
+        watchesWeekdays:  ($(`#switch_watchtime_weekdays`).prop("checked") == true),
+        weekendFrom:  $("#watchtime-weekends-from").val(),
+        weekendTo: $("#watchtime-weekends-to").val(),
+        weekdayFrom:  $("#watchtime-weekdays-from").val(),
+        weekdayTo: $("#watchtime-weekdays-to").val()
+      } 
+      UsersAnswers['watchtime'] = watchTime;
+     },
+     alwaysSelectHoursFirst: true,
+     required: true,
+    // custom colors
+  colors: {
+    buttonTextColor: '#bf7dd3',
+    clockFaceColor: '#EEEEEE',
+    clockInnerCircleTextColor: '#888888',
+    clockInnerCircleUnselectableTextColor: '#CCCCCC',
+    clockOuterCircleTextColor: '#000000',
+    clockOuterCircleUnselectableTextColor: '#CCCCCC',
+    hoverCircleColor: '#DDDDDD',
+    popupBackgroundColor: '#FFFFFF',
+    popupHeaderBackgroundColor: '#0797FF',
+    popupHeaderTextColor: '#FFFFFF',        
+    selectorColor: '#DAB9DF',       
+    selectorNumberColor: '#FFFFFF',
+    signButtonColor: '#FFFFFF',
+    signButtonBackgroundColor: '#0797FF'
+  },
+  });
 
   // Setup the sliders
   SlidersToInitialize.forEach(slider => {
+
     setSliderDisplay(slider);
+    // add handler functions to the slider's events
+    setSliderEventHandlers(slider);
   })
 
   unselectAllRadios();
   unselectAllSwitches();
+  // disable the continue button by default
+  $(`#continue-button`).prop('disabled',true)
+}
+
+function setSliderEventHandlers(slider){
+  // how many milliseconds to hold down the button before it starts incrementing
+  const incrementDelay = 100;
+  
+  // we want to increment the value when holding the mouse button down,
+  // and if we click, only increment by 1 unit
+  $(`#${slider}-minus`).mouseup(function(){
+    // Clear timeout
+    clearInterval(pressTimer);
+    return false;
+  }).mousedown(function(){
+
+    if(UsersAnswers[slider].min > QuestionSettings[slider].min){
+      SLIDERS[slider].slider('setValue',[(UsersAnswers[slider].min-QuestionSettings[slider].incrementBy),UsersAnswers[slider].max], true); // must be true to call the 'slide' event
+    }
+    
+    // Set interval
+    pressTimer = window.setInterval(function() { 
+    
+      if(UsersAnswers[slider].min > QuestionSettings[slider].min){
+        SLIDERS[slider].slider('setValue',[(UsersAnswers[slider].min-QuestionSettings[slider].incrementBy),UsersAnswers[slider].max], true); // must be true to call the 'slide' event
+      }
+       
+    },incrementDelay);
+    return false; 
+  });
+
+  $(`#${slider}-plus`).mouseup(function(){
+    clearInterval(pressTimer);
+    return false;
+  }).mousedown(function(){
+    if(UsersAnswers[slider].max < QuestionSettings[slider].max){
+      SLIDERS[slider].slider('setValue',[UsersAnswers[slider].min,(UsersAnswers[slider].max+QuestionSettings[slider].incrementBy)], true); // must be true to call the 'slide' event
+    }
+    
+    // Set interval
+    pressTimer = window.setInterval(function() { 
+      if(UsersAnswers[slider].max < QuestionSettings[slider].max){
+        SLIDERS[slider].slider('setValue',[UsersAnswers[slider].min,(UsersAnswers[slider].max+QuestionSettings[slider].incrementBy)], true); // must be true to call the 'slide' event
+      }
+    },100);
+    return false; 
+  });
 }
 
 function unselectAllSwitches() {
@@ -108,23 +197,46 @@ function setupCallbacks() {
   // and save the value to the UserAnswers array. 
   // Setup the sliders, assuming 1 slider with 2 values per question
   SlidersToInitialize.forEach(slider => {
-    $(`#slider_${slider}`).on("slide", (slideEvt) => {
-      let minRange = slideEvt.value[0];
-      let maxRange = ((slideEvt.value[1] == 10000 && slider == "average_viewers") ? "10000+" : slideEvt.value[1]);
+    $(`#slider_${slider}`).on("slide", (changeEvt) => adjustSliderEventHandler(slider,changeEvt))
+  });
+}
 
-      let displayText = `Between ${minRange} and ${maxRange} ${QuestionSettings[slider].suffix}`;
-      $(`#${slider}-slider-display`).text(displayText);
-      UsersAnswers[slider] = {
-        min: minRange,
-        max: maxRange
-      }
-    });
-  })
+
+// quickly making this to house event handler since we 
+// need to use it for when we adjust the slider with the buttons
+// this will accept events from the DOM, but we will also feed it 
+// the updated values from when we increment or decrement with the buttons
+// by passing a fake event object: {value:[minVal,maxVal]}
+const adjustSliderEventHandler = (slider, changeEvt) => {
+  let minRange = changeEvt.value[0];
+  let maxRange = changeEvt.value[1];
+
+  let maxRangeDisplay = ((slider == "average_viewers" && maxRange==10000) ? `10000+` :  maxRange);
+
+  let displayText = `Between ${minRange} and ${maxRangeDisplay} ${QuestionSettings[slider].suffix}`;
+  $(`#${slider}-slider-display`).text(displayText);
+  UsersAnswers[slider] = {
+    min: minRange,
+    max: maxRange
+  }
 }
 
 function selectSwitch(question, selection) {
-
   let selectedSwitch = `#switch_${question}_${selection}`;
+
+  if(question === 'watchtime'){
+  
+    if ($(selectedSwitch).prop("checked") == true) {
+      $(`#watchtime-${selection}`).show();
+     
+    } else {
+      $(`#watchtime-${selection}`).hide();
+    
+    }
+
+
+  } else {
+    
   let selectedSwitches = UsersAnswers[question] == undefined ? [] : UsersAnswers[question]
 
   if ($(selectedSwitch).prop("checked") == true) {
@@ -139,8 +251,11 @@ function selectSwitch(question, selection) {
   }
 
   UsersAnswers[question] = selectedSwitches
-  console.log(UsersAnswers)
+    console.log(UsersAnswers)
+  }
+
 }
+
 
 function selectRadio(question, selection) {
   // unselect previous choices
@@ -149,6 +264,34 @@ function selectRadio(question, selection) {
   $(`#radio_${question}-${selection}`).prop('checked', "checked");
   //save the selection
   UsersAnswers[question] = QuestionSettings[question][selection]
+}
+
+function selectMultipleButton(question,selection){
+  if(UsersAnswers[question]){
+    if(UsersAnswers[question].includes(selection)){
+     // remove it from the list
+    var index = UsersAnswers[question].indexOf(selection);
+    if (index > -1) {
+      UsersAnswers[question].splice(index, 1);
+      $(`#button_${question}_${selection}`).removeClass('active');
+    }
+    }else{
+      UsersAnswers[question].push(selection)
+      $(`#button_${question}_${selection}`).addClass('active');
+    }
+  } else {
+    UsersAnswers[question] = [];
+    UsersAnswers[question].push(selection) 
+    $(`#button_${question}_${selection}`).addClass('active');
+  }
+
+  //if no answer, block the continue button
+  if(UsersAnswers[question].length==0){
+    $(`#continue-button`).prop('disabled',true)
+  } else {
+    $(`#continue-button`).prop('disabled',false)
+  }
+  console.log(UsersAnswers)
 }
 
 function selectButton(question, selection) {
@@ -168,12 +311,12 @@ function nextQuestion() {
   // see if we are on the last question
   if (CurrentQuestion == LastQuestion) {
     $('#quiz-modal-label').text(`Results`);
-    $(`#question${CurrentQuestion}-container`).addClass("slide-out-left")
+    $(`#question${CurrentQuestion}-container`).addClass("fade-out")
     $("#continue-button").hide()
     // wait 250 ms before sliding in next question
     setTimeout(() => {
       $(`#question${CurrentQuestion}-container`).hide()
-      $(`#question-result-container`).addClass("slide-in-right")
+      $(`#question-result-container`).addClass("fade-in")
       $(`#question-result-container`).show()
 
       calculateQuizResult();
@@ -183,17 +326,28 @@ function nextQuestion() {
   } else {
     // go to next question
     // slide out current question
-    $(`#question${CurrentQuestion}-container`).addClass("slide-out-left")
+    $(`#question${CurrentQuestion}-container`).addClass("fade-out")
 
     // wait 250 ms before sliding in next question
     setTimeout(() => {
       $(`#question${CurrentQuestion}-container`).hide()
+
+      // disable the continue button by default for this question
+      $(`#continue-button`).prop('disabled',true)
+      // and unfocus it
+      $(`#continue-button`).blur()
+
       // increment the question
       CurrentQuestion += 1;
+
+      // enable the continue button by default for specific questions
+      if(CurrentQuestion==3 || CurrentQuestion==4 || CurrentQuestion==5){
+        $(`#continue-button`).prop('disabled',false)
+      } 
       // change the title
       $('#quiz-modal-label').text(`Question ${CurrentQuestion} of ${LastQuestion}`);
       // slide in the next
-      $(`#question${CurrentQuestion}-container`).addClass("slide-in-right")
+      $(`#question${CurrentQuestion}-container`).addClass("fade-in")
       $(`#question${CurrentQuestion}-container`).show()
     }, 250);
   }
@@ -201,11 +355,7 @@ function nextQuestion() {
 
 function adjustProgressBar(index) {
   let questionNum = index + 1;
-  $("#quiz-modal-progress-bar").css("width", `${((questionNum) / 10 * 100)}%`);
-  if (questionNum == 10) {
-    // quiz is complete
-    $('#quiz-modal-progress-bar span').text(`Complete!`);
-  }
+  $("#quiz-modal-progress-bar").css("width", `${((questionNum) / LastQuestion * 100)}%`);
 }
 
 function loadImage(){
@@ -241,8 +391,7 @@ function calculateQuizResult() {
     data: { UsersAnswers },
     success: function (data) {
       console.log(data)
-      $(`#question-result-container`).addClass("slide-out-left")
-
+      $(`#question-result-container`).addClass("fade-out")
       setTimeout(() => {
         $(`#question-result-container`).hide()
         if(data.Error != null ){
@@ -251,14 +400,13 @@ function calculateQuizResult() {
           $('#streamer-name').text(data.Error.message)
           $('#streamer-name').show()
         } else {
-          $('#streamer-name').text(data.Results.user_name)
-          $(`#streamer-reveal-container`).addClass("slide-in-right")
+          console.log(data.Results);
+          displayStreamerResults(data.Results);
+          $(`#streamer-reveal-container`).addClass("fade-in")
           $(`#streamer-reveal-container`).show()
-  
           console.log("complete.")
         }
-      
-      }, 250);
+      }, 350);
 
     },
     complete: function (xhr, status) {
@@ -266,6 +414,16 @@ function calculateQuizResult() {
         console.log('error')
       }
     }
+  });
+}
+
+function displayStreamerResults(streamers){
+  streamers.forEach((streamer,index)=>{
+    $(`#streamer-${index+1}-user_name`).text(streamer.user_name);
+    $(`#streamer-${index+1}-logo`).attr('src',streamer.logo);
+    $(`#streamer-${index+1}-match`).text(streamer.match_value);
+    $(`#streamer-${index+1}-twitch_link`).attr("href", `https://twitch.tv/${streamer.user_name}`);
+    
   });
 }
 

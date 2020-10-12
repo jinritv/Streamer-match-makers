@@ -2,6 +2,23 @@
 Creating a website to match the streamer of your type:
 [https://streamer-match-maker.herokuapp.com/](https://streamer-match-maker.herokuapp.com/)
 
+
+# Update Oct 12
+Updated the quiz and the database query logic, and many UI changes
+* quiz is now only 5 questions long, as decided on stream
+* added new question: viewing hours, where the user can select when they can watch a stream
+* the switches have been changed for toggle buttons
+* the slide left/right animation has been replaced with a fade in/out animation
+* the mascot image has been changed to the one with the magnifying glass
+* a new time picker has been added to the final question about viewing hours (see Notes below)
+* the results page now displays 5 'top' streamers returned from the query, based off the mockup
+* results now returns the logo URL, as well as a 'match_value' (see Notes below)
+
+**Notes** 
+* The SQL query we run fails to return any streamers. This could mean that the query is too strict, or we are not passing enough data, or the data it specifically needs to find any streamer. Someone who wants to look into more about [Sequelize](https://sequelize.org/) could help us here
+* The 'match_value' is supposed to represent a % value of how the streamer matched against the answers provided, BUT: we don't have a system or algorithm in place to actually calculate this yet. So right now I just set the 1st result as 98% (jinri), and the other 4 streamers get random values. 
+* The 'Viewing hours" question (question #5) doesn't provide anything to the database query yet. We receive that data but the SQL WHERE methods have not been implemented, so right now it's just doing nothing. 
+
 # Update Sept 18
 Major updates in backend and custom admin script to facilitate dev works.
 
