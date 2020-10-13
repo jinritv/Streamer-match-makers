@@ -16,37 +16,51 @@ const {Streamers, StreamersStats, Languages, Categories, StreamersNationalities}
 async function calculateStreamer(quizValues, callback) {
   // User answers passed from frontend
   const prefs = quizValues.UsersAnswers || {};  
-  console.log(`UserAnswers: ${prefs}`);
+  console.log(`UserAnswers:`,prefs);
   
   // Two different types of queries needed for Sequelize
   const whereQuery = {};  // fields in streamers table
+  whereQuery.dob_year = {
+    [Op.between]: getStreamerAgeRange(prefs.age)
+  };
+
+
   const includeQuery = [];  // fields in other tables
 
   // Build query related to streamers table
+  /*
   const usesCam = getYesOrNo(prefs.cam);
   if(usesCam !== null) {
     whereQuery.uses_cam = usesCam;
   }
+  */
+
+  /*
   const isMature = getYesOrNo(prefs.mature);
   if(isMature !== null) {
     whereQuery.mature_stream = getYesOrNo(prefs.mature);
   }
+  */
 
   // Build query related to streamers_stats table
   const statWhereQuery = {};
+
+  /*
   const voiceValue = getVoice(prefs.voice);
   if(voiceValue !== null) {
     statWhereQuery.voice = voiceValue;
   }
+  */
   statWhereQuery.avg_viewers = {
     [Op.between]: getMinMaxViewers(prefs.average_viewers)
   };
+  /*
   statWhereQuery.followers = {
     [Op.between]: getFollowerCountRange(prefs.follower_count)
   };
-  /*statWhereQuery.streamer_age = {
-    [Op.between]: getStreamerAgeRange(prefs.age)
-  };*/
+  */
+  
+  
   includeQuery.push({
     model: StreamersStats,
     where: statWhereQuery,
@@ -78,13 +92,41 @@ async function calculateStreamer(quizValues, callback) {
     console.log(`Found ${usernames.length} matching streamers`);
     console.log(`They are: ${usernames}`);
 
+    // The search is broken so we send the first 5 entries from the DB so
+    // we can at least handle the data properly client-side once the
+    // query actually works.
     if(streamers.length === 0) {
-      callback({user_name: "No One!"}, null);
+      let fakeStreamersResult = await Streamers.findAll({
+        attributes: ['user_name','logo'],
+        where: {
+          [Op.or]: [
+            { id: 1 },
+            { id: 2 },
+            { id: 3 },
+            { id: 4 },
+            { id: 5 }
+          ]
+        }
+      });
+
+      // add some kind of match value in percentage (example 98% match)
+      const matchedStreamers = fakeStreamersResult.map(streamer=> {
+        let streamerObj = Object.assign({}, {user_name: streamer.user_name, logo: streamer.logo });
+        let matchValue = Math.floor(Math.random() * 101); // some random value (for now)
+
+        // if it's jinri, put a high match percentage :)
+        if(streamer.user_name==='jinritv'){
+          matchValue = 98;
+        } 
+        streamerObj.match_value = matchValue;
+        return streamerObj;
+      })
+      callback(matchedStreamers, null);
     }
     else {  
       const result = {
-        // Returns the first one for now if there are multiple ones
-        user_name: usernames.join(","),
+
+        streamers: streamers,
       }
       callback(result, null);
     }
@@ -92,6 +134,7 @@ async function calculateStreamer(quizValues, callback) {
   catch(error) {
     callback(null, error.message);
   }
+  
 }
 
 
@@ -119,14 +162,15 @@ function getFollowerCountRange(follower_count) {
   return [0, 1000000] // Returns all if not selected
 }
 
-
+// the database only contains a column for the DOB year,
+// not age, so we need to calculate that first
 function getStreamerAgeRange(ageRange) {
-  if(!ageRange) {
-    return [25, 75];
-  }
-  const minAge = Number(ageRange.min || 25);
-  const maxAge = Number(ageRange.max || 75);
-  return [minAge, maxAge];
+  let thisYear = new Date().getFullYear();
+
+  const minDOB = Number(thisYear-ageRange.min || thisYear-25);
+  const maxDOB = Number(thisYear-ageRange.max || thisYear-75);
+  
+  return [minDOB, maxDOB];
 }
 
 

@@ -2,6 +2,35 @@
 	background: #bf7dd3;
 }
 
+.streamer-info-container {
+    background: #F8E9FB; 
+    border-radius: 24px; 
+    border-color:#856585; 
+    border-width: 2px; 
+    border-style: solid;
+}
+
+.svg-buttons {
+    filter: drop-shadow(0px 8px 12px rgba(218, 185, 223, 0.63))
+}
+
+.svg-buttons:hover svg line {
+    stroke: #856585;
+}
+
+.modal-footer{
+    position: absolute; 
+    bottom: 0; 
+    left: 0; 
+    right:0;
+    margin-bottom: 12px;
+}
+
+.modal-body {
+    position: relative;
+    flex: none;
+    padding: 4rem 1rem;
+}
 
 .slider.slider-horizontal {
     width: 510px;
@@ -151,10 +180,18 @@
 
 .btn-quiz-continue {
     color:#fff !important;
-    background-color:#DAB9DF !important;
+    background-color:#DAB9DF;
     border-radius: 100px !important;
     margin-bottom: 12px;
     max-width:50%;
+    filter: drop-shadow(0px 8px 12px #dab9dfe7)
+}
+
+.btn-quiz-continue.disabled,.btn-quiz-answer:disabled{
+    color:#fff;
+    background-color:#C1BFBF;
+    border-color:#C1BFBF;
+    filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.233))
 }
 
 .btn-quiz-answer {
@@ -162,27 +199,32 @@
     padding:12px;
     width:100%;
  padding-bottom:12px;
-    background-color:#FDF8FE;
+ margin-right: 6px;
+ margin-left: 6px;
+ white-space: nowrap;
+
     border-color:#DAB9DF;
-    border-width: 4px;
+    border-width: 2px;
+    border-radius: 100px;
 }
+
 .btn-quiz-answer.focus, .btn-quiz-answer:focus,.btn-quiz-answer:hover {
     color:#fff;
-    background-color:#bf7dd3;
-    border-color:#5f355f
+    background-color:#d8c2db;
+    border-color:#856585
 }
 .btn-quiz-answer.focus,.btn-quiz-answer:focus {
     box-shadow:0 0 0 .2rem rgba(113, 60, 198, 0.5)
 }
 .btn-quiz-answer.disabled,.btn-quiz-answer:disabled{
     color:#fff;
-    background-color:#1abc9c;
-    border-color:#1abc9c
+    background-color:#C1BFBF;
+    border-color:#C1BFBF
 }
 .btn-quiz-answer:not(:disabled):not(.disabled).active,.btn-quiz-answer:not(:disabled):not(.disabled):active,.show>.btn-quiz-answer.dropdown-toggle {
-    color:#fff;
-    background-color:#b569cc;
-    border-color:#5e3f5e
+    color:#000000;
+    background-color:#DAB9DF;
+    border-color:#DAB9DF
 }
 
 .navbar-brand {
@@ -290,7 +332,7 @@
 }
 
 .modal-content {
-    min-height: 508px;
+    min-height: 525px;
 }
 
 .modal-dialog {
