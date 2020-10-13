@@ -29,8 +29,7 @@ function getSequelizeFromConfig() {
             rejectUnauthorized: false
           }
         }
-      },
-    
+      }
     );
   }
   return sequelize;

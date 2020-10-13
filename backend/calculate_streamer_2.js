@@ -1,6 +1,6 @@
 
 const {Op} = require("sequelize");
-const {Streamers, StreamersStats, Languages, Categories} = require("../models/models");
+const {Streamers, StreamersStats, Languages, Categories, StreamersNationalities} = require("../models/models");
 
 
 /**
@@ -125,8 +125,8 @@ async function calculateStreamer(quizValues, callback) {
     }
     else {  
       const result = {
-        streamers: streamers,
 
+        streamers: streamers,
       }
       callback(result, null);
     }
