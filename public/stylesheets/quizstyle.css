@@ -235,6 +235,7 @@
 .progress {
     margin-left: 24px;
     margin-right: 24px;
+    position: relative;
 }
 
 .progress-bar {
@@ -244,8 +245,36 @@
     text-align:center;
     white-space:nowrap;
     background-color:#ffd4ee;
-    transition:width .6s ease
-   }
+    transition:width .6s ease;
+}
+
+.progress-bar-checkpoint-20 {
+    position: absolute;
+    border-right: 4px solid white;
+    width: 20%;
+    height: 1rem;
+}
+
+.progress-bar-checkpoint-40 {
+    position: absolute;
+    border-right: 4px solid white;
+    width: 40%;
+    height: 1rem;
+}
+
+.progress-bar-checkpoint-60 {
+    position: absolute;
+    border-right: 4px solid white;
+    width: 60%;
+    height: 1rem;
+}
+
+.progress-bar-checkpoint-80 {
+    position: absolute;
+    border-right: 4px solid white;
+    width: 80%;
+    height: 1rem;
+}
 
 .welcome-container {
     margin-top:150px;
