@@ -3,6 +3,11 @@ Creating a website to match the streamer of your type:
 [https://streamer-match-maker.herokuapp.com/](https://streamer-match-maker.herokuapp.com/)
 
 
+# Update Oct 19
+jinritv/Streamer-match-makers is now the central repository, and code from other places is merged into this repository.
+
+All previous commit histories and list of contributors (from this and other repositories) are also merged here.
+
 # Update Oct 12
 Updated the quiz and the database query logic, and many UI changes
 * quiz is now only 5 questions long, as decided on stream
