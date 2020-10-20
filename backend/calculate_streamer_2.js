@@ -257,8 +257,8 @@ function matchStreamers(prefs, streamers){
      }
     });
 	// count total match with total input (floating number)
-	if streamersLanguage.length != 0 {
-	   scores[streamer.user_name] += totalLangMatch * 1.0 / streamersLanguage.length
+	if (streamersLanguages.length != 0) {
+	   scores[streamer.user_name] += totalLangMatch * 1.0 / streamersLanguages.length
 	}
     totalAttributes += 1;
 
@@ -279,7 +279,7 @@ function matchStreamers(prefs, streamers){
         // totalCategoryAttributes -= 1;
      }
     });
-	if streamersCategories.length != 0 {
+	if (streamersCategories.length != 0) {
 		scores[streamer.user_name] += totalCatMatch * 1.0 / streamersCategories.length
 	}
     totalAttributes += 1;
