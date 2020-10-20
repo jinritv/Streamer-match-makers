@@ -244,17 +244,23 @@ function matchStreamers(prefs, streamers){
     // add together ALL languages (we don't care about duplicates yet)
     let totalLanguageAttributes = streamersLanguages.length + preferredLanguages.length;
     
+	let totalLangMatch = 0;
     streamersLanguages.forEach(strLang=>{
       if(preferredLanguages.includes(strLang)){
         // if the viewer selected that language, add it as a match
-        scores[streamer.user_name] += AttributePoints.language;
+        // scores[streamer.user_name] += AttributePoints.language;
+		totalLangMatch += 1;
 
         // and this means there are duplicates in the two datasets, 
         // we reduce the TOTAL attributes by 1 (removing the duplicate)
-        totalLanguageAttributes -= 1;
+        // totalLanguageAttributes -= 1;
      }
     });
-    totalAttributes += totalLanguageAttributes;
+	// count total match with total input (floating number)
+	if streamersLanguage.length != 0 {
+	   scores[streamer.user_name] += totalLangMatch * 1.0 / streamersLanguage.length
+	}
+    totalAttributes += 1;
 
     //check against stream content
     let streamersCategories = streamer.Categories.map(cat=>cat.category);
@@ -262,16 +268,21 @@ function matchStreamers(prefs, streamers){
 
     let totalCategoryAttributes = streamersCategories.length + preferredCategories.length;
    
+	let totalCatMatch = 0;
     preferredCategories.forEach(cat=>{
       if(streamersCategories.includes(cat)){
         // if the streamer's category, increase the score
-        scores[streamer.user_name] += AttributePoints.content;
+        // scores[streamer.user_name] += AttributePoints.content;
+		totalCatMatch += 1;
 
         // and remove the total by 1 so we dont have duplicate
-        totalCategoryAttributes -= 1;
+        // totalCategoryAttributes -= 1;
      }
     });
-    totalAttributes += totalCategoryAttributes;
+	if streamersCategories.length != 0 {
+		scores[streamer.user_name] += totalCatMatch * 1.0 / streamersCategories.length
+	}
+    totalAttributes += 1;
 
     // TODO check against watch time (stream start/end time)
       
