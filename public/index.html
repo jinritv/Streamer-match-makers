@@ -139,10 +139,11 @@
         <h5 class="modal-title w-100" id="quiz-modal-label">Question 1 of 5</h5>
       </div>
       <div class="progress">
-        <div class="progress-bar-checkpoint-20"><span></span></div>
-        <div class="progress-bar-checkpoint-40"><span></span></div>
-        <div class="progress-bar-checkpoint-60"><span></span></div>
-        <div class="progress-bar-checkpoint-80"><span></span></div>
+        <div id="progress-bar-1" class="progress-bar-checkpoint-20" onclick="goToModal()"><span></span></div>
+        <div id="progress-bar-2" class="progress-bar-checkpoint-40" onclick="goToModal()"><span></span></div>
+        <div id="progress-bar-3" class="progress-bar-checkpoint-60" onclick="goToModal()"><span></span></div>
+        <div id="progress-bar-4" class="progress-bar-checkpoint-80" onclick="goToModal()"><span></span></div>
+        <div id="progress-bar-5" class="progress-bar-checkpoint-100" onclick="goToModal()"><span></span></div>
         <div id="quiz-modal-progress-bar" class="progress-bar" role="progressbar" style="width: 20%;"><span></span>
         </div>
       </div>
@@ -562,6 +563,11 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="modal-footer justify-content-center" style="position: relative;">
+        <button id="restart-button" type="button" onclick="restartQuiz()"
+          class="btn btn-quiz-answer btn-quiz-continue">
+          <span>Restart</span></button>
       </div>
       <div class="modal-footer justify-content-center">
         <button id="continue-button" type="button" onclick="nextQuestion()"
