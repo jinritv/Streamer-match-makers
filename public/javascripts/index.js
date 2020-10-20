@@ -122,7 +122,8 @@ function setupElements() {
   unselectAllRadios();
   unselectAllSwitches();
   // disable the continue button by default
-  $(`#continue-button`).prop('disabled',true)
+  $(`#continue-button`).prop('disabled',true);
+  $(`#restart-button`).hide();
 }
 
 function setSliderEventHandlers(slider){
@@ -311,13 +312,14 @@ function nextQuestion() {
   // see if we are on the last question
   if (CurrentQuestion == LastQuestion) {
     $('#quiz-modal-label').text(`Results`);
-    $(`#question${CurrentQuestion}-container`).addClass("fade-out")
-    $("#continue-button").hide()
+    $(`#question${CurrentQuestion}-container`).addClass("fade-out");
+    $("#continue-button").hide();
     // wait 250 ms before sliding in next question
     setTimeout(() => {
       $(`#question${CurrentQuestion}-container`).hide()
       $(`#question-result-container`).addClass("fade-in")
       $(`#question-result-container`).show()
+      
 
       calculateQuizResult();
 
@@ -351,6 +353,33 @@ function nextQuestion() {
       $(`#question${CurrentQuestion}-container`).show()
     }, 250);
   }
+}
+
+function restartQuiz() {
+  // reset the global variables
+  CurrentQuestion = 1;
+  UsersAnswers = {};
+
+  // get rid of unwanted effects
+  $(`*`).removeClass(`fade-out`);
+  $(`button.active`).removeClass(`active`);
+
+  //initialization again
+  setupElements();
+  setupCallbacks();
+
+  // change the title
+  $('#quiz-modal-label').text(`Question 1 of ${LastQuestion}`);
+
+  // show the first quiz container
+  $(`#question1-container`).addClass("fade-in")
+  $(`#question1-container`).show();
+
+  // show the continue button
+  $(`#continue-button`).show();
+
+  // adjust progress bar to first question
+  adjustProgressBar(0);
 }
 
 function adjustProgressBar(index) {
@@ -402,8 +431,9 @@ function calculateQuizResult() {
         } else {
           console.log(data.Results);
           displayStreamerResults(data.Results);
-          $(`#streamer-reveal-container`).addClass("fade-in")
-          $(`#streamer-reveal-container`).show()
+          $(`#streamer-reveal-container`).addClass("fade-in");
+          $(`#streamer-reveal-container`).show();
+          $("#restart-button").show();
           console.log("complete.")
         }
       }, 350);

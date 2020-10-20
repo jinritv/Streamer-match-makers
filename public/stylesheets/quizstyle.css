@@ -227,6 +227,13 @@
     border-color:#DAB9DF
 }
 
+.btn-quiz-restart {
+    color: #fff;
+    background-color: #DAB9DF;
+    border-color:#DAB9DF;
+    filter: drop-shadow(0px 8px 12px #dab9dfe7)
+}
+
 .navbar-brand {
     color: #000000 !important;
     font-family: "FF Real Head" !important
@@ -249,31 +256,47 @@
 }
 
 .progress-bar-checkpoint-20 {
+    left: 0;
     position: absolute;
     border-right: 4px solid white;
     width: 20%;
     height: 1rem;
+    cursor: pointer;
 }
 
 .progress-bar-checkpoint-40 {
+    left: 20%;
     position: absolute;
     border-right: 4px solid white;
-    width: 40%;
+    width: 20%;
     height: 1rem;
+    cursor: pointer;
 }
 
 .progress-bar-checkpoint-60 {
+    left: 40%;
     position: absolute;
     border-right: 4px solid white;
-    width: 60%;
+    width: 20%;
     height: 1rem;
+    cursor: pointer;
 }
 
 .progress-bar-checkpoint-80 {
+    left: 60%;
     position: absolute;
     border-right: 4px solid white;
-    width: 80%;
+    width: 20%;
     height: 1rem;
+    cursor: pointer;
+}
+
+.progress-bar-checkpoint-100 {
+    left: 80%;
+    position: absolute;
+    width: 20%;
+    height: 1rem;
+    cursor: pointer;
 }
 
 .welcome-container {
