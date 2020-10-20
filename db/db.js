@@ -15,6 +15,15 @@ let sequelize = null;
 
 function getSequelizeFromConfig() {
   if(!sequelize) {
+    // Different SSL option for localhost and remote connection
+    let dialectOptions = {};
+    if (isRemote(dbConfig.host)) {
+      dialectOptions.ssl = {
+        require: true,
+        rejectUnauthorized: false
+      };
+    }
+
     sequelize = new Sequelize(
       dbConfig.dbName,
       dbConfig.username,
@@ -23,16 +32,24 @@ function getSequelizeFromConfig() {
         host: dbConfig.host,
         port: dbConfig.port,
         dialect: dbConfig.dialect,
-        dialectOptions: {
-          ssl: {
-            require: true,
-            rejectUnauthorized: false
-          }
-        }
+        dialectOptions: dialectOptions
       }
     );
   }
   return sequelize;
+}
+
+
+/**
+ * Very basic check if the hostname is remote address
+ * A hostname is treated as remote if it is not "localhost" or "127.0.0.1"
+ */
+function isRemote(host) {
+  if (!host) {  // This is input error and will be handled by Sequelize later
+    return true;
+  }
+  const trimmed = host.trim().toLowerCase();
+  return trimmed !== 'localhost' && trimmed !== '127.0.0.1';
 }
 
 
