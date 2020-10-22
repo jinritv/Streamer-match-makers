@@ -3,6 +3,9 @@ Creating a website to match the streamer of your type:
 [https://streamer-match-maker.herokuapp.com/](https://streamer-match-maker.herokuapp.com/)
 
 
+# Update Oct 22
+All code changes in other repositories are merged. streamer-mtchmkr-postgres repositories should not be used anymore, and people should fork jinritv/Streamer-match-makers from now on.
+
 # Update Oct 19
 jinritv/Streamer-match-makers is now the central repository, and code from other places is merged into this repository.
 
