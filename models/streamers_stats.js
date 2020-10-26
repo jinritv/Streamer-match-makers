@@ -43,6 +43,10 @@ class StreamersStats extends Sequelize.Model {
     viewer_participation: {
       type: DataTypes.INTEGER,
       allowNull: true
+    },
+    start_stream: {
+      type: DataTypes.TIME,
+      allowNull: true
     }
   }, {
     sequelize,

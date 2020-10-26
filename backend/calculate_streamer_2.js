@@ -2,6 +2,50 @@
 const {Op} = require("sequelize");
 const {Streamers, StreamersStats, Languages, Categories, StreamersNationalities} = require("../models/models");
 
+// holds the values for the 'Points' of each attribute (an alternative to weighting?)
+const ATTRIBUTE_POINTS = {
+  age: 0.5,
+  avg_viewers: 1.0,
+  language: 1.0,
+  content: 1.5,
+  watchtime: 1.0,
+}
+
+const SCORE_NEAR_THRESHOLD = {
+  age: 5,
+  avg_viewers: 300,
+}
+
+// total of maximum score
+let TOTAL_ATTRIBUTES =  0;
+for (const [k, v] of Object.entries(ATTRIBUTE_POINTS)) {
+  TOTAL_ATTRIBUTES += v;
+}
+
+
+// key is content filter (input)
+// value is list of streamer category that can be considered
+// as criteria of the filter
+// Ex: If input is cooking, streamer must have cooking in it's category
+// but if input is food, streamer can have either food, or cooking
+const CAT_MAP = {
+  "dancing": ["dancing"],
+  "irl": ["irl", "irl outdoors"],
+  "music": ["music & performing arts", "singing", "piano", "music"],
+  "sciencetech": ["science & technology", "geoguessr"],
+  // HACK: For now, recreated_database.js splites categories in spreadsheet by comma or slash,
+  // resulting in "Just Chatting (yoga, cooking)" splited into "Just Chatting (yoga" and "cooking)"
+  // Should be fixed later
+  "yoga": ["just chatting (yoga"],
+  "movies": ["movies with viewers on discord"],
+  "outdoors": ["irl outdoors", "travel"],
+  "food": ["food", "cooking", "pepega cooking"],
+  "cooking": ["cooking", "pepega cooking"],
+  "ASMR": ["asmr"],
+  "games": ["games", "pepega gaming", "half-life", "pubg"],
+  "justchatting": ["irl", "just chatting", "pepega chatting"],
+}
+
 
 /**
  * Main business logic to find a matching streamer from user answers.
@@ -44,31 +88,44 @@ async function calculateStreamer(quizValues, callback) {
   const allStreamers = JSON.parse(JSON.stringify(allStreamersArray));
   //console.log(allStreamers)
   // for each streamer we run the matchingFunction to get a value
-  const matchedStreamers = matchStreamers(prefs, allStreamers);
+  const matchResult = matchStreamers(prefs, allStreamers);
+  let matchedStreamers = matchResult[0];
+  let topStats = matchResult[1];
 
   // get required data for our streamers
-  let streamersResult = await Streamers.findAll({
-    attributes: ['user_name','logo'],
+  let orQuery = [];
+  matchedStreamers.forEach(m => {
+    orQuery.push({
+      id: m.id,
+    })
+  });
+  let rows = await Streamers.findAll({
+    attributes: ['id', 'user_name','logo'],
     where: {
-      [Op.or]: [
-        { id: matchedStreamers[0].id },
-        { id: matchedStreamers[1].id },
-        { id: matchedStreamers[2].id },
-        { id: matchedStreamers[3].id },
-        { id: matchedStreamers[4].id }
-      ]
+      [Op.or]: orQuery,
     }
   });
 
-  // add the match value to the result
-  const matchedStreamersResult = streamersResult.map((streamer,index)=> {
-    let streamerObj = Object.assign({}, {user_name: streamer.user_name, logo: streamer.logo });
+  let streamersMap = {};
+  rows.forEach(r => {
+    streamersMap[r.id] = r;
+  });
 
-    streamerObj.match_value = matchedStreamers[index].match_percent; // add our calculated match %
+  // add the match value to the result
+  const matchedStreamersResult = matchedStreamers.map(streamer => {
+    if (!(streamer.id in streamersMap)) {
+      throw "Streamer id ${streamer.id} not found in DB";
+    }
+    let r = streamersMap[streamer.id];
+    let streamerObj = Object.assign({}, {id: r.id, user_name: r.user_name, logo: r.logo });
+    streamerObj.match_value = streamer.match_percent; // add our calculated match %
     return streamerObj;
   })
 
-  callback(matchedStreamersResult,null);
+  callback({
+    "result": matchedStreamersResult,
+    "stats": topStats,
+  }, null);
 
   /*
   // Two different types of queries needed for Sequelize
@@ -196,99 +253,109 @@ async function calculateStreamer(quizValues, callback) {
 */
 
 function matchStreamers(prefs, streamers){
-  // scores will keep track of all the values for each streamer as we iterate through the attributes
-  let scores = {};
-
-  // holds the values for the 'Points' of each attribute (an alternative to weighting?)
-  const AttributePoints = {
-    age: 1,
-    avg_viewers: 1,
-    language: 1,
-    content: 1,
-    watchtime: 1
-  }
+  // stats to help score debugging
+  let stats = {};
 
   // array to store the matched streamers
   let matchValues = [];
+  let preferredLanguages = getLanguageNames(prefs.languages);
+  let normalizedWatchtime = normalizeWatchtime(prefs.watchtime);
+  console.log("Input categories", prefs.content);
+  console.log("Normalized watchtime", normalizedWatchtime);
 
   streamers.forEach(streamer=>{
-    let totalAttributes = 0;
     // create an entry for the streamer in the score object
-    scores[streamer.user_name] = 0;
+    let scores = 0.0;
+    stats[streamer.id] = {
+      "Age": 0,
+      "Viewers": 0,
+      "Language": 0,
+      "Content": 0,
+      "Watchtime": 0,
+    };
 
     // check against age preference
     if(streamer.dob_year){
       let DOBrange = getStreamerAgeRange(prefs.age);
-      if(streamer.dob_year >= DOBrange[0] && streamer.dob_year <= DOBrange[1]){
-        // if the dob is within range, increase the score
-        scores[streamer.user_name] += AttributePoints.age
-      }
+      let score = countNearScore(
+        ATTRIBUTE_POINTS.age,
+        streamer.dob_year,
+        DOBrange[0],
+        DOBrange[1],
+        SCORE_NEAR_THRESHOLD.age,
+      );
+      scores += score;
+      stats[streamer.id]["Age"] = Math.ceil(score / ATTRIBUTE_POINTS.age * 100);
     }
-    totalAttributes += 1; 
 
     // check against average viewers preference
     if(streamer.StreamersStat){
       let viewerRange = getMinMaxViewers(prefs.average_viewers);
-      if(streamer.StreamersStat.avg_viewers >= viewerRange[0] && streamer.StreamersStat.avg_viewers <= viewerRange[1] ){
-          // if the average viewers is within range, increase the score
-          scores[streamer.user_name] += AttributePoints.avg_viewers;
-      }
+      let score = countNearScore(
+        ATTRIBUTE_POINTS.avg_viewers,
+        streamer.StreamersStat.avg_viewers,
+        viewerRange[0],
+        viewerRange[1],
+        SCORE_NEAR_THRESHOLD.avg_viewers,
+      );
+      scores += score;
+      stats[streamer.id]["Viewers"] = Math.ceil(score / ATTRIBUTE_POINTS.avg_viewers * 100);
     }
-    totalAttributes += 1;
 
     // check against language preference
     // get the streamers and the user's language arrays
+    let totalLangMatch = 0;
     let streamersLanguages = streamer.Languages.map(lang=>lang.language);
-    let preferredLanguages = getLanguageNames(prefs.languages);
-
-    // add together ALL languages (we don't care about duplicates yet)
-    let totalLanguageAttributes = streamersLanguages.length + preferredLanguages.length;
-    
-	let totalLangMatch = 0;
-    streamersLanguages.forEach(strLang=>{
-      if(preferredLanguages.includes(strLang)){
-        // if the viewer selected that language, add it as a match
-        // scores[streamer.user_name] += AttributePoints.language;
-		totalLangMatch += 1;
-
-        // and this means there are duplicates in the two datasets, 
-        // we reduce the TOTAL attributes by 1 (removing the duplicate)
-        // totalLanguageAttributes -= 1;
+    preferredLanguages.forEach(strLang=>{
+      if(streamersLanguages.includes(strLang)){
+        totalLangMatch += 1;
      }
     });
-	// count total match with total input (floating number)
-	if (streamersLanguages.length != 0) {
-	   scores[streamer.user_name] += totalLangMatch * 1.0 / streamersLanguages.length
-	}
-    totalAttributes += 1;
+    if (preferredLanguages.length != 0) {
+      let langScore = totalLangMatch * ATTRIBUTE_POINTS.language / preferredLanguages.length;
+      scores += langScore;
+      stats[streamer.id]["Language"] = Math.ceil(langScore / ATTRIBUTE_POINTS.language * 100);
+    }
 
     //check against stream content
+    let totalCatMatch = 0;
     let streamersCategories = streamer.Categories.map(cat=>cat.category);
-    let preferredCategories = getCategories(prefs.content);
+    prefs.content.forEach(parentCat=>{
+      if (!(parentCat in CAT_MAP)) {
+        throw `${parentCat} does not exist in category map`
+      }
 
-    let totalCategoryAttributes = streamersCategories.length + preferredCategories.length;
-   
-	let totalCatMatch = 0;
-    preferredCategories.forEach(cat=>{
-      if(streamersCategories.includes(cat)){
-        // if the streamer's category, increase the score
-        // scores[streamer.user_name] += AttributePoints.content;
-		totalCatMatch += 1;
-
-        // and remove the total by 1 so we dont have duplicate
-        // totalCategoryAttributes -= 1;
-     }
+      let catMap = CAT_MAP[parentCat];
+      for (var i = 0; i < catMap.length; i++) {
+        if(streamersCategories.includes(catMap[i])){
+          totalCatMatch += 1;
+          break
+        }
+      }
     });
-	if (streamersCategories.length != 0) {
-		scores[streamer.user_name] += totalCatMatch * 1.0 / streamersCategories.length
-	}
-    totalAttributes += 1;
+    if (prefs.content.length != 0) {
+      let catScore = totalCatMatch * ATTRIBUTE_POINTS.content / prefs.content.length;
+      scores += catScore;
+      stats[streamer.id]["Content"] = Math.ceil(catScore / ATTRIBUTE_POINTS.content * 100);
+    }
 
-    // TODO check against watch time (stream start/end time)
-      
+    // check for watch time
+    let watchtimeScore = calculateWatchtimeScore(
+      normalizedWatchtime,
+      streamer.StreamersStat.start_stream,
+      streamer.StreamersStat.avg_stream_duration
+    ) * ATTRIBUTE_POINTS.watchtime;
+    scores += watchtimeScore;
+    stats[streamer.id]["Watchtime"] = Math.ceil(watchtimeScore / ATTRIBUTE_POINTS.watchtime * 100);
+
     // finally calculate the match % for our matched streamers and add them to the object we return back to the client
-    let similarity = Math.round((scores[streamer.user_name]/totalAttributes)*100);
-    matchValues.push({id: streamer.id, streamer:[streamer.user_name], match_percent:similarity});
+    let similarity = Math.round((scores/TOTAL_ATTRIBUTES)*100);
+    matchValues.push({
+      id: streamer.id,
+      streamer:streamer.user_name,
+      avg_viewer: streamer.StreamersStat.avg_viewers,
+      match_percent:similarity
+    });
   })
   
   // sort the streamers
@@ -296,19 +363,34 @@ function matchStreamers(prefs, streamers){
 
   // we only want top 5
   let topStreamers = matchValues.slice(0,5);
+  let topStats = collectStats(topStreamers, stats);
   console.log(topStreamers);
-  return topStreamers;
+  return [topStreamers, topStats];
 }
 
 // sorts the list of streamers by match percentage (highest first)
+// if percentage is the same, get random so we get different streamer
 function orderStreamers(a, b) {
-  if ( a.match_percent > b.match_percent ){
+  if (a.match_percent > b.match_percent) {
     return -1;
   }
-  if ( a.match_percent < b.match_percent ){
+  if (a.match_percent < b.match_percent) {
     return 1;
   }
-  return 0;
+
+  if (Math.random() > 0.5) {
+    return 1;
+  }
+
+  return -1;
+}
+
+function collectStats(topStreamers, stats) {
+  let topStats = {};
+  topStreamers.forEach(streamer=>{
+    topStats[streamer.id] = stats[streamer.id];
+  });
+  return topStats
 }
 
 function getMinMaxViewers(average_viewers) {
@@ -319,6 +401,30 @@ function getMinMaxViewers(average_viewers) {
   const minAvgViewer = Number(average_viewers.min || 2500);
   const maxAvgViewer = Number(average_viewers.max || 7500);
   return [minAvgViewer, maxAvgViewer];
+}
+
+// base score is score multiplier
+// val is actual value (input)
+// minimum and max value is range for the val to get 100% base score
+// threshold is maximum difference of value with range
+// value difference larger than threshold = 0
+function countNearScore(base_score, val, min_val, max_val, threshold) {
+  if (val >= min_val && val <= max_val) {
+    return base_score
+  }
+
+  let abs_diff = threshold + 1;
+  if (val < min_val) {
+    abs_diff = min_val - val;
+  } else if (val > max_val) {
+    abs_diff = val - max_val;
+  }
+
+  if (abs_diff > threshold) {
+    return 0
+  }
+
+  return base_score * Math.log(threshold + 1 - abs_diff) / Math.log(threshold + 1);
 }
 
 
@@ -344,41 +450,6 @@ function getStreamerAgeRange(ageRange) {
   const minDOB = Number(thisYear-ageRange.max || thisYear-75);
   
   return [minDOB, maxDOB];
-}
-
-
-function getCategories(contents) {
-  if(!contents) {
-    return [];
-  }
-
-  // Match frontend content names and backend category names
-  // TODO: move this out of function to prevent duplicate creations per function call
-  const nameMap = {
-    "dancing": ["dancing"],
-    "irl": ["irl", "pepega chatting", "just chatting"],
-    "music": ["music & performing arts", "singing", "piano", "music"],
-    "sciencetech": ["science & technology", "geoguessr"],
-    // HACK: For now, recreated_database.js splites categories in spreadsheet by comma or slash,
-    // resulting in "Just Chatting (yoga, cooking)" splited into "Just Chatting (yoga" and "cooking)"
-    // Should be fixed later
-    "yoga": ["just chatting (yoga"],
-    "movies": ["movies with viewers on discord"],
-    "outdoors": ["irl outdoors", "travel"],
-    "food": ["food", "cooking"],
-    "cooking": ["food", "pepega cooking", "cooking"],
-    "ASMR": ["asmr"],
-    "games": ["games", "pepega gaming"],
-    "justchatting": ["irl", "pepega chatting", "just chatting"],
-  }
-
-  const allCategories = [];
-  for(let content of contents) {
-    const categories = nameMap[content] || [];
-    allCategories.push(...categories);
-  }
-  // Unique categories
-  return [...new Set(allCategories)];
 }
 
 
@@ -413,6 +484,105 @@ function getYesOrNo(condition) {
     return false;
   }
   return condition.toString().trim().toLowerCase() === "yes";
+}
+
+// only handle weekdays because thats all we have
+// on DB
+function normalizeWatchtime(input) {
+  if (input == undefined || !input.watchesWeekdays) {
+    return null
+  }
+
+  let from = new Date("January 5 1980 " + input.weekdayFrom);
+
+  // handling next date
+  let to_date = "5";
+  if (parseInt(input.weekdayFrom.replace(":", "")) > parseInt(input.weekdayTo.replace(":", ""))) {
+    to_date = "6";
+  }
+  let to = new Date("January "+to_date+" 1980 " + input.weekdayTo);
+
+  let fromT = new Date(from.getTime());
+  fromT.setDate(fromT.getDate() + 1);
+  let toT = new Date(to.getTime());
+  toT.setDate(toT.getDate() + 1);
+
+  let fromY = new Date(from.getTime());
+  fromY.setDate(fromY.getDate() - 1);
+  let toY = new Date(to.getTime());
+  toY.setDate(toY.getDate() - 1);
+
+  return [from, to, fromT, toT, fromY, toY]
+}
+
+// going to assume most streamers stream for 3 hours
+// if not defined in DB
+function calculateWatchtimeScore(input, start_time, stream_duration) {
+  if (input == null) {
+    return 1
+  }
+
+  if (start_time == null) {
+    return 0
+  }
+
+  if (stream_duration == null) {
+    stream_duration = 3;
+  }
+
+  let st_from = new Date("January 5 1980 "+start_time);
+  let st_to = new Date("January 5 1980 "+start_time);
+  st_to.setHours(st_to.getHours() + stream_duration);
+
+  // current
+  let s1 = compareTime(st_from, st_to, input[0], input[1]);
+  if (s1 != 0) {
+    return s1
+  }
+
+  // tomorrow
+  let s2 = compareTime(st_from, st_to, input[2], input[3]);
+  if (s2 != 0) {
+    return s2
+  }
+
+  // yesterday
+  return compareTime(st_from, st_to, input[4], input[5]);
+}
+
+function compareTime(st_from, st_to, d1, d2) {
+  let watch_duration = d2 - d1;
+  // check for full watchtime, stream duration is longer than input (within)
+  // a   |   |   b
+  // a: stream from
+  // b: stream end
+  // |: input
+  if (d1 >= st_from && d2 <= st_to) {
+    return 1
+  }
+
+  // input is longer than stream (surrounding)
+  // |  a   b  |
+  if (st_from >= d1 && st_to <= d2) {
+    return 1
+  }
+
+  // partial early
+  // | a | b
+  if (d1 < st_from && d2 < st_to && d2 > st_from) {
+    let watched = d2 - st_from;
+    return watched *1.0 / watch_duration;
+  }
+
+  // partial late
+  // a | b |
+  if (st_from < d1 && st_to < d2 && d1 < st_to) {
+    let watched = st_to - d1;
+    return watched *1.0 / watch_duration;
+  }
+
+  // outside range
+  return 0
 }
 
 

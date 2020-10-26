@@ -317,12 +317,12 @@
 
                 <div class="custom-control custom-switch" style="margin-right:48px;">
                   <input type="checkbox" class="custom-control-input" id="switch_watchtime_weekdays"
-                    onclick="selectSwitch('watchtime','weekdays')">
+                    onclick="selectSwitch('watchtime','weekdays'); captureWatchtimeInput()">
                   <label class="custom-control-label" for="switch_watchtime_weekdays">Weekdays</label>
                 </div>
                 <div class="custom-control custom-switch">
                   <input type="checkbox" class="custom-control-input" id="switch_watchtime_weekends"
-                    onclick="selectSwitch('watchtime','weekends')">
+                    onclick="selectSwitch('watchtime','weekends'); console.log('Weekends not handled yet')">
                   <label class="custom-control-label" for="switch_watchtime_weekends">Weekends</label>
                 </div>
               </div>
