@@ -29,10 +29,12 @@ It should display the version number of Node installed (v12.18.3).
 
 Download PostgreSQL [here](https://www.postgresql.org/download/). When you install, it is strongly recommended including pgAdmin as a part of the installation package.
 
-After the installation is complete, please go to the project root directory and open `.env` file with a text editor. Add DB credentials here. Please make sure to not commit the `.env` file that contains the connection string.
-
 ## Verify Postgresql database server connection
 
+### Environment setup
+Please go to the project root directory and open `.env` file with a text editor. Add DB credentials here. Please make sure to not commit the `.env` file that contains the connection string.
+
+### DB connection test
 Run test_db_connection.js as instructed in admin/README.md, and make sure that the success message is displayed.
 
 ## Populate data into DB
@@ -58,6 +60,22 @@ Go to [localhost:3000](http://localhost:3000) in a web browser. Verify there are
 
 Now you're ready to start!
 
+
+# Project Structure
+I tried to keep the structure as simple as possible, so that anyone who wants to learn can follow along easier. Our Node server doesn't use any view engine, we are only displaying the static html file with the css and js. For now this is the simplest way, until, or if, we need to add something more.
+
+* **/admin** : this folder contains various custom admin scripts you can run to manipulate data.
+* **/backend** : this folder contains the code that will run server-side
+* **/db** : this folder contains DB-related code.
+* **/models** : this folder has auto-generated Sequelize model files. You wouldn't need to touch this folder unless there is change in DB schema. /models/README.md has information about how to re-generate models in schema change
+* **/node_modules** : this folder is automatically filled when you run `npm install`, don't worry about it.
+* **/public** : this folder contains our website files (html, css, and js) for all of our client-side activities. 
+* **/util** : some common utility functions used in other modules.
+* **/validation** : data validation between business logic and data access layer
+* **app.js** : the 'base' module that will run our server. Here we define the endpoints and serve the static pages
+* **package.json** : this outlines our project and contains information such as the name and what other modules we need. When we run `npm install`, it reads the package names from the "dependancies" section and installs them for us. It also gets updated if we install any packages using `npm install package-name`. Don't worry about this file.
+* **package-lock.json** : automatically generated, don't worry about it.
+* **.env** : This file needs to be created so we can connect to the database hosted on heroku. It should never be commited to github. 
 
 
 # Release Notes
@@ -119,22 +137,6 @@ The main flow for the quiz is complete for the 9 example questions. I've added d
 To reset the quiz, refresh the page. 
 
 
-# Project Structure
-I tried to keep the structure as simple as possible, so that anyone who wants to learn can follow along easier. Our Node server doesn't use any view engine, we are only displaying the static html file with the css and js. For now this is the simplest way, until, or if, we need to add something more.
-
-* **/admin** : this folder contains various custom admin scripts you can run to manipulate data.
-* **/backend** : this folder contains the code that will run server-side
-* **/db** : this folder contains DB-related code.
-* **/models** : this folder has auto-generated Sequelize model files. You wouldn't need to touch this folder unless there is change in DB schema. /models/README.md has information about how to re-generate models in schema change
-* **/node_modules** : this folder is automatically filled when you run `npm install`, don't worry about it.
-* **/public** : this folder contains our website files (html, css, and js) for all of our client-side activities. 
-* **/util** : some common utility functions used in other modules.
-* **/validation** : data validation between business logic and data access layer
-* **app.js** : the 'base' module that will run our server. Here we define the endpoints and serve the static pages
-* **package.json** : this outlines our project and contains information such as the name and what other modules we need. When we run `npm install`, it reads the package names from the "dependancies" section and installs them for us. It also gets updated if we install any packages using `npm install package-name`. Don't worry about this file.
-* **package-lock.json** : automatically generated, don't worry about it.
-* **.env** : This file needs to be created so we can connect to the database hosted on heroku. It should never be commited to github. 
-
 # Authors
 
 Contributors please add your name to this readme in the Authors section
@@ -147,6 +149,7 @@ Contributors please add your name to this readme in the Authors section
 * **9_dog_9_dog** - some backend work and admin scripts
 * **ysfchapterzero** - ranking algorithm
 * **[YOUR NAME HERE]**
+
 
 # Links
 Trello board for project management: [Trello](https://trello.com/b/026o2aq4/jinri-co-project-2-streammatch)
