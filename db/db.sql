@@ -52,7 +52,8 @@ CREATE TABLE "streamers_stats" (
   "voice" int,
   "avg_viewers" int,
   "avg_stream_duration" int,
-  "viewer_participation" int
+  "viewer_participation" int,
+  "start_stream" time with time zone null
 );
 
 CREATE TABLE "streamers_tags" (
