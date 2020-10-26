@@ -1,20 +1,21 @@
 # JinriTV Streamer Matchmakers Project
-Creating a website to match the streamer of your type
+Creating a website to match the streamer of your type:
+[https://streamer-match-maker.herokuapp.com/](https://streamer-match-maker.herokuapp.com/)
 
-## Getting Started
+
+# Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### To install
+## Installation
 
 **Note** This guide is for Windows OS only, maybe if someone wants to make a guide for other systems it would be appreciated.
 This guide will show how to install these software:
 
 * **Node.js** - The backend environment 
+* **PostgreSQL** - Our choice of database
 
-* **MySQL** - The database
-
-## Installing Node.js
+### Installing Node.js
 
 Start with downloading Node.js version LTS from the [Node.js](https://nodejs.org/en/) downloads page. Run the installer and leave most settings at default. Make sure that **npm package manager** is set to be installed.
 
@@ -24,126 +25,134 @@ After installation, verify that Node was successfully installed by opening up a 
 
 It should display the version number of Node installed (v12.18.3).
 
-## Installing MySQL
+### Installing PostgreSQL
 
-Now download the [MySQL Installer](https://https://dev.mysql.com/downloads/), choose the "MySQL Installer for Windows". When the installer asks you what to install, you can select:
+Download PostgreSQL [here](https://www.postgresql.org/download/). When you install, it is strongly recommended including pgAdmin as a part of the installation package.
 
-* **Server Only**: We only need the MySQL server so this is all we need to install.
+## Verify Postgresql database server connection
 
-or
+### Environment setup
+Please go to the project root directory and open `.env` file with a text editor. Add DB credentials here. Please make sure to not commit the `.env` file that contains the connection string.
 
-* **Developer Default**: this will install more than what we need, but it will include other useful tools such as Workbench, which is a GUI for interacting with the databases.
+### DB connection test
+Run test_db_connection.js as instructed in admin/README.md, and make sure that the success message is displayed.
 
+## Populate data into DB
 
-## Setting up the MySQL database
-
-After installation, it will begin the process to setup the database. Keep all settings at default until the **Accounts and Roles** section, where we will setup 2 users:
-* **Root**: this is the super admin account and it is not recommended to develop with this account
-* **Dev account**: the account we will use to develop with
-
-Once you get to the **Account and Roles** section: Setup your password for the root account here. Make sure to keep this password secure.
-
-Then create a new Role, this will be your dev account that you will login to the database with:
-![create user](https://github.com/glottsi/Streamer-match-makers/blob/master/guide_images/Untitled.png)
-
-Now it will ask if you want MySQL to be configured as a service. This means you will be able to start and stop the database server through the windows services interface. Enter a name for the service, and decide if you want the database server to start every time windows starts.
-
-![name service](https://github.com/glottsi/Streamer-match-makers/blob/master/guide_images/service.png)
-
-Press Next and Execute to complete the installation.
-
-After installation, if you open the Task Manager and go to the Services tab, you should be able to see the new database service running:
-
-![service running](https://github.com/glottsi/Streamer-match-makers/blob/master/guide_images/service_running.png)
-
-## Node.js and MySQL problem
-
-It seems like the new version of MySQL's authentication doesn't work well with Node, so in order to connect to our database server, we need to run a command to change the authentication process.
-
-They are supposed to be working on a fix but it's still not completed yet: [https://github.com/mysqljs/mysql/issues/1507](https://github.com/mysqljs/mysql/issues/1507)
-
-#### The database auth "downgrade" fix
-
-Before we can connect to MySQL with Node, we need to downgrade the authentication system that our server uses, for our dev user.
-
-Open your Command Prompt and run this command ```cd C:\Program Files\MySQL\MySQL Server 8.0\bin```
-
-Now login to the MySQL server with your root user by entering this command:
-
-```mysql -u root -p```
-
-and it will ask for your root password. Then you should be successfully logged into your MySQL server:
-
-![sql login](https://github.com/glottsi/Streamer-match-makers/blob/master/guide_images/loginmysql.png)
-
-Run this command to change the authentication method for your dev user:
-
-```ALTER USER 'your-username'@'%' IDENTIFIED WITH mysql_native_password BY 'your-password';```
-
-You should see `Query OK, 0 rows affected (0.00 sec)`
-
-This command tells our server to accept the kind of authentication that we use with the Node module.
+1. Get permission to [Google sheet](https://docs.google.com/spreadsheets/d/1yQ7YzuM5FhFB13ChTz77W2VyhzYJnjtqMBAEOwJrebI) from the Boss
+2. Open the spreadsheet, go to "Focused Targets" sheet
+3. Download the sheet info CSV file
+4. Run recreate_database.js as instructed in admin/README.md
 
 ## Verify Node server is working
 
-Now we can test if our Node and MySQL connection is working correctly.
-
-Open Command Prompt and `cd` to the location of this project, specifically the `/Node` folder. First we must install the required packages. In this folder, run the command 
+Open Command Prompt and `cd` to the location of this project. First we must install the required packages. In this folder, run the command 
 
 `npm install`
 
 And it should install the required packages we need (which are defined in the package.json file).
 
-Now to start the server run the command `npm start`
+To start the server, run the command `npm start`
 
-The console should now display something like 
-```  streamer-matcher:server Listening on port 3000 +0ms ```
+Go to [localhost:3000](http://localhost:3000) in a web browser. Verify there are no errors on the page, or in the console.
 
-Now go to `localhost:3000` in a web browser. 
+## Play with the website
 
-Verify there are no errors on the page, or in the console.
+Now you're ready to start!
 
-## Verify MySQL database server connection
 
-On the home page, click the link called "Database", or navigate in the browser to `localhost:3000/database`
-
-Enter your username and password for the dev account you created. 
-
-The button will turn green and a success message will display if you are successfully connected, Congrats!
-![success](https://github.com/glottsi/Streamer-match-makers/blob/master/guide_images/login_success.png)
-
-And red if incorrect:
-![fail](https://github.com/glottsi/Streamer-match-makers/blob/master/guide_images/login_fail.png)
-
-## Project Structure
+# Project Structure
 I tried to keep the structure as simple as possible, so that anyone who wants to learn can follow along easier. Our Node server doesn't use any view engine, we are only displaying the static html file with the css and js. For now this is the simplest way, until, or if, we need to add something more.
 
-![structre](https://github.com/glottsi/Streamer-match-makers/blob/master/guide_images/file_structure.png)
-
+* **/admin** : this folder contains various custom admin scripts you can run to manipulate data.
 * **/backend** : this folder contains the code that will run server-side
+* **/db** : this folder contains DB-related code.
+* **/models** : this folder has auto-generated Sequelize model files. You wouldn't need to touch this folder unless there is change in DB schema. /models/README.md has information about how to re-generate models in schema change
 * **/node_modules** : this folder is automatically filled when you run `npm install`, don't worry about it.
 * **/public** : this folder contains our website files (html, css, and js) for all of our client-side activities. 
+* **/util** : some common utility functions used in other modules.
+* **/validation** : data validation between business logic and data access layer
 * **app.js** : the 'base' module that will run our server. Here we define the endpoints and serve the static pages
 * **package.json** : this outlines our project and contains information such as the name and what other modules we need. When we run `npm install`, it reads the package names from the "dependancies" section and installs them for us. It also gets updated if we install any packages using `npm install package-name`. Don't worry about this file.
 * **package-lock.json** : automatically generated, don't worry about it.
+* **.env** : This file needs to be created so we can connect to the database hosted on heroku. It should never be commited to github. 
 
-## Next Steps
 
-Obvious next step: we need to actually create the database, and seed the data. This is just a sample project to test the Node and MySQL servers.
+# Release Notes
 
-Contributors please add your name to this readme in the Authors section, sorry if I didn't put everyone
+## 2020-10-26
+Streamer ranking backend is added 
 
-## Authors
+## 2020-10-22
+All code changes in other repositories are merged. streamer-mtchmkr-postgres repositories should not be used anymore, and people should fork jinritv/Streamer-match-makers from now on.
+
+## 2020-10-19
+jinritv/Streamer-match-makers is now the central repository, and code from other places is merged into this repository.
+
+All previous commit histories and list of contributors (from this and other repositories) are also merged here.
+
+## 2020-10-12
+Updated the quiz and the database query logic, and many UI changes
+* quiz is now only 5 questions long, as decided on stream
+* added new question: viewing hours, where the user can select when they can watch a stream
+* the switches have been changed for toggle buttons
+* the slide left/right animation has been replaced with a fade in/out animation
+* the mascot image has been changed to the one with the magnifying glass
+* a new time picker has been added to the final question about viewing hours (see Notes below)
+* the results page now displays 5 'top' streamers returned from the query, based off the mockup
+* results now returns the logo URL, as well as a 'match_value' (see Notes below)
+
+**Notes** 
+* The SQL query we run fails to return any streamers. This could mean that the query is too strict, or we are not passing enough data, or the data it specifically needs to find any streamer. Someone who wants to look into more about [Sequelize](https://sequelize.org/) could help us here
+* The 'match_value' is supposed to represent a % value of how the streamer matched against the answers provided, BUT: we don't have a system or algorithm in place to actually calculate this yet. So right now I just set the 1st result as 98% (jinri), and the other 4 streamers get random values. 
+* The 'Viewing hours" question (question #5) doesn't provide anything to the database query yet. We receive that data but the SQL WHERE methods have not been implemented, so right now it's just doing nothing. 
+
+## 2020-09-18
+Major updates in backend and custom admin script to facilitate dev works.
+
+1. In server, /calculateStreamer endpoint now returns a matching streamer based on the user answers
+2. Validation is added between business logic and data access layer. Eventually, communication between the two layers should be done by passing JSON object in specific formats, which is validated by this validation logic. 
+3. Two admin scripts were added: test_db_connection.js and recreate_database.js. Please take a look at admin/README.md for more information.
+4. ORM library [Sequelize](https://sequelize.org/) was introduced into the project to work with the database more easily. Also, all models under /models are automatically generated by [sequelize-auto](https://github.com/sequelize/sequelize-auto)
+5. This README.md now includes how to run a working streamer match maker service from localhost from scratch. Please look at Getting Started section.
+
+
+## 2020-09-14
+Really scuffed update, this one includes a new modal to the main page where we can add a streamer to the database. A record is created only for the base 'streamers' table, the rest still needs to be updated. But when we insert a new streamer, we retreive the id, so we can use it in subsequent insert queries for things like nationality, stats, language, etc. 
+
+## 2020-09-08
+Small update to actually send user's answers to the server, and retreive a streamer from the database. Includes a "results" page with a button to reveal the streamer. 
+
+We're now using kyroskoh's API gateway to interact with the database, but for right now we only retrieve Jinri's record and return it.
+
+Still need to figure out an algorithm, or best strategy to determine the streamer based on the quiz answers.
+
+## 2020-09-04
+The main flow for the quiz is complete for the 9 example questions. I've added different examples of quiz elements so we can pick the best ones to use:
+* **Range Slider**: I used Mark's suggestion to add [https://github.com/seiyria/bootstrap-slider](https://github.com/seiyria/bootstrap-slider), it is in use for questions 1 and 3.
+* **'Radio'-type radio buttons**: These are radio buttons (only one selection allowed), with circle-style normal radio button style, used for question 2 and 6.
+* **'Button'-type radio buttons**: These are radio buttons, with a 'button' style, used for questions 7, 8 and 9.
+* **Switches**: These are toggles, which allow for multiple selection, used in questions 4 and 5.
+
+To reset the quiz, refresh the page. 
+
+
+# Authors
+
+Contributors please add your name to this readme in the Authors section
 
 * **glottsi** - this readme, initial work - 
 * **kalaloon** - inital work, spreadsheet -
 * **kookehs** - initial work, loading data -
 * **Proshuto** - meme captain -
-* **your names here**
+* **kyroskoh** - providing the DreamFactory database API
+* **9_dog_9_dog** - some backend work and admin scripts
+* **ysfchapterzero** - ranking algorithm
+* **[YOUR NAME HERE]**
 
-### Links
+
+# Links
 Trello board for project management: [Trello](https://trello.com/b/026o2aq4/jinri-co-project-2-streammatch)
 
 Google Sheet with the data: [Google sheet](https://docs.google.com/spreadsheets/d/1yQ7YzuM5FhFB13ChTz77W2VyhzYJnjtqMBAEOwJrebI)
-
 
