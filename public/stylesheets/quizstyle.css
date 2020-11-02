@@ -255,46 +255,10 @@
     transition:width .6s ease;
 }
 
-.progress-bar-checkpoint-20 {
-    left: 0;
+
+.progress-bar-checkpoint {
     position: absolute;
     border-right: 4px solid white;
-    width: 20%;
-    height: 1rem;
-    cursor: pointer;
-}
-
-.progress-bar-checkpoint-40 {
-    left: 20%;
-    position: absolute;
-    border-right: 4px solid white;
-    width: 20%;
-    height: 1rem;
-    cursor: pointer;
-}
-
-.progress-bar-checkpoint-60 {
-    left: 40%;
-    position: absolute;
-    border-right: 4px solid white;
-    width: 20%;
-    height: 1rem;
-    cursor: pointer;
-}
-
-.progress-bar-checkpoint-80 {
-    left: 60%;
-    position: absolute;
-    border-right: 4px solid white;
-    width: 20%;
-    height: 1rem;
-    cursor: pointer;
-}
-
-.progress-bar-checkpoint-100 {
-    left: 80%;
-    position: absolute;
-    width: 20%;
     height: 1rem;
     cursor: pointer;
 }

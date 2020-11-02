@@ -489,18 +489,18 @@ function getYesOrNo(condition) {
 // only handle weekdays because thats all we have
 // on DB
 function normalizeWatchtime(input) {
-  if (input == undefined || !input.watchesWeekdays) {
+  if (input == undefined || !input.weekdays) {
     return null
   }
 
-  let from = new Date("January 5 1980 " + input.weekdayFrom);
+  let from = new Date("January 5 1980 " + input.weekdaysFrom);
 
   // handling next date
   let to_date = "5";
-  if (parseInt(input.weekdayFrom.replace(":", "")) > parseInt(input.weekdayTo.replace(":", ""))) {
+  if (parseInt(input.weekdaysFrom.replace(":", "")) > parseInt(input.weekdaysTo.replace(":", ""))) {
     to_date = "6";
   }
-  let to = new Date("January "+to_date+" 1980 " + input.weekdayTo);
+  let to = new Date("January "+to_date+" 1980 " + input.weekdaysTo);
 
   let fromT = new Date(from.getTime());
   fromT.setDate(fromT.getDate() + 1);

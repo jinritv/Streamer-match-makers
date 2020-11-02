@@ -80,6 +80,9 @@ I tried to keep the structure as simple as possible, so that anyone who wants to
 
 # Release Notes
 
+## 2020-11-02
+New script file 'create_quiz.js' added, that will build the html for the questions when the page loads.
+
 ## 2020-10-26
 Streamer ranking backend is added 
 
