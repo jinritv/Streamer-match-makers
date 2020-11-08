@@ -27,16 +27,20 @@ NOTE: the 'answer_settings' property is different
 const QuestionTypes = {
   MultipleSelection: "multipleselection",
   RangeSlider: "rangeslider",
-  TimeRange: "timerange"
+  TimeRange: "timerange",
+  SingleSelection: "singleselection"
 }
 
 // Specific settings for each type of question
 const QuestionTypeSettings = {
   [QuestionTypes.MultipleSelection]: {
-    buttonsPerRow: 4 // buttons to put on a single row before making a new row           
+    buttonsPerRow: 5 // buttons to put on a single row before making a new row           
   },
   [QuestionTypes.RangeSlider]: {},
-  [QuestionTypes.TimeRange]: {}
+  [QuestionTypes.TimeRange]: {},
+  [QuestionTypes.SingleSelection]: {
+    buttonsPerRow: 1 // buttons to put on a single row before making a new row    
+  }
 }
 
 // the quiz's questions will be built and displayed in the order they appear in this array
@@ -133,6 +137,192 @@ const QUIZ_QUESTIONS = [
     ],
   },
 
+
+   //Follower/Sub only chat?
+  {
+    unique_question_identifier: "subonly",
+    displayed_question: "What kind of chat?",
+    question_type: QuestionTypes.SingleSelection,
+    disableContinueButtonByDefault: true,
+    answer_settings: [
+      {
+        display_name: "All",
+        value: "all"
+      },
+      {
+        display_name: "Sub only",
+        value: "sub-only"
+      },
+      {
+        display_name: "Follower only",
+        value: "follower-only"
+      },
+    ]
+  },
+
+
+  //Question 3: MATURE
+  {
+    unique_question_identifier: "mature",
+    displayed_question: "Mature content?",
+    question_type: QuestionTypes.SingleSelection,
+    disableContinueButtonByDefault: true, //so this just enables/disables the continue button when the question is displayed... because for the sliders we kept it enabled but we wanted them to select at least 1 button before being allowed to continue 
+    answer_settings: [
+      {
+        display_name: "Mature",
+        value: true
+      },
+      {
+        display_name: "Family-friendly",
+        value: false
+      },
+    ]
+  },
+  {
+    unique_question_identifier: "chat-vibe",
+    displayed_question: "Chat Vibe?", //yes boss
+    question_type: QuestionTypes.MultipleSelection,
+    disableContinueButtonByDefault: false, 
+    answer_settings: [
+      { 
+        display_name: "Chatty",
+        value: "chatty"
+      },
+      { 
+        display_name: "Chill",
+        value: "chill"
+      },
+      { 
+        display_name: "Serious",
+        value: "serious"
+      },
+      { 
+        display_name: "Smart",
+        value: "smart"
+      },
+      { 
+        display_name: "Funny",
+        value: "funny"
+      },
+      { 
+        display_name: "Friendly",
+        value: "friendly"
+      },
+      { 
+        display_name: "Moody",
+        value: "moody"
+      },
+      { 
+        display_name: "Weird",
+        value: "weird"
+      },
+      { 
+        display_name: "Geeky",
+        value: "geeky"
+      },
+      { 
+        display_name: "Shy",
+        value: "shy"
+      },
+      { 
+        display_name: "Silly",
+        value: "silly"
+      },
+      { 
+        display_name: "Rude",
+        value: "rude"
+      },
+      { 
+        display_name: "Dorky",
+        value: "dorky"
+      },
+      { 
+        display_name: "Angry",
+        value: "angry"
+      },
+      { 
+        display_name: "Loud",
+        value: "loud"
+      },
+      { 
+        display_name: "Quiet",
+        value: "quiet"
+      },
+      { 
+        display_name: "Troll",
+        value: "troll"
+      },
+      { 
+        display_name: "Drunk",
+        value: "drunk"
+      },
+      { 
+        display_name: "Spam Emotes",
+        value: "spam-emotes"
+      },
+      { 
+        display_name: "Fast",
+        value: "fast"
+      },
+      { 
+        display_name: "Slow",
+        value: "slow"
+      },
+      { 
+        display_name: "Wholesome",
+        value: "wholesome"
+      },
+      { 
+        display_name: "Toxic",
+        value: "toxic" //자네... 거... 20% raise 줄테니! 열심히 일해라! 인턴! YES BOSS. ALL HAIL JINRI BOSS 
+      }, // chat vibe should be done now. 
+    ]
+  },
+/*
+
+
+ok
+
+to add a new question just copy paste this:
+{
+    unique_question_identifier: "THIS-IS-THE-KEY-FOR-THIS-QUESTION-IN-THE-ANSWER-OBJECT",
+    displayed_question: "This is the question that is displayed",
+    question_type: QuestionTypes.MultipleSelection,
+    disableContinueButtonByDefault: false, //so this just enables/disables the continue button when the question is displayed... because for the sliders we kept it enabled but we wanted them to select at least 1 button before being allowed to continue 
+    answer_settings: [
+      {
+        display_name: "Text that appears on the button",
+        value: "value for this selection"
+      },
+      {
+        display_name: "",
+        value: ""
+      },
+    ]
+  },
+but i think this will always be the one we have for the button
+but adjust the 'answer_settings' for the specific type of question it is
+
+
+NOTE:
+MATURE CONTENT <- Glottsi
+CHAT VIBE <- underthesnow. Put it on trello for better tracking! Hire a manager to manage trello LUL
+VIEWER PARTICIPATION
+  never, rarely, sometimes, often, always
+Frequency of Streaming
+Follower/Sub-only
+voice tone
+small streamer
+cam...?
+
+*/
+
+
+
+
+
+
+
   // Question 3: 'average_viewers'
   {
     unique_question_identifier: "average_viewers",
@@ -148,20 +338,7 @@ const QUIZ_QUESTIONS = [
     },
   },
 
-  // Question 4: 'age'
-  {
-    unique_question_identifier: "age",
-    displayed_question: "I prefer streamers of the age",
-    question_type: QuestionTypes.RangeSlider,
-    disableContinueButtonByDefault: false,
-    answer_settings: {
-      slider_label_default: "Between 25 and 75 years old",
-      min: 16,
-      max: 100,
-      suffix: "years old",
-      incrementBy: 1
-    },
-  },
+  // Question 4: 
 
   // Question 5: 'watchtime'
   {
@@ -484,6 +661,38 @@ const GenerateQuestionInputs = {
         </div>`;
     })
     htmlString += `</div></div>`;
+    return htmlString;
+  },
+  [QuestionTypes.SingleSelection]: (question) => {
+    let htmlString =
+      `<div class="d-flex flex-row mb-3 justify-content-center">
+            <h4>${question.displayed_question}</h4>
+        </div>`;
+
+    let newRowHtml = `<div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">`;
+    let closeRowHtml = `</div>`;
+
+    let numInCurrentRow = 0; // keeps track of how many buttons are on the current row
+    htmlString += newRowHtml; // create a new row to start
+    question.answer_settings.forEach((answer, indx) => {
+      // check if we can add this button to the current row, or we need to make a new row
+      if (numInCurrentRow >= QuestionTypeSettings[question.question_type].buttonsPerRow) {
+        // close the row
+        htmlString += closeRowHtml;
+        // and open a new one
+        htmlString += newRowHtml;
+        // reset the row counter
+        numInCurrentRow = 0;
+      }
+      // add the button html to the rest of the html
+      htmlString += `<button id="generated-quiz-modal-button_${question.unique_question_identifier}_${answer.value}" type="button" onclick="selectButton('${question.unique_question_identifier}','${answer.value}')"
+             class="btn btn-quiz-answer">
+             <span>${answer.display_name}</span>
+           </button>`;
+
+      numInCurrentRow += 1;
+    })
+    htmlString += closeRowHtml; // close the row now
     return htmlString;
   },
 }

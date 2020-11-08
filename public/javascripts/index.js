@@ -193,6 +193,16 @@ function toggleTimeInput(question, selection) {
   }
 }
 
+function selectButton(question, selection) {
+  // unselect previous choices
+  $(`[id^="generated-quiz-modal-button_${question}"]`).removeClass('active');
+  // select current choice
+  $(`#generated-quiz-modal-button_${question}_${selection}`).addClass('active');
+  //save the selection
+  UsersAnswers[question] = selection;
+  $(`#continue-button`).prop('disabled', false);
+}
+
 function selectMultipleButton(question, selection) {
   if (UsersAnswers[question]) {
     if (UsersAnswers[question].includes(selection)) {
