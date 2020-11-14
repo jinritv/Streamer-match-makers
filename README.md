@@ -2,7 +2,6 @@
 Creating a website to match the streamer of your type:
 [https://streamer-match-maker.herokuapp.com/](https://streamer-match-maker.herokuapp.com/)
 
-
 # Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -79,6 +78,16 @@ I tried to keep the structure as simple as possible, so that anyone who wants to
 
 
 # Release Notes
+
+## 2020-11-14
+- Moved a bunch of the html strings into a separate file `html_helpers.js` to reduce clutter in our create_quiz file.
+- Added an override feature when generating questions: For questions that include buttons, you can now just add the property `buttonsPerRow` to the question object and it will override the default buttons per row for that question type.
+- Combined the MultipleSelection and SingleSelection button types, because they are basically the exact same, aside from the function we call in the onclick handler. So now, when making a new question with either type of button, there is no difference in structure between the two types of questions when making them. The name of the onclick function can also be overridden by simply adding the property `onclickFunctionName` to the question schema object. 
+- Simplification for defining the answers in a button-type question: we now need to pass only the values in the array, and we do not need to provide any label for it, since our new localizations system will handle displaying the text. 
+- Removed all hard-coded text from the HTML, and put them in a separate file `localizations.js`. 
+- New system for handling languages, where users can now change the language quickly by selecting it from the drop-down menu at the top right of the site. Any missing translations for that language will display an error message in place of the desired text. 
+- The `localizations.js` is where we can now add translations to the site very easily (see Discord for tutorial)
+- I re-wrote the text animation function that erases and writes the text, because we needed to be able to stop the loop when we changed the language (it was running forever before), so I've changed the setTimeout to setInterval, where once we change the language, we clearInterval() so we can restart it with the new language. **Note:** I've noticed once the animation seemed to be going really fast after leaving the site on in the background for a while then coming back to it. Not sure if it was just a visual bug or if the timings are messed up, making the animation increase speed for some reason after a while. I might have broken the animation while adding the setInterval, not sure.  
 
 ## 2020-11-02
 New script file 'create_quiz.js' added, that will build the html for the questions when the page loads.
