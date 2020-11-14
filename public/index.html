@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>JinriTV</title>
+  <title id="page-title"></title>
   <!-- Favicon-->
   <link rel="icon" type="image/x-icon" href="/images/favicon.ico?v=1.1" />
   <!-- Font Awesome icons (free version)-->
@@ -30,15 +30,10 @@
     <div class="container" id="logo-container">
       <img src="https://cdn.discordapp.com/attachments/741373796014882940/742567482774257684/logo.png"
         style="width:50px;height:50px;margin-right:10px;" id="TwiriLogo" />
-      <a class="navbar-brand js-scroll-trigger" href="#page-top" id="logoText">Twiri, Stream Seeker</a>
-
+      <a class="navbar-brand js-scroll-trigger" href="#page-top" id="logoText"></a>
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <!--
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-              onclick="openAddStreamerModal()">Add a Streamer</a></li>
+        <ul id="generated-language-dropdown" class="navbar-nav ml-auto">
         </ul>
-        -->
       </div>
     </div>
   </nav>
@@ -47,8 +42,8 @@
   <div class="container d-flex align-items-center flex-column welcome-container" id="welcome-card">
     <div id="welcome-banner" class="row container-fluid">
       <div id="welcome-text" class="column colLeft text-center">
-        <h1>Don't know who to</h1>
-        <h1 class="primary-color" id="keyword">host?</h1>
+        <h1 id="animated-words-label"></h1>
+        <h1 class="primary-color" id="keyword"></h1>
       </div>
       <div id="dancing-jinri" class="column colRight text-center" style="display: none;">
         <img src="/images/mascot.png" />
@@ -72,7 +67,8 @@
         <i class="fas fa-star"></i>
       </div>
       <button type="button" class="btn btn-primary" onclick="openGeneratedQuizModal()"
-        style="margin-right:12px;margin-left:12px; border-radius: 16px;">Find a Streamer</button>
+        style="margin-right:12px;margin-left:12px; border-radius: 16px;"><span
+          id="find-streamer-button"></span></button>
       <div class="divider-custom-icon">
         <i class="fas fa-star"></i>
       </div>
@@ -82,7 +78,7 @@
   <!-- Footer-->
   <div class="footer text-center bg-secondary">
     <!-- Copyright Section-->
-    <small style="color:#4d2c4d">Copyright © JinriTV</small>
+    <div style="color:#4d2c4d" id="copyright-text"></div>
   </div>
 
   <!-- Loading Scripts -->
@@ -91,20 +87,23 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
   <!-- Third party plugin JS-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js" integrity="sha256-yUWanhHkxj+3ow0qZE6AtzP8lZkwLvPagULL6PnZMz0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"
+    integrity="sha256-yUWanhHkxj+3ow0qZE6AtzP8lZkwLvPagULL6PnZMz0=" crossorigin="anonymous"></script>
   <!-- Core theme JS-->
   <script src="javascripts/bootstrap-slider.min.js"></script>
+  <script src="javascripts/localizations.js"></script>
   <script src="javascripts/scripts.js"></script>
+  <script src="javascripts/html_helpers.js"></script>
   <script src="javascripts/create_quiz.js"></script>
   <script src="javascripts/index.js"></script>
-  <script src="javascripts/jquery-clock-timepicker.min.js"></script> 
+  <script src="javascripts/jquery-clock-timepicker.min.js"></script>
 </body>
 
 <!-- Generated Modal (questions are added here after page loads) -->
 <div class="modal fade" id="generated-quiz-modal" tabindex="-1" role="dialog">
   <!---
         the question pages are created and added in here after the page loads. Check the BuildQuiz() function
-        in the index.js script file.
+        in the create_quiz.js script file.
       -->
 </div>
 </div>

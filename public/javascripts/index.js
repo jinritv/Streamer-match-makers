@@ -17,9 +17,9 @@ var pressTimer;
 // statistic of scoring result
 var ResultStats = {};
 
-
 // This is called when the page is loaded
 $(() => {
+  SetupLanguageDropdown();
   // First thing we do is generate all the HTML we need for the quiz
   BuildQuiz(); // This is defined in 'create_quiz.js'
 
@@ -29,9 +29,57 @@ $(() => {
   // setup the callbacks for the different events
   setupCallbacks();
 
+  // change language for the elements that come in the static html
+  translateStaticElements();
+
   //starts page animations
   animateElements();
 });
+
+const ToBeTranslatedOnPageLoad = [
+  "page-title",
+  "logoText",
+  "copyright-text",
+  "animated-words-label",
+  "find-streamer-button",
+];
+
+function translateStaticElements() {
+  ToBeTranslatedOnPageLoad.forEach(element => {
+    $(`#${element}`).html(getTranslation(element))
+  })
+}
+
+function generateDropdownOptions() {
+  let dropdownHtml = ``;
+  let languages = Object.values(Languages);
+  languages.forEach(language => {
+    let icon = getLanguageIcon(language);
+    let name = getTranslation(`drop-down-label-${language}`);
+    dropdownHtml += HTMLStrings.LanguageDropDownItem(language,icon,name)  
+  })
+  return dropdownHtml;
+}
+
+function updateLanguage(language) {
+  // unselect previous language choice
+  $(`[id^="generated-dropdown-option-"]`).removeClass('active');
+  // set current active language
+  $(`#generated-dropdown-option-${language}`).addClass('active');
+  $(`#current-language-label`).html(getTranslation(`drop-down-label-${language}`))
+  $(`#current-language-icon`).attr('src', getLanguageIcon(language))
+  setLanguage(language);
+  translateStaticElements();
+  SetupLanguageDropdown(); 
+  BuildQuiz();
+  restartQuiz();
+  setTextAnimation();
+}
+
+function SetupLanguageDropdown() {
+  let dropdownHtml = HTMLStrings.LanguageDropDown(getLanguageIcon(getLanguage()),getTranslation(`drop-down-label-${getLanguage()}`),generateDropdownOptions())
+  $(`#generated-language-dropdown`).html(dropdownHtml)
+}
 
 function setupElements() {
   InitializeSliders();
@@ -106,10 +154,10 @@ function HideElementsAtQuizStart() {
 function setSliderDisplay(sliderName, settings) {
   let minRange = settings.min;
   let maxRange = settings.max;
-  let minDefault = Math.floor(maxRange / 4);
-  let maxDefault = Math.floor(maxRange / 4) * 3;
-  let displayText = `Between ${minDefault} and ${maxDefault} ${settings.suffix}`;
-  $(`#generated-${sliderName}-slider-display`).text(displayText);
+  let minDefault = settings.defaultMin;
+  let maxDefault = settings.defaultMax;
+  let displayText = getTranslation(`range-display-${sliderName}`, [minDefault, maxDefault]);
+  $(`#generated-${sliderName}-slider-display`).html(displayText);
   SLIDERS[sliderName] = $(`#generated-slider_${sliderName}`).slider({ id: `generated-slider_${sliderName}`, min: minRange, max: maxRange, range: true, value: [minDefault, maxDefault], tooltip: 'hide' });
   UsersAnswers[sliderName] = {
     min: minDefault,
@@ -171,13 +219,12 @@ function setupCallbacks() {
   })
 }
 
-
 const adjustSliderEventHandler = (sliderName, settings, changeEvt) => {
   let minRange = changeEvt.value[0];
   let maxRange = changeEvt.value[1];
-  let maxRangeDisplay = ((sliderName == "average_viewers" && maxRange == 10000) ? `10000+` : maxRange);
-  let displayText = `Between ${minRange} and ${maxRangeDisplay} ${settings.suffix}`;
-  $(`#generated-${sliderName}-slider-display`).text(displayText);
+  let maxRangeDisplay = ((maxRange == settings.max) ? `${maxRange}+` : maxRange);
+  let displayText = getTranslation(`range-display-${sliderName}`, [minRange, maxRangeDisplay]);
+  $(`#generated-${sliderName}-slider-display`).html(displayText);
   UsersAnswers[sliderName] = {
     min: minRange,
     max: maxRange
@@ -191,6 +238,14 @@ function toggleTimeInput(question, selection) {
   } else {
     $(`#generated-${question}-${selection}`).hide();
   }
+}
+
+function exampleOnClickFunction(question, selection) {
+  // this does nothing special, its just to show you can override the default onclick function for buttons.
+  // since this example is used for the languages question, 
+  // it's multiple select so we'll just call that function normally anyways
+  // since we don't actually need to provide a unique function
+  selectMultipleButton(question, selection)
 }
 
 function selectButton(question, selection) {
@@ -238,7 +293,7 @@ function nextQuestion() {
 
   // see if we are on the last question
   if (CurrentQuestion == QUIZ_QUESTIONS.length) {
-    $('#generated-quiz-modal-progress-label').text(`Results`);
+    $('#generated-quiz-modal-progress-label').html(getTranslation('results'));
     $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-out");
     $("#continue-button").hide();
     setTimeout(() => {
@@ -263,7 +318,7 @@ function nextQuestion() {
       // increment the question
       CurrentQuestion += 1;
       // change the title
-      $('#generated-quiz-modal-progress-label').text(`Question ${CurrentQuestion} of ${QUIZ_QUESTIONS.length}`);
+      $('#generated-quiz-modal-progress-label').html(getTranslation("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length]));
       // slide in the next
       $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-in")
       $(`#generated-quiz-modal-question${CurrentQuestion}-container`).show()
@@ -283,7 +338,7 @@ function restartQuiz() {
   setupElements();
   setupCallbacks();
   // change the title
-  $('#generated-quiz-modal-progress-label').text(`Question 1 of ${QUIZ_QUESTIONS.length}`);
+  $('#generated-quiz-modal-progress-label').html(getTranslation("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length]));
   // show the first quiz container
   $(`#generated-question1-container`).addClass("fade-in")
   $(`#generated-question1-container`).show();
@@ -303,6 +358,7 @@ function closeQuizModal() {
 }
 
 function animateElements() {
+  setTextAnimation();
   $("#bg-rectangle").addClass("bounce-in-top");
   $("#bg-rectangle").show();
   $("#dancing-jinri").addClass("slide-in-right");
@@ -311,6 +367,44 @@ function animateElements() {
   $("#start-quiz-button").addClass("fade-in");
   $("#start-quiz-button-modal").addClass("fade-in");
   $("#welcome-text").addClass("swing-in-left-fwd")
+}
+
+var textEraseAnimationTimer;
+
+function setTextAnimation() {
+  clearInterval(textEraseAnimationTimer);
+  textEraseAnimationTimer = animateText();
+}
+
+function animateText() {
+  var index = 0;
+  var words = getTranslation('animated-words');
+  keyword.innerHTML = words[0]
+  function erase() {
+    var remainingText = keyword.innerHTML;
+    var l = remainingText.length;
+    if (l > 0) {
+      keyword.innerHTML = remainingText.substring(0, l - 1);
+      setTimeout(erase, 33);
+    }
+    else {
+      index += 1;
+      setTimeout(enter, 33);
+    }
+  }
+  function enter() {
+    if (index == words.length - 1) {
+      index = 0;
+    }
+    var remainingText = keyword.innerHTML;
+    var l = remainingText.length;
+    var w = words[index];
+    if (l < w.length) {
+      keyword.innerHTML += w.charAt(l);
+      setTimeout(enter, 33);
+    }
+  }
+  return setInterval(erase, 1500);
 }
 
 function calculateQuizResult() {
