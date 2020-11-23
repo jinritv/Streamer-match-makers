@@ -74,12 +74,12 @@ function getTranslationTable(params) {
             },
             "animated-words-label": {
                 [Languages.ENGLISH]: "Don't know who to",
-                [Languages.FRENCH]: "Ne sais pas qui",
+                [Languages.FRENCH]: "Qui",
                 [Languages.KOREAN]: "누구를 어떻게 해야 할지 모르다"
             },
             "animated-words": {
                 [Languages.ENGLISH]: ['watch?', 'host?', 'follow?', 'raid?'],
-                [Languages.FRENCH]: ['regarder?', 'hoster?', 'suivre?', 'raider?'],
+                [Languages.FRENCH]: ['regarder ?', 'héberger ?', 'suivre ?', 'raider ?'],
                 [Languages.KOREAN]: ['급습하다?', '지켜보다?', '뒤를 따르다?']
             },
             "find-streamer-button": {
@@ -91,7 +91,7 @@ function getTranslationTable(params) {
             // Question 1: Languages
             "question-text-languages": {
                 [Languages.ENGLISH]: "Spoken languages?",
-                [Languages.FRENCH]: "Langues de stream?"
+                [Languages.FRENCH]: "Dans quelle(s) langue(s) ?"
             },
             "button-text-languages-english": {
                 [Languages.ENGLISH]: "English",
@@ -121,10 +121,11 @@ function getTranslationTable(params) {
             // Question 2: Content
             "question-text-content": {
                 [Languages.ENGLISH]: "I prefer streamers who stream...",
-                [Languages.FRENCH]: "Je préfère des streamers qui..."
+                [Languages.FRENCH]: "Dans quelle(s) catégorie(s) ?"
             },
             "button-text-content-justchatting": {
-                [Languages.ENGLISH]: "Just Chatting"
+                [Languages.ENGLISH]: "Just Chatting",
+                [Languages.FRENCH]: "Discussion"
             },
             "button-text-content-games": {
                 [Languages.ENGLISH]: "Games",
@@ -139,159 +140,204 @@ function getTranslationTable(params) {
                 [Languages.FRENCH]: "Science et Technologie"
             },
             "button-text-content-food": {
-                [Languages.ENGLISH]: "Food"
+                [Languages.ENGLISH]: "Food",
+                [Languages.FRENCH]: "Nourriture et boissons"
             },
             "button-text-content-cooking": {
-                [Languages.ENGLISH]: "Cooking"
+                [Languages.ENGLISH]: "Cooking",
+                [Languages.FRENCH]: "Cuisine"
             },
             "button-text-content-outdoors": {
-                [Languages.ENGLISH]: "Outdoors"
+                [Languages.ENGLISH]: "Outdoors",
+                [Languages.FRENCH]: "Extérieur"
             },
             "button-text-content-irl": {
-                [Languages.ENGLISH]: "IRL"
+                [Languages.ENGLISH]: "IRL",
+                [Languages.FRENCH]: "IRL"
             },
             "button-text-content-movies": {
-                [Languages.ENGLISH]: "Movies"
+                [Languages.ENGLISH]: "Movies",
+                [Languages.FRENCH]: "Films"
             },
             "button-text-content-music": {
-                [Languages.ENGLISH]: "Music"
+                [Languages.ENGLISH]: "Music",
+                [Languages.FRENCH]: "Musique"
             },
             "button-text-content-dancing": {
-                [Languages.ENGLISH]: "Dancing"
+                [Languages.ENGLISH]: "Dancing",
+                [Languages.FRENCH]: "Danse",
             },
             "button-text-content-yoga": {
-                [Languages.ENGLISH]: "Yoga"
+                [Languages.ENGLISH]: "Yoga",
+                [Languages.FRENCH]: "Yoga"
             },
     
             // Question 3: subonly
             "question-text-subonly": {
-                [Languages.ENGLISH]: "What kind of chat?"
+                [Languages.ENGLISH]: "What kind of chat?",
+                [Languages.FRENCH]: "Qui peut discuter ?"
             },
             "button-text-subonly-all": {
-                [Languages.ENGLISH]: "All"
+                [Languages.ENGLISH]: "All",
+                [Languages.FRENCH]: "Tout le monde"
             },
             "button-text-subonly-sub-only": {
-                [Languages.ENGLISH]: "Sub-only"
+                [Languages.ENGLISH]: "Sub-only",
+                [Languages.FRENCH]: "Abonnés seulement"
             },
             "button-text-subonly-follower-only": {
-                [Languages.ENGLISH]: "Follower-only"
+                [Languages.ENGLISH]: "Follower-only",
+                [Languages.FRENCH]: "Suiveurs seulement"
             },
     
             //Question 4: Mature
             "question-text-mature": {
-                [Languages.ENGLISH]: "Mature content?"
+                [Languages.ENGLISH]: "Mature content?",
+                [Languages.FRENCH]: "Avec quel type de contenu ?",
             },
             "button-text-mature-true": {
-                [Languages.ENGLISH]: "Mature"
+                [Languages.ENGLISH]: "Mature",
+                [Languages.FRENCH]: "Adulte"
             },
             "button-text-mature-false": {
-                [Languages.ENGLISH]: "Family-friendly"
+                [Languages.ENGLISH]: "Family-friendly",
+                [Languages.FRENCH]: "Tout public"
             },
     
             // Question 5: chat vibe
             "question-text-chat-vibe": {
-                [Languages.ENGLISH]: "Chat Vibe?"
+                [Languages.ENGLISH]: "Chat Vibe?",
+                [Languages.FRENCH]: "Dans une ambiance…"
             },
             "button-text-chat-vibe-chatty": {
-                [Languages.ENGLISH]: "Chatty"
+                [Languages.ENGLISH]: "Chatty",
+                [Languages.FRENCH]: "Papoteuse"
             },
             "button-text-chat-vibe-chill": {
-                [Languages.ENGLISH]: "Chill"
+                [Languages.ENGLISH]: "Chill",
+                [Languages.FRENCH]: "Posée"
             },
             "button-text-chat-vibe-serious": {
-                [Languages.ENGLISH]: "Serious"
+                [Languages.ENGLISH]: "Serious",
+                [Languages.FRENCH]: "Sérieuse"
             },
             "button-text-chat-vibe-smart": {
-                [Languages.ENGLISH]: "Smart"
+                [Languages.ENGLISH]: "Smart",
+                [Languages.FRENCH]: "Intelligente"
             },
             "button-text-chat-vibe-funny": {
-                [Languages.ENGLISH]: "Funny"
+                [Languages.ENGLISH]: "Funny",
+                [Languages.FRENCH]: "Drôle"
             },
             "button-text-chat-vibe-friendly": {
-                [Languages.ENGLISH]: "Friendly"
+                [Languages.ENGLISH]: "Friendly",
+                [Languages.FRENCH]: "Amicale"
             },
             "button-text-chat-vibe-moody": {
-                [Languages.ENGLISH]: "Moody"
+                [Languages.ENGLISH]: "Moody",
+                [Languages.FRENCH]: "Maussade"
             },
             "button-text-chat-vibe-weird": {
-                [Languages.ENGLISH]: "Weird"
+                [Languages.ENGLISH]: "Weird",
+                [Languages.FRENCH]: "Bizarre"
             },
             "button-text-chat-vibe-geeky": {
-                [Languages.ENGLISH]: "Geeky"
+                [Languages.ENGLISH]: "Geeky",
+                [Languages.FRENCH]: "Geeky"
             },
             "button-text-chat-vibe-shy": {
-                [Languages.ENGLISH]: "Shy"
+                [Languages.ENGLISH]: "Shy",
+                [Languages.FRENCH]: "Timide"
             },
             "button-text-chat-vibe-silly": {
-                [Languages.ENGLISH]: "Silly"
+                [Languages.ENGLISH]: "Silly",
+                [Languages.FRENCH]: "Idiote"
             },
             "button-text-chat-vibe-rude": {
-                [Languages.ENGLISH]: "Rude"
+                [Languages.ENGLISH]: "Rude",
+                [Languages.FRENCH]: "Vulgaire"
             },
             "button-text-chat-vibe-dorky": {
-                [Languages.ENGLISH]: "Dorky"
+                [Languages.ENGLISH]: "Dorky",
+                [Languages.FRENCH]: "Dorky"
             },
             "button-text-chat-vibe-angry": {
-                [Languages.ENGLISH]: "Angry"
+                [Languages.ENGLISH]: "Angry",
+                [Languages.FRENCH]: "Énervée"
             },
             "button-text-chat-vibe-loud": {
-                [Languages.ENGLISH]: "Loud"
+                [Languages.ENGLISH]: "Loud",
+                [Languages.FRENCH]: "Bruyante"
             },
             "button-text-chat-vibe-quiet": {
-                [Languages.ENGLISH]: "Quiet"
+                [Languages.ENGLISH]: "Quiet",
+                [Languages.FRENCH]: "Tranquille"
             },
             "button-text-chat-vibe-troll": {
-                [Languages.ENGLISH]: "Troll"
+                [Languages.ENGLISH]: "Troll",
+                [Languages.FRENCH]: "Troll"
             },
             "button-text-chat-vibe-drunk": {
-                [Languages.ENGLISH]: "Drunk"
+                [Languages.ENGLISH]: "Drunk",
+                [Languages.FRENCH]: "Bourrée"
             },
             "button-text-chat-vibe-spam-emotes": {
-                [Languages.ENGLISH]: "Spam emotes"
+                [Languages.ENGLISH]: "Spam emotes",
+                [Languages.FRENCH]: "Spam emotes"
             },
             "button-text-chat-vibe-fast": {
-                [Languages.ENGLISH]: "Fast"
+                [Languages.ENGLISH]: "Fast",
+                [Languages.FRENCH]: "Rapide"
             },
             "button-text-chat-vibe-slow": {
-                [Languages.ENGLISH]: "Slow"
+                [Languages.ENGLISH]: "Slow",
+                [Languages.FRENCH]: "Lente"
             },
             "button-text-chat-vibe-wholesome": {
-                [Languages.ENGLISH]: "Wholesome"
+                [Languages.ENGLISH]: "Wholesome",
+                [Languages.FRENCH]: "Saine"
             },
             "button-text-chat-vibe-toxic": {
-                [Languages.ENGLISH]: "Toxic"
+                [Languages.ENGLISH]: "Toxic",
+                [Languages.FRENCH]: "Toxique"
             },
     
             // Question 6: average viewers
             "question-text-average_viewers": {
-                [Languages.ENGLISH]: "Average viewer count?"
+                [Languages.ENGLISH]: "Average viewer count?",
+                [Languages.FRENCH]: "Nombre moyen de spectateurs ?"
             },
     
             // Question 7: watch time
             "question-text-watchtime": {
-                [Languages.ENGLISH]: "I can watch streams on"
+                [Languages.ENGLISH]: "I can watch streams on",
+                [Languages.FRENCH]: "Je regarde des streams…",
             },
             "time-range-watchtime-weekdays": {
-                [Languages.ENGLISH]: "Weekdays"
+                [Languages.ENGLISH]: "Weekdays",
+                [Languages.FRENCH]: "En semaine"
             },
             "time-range-watchtime-weekends": {
-                [Languages.ENGLISH]: "Weekends"
+                [Languages.ENGLISH]: "Weekends",
+                [Languages.FRENCH]: "Le weekend"
             },
             "time-range-watchtime-from": {
-                [Languages.ENGLISH]: "from"
+                [Languages.ENGLISH]: "from",
+                [Languages.FRENCH]: "de"
             },
             "time-range-watchtime-to": {
-                [Languages.ENGLISH]: "to"
+                [Languages.ENGLISH]: "to",
+                [Languages.FRENCH]: "à"
             },
     
             // Misc
             "loading-message": {
                 [Languages.ENGLISH]: "Matching you with a streamer...",
-                [Languages.FRENCH]: "En train de vous trouver des streamers..."
+                [Languages.FRENCH]: "Recherche de streamers en cours…"
             },
             "match": {
                 [Languages.ENGLISH]: "match",
-                [Languages.FRENCH]: "égal"
+                [Languages.FRENCH]: "de correspondance"
             },
             "results": {
                 [Languages.ENGLISH]: "Results",
@@ -299,11 +345,11 @@ function getTranslationTable(params) {
             },
             "restart": {
                 [Languages.ENGLISH]: "Restart",
-                [Languages.FRENCH]: "à nouveau"
+                [Languages.FRENCH]: "Relancer la recherche"
             },
             "continue": {
                 [Languages.ENGLISH]: "Continue",
-                [Languages.FRENCH]: "Continuez"
+                [Languages.FRENCH]: "Continuer"
             }
         }
     }
