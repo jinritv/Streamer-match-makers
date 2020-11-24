@@ -47,6 +47,10 @@ class StreamersStats extends Sequelize.Model {
     start_stream: {
       type: DataTypes.TIME,
       allowNull: true
+    },
+    chat_mode: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,

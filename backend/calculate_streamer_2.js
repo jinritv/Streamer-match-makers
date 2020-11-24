@@ -4,15 +4,16 @@ const {Streamers, StreamersStats, Languages, Categories, StreamersNationalities}
 
 // holds the values for the 'Points' of each attribute (an alternative to weighting?)
 const ATTRIBUTE_POINTS = {
-  age: 0.5,
   avg_viewers: 1.0,
   language: 1.0,
   content: 1.5,
-  watchtime: 1.0,
+  chatmode: 1.0,
+  maturity: 1.0,
+  chat_vibe: 1.0,
+  watchtime: 1.5,
 }
 
 const SCORE_NEAR_THRESHOLD = {
-  age: 5,
   avg_viewers: 300,
 }
 
@@ -80,7 +81,7 @@ async function calculateStreamer(quizValues, callback) {
   // Get all the streamers from the database
   const allStreamersArray = await Streamers.findAll({
     // we only need a few columns from the main Streamer table
-    attributes:['id','user_name', 'dob_year','logo'],
+    attributes:['id','user_name', 'dob_year','logo', 'mature_stream'],
     // we want to include the other associated tables such as StreamerStats, Languages, etc
     include:{ all: true, nested: true }
   });
@@ -126,115 +127,6 @@ async function calculateStreamer(quizValues, callback) {
     "result": matchedStreamersResult,
     "stats": topStats,
   }, null);
-
-  /*
-  // Two different types of queries needed for Sequelize
-  const whereQuery = {};  // fields in streamers table
-  whereQuery.dob_year = {
-    [Op.between]: getStreamerAgeRange(prefs.age)
-  };
-
-  const includeQuery = [];  // fields in other tables
-
-  const usesCam = getYesOrNo(prefs.cam);
-  if(usesCam !== null) {
-    whereQuery.uses_cam = usesCam;
-  }
-  
-  const isMature = getYesOrNo(prefs.mature);
-  if(isMature !== null) {
-    whereQuery.mature_stream = getYesOrNo(prefs.mature);
-  }
-  
-  // Build query related to streamers_stats table
-  const statWhereQuery = {};
-
-  const voiceValue = getVoice(prefs.voice);
-  if(voiceValue !== null) {
-    statWhereQuery.voice = voiceValue;
-  }
-  statWhereQuery.avg_viewers = {
-    [Op.between]: getMinMaxViewers(prefs.average_viewers)
-  };
-
-  statWhereQuery.followers = {
-    [Op.between]: getFollowerCountRange(prefs.follower_count)
-  };
-  
-  includeQuery.push({
-    model: StreamersStats,
-    where: statWhereQuery,
-  });
-  
-  // Queries related to languages table
-  const languageNames = getLanguageNames(prefs.languages);
-  if(languageNames && languageNames.length > 0) {
-    includeQuery.push({
-      model: Languages,
-      where: {language: languageNames}
-    })
-  }
-
-  // Queries related to categories table
-  const categories = getCategories(prefs.content);
-  if(categories && categories.length > 0) {
-    includeQuery.push({
-      model: Categories,
-      where: {category: categories}
-    });
-  }
-
-  try {
-    const streamers = await Streamers.findAll({where: whereQuery, include: includeQuery});
-    
-    // Usernames of matching streamers
-    const usernames = streamers.map(streamer => streamer.user_name);
-    console.log(`Found ${usernames.length} matching streamers`);
-    console.log(`They are: ${usernames}`);
-
-    // The search is broken so we send the first 5 entries from the DB so
-    // we can at least handle the data properly client-side once the
-    // query actually works.
-    if(streamers.length === 0) {
-      let fakeStreamersResult = await Streamers.findAll({
-        attributes: ['user_name','logo'],
-        where: {
-          [Op.or]: [
-            { id: 1 },
-            { id: 2 },
-            { id: 3 },
-            { id: 4 },
-            { id: 5 }
-          ]
-        }
-      });
-
-      // add some kind of match value in percentage (example 98% match)
-      const matchedStreamers = fakeStreamersResult.map(streamer=> {
-        let streamerObj = Object.assign({}, {user_name: streamer.user_name, logo: streamer.logo });
-        let matchValue = Math.floor(Math.random() * 101); // some random value (for now)
-
-        // if it's jinri, put a high match percentage :)
-        if(streamer.user_name==='jinritv'){
-          matchValue = 98;
-        } 
-        streamerObj.match_value = matchValue;
-        return streamerObj;
-      })
-      callback(matchedStreamers, null);
-    }
-    else {  
-      const result = {
-
-        streamers: streamers,
-      }
-      callback(result, null);
-    }
-  }
-  catch(error) {
-    callback(null, error.message);
-  }
-  */
 }
 
 
@@ -267,26 +159,14 @@ function matchStreamers(prefs, streamers){
     // create an entry for the streamer in the score object
     let scores = 0.0;
     stats[streamer.id] = {
-      "Age": 0,
       "Viewers": 0,
       "Language": 0,
       "Content": 0,
+      "Maturity": 0,
+      "Chat Mode": 0,
+      "Chat Vibe": 0,
       "Watchtime": 0,
     };
-
-    // check against age preference
-    if(streamer.dob_year){
-      let DOBrange = getStreamerAgeRange(prefs.age);
-      let score = countNearScore(
-        ATTRIBUTE_POINTS.age,
-        streamer.dob_year,
-        DOBrange[0],
-        DOBrange[1],
-        SCORE_NEAR_THRESHOLD.age,
-      );
-      scores += score;
-      stats[streamer.id]["Age"] = Math.ceil(score / ATTRIBUTE_POINTS.age * 100);
-    }
 
     // check against average viewers preference
     if(streamer.StreamersStat){
@@ -337,6 +217,44 @@ function matchStreamers(prefs, streamers){
       let catScore = totalCatMatch * ATTRIBUTE_POINTS.content / prefs.content.length;
       scores += catScore;
       stats[streamer.id]["Content"] = Math.ceil(catScore / ATTRIBUTE_POINTS.content * 100);
+    }
+
+    // Sub only check
+    // TODO: mapping model not completed, only handling 'all' choice
+    let chatModeScore = 0.5;
+    if (prefs.subonly == 'all') {
+      chatModeScore = 1;
+    }
+    scores += chatModeScore * ATTRIBUTE_POINTS.chatmode;
+    stats[streamer.id]["Chat Mode"] = chatModeScore * 100;
+
+    // maturity check
+    if (prefs.mature) {
+      let bMature = prefs.mature == 'true' ? true:false;
+      let score = 0;
+      if (streamer.mature_stream == null) {
+        score = 0.5;
+      } else if ((bMature && (streamer.mature_stream == 1)) || (!bMature && (streamer.mature_stream == 0))) {
+        score = 1;
+      }
+      
+      scores += score * ATTRIBUTE_POINTS.maturity;
+      stats[streamer.id]["Maturity"] = score * 100;
+    }
+
+    // chat vibe check
+    let chatVibes = streamer.ChatVibes.map(row=>row.vibe.toLowerCase());
+    let matchVibes = 0;
+    prefs["chat-vibe"].forEach(vibe => {
+      if (chatVibes.includes(vibe.toLowerCase())) {
+        matchVibes += 1;
+      }
+    });
+
+    if (prefs["chat-vibe"].length != 0) {
+      let vibeScore = matchVibes * ATTRIBUTE_POINTS.chat_vibe / prefs["chat-vibe"].length;
+      scores += vibeScore;
+      stats[streamer.id]["Chat Vibe"] = Math.ceil(vibeScore / ATTRIBUTE_POINTS.chat_vibe * 100);
     }
 
     // check for watch time
