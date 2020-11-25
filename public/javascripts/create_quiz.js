@@ -307,7 +307,10 @@ function generateQuestionsHtml() {
   let allQuestions = ``;
   QUIZ_QUESTIONS.forEach((question, index) => {
     let questionNum = index + 1;
-    let questionHtml = HTMLStrings.QuestionContainerOpen(questionNum) + GenerateQuestionInputs(question) + HTMLStrings.QuestionContainerClose;
+    let questionHtml = HTMLStrings.QuestionContainerOpen(questionNum) 
+      + GenerateQuestionInputs(question) 
+      + HTMLStrings.QuestionSearchWeight(questionNum)
+      + HTMLStrings.QuestionContainerClose;
     allQuestions += questionHtml;
   });
   return allQuestions;

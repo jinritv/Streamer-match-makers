@@ -304,6 +304,9 @@ function getTranslationTable(params) {
             "continue": {
                 [Languages.ENGLISH]: "Continue",
                 [Languages.FRENCH]: "Continuez"
+            },
+            "search-weight": {
+                [Languages.ENGLISH]: "How important is this?"
             }
         }
     }

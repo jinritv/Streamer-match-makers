@@ -2,25 +2,22 @@
 const {Op} = require("sequelize");
 const {Streamers, StreamersStats, Languages, Categories, StreamersNationalities} = require("../models/models");
 
+const SCORE_NEAR_THRESHOLD = {
+  age: 5,
+  average_viewers: 300,
+}
+
 // holds the values for the 'Points' of each attribute (an alternative to weighting?)
-const ATTRIBUTE_POINTS = {
+let ATTRIBUTE_POINTS = {
   age: 0.5,
-  avg_viewers: 1.0,
-  language: 1.0,
+  average_viewers: 1.0,
+  languages: 1.0,
   content: 1.5,
   watchtime: 1.0,
 }
 
-const SCORE_NEAR_THRESHOLD = {
-  age: 5,
-  avg_viewers: 300,
-}
-
 // total of maximum score
 let TOTAL_ATTRIBUTES =  0;
-for (const [k, v] of Object.entries(ATTRIBUTE_POINTS)) {
-  TOTAL_ATTRIBUTES += v;
-}
 
 
 // key is content filter (input)
@@ -61,6 +58,14 @@ async function calculateStreamer(quizValues, callback) {
   // User answers passed from frontend
   const prefs = quizValues.UsersAnswers || {};  
   console.log(`UserAnswers:`,prefs);
+
+  ATTRIBUTE_POINTS = Object.assign({}, ATTRIBUTE_POINTS, prefs.ranks)
+  TOTAL_ATTRIBUTES = 0;
+  for (const [k, v] of Object.entries(ATTRIBUTE_POINTS)) {
+    let num_v = Number(v) || 3; // convert values to ints. For some reason they are converted to string when sent from the client.
+    ATTRIBUTE_POINTS[k] = num_v;
+    TOTAL_ATTRIBUTES += num_v;
+  }
 
   /* 
   *****************************
@@ -292,14 +297,14 @@ function matchStreamers(prefs, streamers){
     if(streamer.StreamersStat){
       let viewerRange = getMinMaxViewers(prefs.average_viewers);
       let score = countNearScore(
-        ATTRIBUTE_POINTS.avg_viewers,
+        ATTRIBUTE_POINTS.average_viewers,
         streamer.StreamersStat.avg_viewers,
         viewerRange[0],
         viewerRange[1],
-        SCORE_NEAR_THRESHOLD.avg_viewers,
+        SCORE_NEAR_THRESHOLD.average_viewers,
       );
       scores += score;
-      stats[streamer.id]["Viewers"] = Math.ceil(score / ATTRIBUTE_POINTS.avg_viewers * 100);
+      stats[streamer.id]["Viewers"] = Math.ceil(score / ATTRIBUTE_POINTS.average_viewers * 100);
     }
 
     // check against language preference
@@ -312,9 +317,9 @@ function matchStreamers(prefs, streamers){
      }
     });
     if (preferredLanguages.length != 0) {
-      let langScore = totalLangMatch * ATTRIBUTE_POINTS.language / preferredLanguages.length;
+      let langScore = totalLangMatch * ATTRIBUTE_POINTS.languages / preferredLanguages.length;
       scores += langScore;
-      stats[streamer.id]["Language"] = Math.ceil(langScore / ATTRIBUTE_POINTS.language * 100);
+      stats[streamer.id]["Language"] = Math.ceil(langScore / ATTRIBUTE_POINTS.languages * 100);
     }
 
     //check against stream content

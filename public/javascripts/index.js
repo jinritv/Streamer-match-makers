@@ -84,6 +84,7 @@ function SetupLanguageDropdown() {
 function setupElements() {
   InitializeSliders();
   InitializeTimePickers();
+  InitializeStarryRatings();
   UnselectAllSwitches();
   HideElementsAtQuizStart();
   // statistic tooltip hovefr
@@ -124,6 +125,31 @@ function InitializeTimePickers() {
       signButtonBackgroundColor: '#0797FF'
     },
   });
+}
+
+function InitializeStarryRatings() {
+  UsersAnswers['ranks'] = {};
+
+  for (var i = 0; i < QUIZ_QUESTIONS.length; ++i) {
+    let question = QUIZ_QUESTIONS[i];
+
+    // default rank
+    UsersAnswers['ranks'][question.unique_question_identifier] = 3;
+
+    let starRatingId = `question${i+1}-weight-star-rating`
+    let starRatingEl = document.getElementById(starRatingId);
+    
+    if (starRatingEl) {
+      new Starry(starRatingEl, {
+        name: starRatingId, 
+        beginWith: 60, // 3 out of 5 stars
+        multiple: true,
+        onRate: function (rating) {
+          UsersAnswers['ranks'][question.unique_question_identifier] = parseInt(rating) || 3;
+        }
+      });
+    }
+  }
 }
 
 function UnselectAllSwitches() {
