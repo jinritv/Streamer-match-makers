@@ -6,7 +6,8 @@ var http = require('http');
 var public = path.join(__dirname, 'public');
 
 const calculateStreamer = require('./backend/calculate_streamer_2');
-const createStreamer = require('./backend/create_streamer')
+const createStreamer = require('./backend/create_streamer');
+const LoadLanguageJSON = require('./backend/localizations/localization');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
@@ -55,15 +56,27 @@ app.post("/createNewStreamer", (req, res, next) => {
    createStreamer(req.body.newStreamer, createStreamerCallback);
 });
 
+// We are requesting JSON of all the site text in the language requested
+// The translation JSON files are stored in the /backend/localizations/translations folder.
+app.post("/getLocalization", (req, res, next)=>{
+
+  let LANGUAGE_TO_GET = req.body.language;
+
+  const getLanguageJSONCallback = (results, err) => {
+    res.json({
+      "Error":err,
+      "Results": results
+    });
+  };
+
+  LoadLanguageJSON(LANGUAGE_TO_GET, getLanguageJSONCallback);
+});
 
 app.use(express.static('public'));
-
 var server = http.createServer(app);
-
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
 
 /**
  * Event listener for HTTP server "error" event.
