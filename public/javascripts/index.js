@@ -17,6 +17,9 @@ var pressTimer;
 // statistic of scoring result
 var ResultStats = {};
 
+// The theme, either 'light' or 'dark'
+var Theme = 'light';
+
 // what language is currently being displayed on the screen
 let _CURRENT_LANGUAGE_;
 
@@ -134,6 +137,21 @@ function addTextToStaticElements() {
   ].forEach(element => {
     $(`#${element}`).html(getText(element))
   })
+}
+
+// Toggles the theme to dark/light mode
+function toggleDarkMode(){
+  if(Theme=='light'){
+    Theme='dark';
+    $('#page-top').removeClass('light-mode');
+    $('#page-top').addClass('dark-mode');
+    $('#dark-mode-label').text(getTranslation('light-mode-label'));
+  } else {
+    Theme='light';
+    $('#page-top').removeClass('dark-mode');
+    $('#page-top').addClass('light-mode');
+    $('#dark-mode-label').text(getTranslation('dark-mode-label'));
+  }
 }
 
 function generateDropdownOptions() {
