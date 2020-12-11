@@ -79,6 +79,14 @@ I tried to keep the structure as simple as possible, so that anyone who wants to
 
 # Release Notes
 
+## 2020-12-11 
+*dark mode*
+- added a dark/light theme toggle to the bottom-right of the site (click it to toggle theme change)
+- added the chosen font from the poll (grandstander)
+- removed unneccesary stylesheet references
+- removed body.css, heading.css, styles.css, so we now load the bootstrap directly from the cdn to clear up some of the clutter
+- created 'themes.css' to contain all of the css color variables the site uses, which defines a class 'light-theme' and 'dark-theme', which will change the variables used to color html elements according to the selected class. all of the color properties were moved from the other css files into this one.
+
 ## 2020-11-28
 *Localization*
 - Moved the entire localization system to the backend
