@@ -134,6 +134,7 @@ function addTextToStaticElements() {
     "copyright-text",
     "animated-words-label",
     "find-streamer-button",
+    "dark-mode-label"
   ].forEach(element => {
     $(`#${element}`).html(getText(element))
   })
