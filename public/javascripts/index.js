@@ -17,6 +17,9 @@ var pressTimer;
 // statistic of scoring result
 var ResultStats = {};
 
+// The theme, either 'light' or 'dark'
+var Theme = 'light';
+
 // This is called when the page is loaded
 $(() => {
   SetupLanguageDropdown();
@@ -39,10 +42,26 @@ $(() => {
 const ToBeTranslatedOnPageLoad = [
   "page-title",
   "logoText",
+  "dark-mode-label",
   "copyright-text",
   "animated-words-label",
   "find-streamer-button",
 ];
+
+// Toggles the theme to dark/light mode
+function toggleDarkMode(){
+  if(Theme=='light'){
+    Theme='dark';
+    $('#page-top').removeClass('light-mode');
+    $('#page-top').addClass('dark-mode');
+    $('#dark-mode-label').text(getTranslation('light-mode-label'));
+  } else {
+    Theme='light';
+    $('#page-top').removeClass('dark-mode');
+    $('#page-top').addClass('light-mode');
+    $('#dark-mode-label').text(getTranslation('dark-mode-label'));
+  }
+}
 
 function translateStaticElements() {
   ToBeTranslatedOnPageLoad.forEach(element => {

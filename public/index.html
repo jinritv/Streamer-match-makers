@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -12,19 +11,24 @@
   <!-- Font Awesome icons (free version)-->
   <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
   <!-- Google fonts-->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
-    type="text/css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@200&display=swap" rel="stylesheet"> 
+<!-- Animations -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css"
     integrity="sha256-6hqHMqXTVEds1R8HgKisLm3l/doneQs+rS1a5NLmwwo=" crossorigin="anonymous" />
-  <!-- Core theme CSS (includes Bootstrap)-->
-  <link href="stylesheets/styles.css" rel="stylesheet" />
+    <link href="stylesheets/animations.css" rel="stylesheet" />
+  <!-- Core theme CSS (includes Bootstrap) -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link href="stylesheets/bootstrap-slider.css" rel="stylesheet" />
+  
+
+  <!-- Our custom CSS -->
   <link href="stylesheets/quizstyle.css" rel="stylesheet" />
-  <link href="stylesheets/animations.css" rel="stylesheet" />
+  <link href="stylesheets/themes.css" rel="stylesheet" />
 </head>
 
-<body id="page-top">
+<body id="page-top" class="light-mode">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
     <div class="container" id="logo-container">
@@ -37,6 +41,7 @@
       </div>
     </div>
   </nav>
+ 
   <div id="bg-rectangle" style="display: none;">
   </div>
   <div class="container d-flex align-items-center flex-column welcome-container" id="welcome-card">
@@ -76,9 +81,10 @@
   </div>
 
   <!-- Footer-->
-  <div class="footer text-center bg-secondary">
+  <div class="footer d-flex justify-content-center">
     <!-- Copyright Section-->
-    <div style="color:#4d2c4d" id="copyright-text"></div>
+    <div id="copyright-text"></div>
+    <div onclick="toggleDarkMode()" id="dark-mode-toggle"><span id="dark-mode-toggle-icon">🌚</span><span id="dark-mode-label"></span></div>
   </div>
 
   <!-- Loading Scripts -->
