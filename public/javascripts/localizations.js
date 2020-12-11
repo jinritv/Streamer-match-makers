@@ -2,7 +2,7 @@ const Languages = {
     ENGLISH: 'english', // make sure this value is the same you put after the 'drop-down-label-' for the dropdown
     FRENCH: 'french',
     KOREAN: 'korean',
-    JAPANESE: 'japanese'
+    //JAPANESE: 'japanese'
     // add a new language here
 }
 
@@ -304,6 +304,12 @@ function getTranslationTable(params) {
             "continue": {
                 [Languages.ENGLISH]: "Continue",
                 [Languages.FRENCH]: "Continuez"
+            },
+            "dark-mode-label":{
+                [Languages.ENGLISH]: "dark mode?",
+            },
+            "light-mode-label":{
+                [Languages.ENGLISH]: "light mode?",
             }
         }
     }
