@@ -14,11 +14,18 @@ const Languages = {
 // Sets the filepath for the JSON language file, and loads it
 const LoadLanguageJSON = (language, callback) => {
     console.log("Loading JSON language file for:", language);
-    // Check if the requested language is available
+    //Check if user-language is available
     if (Object.values(Languages.Tags).includes(language)) {
         // Define the filepath to our file
         let filePath = `backend/localizations/translations/${language}.json`;
         // Attempt to read the file for that language
+        fs.readFile(filePath, CallbackLanguageFileLoad(callback));
+    }
+    else{
+
+        //Define Filepath to constant language (If we didnt add that Language, use English instead)
+        let filePath = `backend/localizations/translations/en-US.json`;
+        //Attempt to read the file for that language
         fs.readFile(filePath, CallbackLanguageFileLoad(callback));
     }
 }
