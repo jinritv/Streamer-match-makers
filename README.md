@@ -79,6 +79,23 @@ I tried to keep the structure as simple as possible, so that anyone who wants to
 
 # Release Notes
 
+## 2020-12-11 
+*dark mode*
+- added a dark/light theme toggle to the bottom-right of the site (click it to toggle theme change)
+- added the chosen font from the poll (grandstander)
+- removed unneccesary stylesheet references
+- removed body.css, heading.css, styles.css, so we now load the bootstrap directly from the cdn to clear up some of the clutter
+- created 'themes.css' to contain all of the css color variables the site uses, which defines a class 'light-theme' and 'dark-theme', which will change the variables used to color html elements according to the selected class. all of the color properties were moved from the other css files into this one.
+
+## 2020-11-28
+*Localization*
+- Moved the entire localization system to the backend
+- Language texts are now stored in their own JSON files
+- We retreive the browser's language and use that as default language
+- On site load, we send a POST request to the server with that default language 
+- The server reads the appropriate file and sends the JSON data back to the client, with other information such as other available languages and icons for the drop-down menu. 
+- The language JSON data is stored and the rest of the site is loaded
+
 ## 2020-11-14
 - Moved a bunch of the html strings into a separate file `html_helpers.js` to reduce clutter in our create_quiz file.
 - Added an override feature when generating questions: For questions that include buttons, you can now just add the property `buttonsPerRow` to the question object and it will override the default buttons per row for that question type.

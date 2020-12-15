@@ -168,7 +168,7 @@ function BuildQuiz() {
   let quizHtml = `<div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header text-center">
-            <h5 class="modal-title w-100" id="generated-quiz-modal-progress-label">${getTranslation("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length])}</h5>
+            <h5 class="modal-title w-100" id="generated-quiz-modal-progress-label">${getText("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length])}</h5>
           </div>
               ${generateProgressBar(QUIZ_QUESTIONS.length)}
           <div class="modal-body">
@@ -224,7 +224,7 @@ function GenerateQuestionInputs(question) {
 // Thhe main functions that build the inputs for each question
 const generateInputFunctions = {
   'buttonselect': (question) => {
-    let htmlString = HTMLStrings.BasicQuestionTitle(getTranslation(`question-text-${question.unique_question_identifier}`));
+    let htmlString = HTMLStrings.BasicQuestionTitle(getText(`question-text-${question.unique_question_identifier}`));
     let numInCurrentRow = 0; // keeps track of how many buttons are on the current row
     // check if we have overidden the number of buttons per row
     // if we have not overriden it, it will use the default for that question type's settings.
@@ -253,8 +253,8 @@ const generateInputFunctions = {
   [QuestionTypes.RangeSlider]: (question) => {
     let defaultDisplayValues = [question.answer_settings.defaultMin,question.answer_settings.defaultMax];
     let htmlString = `<div class="d-flex flex-column mb-3 justify-content-center text-center">
-        <h4>${getTranslation(`question-text-${question.unique_question_identifier}`)}</h4>
-        <span id="generated-${question.unique_question_identifier}-slider-display">${getTranslation(`range-display-${question.unique_question_identifier}`,defaultDisplayValues)}</span>
+        <h4>${getText(`question-text-${question.unique_question_identifier}`)}</h4>
+        <span id="generated-${question.unique_question_identifier}-slider-display">${getText(`range-display-${question.unique_question_identifier}`,defaultDisplayValues)}</span>
       </div>     
       <div class="d-flex flex-row justify-content-center quiz-slider-container">
       <div id='generated-${question.unique_question_identifier}-minus' class="btn btn-outline-light svg-buttons" style="margin-right: 24px;">
@@ -277,23 +277,23 @@ const generateInputFunctions = {
   },
   [QuestionTypes.TimeRange]: (question) => {
     let htmlString = `<div class="d-flex flex-row mb-3 justify-content-center">
-        <h4>${getTranslation(`question-text-${question.unique_question_identifier}`)}</h4>
+        <h4>${getText(`question-text-${question.unique_question_identifier}`)}</h4>
       </div><div class="d-flex flex-column mb-3"><div class="d-flex flex-row mb-3 justify-content-center">`;
     question.answer_settings.forEach(answerTime => {
       htmlString += `<div class="custom-control custom-switch" style="margin-right:48px;">
           <input type="checkbox" class="custom-control-input" id="generated-switch_${question.unique_question_identifier}_${answerTime.value_name}"
             onclick="toggleTimeInput('${question.unique_question_identifier}','${answerTime.value_name}'); captureTimeInputs()">
-          <label class="custom-control-label" for="generated-switch_${question.unique_question_identifier}_${answerTime.value_name}">${getTranslation(`time-range-${question.unique_question_identifier}-${answerTime.value_name}`)}</label>
+          <label class="custom-control-label" for="generated-switch_${question.unique_question_identifier}_${answerTime.value_name}">${getText(`time-range-${question.unique_question_identifier}-${answerTime.value_name}`)}</label>
         </div>`;
     })
     htmlString += `</div><div class="d-flex flex-row mb-3 justify-content-center">`;
     question.answer_settings.forEach(answerTime => {
       htmlString += `<div id="generated-${question.unique_question_identifier}-${answerTime.value_name}" style="position: relative;">
           <div class="d-flex flex-column text-center">
-            <span style="color:#bf7dd3"><strong>${getTranslation(`time-range-${question.unique_question_identifier}-${answerTime.value_name}`)}</strong></span>
-            <span>${getTranslation(`time-range-${question.unique_question_identifier}-from`)}</span>
+            <span style="color:#bf7dd3"><strong>${getText(`time-range-${question.unique_question_identifier}-${answerTime.value_name}`)}</strong></span>
+            <span>${getText(`time-range-${question.unique_question_identifier}-from`)}</span>
             <input id="generated-${question.unique_question_identifier}-${answerTime.value_name}-from" class="time text-center" type="text" value="${answerTime.minDefault}" />
-            <span>${getTranslation(`time-range-${question.unique_question_identifier}-to`)}</span>
+            <span>${getText(`time-range-${question.unique_question_identifier}-to`)}</span>
             <input id="generated-${question.unique_question_identifier}-${answerTime.value_name}-to" class="time text-center" type="text" value="${answerTime.maxDefault}" />
           </div>
         </div>`;

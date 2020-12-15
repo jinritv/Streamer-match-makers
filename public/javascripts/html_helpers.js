@@ -1,8 +1,8 @@
 // Is there a better way to store this html?
 const HTMLStrings = {
-    LanguageDropDownItem: (language,icon,name) => (`<div class="dropdown-item-container"><a id="generated-dropdown-option-${language}" onclick="updateLanguage('${language}')" class="dropdown-item language-dropdown" href="#"><img src="${icon}"/><span class="language-dropdown-text">${name}</span></a></div>`),
+    LanguageDropDownItem: (language,icon,name) => (`<div class="dropdown-item-container"><a id="generated-dropdown-option-${language}" onclick="updateLanguage('${language}')" class="dropdown-item language-dropdown" href="#"><img class="dropdown-lang-icon" src="${icon}"/><span class="language-dropdown-text">${name}</span></a></div>`),
     LanguageDropDown: (languageIcon,languageDisplayName,dropDownOptions) => (`<div id="language-dropdown" class="btn-group">
-    <button type="button" class="btn btn-quiz-answer"><img id="current-language-icon" src="${languageIcon}"/><span class="language-dropdown-text" id="current-language-label">${languageDisplayName}</span></button>
+    <button type="button" class="btn btn-quiz-answer"><img class="dropdown-lang-icon" id="current-language-icon" src="${languageIcon}"/><span class="language-dropdown-text" id="current-language-label">${languageDisplayName}</span></button>
     <button type="button" class="btn btn-quiz-answer dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
       aria-haspopup="true" aria-expanded="false">
     </button>
@@ -15,12 +15,12 @@ const HTMLStrings = {
     ModalFooter: () => `<div class="modal-footer justify-content-center" style="position: relative;">
     <button id="restart-button" type="button" onclick="restartQuiz()"
         class="btn btn-quiz-answer btn-quiz-continue">
-    <span>${getTranslation('restart')}</span></button>
+    <span>${getText('restart')}</span></button>
   </div>
   <div class="modal-footer justify-content-center">
     <button id="continue-button" type="button" onclick="nextQuestion()"
         class="btn btn-quiz-answer btn-quiz-continue">
-      <span>${getTranslation('continue')}</span>
+      <span>${getText('continue')}</span>
     </button>
   </div>`,
     ProgressBarOpen: `<div class="progress">`,
@@ -28,7 +28,7 @@ const HTMLStrings = {
     ProgressBarClose: (percentagePerQuestion) => (`<div id="generated-quiz-modal-progress-bar" class="progress-bar" role="progressbar" style="width: ${percentagePerQuestion}%;"><span></span></div></div>`),
     BasicAnswerButton: (question, answer, onclickFunctionName) => (`<button id="generated-quiz-modal-button_${question.unique_question_identifier}_${answer}" type="button" onclick="${onclickFunctionName}('${question.unique_question_identifier}','${answer}')"
     class="btn btn-quiz-answer">
-    <span>${getTranslation(`button-text-${question.unique_question_identifier}-${answer}`)}</span>
+    <span>${getText(`button-text-${question.unique_question_identifier}-${answer}`)}</span>
   </button>`),
     BasicQuestionTitle: (questionTitle) => (`<div class="d-flex flex-row mb-3 justify-content-center">
                                 <h4>${questionTitle}</h4>
@@ -46,7 +46,7 @@ const HTMLStrings = {
         <div></div>
         <div></div>
       </div>
-      <h4>${getTranslation('loading-message')}</h4>
+      <h4>${getText('loading-message')}</h4>
       <div class="lds-ellipsis">
         <div></div>
         <div></div>
@@ -63,7 +63,7 @@ const HTMLStrings = {
                 </div>
             </div>
             <div class="col">
-                <div class="float-right" style="padding-top: 12px;"><span><strong style="color: #009900;" id="streamer-1-match">98</strong>% ${getTranslation('match')}</span></div>
+                <div class="float-right" style="padding-top: 12px;"><span><strong style="color: #009900;" id="streamer-1-match">98</strong>% ${getText('match')}</span></div>
             </div>
         </div>
         <div class="row">
@@ -89,7 +89,7 @@ const HTMLStrings = {
                         </div>
                       </div>
                       <div class="col">
-                        <div class="float-right" style="padding-top: 12px;"><span><strong id="streamer-${streamerId}-match">98</strong>% ${getTranslation('match')}</span></div>
+                        <div class="float-right" style="padding-top: 12px;"><span><strong id="streamer-${streamerId}-match">98</strong>% ${getText('match')}</span></div>
                       </div>
                     </div>
                     <div class="row" style="padding-bottom: 12px;">
