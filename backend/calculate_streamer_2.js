@@ -2,16 +2,25 @@
 const {Op} = require("sequelize");
 const {Streamers, StreamersStats, Languages, Categories, StreamersNationalities} = require("../models/models");
 
-// holds the values for the 'Points' of each attribute (an alternative to weighting?)
-const ATTRIBUTE_POINTS = {
-  avg_viewers: 1.0,
-  language: 1.0,
+// holds the default values for the 'Points' of each attribute. 
+const ATTRIBUTE_POINTS_DEFAULTS = {
+  average_viewers: 1.0,
+  languages: 1.0,
   content: 1.5,
-  chatmode: 1.0,
-  maturity: 1.0,
+  subonly: 1.0,
+  mature: 1.0,
   chat_vibe: 1.0,
   watchtime: 1.5,
 }
+
+// Overwritten by POST from client questionnaire with request[ranks] values.
+// NOTE: The property names in request[ranks] are equivalent to the 'unique_question_identifier' 
+//       property for each question. If those identifiers do not match the fields above, the
+//       user supplied weight will be ignored and the default value above will be used for the
+//       offending field.
+let ATTRIBUTE_POINTS = {
+  ...ATTRIBUTE_POINTS_DEFAULTS
+};
 
 const SCORE_NEAR_THRESHOLD = {
   avg_viewers: 300,
@@ -19,8 +28,12 @@ const SCORE_NEAR_THRESHOLD = {
 
 // total of maximum score
 let TOTAL_ATTRIBUTES =  0;
-for (const [k, v] of Object.entries(ATTRIBUTE_POINTS)) {
-  TOTAL_ATTRIBUTES += v;
+function refreshTotalAttributePoints() {
+  TOTAL_ATTRIBUTES = 0;
+
+  for (const [k, v] of Object.entries(ATTRIBUTE_POINTS)) {
+    TOTAL_ATTRIBUTES += v;
+  }
 }
 
 
@@ -148,6 +161,9 @@ function matchStreamers(prefs, streamers){
   // stats to help score debugging
   let stats = {};
 
+  // setup question ranks
+  processRanks(prefs.ranks);
+
   // array to store the matched streamers
   let matchValues = [];
   let preferredLanguages = getLanguageNames(prefs.languages);
@@ -172,14 +188,14 @@ function matchStreamers(prefs, streamers){
     if(streamer.StreamersStat){
       let viewerRange = getMinMaxViewers(prefs.average_viewers);
       let score = countNearScore(
-        ATTRIBUTE_POINTS.avg_viewers,
+        ATTRIBUTE_POINTS.average_viewers,
         streamer.StreamersStat.avg_viewers,
         viewerRange[0],
         viewerRange[1],
         SCORE_NEAR_THRESHOLD.avg_viewers,
       );
       scores += score;
-      stats[streamer.id]["Viewers"] = Math.ceil(score / ATTRIBUTE_POINTS.avg_viewers * 100);
+      stats[streamer.id]["Viewers"] = Math.ceil(score / ATTRIBUTE_POINTS.average_viewers * 100);
     }
 
     // check against language preference
@@ -192,9 +208,9 @@ function matchStreamers(prefs, streamers){
      }
     });
     if (preferredLanguages.length != 0) {
-      let langScore = totalLangMatch * ATTRIBUTE_POINTS.language / preferredLanguages.length;
+      let langScore = totalLangMatch * ATTRIBUTE_POINTS.languages / preferredLanguages.length;
       scores += langScore;
-      stats[streamer.id]["Language"] = Math.ceil(langScore / ATTRIBUTE_POINTS.language * 100);
+      stats[streamer.id]["Language"] = Math.ceil(langScore / ATTRIBUTE_POINTS.languages * 100);
     }
 
     //check against stream content
@@ -225,7 +241,7 @@ function matchStreamers(prefs, streamers){
     if (prefs.subonly == 'all') {
       chatModeScore = 1;
     }
-    scores += chatModeScore * ATTRIBUTE_POINTS.chatmode;
+    scores += chatModeScore * ATTRIBUTE_POINTS.subonly;
     stats[streamer.id]["Chat Mode"] = chatModeScore * 100;
 
     // maturity check
@@ -238,7 +254,7 @@ function matchStreamers(prefs, streamers){
         score = 1;
       }
       
-      scores += score * ATTRIBUTE_POINTS.maturity;
+      scores += score * ATTRIBUTE_POINTS.mature;
       stats[streamer.id]["Maturity"] = score * 100;
     }
 
@@ -501,6 +517,33 @@ function compareTime(st_from, st_to, d1, d2) {
 
   // outside range
   return 0
+}
+
+function processRanks(ranks) {
+  // Always restore attribute points to default values.
+  ATTRIBUTE_POINTS = {
+    ...ATTRIBUTE_POINTS_DEFAULTS
+  };
+  refreshTotalAttributePoints();
+
+  if (!ranks) {
+    return;
+  }
+
+  // read and update question weights from supplied user data
+  for (const [key, val] of Object.entries(ATTRIBUTE_POINTS)) {
+    let newWeightValue = parseFloat(ranks[key]); 
+    
+    if (isNaN(newWeightValue)) {
+      // Log helpful debug information
+      console.log(new Error(`Question weight for 'ATTRIBUTE_POINTS' key '${key}' was not found in client request payload. Inspect request[ranks] data for possible naming mismatch.`));
+      continue;
+    }
+
+    ATTRIBUTE_POINTS[key] = newWeightValue;
+  }
+  refreshTotalAttributePoints();
+
 }
 
 

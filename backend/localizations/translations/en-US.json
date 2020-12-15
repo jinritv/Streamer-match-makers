@@ -66,6 +66,7 @@
     "time-range-watchtime-weekends": "Weekends",
     "time-range-watchtime-from": "from",
     "time-range-watchtime-to": "to",
+    "search-weight": "How important is this?",
     "loading-message": "Matching you with a streamer...",
     "match": "match",
     "results": "Results",
