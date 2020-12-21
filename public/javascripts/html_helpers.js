@@ -17,10 +17,16 @@ const HTMLStrings = {
         class="btn btn-quiz-answer btn-quiz-continue">
     <span>${getText('restart')}</span></button>
   </div>
-  <div class="modal-footer justify-content-center">
+  <div class="btn-back justify-content-center"> 
+    <button id="back-button" type="button" onclick="lastQuestion()"
+    class="btn btn-quiz-answer btn-quiz-back">
+    <span>back</span>
+    </button>
+  </div> 
+  <div class="modal-footer justify-content-center">   
     <button id="continue-button" type="button" onclick="nextQuestion()"
-        class="btn btn-quiz-answer btn-quiz-continue">
-      <span>${getText('continue')}</span>
+    class="btn btn-quiz-answer btn-quiz-continue">
+    <span>${getText('continue')}</span>
     </button>
   </div>`,
     ProgressBarOpen: `<div class="progress">`,
