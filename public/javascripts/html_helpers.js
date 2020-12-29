@@ -12,15 +12,25 @@ const HTMLStrings = {
   </div>`),
     QuestionContainerOpen: (questionNum) => (`<div id="generated-quiz-modal-question${questionNum}-container" style="z-index: 1;">`),
     QuestionContainerClose: `</div>`,
+    QuestionSearchWeight:(questionNum) => (`<div class="d-flex flex-column align-items-center justify-content-center">
+      <div>${getText('search-weight')}</div>
+      <div id="question${questionNum}-weight-star-rating" class="mb-3"></div>
+    </div>`),
     ModalFooter: () => `<div class="modal-footer justify-content-center" style="position: relative;">
     <button id="restart-button" type="button" onclick="restartQuiz()"
         class="btn btn-quiz-answer btn-quiz-continue">
     <span>${getText('restart')}</span></button>
   </div>
-  <div class="modal-footer justify-content-center">
+  <div class="btn-back justify-content-center"> 
+    <button id="back-button" type="button" onclick="lastQuestion()"
+    class="btn btn-quiz-answer btn-quiz-back">
+    <span>back</span>
+    </button>
+  </div> 
+  <div class="modal-footer justify-content-center">   
     <button id="continue-button" type="button" onclick="nextQuestion()"
-        class="btn btn-quiz-answer btn-quiz-continue">
-      <span>${getText('continue')}</span>
+    class="btn btn-quiz-answer btn-quiz-continue">
+    <span>${getText('continue')}</span>
     </button>
   </div>`,
     ProgressBarOpen: `<div class="progress">`,
