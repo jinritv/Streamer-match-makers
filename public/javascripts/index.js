@@ -186,6 +186,7 @@ function SetupLanguageDropdown() {
 function setupElements() {
   InitializeSliders();
   InitializeTimePickers();
+  InitializeStarryRatings();
   UnselectAllSwitches();
   HideElementsAtQuizStart();
   // statistic tooltip hovefr
@@ -228,6 +229,31 @@ function InitializeTimePickers() {
   });
 }
 
+function InitializeStarryRatings() {
+  UsersAnswers['ranks'] = {};
+
+  for (var i = 0; i < QUIZ_QUESTIONS.length; ++i) {
+    let question = QUIZ_QUESTIONS[i];
+
+    // default rank
+    UsersAnswers['ranks'][question.unique_question_identifier] = 3;
+
+    let starRatingId = `question${i+1}-weight-star-rating`
+    let starRatingEl = document.getElementById(starRatingId);
+    
+    if (starRatingEl) {
+      new Starry(starRatingEl, {
+        name: starRatingId, 
+        beginWith: 60, // 3 out of 5 stars
+        multiple: true,
+        onRate: function (rating) {
+          UsersAnswers['ranks'][question.unique_question_identifier] = parseInt(rating) || 3;
+        }
+      });
+    }
+  }
+}
+
 function UnselectAllSwitches() {
   $(`[id^="generated-switch_"]`).prop('checked', "");
 }
@@ -251,6 +277,7 @@ function HideElementsAtQuizStart() {
   $(`#restart-button`).hide();
   // disable the continue button by default
   $(`#continue-button`).prop('disabled', true);
+  $(`#back-button`).prop('disabled', true);
 }
 
 function setSliderDisplay(sliderName, settings) {
@@ -398,6 +425,7 @@ function nextQuestion() {
     $('#generated-quiz-modal-progress-label').html(getText('results'));
     $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-out");
     $("#continue-button").hide();
+    $("#back-button").hide();
     setTimeout(() => {
       $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
       $(`#generated-question-result-container`).addClass("fade-in")
@@ -405,9 +433,12 @@ function nextQuestion() {
       calculateQuizResult();
     }, 250);
   } else {
+    
     // go to next question
+
     // slide out current question
-    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-out")
+    //$(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-in")
+
     // wait 250 ms before sliding in next question
     setTimeout(() => {
       $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
@@ -426,6 +457,26 @@ function nextQuestion() {
       $(`#generated-quiz-modal-question${CurrentQuestion}-container`).show()
     }, 250);
   }
+}
+
+function lastQuestion(){
+  // adjusts the display progress bar
+  backProgressBar(CurrentQuestion);
+
+  //Enable continue button immediately when going back
+  $(`#continue-button`).prop('disabled', false)
+
+    // wait 250 ms before sliding back one question
+    setTimeout(() => {
+      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
+      // decrement the question
+      CurrentQuestion -= 1;
+      // change the title
+      $('#generated-quiz-modal-progress-label').html(getText("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length]));
+      // slide in the next
+      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-in")
+      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).show()
+    }, 250);
 }
 
 function restartQuiz() {
@@ -450,9 +501,28 @@ function restartQuiz() {
   adjustProgressBar(0);
 }
 
+function checkQuestion(questionNum){
+  //Check Question and enable/disable BACK Button
+  if(questionNum == 1){
+    $(`#back-button`).prop('disabled', true);
+  }
+  else{
+    $(`#back-button`).prop('disabled', false);
+  }
+}
+
 function adjustProgressBar(index) {
   let questionNum = index + 1;
   $("#generated-quiz-modal-progress-bar").css("width", `${((questionNum) / QUIZ_QUESTIONS.length * 100)}%`);
+
+  checkQuestion(questionNum);
+}
+
+function backProgressBar(index) {
+  let questionNum = index - 1;
+  $("#generated-quiz-modal-progress-bar").css("width", `${((questionNum) / QUIZ_QUESTIONS.length * 100)}%`);
+
+  checkQuestion(questionNum);
 }
 
 function closeQuizModal() {

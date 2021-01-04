@@ -6,11 +6,13 @@ const { DataTypes } = require("sequelize");
 
 const Categories = require("./categories")(sequelize, DataTypes);
 const Languages = require("./languages")(sequelize, DataTypes);
+const ChatVibes = require("./chat_vibes")(sequelize, DataTypes);
 const Locations = require("./locations")(sequelize, DataTypes);
 const Nationalities = require("./nationalities")(sequelize, DataTypes);
 const StreamersCategories = require("./streamers_categories")(sequelize, DataTypes);
 const StreamersCollabs = require("./streamers_collabs")(sequelize, DataTypes);
 const StreamersLanguages = require("./streamers_languages")(sequelize, DataTypes);
+const StreamersChatVibes = require("./streamers_chat_vibes")(sequelize, DataTypes);
 const StreamersLocations = require("./streamers_locations")(sequelize, DataTypes);
 const StreamersNationalities = require("./streamers_nationalities")(sequelize, DataTypes);
 const StreamersStats = require("./streamers_stats")(sequelize, DataTypes);
@@ -37,6 +39,12 @@ Streamers.belongsToMany(
   Languages, {through: StreamersLanguages, foreignKey: "streamer_id", otherKey: "language_id"});
 Languages.belongsToMany(
   Streamers, {through: StreamersLanguages, foreignKey: "language_id", otherKey: "streamer_id"});
+
+// streamers & chat vibes tables
+Streamers.belongsToMany(
+  ChatVibes, {through: StreamersChatVibes, foreignKey: "streamer_id", otherKey: "chat_vibe_id"});
+ChatVibes.belongsToMany(
+  Streamers, {through: StreamersChatVibes, foreignKey: "chat_vibe_id", otherKey: "streamer_id"});
 
 // streamers & locations tables
 Streamers.belongsToMany(

@@ -2,24 +2,44 @@
 const {Op} = require("sequelize");
 const {Streamers, StreamersStats, Languages, Categories, StreamersNationalities} = require("../models/models");
 
-// holds the values for the 'Points' of each attribute (an alternative to weighting?)
-const ATTRIBUTE_POINTS = {
-  age: 0.5,
-  avg_viewers: 1.0,
-  language: 1.0,
+// holds the default values for the 'Points' of each attribute. 
+const ATTRIBUTE_POINTS_DEFAULTS = {
+  average_viewers: 1.0,
+  languages: 1.0,
   content: 1.5,
-  watchtime: 1.0,
+  subonly: 1.0,
+  mature: 1.0,
+  'chat-vibe': 1.0,
+  watchtime: 1.5,
 }
 
+// Overwritten by POST from client questionnaire with request[ranks] values.
+// NOTE: The property names in request[ranks] are equivalent to the 'unique_question_identifier' 
+//       property for each question. If those identifiers do not match the fields above, the
+//       user supplied weight will be ignored and the default value above will be used for the
+//       offending field.
+let ATTRIBUTE_POINTS = {
+  ...ATTRIBUTE_POINTS_DEFAULTS
+};
+
+// The user supplied weight value is going to be a value between 1 - 5 (equivalent to the number
+// of stars selected. When processing the user's selection, the value will be divided by the
+// following constant. With 5 total stars and a value of 5.0, all ATTRIBUTE_POINT values will be
+// set to a value between [0.2 - 1.0]).
+const ATTRIBUTE_POINTS_STAR_TOTAL = 5.0;
+
 const SCORE_NEAR_THRESHOLD = {
-  age: 5,
   avg_viewers: 300,
 }
 
 // total of maximum score
 let TOTAL_ATTRIBUTES =  0;
-for (const [k, v] of Object.entries(ATTRIBUTE_POINTS)) {
-  TOTAL_ATTRIBUTES += v;
+function refreshTotalAttributePoints() {
+  TOTAL_ATTRIBUTES = 0;
+
+  for (const [k, v] of Object.entries(ATTRIBUTE_POINTS)) {
+    TOTAL_ATTRIBUTES += v;
+  }
 }
 
 
@@ -80,7 +100,7 @@ async function calculateStreamer(quizValues, callback) {
   // Get all the streamers from the database
   const allStreamersArray = await Streamers.findAll({
     // we only need a few columns from the main Streamer table
-    attributes:['id','user_name', 'dob_year','logo'],
+    attributes:['id','user_name', 'dob_year','logo', 'mature_stream'],
     // we want to include the other associated tables such as StreamerStats, Languages, etc
     include:{ all: true, nested: true }
   });
@@ -126,115 +146,6 @@ async function calculateStreamer(quizValues, callback) {
     "result": matchedStreamersResult,
     "stats": topStats,
   }, null);
-
-  /*
-  // Two different types of queries needed for Sequelize
-  const whereQuery = {};  // fields in streamers table
-  whereQuery.dob_year = {
-    [Op.between]: getStreamerAgeRange(prefs.age)
-  };
-
-  const includeQuery = [];  // fields in other tables
-
-  const usesCam = getYesOrNo(prefs.cam);
-  if(usesCam !== null) {
-    whereQuery.uses_cam = usesCam;
-  }
-  
-  const isMature = getYesOrNo(prefs.mature);
-  if(isMature !== null) {
-    whereQuery.mature_stream = getYesOrNo(prefs.mature);
-  }
-  
-  // Build query related to streamers_stats table
-  const statWhereQuery = {};
-
-  const voiceValue = getVoice(prefs.voice);
-  if(voiceValue !== null) {
-    statWhereQuery.voice = voiceValue;
-  }
-  statWhereQuery.avg_viewers = {
-    [Op.between]: getMinMaxViewers(prefs.average_viewers)
-  };
-
-  statWhereQuery.followers = {
-    [Op.between]: getFollowerCountRange(prefs.follower_count)
-  };
-  
-  includeQuery.push({
-    model: StreamersStats,
-    where: statWhereQuery,
-  });
-  
-  // Queries related to languages table
-  const languageNames = getLanguageNames(prefs.languages);
-  if(languageNames && languageNames.length > 0) {
-    includeQuery.push({
-      model: Languages,
-      where: {language: languageNames}
-    })
-  }
-
-  // Queries related to categories table
-  const categories = getCategories(prefs.content);
-  if(categories && categories.length > 0) {
-    includeQuery.push({
-      model: Categories,
-      where: {category: categories}
-    });
-  }
-
-  try {
-    const streamers = await Streamers.findAll({where: whereQuery, include: includeQuery});
-    
-    // Usernames of matching streamers
-    const usernames = streamers.map(streamer => streamer.user_name);
-    console.log(`Found ${usernames.length} matching streamers`);
-    console.log(`They are: ${usernames}`);
-
-    // The search is broken so we send the first 5 entries from the DB so
-    // we can at least handle the data properly client-side once the
-    // query actually works.
-    if(streamers.length === 0) {
-      let fakeStreamersResult = await Streamers.findAll({
-        attributes: ['user_name','logo'],
-        where: {
-          [Op.or]: [
-            { id: 1 },
-            { id: 2 },
-            { id: 3 },
-            { id: 4 },
-            { id: 5 }
-          ]
-        }
-      });
-
-      // add some kind of match value in percentage (example 98% match)
-      const matchedStreamers = fakeStreamersResult.map(streamer=> {
-        let streamerObj = Object.assign({}, {user_name: streamer.user_name, logo: streamer.logo });
-        let matchValue = Math.floor(Math.random() * 101); // some random value (for now)
-
-        // if it's jinri, put a high match percentage :)
-        if(streamer.user_name==='jinritv'){
-          matchValue = 98;
-        } 
-        streamerObj.match_value = matchValue;
-        return streamerObj;
-      })
-      callback(matchedStreamers, null);
-    }
-    else {  
-      const result = {
-
-        streamers: streamers,
-      }
-      callback(result, null);
-    }
-  }
-  catch(error) {
-    callback(null, error.message);
-  }
-  */
 }
 
 
@@ -242,7 +153,7 @@ async function calculateStreamer(quizValues, callback) {
 /** THIS IS NOT COMPLETE!
 
   The basic matching algorithm is Jaccard index, essentially:
-
+z
   * for each streamer, we count how many attributes are shared with the user's preferences
 
   * we divide this number by the total number of unique attributes from both the user's and streamer's sets
@@ -256,6 +167,9 @@ function matchStreamers(prefs, streamers){
   // stats to help score debugging
   let stats = {};
 
+  // setup question ranks
+  processRanks(prefs.ranks);
+
   // array to store the matched streamers
   let matchValues = [];
   let preferredLanguages = getLanguageNames(prefs.languages);
@@ -267,39 +181,27 @@ function matchStreamers(prefs, streamers){
     // create an entry for the streamer in the score object
     let scores = 0.0;
     stats[streamer.id] = {
-      "Age": 0,
       "Viewers": 0,
       "Language": 0,
       "Content": 0,
+      "Maturity": 0,
+      "Chat Mode": 0,
+      "Chat Vibe": 0,
       "Watchtime": 0,
     };
-
-    // check against age preference
-    if(streamer.dob_year){
-      let DOBrange = getStreamerAgeRange(prefs.age);
-      let score = countNearScore(
-        ATTRIBUTE_POINTS.age,
-        streamer.dob_year,
-        DOBrange[0],
-        DOBrange[1],
-        SCORE_NEAR_THRESHOLD.age,
-      );
-      scores += score;
-      stats[streamer.id]["Age"] = Math.ceil(score / ATTRIBUTE_POINTS.age * 100);
-    }
 
     // check against average viewers preference
     if(streamer.StreamersStat){
       let viewerRange = getMinMaxViewers(prefs.average_viewers);
       let score = countNearScore(
-        ATTRIBUTE_POINTS.avg_viewers,
+        ATTRIBUTE_POINTS.average_viewers,
         streamer.StreamersStat.avg_viewers,
         viewerRange[0],
         viewerRange[1],
         SCORE_NEAR_THRESHOLD.avg_viewers,
       );
       scores += score;
-      stats[streamer.id]["Viewers"] = Math.ceil(score / ATTRIBUTE_POINTS.avg_viewers * 100);
+      stats[streamer.id]["Viewers"] = Math.ceil(score / ATTRIBUTE_POINTS.average_viewers * 100);
     }
 
     // check against language preference
@@ -312,9 +214,9 @@ function matchStreamers(prefs, streamers){
      }
     });
     if (preferredLanguages.length != 0) {
-      let langScore = totalLangMatch * ATTRIBUTE_POINTS.language / preferredLanguages.length;
+      let langScore = totalLangMatch * ATTRIBUTE_POINTS.languages / preferredLanguages.length;
       scores += langScore;
-      stats[streamer.id]["Language"] = Math.ceil(langScore / ATTRIBUTE_POINTS.language * 100);
+      stats[streamer.id]["Language"] = Math.ceil(langScore / ATTRIBUTE_POINTS.languages * 100);
     }
 
     //check against stream content
@@ -337,6 +239,44 @@ function matchStreamers(prefs, streamers){
       let catScore = totalCatMatch * ATTRIBUTE_POINTS.content / prefs.content.length;
       scores += catScore;
       stats[streamer.id]["Content"] = Math.ceil(catScore / ATTRIBUTE_POINTS.content * 100);
+    }
+
+    // Sub only check
+    // TODO: mapping model not completed, only handling 'all' choice
+    let chatModeScore = 0.5;
+    if (prefs.subonly == 'all') {
+      chatModeScore = 1;
+    }
+    scores += chatModeScore * ATTRIBUTE_POINTS.subonly;
+    stats[streamer.id]["Chat Mode"] = chatModeScore * 100;
+
+    // maturity check
+    if (prefs.mature) {
+      let bMature = prefs.mature == 'true' ? true:false;
+      let score = 0;
+      if (streamer.mature_stream == null) {
+        score = 0.5;
+      } else if ((bMature && (streamer.mature_stream == 1)) || (!bMature && (streamer.mature_stream == 0))) {
+        score = 1;
+      }
+      
+      scores += score * ATTRIBUTE_POINTS.mature;
+      stats[streamer.id]["Maturity"] = score * 100;
+    }
+
+    // chat vibe check
+    let chatVibes = streamer.ChatVibes.map(row=>row.vibe.toLowerCase());
+    let matchVibes = 0;
+    prefs["chat-vibe"].forEach(vibe => {
+      if (chatVibes.includes(vibe.toLowerCase())) {
+        matchVibes += 1;
+      }
+    });
+
+    if (prefs["chat-vibe"].length != 0) {
+      let vibeScore = matchVibes * ATTRIBUTE_POINTS["chat-vibe"] / prefs["chat-vibe"].length;
+      scores += vibeScore;
+      stats[streamer.id]["Chat Vibe"] = Math.ceil(vibeScore / ATTRIBUTE_POINTS["chat-vibe"] * 100);
     }
 
     // check for watch time
@@ -583,6 +523,33 @@ function compareTime(st_from, st_to, d1, d2) {
 
   // outside range
   return 0
+}
+
+function processRanks(ranks) {
+  // Always restore attribute points to default values.
+  ATTRIBUTE_POINTS = {
+    ...ATTRIBUTE_POINTS_DEFAULTS
+  };
+  refreshTotalAttributePoints();
+
+  if (!ranks) {
+    return;
+  }
+
+  // read and update question weights from supplied user data
+  for (const [key, val] of Object.entries(ATTRIBUTE_POINTS)) {
+    let newWeightValue = parseFloat(ranks[key]); 
+    
+    if (isNaN(newWeightValue)) {
+      // Log helpful debug information
+      console.log(new Error(`Question weight for 'ATTRIBUTE_POINTS' key '${key}' was not found in client request payload. Inspect request[ranks] data for possible naming mismatch.`));
+      continue;
+    }
+
+    ATTRIBUTE_POINTS[key] = newWeightValue / ATTRIBUTE_POINTS_STAR_TOTAL; 
+  }
+  refreshTotalAttributePoints();
+
 }
 
 

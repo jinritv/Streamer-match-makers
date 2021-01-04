@@ -31,7 +31,7 @@ Download PostgreSQL [here](https://www.postgresql.org/download/). When you insta
 ## Verify Postgresql database server connection
 
 ### Environment setup
-Please go to the project root directory and open `.env` file with a text editor. Add DB credentials here. Please make sure to not commit the `.env` file that contains the connection string.
+Please go to the project root directory and make a copy of the `.sample-env` file, renaming it to `.env`. Open your newly created `.env` file with a text editor and enter your local DB credentials. Please make sure to not commit the `.env` file that contains the connection string.
 
 ### DB connection test
 Run test_db_connection.js as instructed in admin/README.md, and make sure that the success message is displayed.
