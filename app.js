@@ -5,7 +5,7 @@ var debug = require('debug')('streamer-matcher:server');
 var http = require('http');
 var public = path.join(__dirname, 'public');
 
-const calculateStreamer = require('./backend/calculate_streamer_2');
+const calculateStreamer = require('./backend/calculate_streamer');
 const createStreamer = require('./backend/create_streamer');
 const LoadLanguageJSON = require('./backend/localizations/localization');
 
