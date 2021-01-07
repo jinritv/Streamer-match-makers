@@ -1,11 +1,10 @@
 // Is there a better way to store this html?
 const HTMLStrings = {
-    LanguageDropDownItem: (language,icon,name) => (`<div class="dropdown-item-container"><a id="generated-dropdown-option-${language}" onclick="updateLanguage('${language}')" class="dropdown-item language-dropdown" href="#"><img class="dropdown-lang-icon" src="${icon}"/><span class="language-dropdown-text">${name}</span></a></div>`),
+    LanguageDropDownItem: (language,icon,name) => (`<div class="dropdown-item-container"><a id="generated-dropdown-option-${language}" onclick="updateLanguage('${language}')" class="dropdown-item language-dropdown" href="#"><span class="language-dropdown-text">${name}</span></a></div>`),
     LanguageDropDown: (languageIcon,languageDisplayName,dropDownOptions) => (`<div id="language-dropdown" class="btn-group">
-    <button type="button" class="btn btn-quiz-answer"><img class="dropdown-lang-icon" id="current-language-icon" src="${languageIcon}"/><span class="language-dropdown-text" id="current-language-label">${languageDisplayName}</span></button>
-    <button type="button" class="btn btn-quiz-answer dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false">
-    </button>
+    <button type="button" class="btn btn-dropdown dropdown-toggle" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false"><img class="dropdown-lang-icon" id="current-language-icon" src="${languageIcon}"/><span class="language-dropdown-text" id="current-language-label">${languageDisplayName}</span></button>
+  
     <div class="dropdown-menu">
       ${dropDownOptions}
     </div>
