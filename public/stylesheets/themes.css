@@ -13,6 +13,19 @@ Put all other css in the quizstyle.css file
     Any time we want to change the color of something, change the variable to one of these root colors.
     If the color you want doesn't exist, make a new label for it and add it here. 
     */
+    --brand-primary-light: #FFB6D3;
+    --brand-primary: #f29cb9;
+    --brand-primary-dark:#D983A0;
+    --brand-success-dark: #C08D2F;
+    --brand-success: #d9a648;
+    --brand-success-light: #F3C062;
+    --brand-info: #bf7111;
+    --brand-warning: #710273;
+    --brand-danger: #3f0140;
+
+    --brand-text-color: #710273;
+
+
     --pure-white: #fff;
     --pure-black: #000000;
     --light-grey:#adb5bd;
@@ -37,6 +50,41 @@ Put all other css in the quizstyle.css file
     
 }
 
+.dark-text-color{
+    color:var(--brand-really-dark-purple);
+}
+
+.matches-made-text{
+    color:var(--brand-success-dark);
+}
+    
+.btn-start-quiz,
+.btn-start-quiz:active,
+.btn-start-quiz:visited,
+.btn-start-quiz:focus {
+    background-color: var(--brand-success);
+    border-color: var(--brand-success-dark);
+}
+.btn-start-quiz:hover{
+    background-color: var(--brand-success-light);
+    border-color: var(--brand-success);
+}
+.btn-start-quiz{
+    margin-top:24px;
+    padding-left:48px;
+    padding-right:48px;
+    padding-top:8px;
+    padding-bottom:8px;
+    border-radius: 4px;
+}
+
+.btn-dropdown{
+    border-radius: 8px;
+    border-width:2px;
+    background-color: var(--pure-white);
+    border-color: var(--brand-text-color);
+}
+
 .light-mode {
     /* Default mode is light mode */
     --progress-label-color: var(--brand-dark-pink);
@@ -46,7 +94,7 @@ Put all other css in the quizstyle.css file
     --page-background-color: var(--pure-white);
     --modal-background-color: var(--pure-white);
     --footer-color: var(--brand-really-light-pink);
-    --animated-words-label: var(--brand-dark-pink);
+    --animated-words-label: var(--brand-really-dark-purple);
     --logo-text-color: var(--brand-dark-pink);
     --progress-background-color: var(--brand-really-light-pink);
     --background-square-color: var(--brand-secondary-background);
@@ -77,6 +125,31 @@ so we can easily change color when
 we change the theme. 
 
 */
+.sphere-lg
+{
+    background: #f5c5e55b;
+}
+.sphere-med
+{
+    background:#d557c02c;
+}
+.sphere-small
+{
+    background: #ab2ca338;
+}
+.page-header{
+    background-color: var(--pure-white);
+    border-bottom-width: 2px;
+    border-bottom-style:solid;
+    border-bottom-color: var(--brand-text-color);
+    box-shadow:  0 6px 4px -4px rgba(0, 0, 0, 0.164); 
+}
+
+.page-footer{
+    background-color: var(--pure-white);
+    box-shadow:  6px 0 4px 4px rgba(0, 0, 0, 0.233); 
+}
+
 .btn span {
     color: var(--button-text-color);
 }
@@ -94,15 +167,15 @@ body {
 }
 
 .modal-content {
-    background-color: var(--modal-background-color);
+    background-color: var(--pure-white);
 }
 
 #bg-rectangle {
     background: var(--background-square-color);
 }
 
-#animated-words-label{
-    color: var(--animated-words-label);
+.dark-text{
+    color: var(--brand-really-dark-purple);
 }
 
 #copyright-text{
@@ -110,7 +183,7 @@ body {
 }
 
 #keyword {
-    color: var(--brand-light-pink);
+    color: var(--brand-success);
 }
 
 #dark-mode-label {
@@ -121,16 +194,13 @@ body {
     color: var(--brand-light-pink) !important;
 }
 
-.progress {
-    background-color:var(--progress-background-color);
-}
 
 #logoText {
-    color: var(--logo-text-color) !important
+    color:var(--brand-text-color);
 }
 
 .progress-bar-checkpoint {
-    border-right-color: var(--modal-background-color);
+    border-right-color: var(--pure-white);
 }
 
 .progress-bar {
@@ -172,28 +242,6 @@ body {
 }
 
 
-.btn-primary {
-    background-color:var(--brand-button-background);
-    border-color:var(--brand-border);
-}
-.btn-primary.focus, .btn-primary:focus,.btn-primary:hover {
-    background-color:var(--brand-med-pink);
-    border-color:var(--brand-dark-pink);
-}
-.btn-primary.focus,.btn-primary:focus {
-    box-shadow:0 0 0 .2rem var(--brand-btn-primary-focus-dropshadow)
-}
-
-.btn-primary:not(:disabled):not(.disabled).active,.btn-primary:not(:disabled):not(.disabled):active,.show>.btn-primary.dropdown-toggle {
-    background-color:var(--brand-med-pink);
-    border-color:var(--brand-dark-pink);
-}
-
-
-.btn{
-    border-color: transparent;
-}
-
 .slider-handle{ 
     background: var(--brand-light-pink);
     border-color: var(--brand-med-pink);
@@ -231,11 +279,12 @@ body {
      }
   
      .dropdown-item-container{
-         background-color: var(--page-background-color);
+         background-color: var(--pure-white);
      }
-     .dropdown-menu{
-        background-color: var(--page-background-color);
-     }
+    
+.dropdown-menu{
+    background-color: var(--pure-white);
+}
 .footer {   
     background-color:var(--footer-color)!important;
  }

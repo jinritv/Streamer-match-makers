@@ -295,6 +295,8 @@ function setSliderDisplay(sliderName, settings) {
 }
 
 function openGeneratedQuizModal() {
+  // prod database not changed yet
+  return;
   $("#generated-quiz-modal").modal('show');
 }
 
@@ -531,7 +533,9 @@ function closeQuizModal() {
 
 function animateElements() {
   setTextAnimation();
-  $("#bg-rectangle").addClass("bounce-in-top");
+  /**
+   * disabling page animations for now
+   *   $("#bg-rectangle").addClass("bounce-in-top");
   $("#bg-rectangle").show();
   $("#dancing-jinri").addClass("slide-in-right");
   $("#dancing-jinri").show();
@@ -539,48 +543,86 @@ function animateElements() {
   $("#start-quiz-button").addClass("fade-in");
   $("#start-quiz-button-modal").addClass("fade-in");
   $("#welcome-text").addClass("swing-in-left-fwd")
+   */
+
 }
 
-var textEraseAnimationTimer;
+const ERASE = "erase";
+const WRITE = "write";
+let textEraseAnimationTimer;
+let words;
+let currentWord;
+let currentDirection = WRITE;
+let wordListIndex = 0;
+let delay = false;
+let addedQuestionMark = false;
+
+const matchesMade = 2000;
+let currentMatchesMade = 0;
 
 function setTextAnimation() {
   clearInterval(textEraseAnimationTimer);
-  textEraseAnimationTimer = animateText();
+  words = getText('animated-words');
+  currentWord = words[wordListIndex];
+  textEraseAnimationTimer = setInterval(eraseAndWriteText, 33);
 }
 
-function animateText() {
-  var index = 0;
-  var words = getText('animated-words');
-  keyword.innerHTML = words[0]
-  function erase() {
-    var remainingText = keyword.innerHTML;
-    var l = remainingText.length;
-    if (l > 0) {
-      keyword.innerHTML = remainingText.substring(0, l - 1);
-      setTimeout(erase, 33);
+  function eraseAndWriteText() {
+    // we wait a bit before erasing
+    if(delay){
+      return;
     }
-    else {
-      index += 1;
-      setTimeout(enter, 33);
+
+    if(addedQuestionMark){
+      keyword.innerHTML = currentWord;
+      addedQuestionMark = false;
+      return
+    }
+    
+   // get text thats displayed right now
+    var remainingText = keyword.innerHTML;
+    // get the length of it
+    var l = remainingText.length;
+    // if theres some characters in it
+    if(currentDirection=='erase'){
+      if (l > 0) {
+        // then erase 1 character
+        keyword.innerHTML = remainingText.substring(0, l - 1);
+      } else {
+        currentDirection ='write';
+        wordListIndex+=1;
+        // no characters, change to next word
+        if (wordListIndex == words.length) {
+          wordListIndex = 0;
+        } 
+        // get a new word to animate
+        currentWord = words[wordListIndex];
+      }
+    } else {
+      // if we have not written the whole word yet
+      if (l < currentWord.length) {
+        // write 1 character
+        keyword.innerHTML += currentWord.charAt(l);
+      } else {
+        // done writing the word, so add black question mark and delay a bit
+        // the mockup UI has the question mark as black, so we must also 
+        // remove the question mark from the localization files. 
+        keyword.innerHTML += `<span class="dark-text">?</span>`;
+        addedQuestionMark = true;
+        delay = true;
+        setTimeout(()=>{
+          delay = false;
+          currentDirection='erase';
+        },800)
+      }
+ 
     }
   }
-  function enter() {
-    if (index == words.length - 1) {
-      index = 0;
-    }
-    var remainingText = keyword.innerHTML;
-    var l = remainingText.length;
-    var w = words[index];
-    if (l < w.length) {
-      keyword.innerHTML += w.charAt(l);
-      setTimeout(enter, 33);
-    }
-  }
-  return setInterval(erase, 1500);
-}
 
 //retreives the language's icon to display on the dropdown menu.
 function getLanguageIcon(language) {
+  // hack to return globe image
+  return './images/globe.png';
   if (ICONS[language]) {
     return ICONS[language]
   }

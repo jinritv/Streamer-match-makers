@@ -25,7 +25,7 @@ app.set('port', port);
 
 // Home/Main quiz page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(public, 'index.html'));
+    res.sendFile(path.join(public, 'new_index.html'));
 });
 
 // Called at the end of the quiz
