@@ -296,7 +296,7 @@ function setSliderDisplay(sliderName, settings) {
 
 function openGeneratedQuizModal() {
   // prod database not changed yet
-  return;
+ // return;
   $("#generated-quiz-modal").modal('show');
 }
 
