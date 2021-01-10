@@ -101,7 +101,7 @@ const QUIZ_QUESTIONS = [
     unique_question_identifier: "chat-vibe",
     question_type: QuestionTypes.Buttons.MultipleSelection,
     disableContinueButtonByDefault: false,
-    buttonsPerRow: 6,
+    buttonsPerRow: 5,
     answer_settings: [
       "chatty",
       "chill",
