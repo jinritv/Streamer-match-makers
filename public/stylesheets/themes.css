@@ -71,8 +71,6 @@ Put all other css in the quizstyle.css file
 }
 .btn-start-quiz{
     margin-top:24px;
-    padding-left:48px;
-    padding-right:48px;
     padding-top:8px;
     padding-bottom:8px;
     border-radius: 4px;
@@ -127,15 +125,18 @@ we change the theme.
 */
 .sphere-lg
 {
-    background: #f5c5e55b;
+    background: #710273;
+    opacity: 15%;
 }
 .sphere-med
 {
-    background:#d557c02c;
+    background:#710273;
+    opacity: 11%;
 }
 .sphere-small
 {
-    background: #ab2ca338;
+    background: #710273;
+    opacity: 15%;
 }
 .page-header{
     background-color: var(--pure-white);

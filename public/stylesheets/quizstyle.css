@@ -226,7 +226,7 @@ body {
 }
 
 .welcome-container {
-    margin-top:20vh;
+    margin-top:30vh;
     margin-left:5vw;
 }
 
@@ -415,6 +415,10 @@ Unique elements (id)
     z-index:777;
 }
 
+.img_detective{
+    width: 640px;;
+}
+
 
 
 .base-circle{
@@ -565,8 +569,8 @@ Unique elements (id)
 
 @media (min-width:1200px){
     .detective{
-        margin-top: 25%;
-        margin-left:10%;
+        margin-top: -15%;
+        margin-left:0%;
     }
     .sphere-lg
     {
