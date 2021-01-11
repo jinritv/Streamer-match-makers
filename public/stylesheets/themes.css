@@ -172,6 +172,10 @@ Put all other css in the quizstyle.css file
     --background-color: var(--background-dark);
 
     
+
+    /*dropdown */
+    --dropdown-label-text: var(--pure-white);
+
 }
 
 
@@ -420,3 +424,10 @@ background-color: gray;
     filter: drop-shadow(0px 8px 12px var(--brand-continue-button-dropshadow))
 }
 
+#current-language-label{
+    color: var(--dropdown-label-text);
+}
+
+.language-dropdown-text{
+    color:var(--brand-text-dark);
+}
