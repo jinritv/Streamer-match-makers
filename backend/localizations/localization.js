@@ -3,10 +3,14 @@ const fs = require('fs');
 const Languages = {
     Tags: {
         ENGLISH: 'en-US',
+        GERMAN: 'de-DE',
+        FRENCH: 'fr-FR'
         // add a new language here
     },
     Icons: {
         'en-US': "https://cdn.betterttv.net/emote/566ca04265dbbdab32ec054a/1x",
+        'de-DE':"",
+        'fr-FR':""
         // add a new language here
     }
 }
