@@ -65,6 +65,10 @@ Put all other css in the quizstyle.css file
     --btnoutline-dark: #F29CB9;
     --btninside-light:#fff;
     --btninside-dark:#1A2138;
+
+    /*Background*/
+    --background-light:#ffff;
+    --background-dark: #222B45;
     
 }
 
@@ -131,6 +135,8 @@ Put all other css in the quizstyle.css file
     /*Buttons*/
     --btn-outlines: var(--btnoutline-light);
     --btn-inside: var(--btninside-light);
+
+    --background-color: var(--background-light);
 }
 
 /* When this class is added to the main page element, it changes the variables for the colors */
@@ -162,6 +168,10 @@ Put all other css in the quizstyle.css file
     /*Buttons*/
     --btn-outlines: var(--btnoutline-dark);
     --btn-inside:var(--btninside-dark);
+
+    --background-color: var(--background-dark);
+
+    
 }
 
 
@@ -173,6 +183,10 @@ so we can easily change color when
 we change the theme. 
 
 */
+
+.background-container{
+    background-color: var(--background-color);
+}
 
 #logoText {
     color: var(--logocolor);
@@ -305,7 +319,6 @@ background: linear-gradient(156.04deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 25
 filter: drop-shadow(5px 5px 25px rgba(50, 50, 50, 0.85));
 backdrop-filter: blur(100px);
 background-color: gray;
-    border-color:var(--brand-dark-pink);
 }
 
 .svg-buttons {

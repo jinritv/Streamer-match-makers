@@ -72,7 +72,7 @@ const HTMLStrings = {
     </div>
         <div class="row">
             <div class="col">
-                <div style="border-radius: 50%; border-color:#DAB9DF; border-width: 2px; height:120px; width:120px; margin-bottom: 24px; margin-top:12px; overflow: hidden; margin-left:auto; margin-right:auto;">
+                <div style="border-radius: 50%; border-color:#DAB9DF; border-width: 2px; height:130px; width:130px; margin-bottom: 24px; margin-top:25px; overflow: hidden; margin-left:auto; margin-right:auto;">
                     <img id="streamer-1-logo" style="max-width: 100%; max-height: 100%;" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e0bbc79b-7c05-473b-a95c-508cd88c5991-profile_image-300x300.png" />
                 </div>
             </div>
@@ -116,7 +116,7 @@ const HTMLStrings = {
     <div class="container-fluid ">
         <div class="row">
             <div class="col">
-                <div style="border-radius: 50%; border-color:#DAB9DF; border-width: 2px; height:100px; width:100px; margin-bottom: 24px; margin-top:12px; overflow: hidden; margin-left:auto; margin-right:auto;">
+                <div style="border-radius: 50%; border-color:#DAB9DF; border-width: 2px; height:126px; width:126px; margin-bottom: 24px; margin-top:25px; overflow: hidden; margin-left:auto; margin-right:auto;">
                 <img id="streamer-${streamerId}-logo" style="max-width: 100%; max-height: 100%;" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e0bbc79b-7c05-473b-a95c-508cd88c5991-profile_image-300x300.png" />
                 </div>
             </div>
