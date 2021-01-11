@@ -32,7 +32,7 @@ Put all other css in the quizstyle.css file
     --dark-grey:#6c757d;
 
     --brand-really-dark-purple: #120918;
-    --brand-dark-pink: #5f355f;
+    --brand-dark-pink: #D0729B;
     --brand-med-pink: #bf7dd3;
     --brand-med-pink-2:#856585;
 
@@ -43,10 +43,15 @@ Put all other css in the quizstyle.css file
  
     --brand-button-background: #a364b6;
     --brand-border: #bd96bd;
-    --brand-secondary-background: #f6e0fa;
+    --brand-secondary-background: #710273;
     --brand-btn-primary-focus-dropshadow: rgba(186, 60, 198, 0.5);
     --brand-svg-button-dropshadow: rgba(218, 185, 223, 0.63);
     --brand-continue-button-dropshadow: #dab9dfe7;
+
+    --brand-text-light: #ffff;
+    --brand-text-dark: #343434; 
+
+    --modal-background-dark: #1A2138;
     
 }
 
@@ -87,7 +92,7 @@ Put all other css in the quizstyle.css file
 .light-mode {
     /* Default mode is light mode */
     --progress-label-color: var(--brand-dark-pink);
-    --h4-text-color: var(--brand-dark-pink);
+    --h4-text-color: var(--brand-text-dark);
     --text-color: var(--brand-dark-pink);
     --text-color-inverse: var(--brand-really-light-pink);
     --page-background-color: var(--pure-white);
@@ -97,13 +102,18 @@ Put all other css in the quizstyle.css file
     --logo-text-color: var(--brand-dark-pink);
     --progress-background-color: var(--brand-really-light-pink);
     --background-square-color: var(--brand-secondary-background);
+
+
+    --text-color-headline: var(--brand-text-dark);
+    --modal-background: var(--pure-white);
+    --question-color: var(--brand-text-dark);
 }
 
 /* When this class is added to the main page element, it changes the variables for the colors */
 .dark-mode {
     --progress-background-color: var(--brand-light-pink-2);
     --progress-label-color: var(--brand-really-light-pink);
-    --h4-text-color: var(--brand-med-pink);
+    --h4-text-color: var(--pure-white);
     --logo-text-color: var(--brand-really-light-pink);
     --animated-words-label: var(--brand-really-light-pink);
     --text-color: var(--brand-really-light-pink);
@@ -113,6 +123,11 @@ Put all other css in the quizstyle.css file
     --button-text-color: var(--brand-really-light-pink);
     --footer-color: var(--brand-dark-pink);
     --background-square-color: var(--brand-dark-pink);
+
+
+    --text-color-headline: var(--brand-text-light);
+    --modal-background: var(--modal-background-dark);
+    --question-color: var(--pure-white);
 }
 
 
@@ -126,17 +141,17 @@ we change the theme.
 */
 .sphere-lg
 {
-    background: #710273;
-    opacity: 15%;
+    background-color: var(--background-square-color);
+    opacity: 5%;
 }
 .sphere-med
 {
-    background:#710273;
+    background-color: var(--background-square-color);
     opacity: 11%;
 }
 .sphere-small
 {
-    background: #710273;
+    background-color: var(--background-square-color);
     opacity: 15%;
 }
 .page-header{
@@ -153,11 +168,11 @@ we change the theme.
 }
 
 .btn span {
-    color: var(--button-text-color);
+    color: var(--brand-text-dark);
 }
 
 #generated-quiz-modal-progress-label{
-    color: var(--progress-label-color);
+    color: var(--question-color);
 }
 
 h4 {
@@ -169,7 +184,7 @@ body {
 }
 
 .modal-content {
-    background-color: var(--pure-white);
+    background-color: var(--modal-background);
 }
 
 #bg-rectangle {
@@ -177,7 +192,11 @@ body {
 }
 
 .dark-text{
-    color: var(--brand-really-dark-purple);
+    color: var(--text-color-headline);
+}
+
+.info-text{
+    color: var(--text-color-headline);
 }
 
 #copyright-text{
@@ -231,9 +250,10 @@ body {
 	background: var(--brand-med-pink);
 }
 
-
+/* Text Size*/
 .percent-match{
     color: var(--pure-white);
+    font-size: 40px;
 }
 .streamer-username{
     color: var(--pure-white);
