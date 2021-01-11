@@ -101,7 +101,7 @@ const QUIZ_QUESTIONS = [
     unique_question_identifier: "chat-vibe",
     question_type: QuestionTypes.Buttons.MultipleSelection,
     disableContinueButtonByDefault: false,
-    buttonsPerRow: 6,
+    buttonsPerRow: 5,
     answer_settings: [
       "chatty",
       "chill",
@@ -177,43 +177,60 @@ function BuildQuiz() {
             <div id="generated-question-result-container">
               ${HTMLStrings.LoadingScreen()}
             </div>
-            <div id="generated-streamer-reveal-container" class="container">
-              <div class="row mb-3 justify-content-center">
-                <div class="col justify-content-center">
-                 ${HTMLStrings.FirstPlaceStreamer()}
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col">
-                  <div class="container streamer-info-container">
-                    ${HTMLStrings.OtherStreamer(2)}
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="container streamer-info-container">
-                    ${HTMLStrings.OtherStreamer(3)}
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <div class="container streamer-info-container">
-                    ${HTMLStrings.OtherStreamer(4)}
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="container streamer-info-container">
-                    ${HTMLStrings.OtherStreamer(5)}
-                  </div>
-                </div>
-              </div>
-            </div>
             </div>
           </div>
           ${HTMLStrings.ModalFooter()}
         </div>
       </div>`;
   $(`#generated-quiz-modal`).html(quizHtml);
+  $(`#generated-result-page`).html(CreateResultPage())
+}
+
+function CreateResultPage(){
+  return `<div id="generated-streamer-reveal-container" class="container-fluid">
+  <div class="row mb-3 justify-content-center">
+  <h4>These are your top</h4>
+  
+  </div>
+  <div class="row mb-3 justify-content-center">
+  <h3>Matches</h3>
+  </div>
+  <div class="row mb-3 justify-content-center">
+  <div class="col">
+  <div class="streamer-info-container others">
+    ${HTMLStrings.OtherStreamer(2)}
+  </div>
+</div>
+<div class="col">
+  <div class="streamer-info-container others">
+    ${HTMLStrings.OtherStreamer(3)}
+  </div>
+</div>
+    <div class="col justify-content-center">
+     ${HTMLStrings.FirstPlaceStreamer()}
+    </div>
+    <div class="col">
+    <div class="streamer-info-container others">
+      ${HTMLStrings.OtherStreamer(4)}
+    </div>
+  </div>
+  <div class="col">
+    <div class="streamer-info-container others">
+      ${HTMLStrings.OtherStreamer(5)}
+    </div>
+  </div>
+  </div>
+  <div class="row">
+  <div class="col"></div>
+  <div class="col" style="text-align:center;">
+  <button id="restart-button" type="button" onclick="restartQuiz()"
+  class="btn btn-quiz-answer btn-quiz-restart">
+<span>${getText('restart')}</span></button>
+  </div>
+  <div class="col"></div>
+ 
+  </div>
+</div>`
 }
 
 function GenerateQuestionInputs(question) {
