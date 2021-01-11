@@ -70,27 +70,27 @@ const CallbackLoadRestOfSite = () => {
   animateElements();
 }
 
-function assignLabels(){
-   // only changes when the language changes
-   const LABEL_IDS = [
+function assignLabels() {
+  // only changes when the language changes
+  const LABEL_IDS = [
     "page-title",
     "logoText",
     "copyright-text",
     "animated-words-label",
     "find-streamer-button",
   ];
-  LABEL_IDS.forEach(labelID=>{
+  LABEL_IDS.forEach(labelID => {
     $Labels[labelID] = $(`#${labelID}`);
   });
 }
 
-function assignThemes(){
+function assignThemes() {
   $ThemeWrapper = $('#page-top');
   $themeIcon = $('#theme-icon');
   $themeLabel = $('#theme-label');
 }
 
-function assignJqueryElements(){
+function assignJqueryElements() {
   // static labels (do not change once loaded)
   assignLabels();
   // elements for handling theming
@@ -123,7 +123,7 @@ const CallbackOnLanguageChanged = () => {
 // gets the default language, which we retreive from the browser
 function getDefaultLanguage() {
   let lang = navigator.language;
-  console.log({BrowserLanguage: lang, SupportedLanguages: navigator.languages});
+  console.log({ BrowserLanguage: lang, SupportedLanguages: navigator.languages });
   return lang;
 }
 
@@ -184,18 +184,18 @@ function addTextToStaticElements() {
     elementRef.html(getText(elementID));
   }
   let nextTheme = CurrentTheme == THEMES.Dark ? THEMES.Light : THEMES.Dark;
-  $themeIcon.text(CurrentTheme == THEMES.Dark?'🌞':'🌚')
+  $themeIcon.text(CurrentTheme == THEMES.Dark ? '🌞' : '🌚')
   $themeLabel.text(getText(`${nextTheme}-label`));
 }
 
 // Toggles the theme to dark/light mode
-function toggleDarkMode(){
+function toggleDarkMode() {
   // remove current theme
   $ThemeWrapper.removeClass(CurrentTheme);
   // get opposite of current theme for the next theme
   let nextTheme = CurrentTheme == THEMES.Dark ? THEMES.Light : THEMES.Dark;
   $ThemeWrapper.addClass(nextTheme);
-  $themeIcon.text(nextTheme==THEMES.Dark?'🌞':'🌚')
+  $themeIcon.text(nextTheme == THEMES.Dark ? '🌞' : '🌚')
   $themeLabel.text(getText(`${CurrentTheme}-label`));
   CurrentTheme = nextTheme;
 }
@@ -283,12 +283,12 @@ function InitializeStarryRatings() {
     // default rank
     UsersAnswers['ranks'][question.unique_question_identifier] = 3;
 
-    let starRatingId = `question${i+1}-weight-star-rating`
+    let starRatingId = `question${i + 1}-weight-star-rating`
     let starRatingEl = document.getElementById(starRatingId);
-    
+
     if (starRatingEl) {
       new Starry(starRatingEl, {
-        name: starRatingId, 
+        name: starRatingId,
         beginWith: 60, // 3 out of 5 stars
         multiple: true,
         onRate: function (rating) {
@@ -341,7 +341,7 @@ function setSliderDisplay(sliderName, settings) {
 
 function openGeneratedQuizModal() {
   // prod database not changed yet
- // return;
+  // return;
   $("#generated-quiz-modal").modal('show');
 }
 
@@ -474,11 +474,13 @@ function nextQuestion() {
     $quizContinueButton.hide();
     $quizBackButton.hide();
     setTimeout(() => {
+      $quizResultContainer.addClass('fade-in');
+      $quizResultContainer.show();
       $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide();
       calculateQuizResult();
     }, 250);
   } else {
-    
+
     // go to next question
 
     // slide out current question
@@ -504,27 +506,38 @@ function nextQuestion() {
   }
 }
 
-function lastQuestion(){
+function lastQuestion() {
   // adjusts the display progress bar
   backProgressBar(CurrentQuestion);
 
   //Enable continue button immediately when going back
   $quizContinueButton.prop('disabled', false)
 
-    // wait 250 ms before sliding back one question
-    setTimeout(() => {
-      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
-      // decrement the question
-      CurrentQuestion -= 1;
-      // change the title
-      $('#generated-quiz-modal-progress-label').html(getText("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length]));
-      // slide in the next
-      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-in")
-      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).show()
-    }, 250);
+  // wait 250 ms before sliding back one question
+  setTimeout(() => {
+    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
+    // decrement the question
+    CurrentQuestion -= 1;
+    // change the title
+    $('#generated-quiz-modal-progress-label').html(getText("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length]));
+    // slide in the next
+    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-in")
+    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).show()
+  }, 250);
 }
 
 function restartQuiz() {
+  for (var i = 0; i < 150; i++) {
+    $(`.confetti-${i}`).remove();
+  }
+  $(`#main-container`).removeClass('wide-container');
+  $(`#welcome-banner`).show();
+
+  $quizResultContainer.removeClass('fade-in');
+  $quizResultContainer.hide();
+
+  
+ 
   // reset the global variables
   CurrentQuestion = 1;
   UsersAnswers = {};
@@ -533,6 +546,7 @@ function restartQuiz() {
   $(`button.active`).removeClass(`active`);
   //initialization again
   BuildQuiz();
+  assignJqueryElements();
   setupElements();
   setupCallbacks();
   // change the title
@@ -546,12 +560,12 @@ function restartQuiz() {
   adjustProgressBar(0);
 }
 
-function checkQuestion(questionNum){
+function checkQuestion(questionNum) {
   //Check Question and enable/disable BACK Button
-  if(questionNum == 1){
+  if (questionNum == 1) {
     $quizBackButton.prop('disabled', true);
   }
-  else{
+  else {
     $quizBackButton.prop('disabled', false);
   }
 }
@@ -610,57 +624,57 @@ function setTextAnimation() {
   textEraseAnimationTimer = setInterval(eraseAndWriteText, 33);
 }
 
-  function eraseAndWriteText() {
-    // we wait a bit before erasing
-    if(delay){
-      return;
+function eraseAndWriteText() {
+  // we wait a bit before erasing
+  if (delay) {
+    return;
+  }
+
+  if (addedQuestionMark) {
+    keyword.innerHTML = currentWord;
+    addedQuestionMark = false;
+    return
+  }
+
+  // get text thats displayed right now
+  var remainingText = keyword.innerHTML;
+  // get the length of it
+  var l = remainingText.length;
+  // if theres some characters in it
+  if (currentDirection == 'erase') {
+    if (l > 0) {
+      // then erase 1 character
+      keyword.innerHTML = remainingText.substring(0, l - 1);
+    } else {
+      currentDirection = 'write';
+      wordListIndex += 1;
+      // no characters, change to next word
+      if (wordListIndex == words.length) {
+        wordListIndex = 0;
+      }
+      // get a new word to animate
+      currentWord = words[wordListIndex];
+    }
+  } else {
+    // if we have not written the whole word yet
+    if (l < currentWord.length) {
+      // write 1 character
+      keyword.innerHTML += currentWord.charAt(l);
+    } else {
+      // done writing the word, so add black question mark and delay a bit
+      // the mockup UI has the question mark as black, so we must also 
+      // remove the question mark from the localization files. 
+      keyword.innerHTML += `<span class="dark-text">?</span>`;
+      addedQuestionMark = true;
+      delay = true;
+      setTimeout(() => {
+        delay = false;
+        currentDirection = 'erase';
+      }, 800)
     }
 
-    if(addedQuestionMark){
-      keyword.innerHTML = currentWord;
-      addedQuestionMark = false;
-      return
-    }
-    
-   // get text thats displayed right now
-    var remainingText = keyword.innerHTML;
-    // get the length of it
-    var l = remainingText.length;
-    // if theres some characters in it
-    if(currentDirection=='erase'){
-      if (l > 0) {
-        // then erase 1 character
-        keyword.innerHTML = remainingText.substring(0, l - 1);
-      } else {
-        currentDirection ='write';
-        wordListIndex+=1;
-        // no characters, change to next word
-        if (wordListIndex == words.length) {
-          wordListIndex = 0;
-        } 
-        // get a new word to animate
-        currentWord = words[wordListIndex];
-      }
-    } else {
-      // if we have not written the whole word yet
-      if (l < currentWord.length) {
-        // write 1 character
-        keyword.innerHTML += currentWord.charAt(l);
-      } else {
-        // done writing the word, so add black question mark and delay a bit
-        // the mockup UI has the question mark as black, so we must also 
-        // remove the question mark from the localization files. 
-        keyword.innerHTML += `<span class="dark-text">?</span>`;
-        addedQuestionMark = true;
-        delay = true;
-        setTimeout(()=>{
-          delay = false;
-          currentDirection='erase';
-        },800)
-      }
- 
-    }
   }
+}
 
 //retreives the language's icon to display on the dropdown menu.
 function getLanguageIcon(language) {
@@ -685,14 +699,14 @@ function insertValuesIntoText(text, values) {
   for (let index = 0; index < text.length; index++) {
     // we are looking for substrings that are formatted lke this: [*]
     let str = text.substring(index, index + 3);
-    if (str==PLACEHOLDER) {
+    if (str == PLACEHOLDER) {
       // keeping track of how many placeholders we find in the text
       valuesToInsert += 1;
     }
   }
   // for each placeholder we replace it with a value from the array
-  for(let valueIndex = 0; valueIndex < valuesToInsert; valueIndex++){
-    if(values[valueIndex]){
+  for (let valueIndex = 0; valueIndex < valuesToInsert; valueIndex++) {
+    if (values[valueIndex]) {
       completeText = text.replace(PLACEHOLDER, values[valueIndex])
     } else {
       // if the value array doesn't have enough values to insert, it's replaced with an error text
@@ -730,6 +744,7 @@ function getLanguage() {
 }
 
 function calculateQuizResult() {
+ 
   // Send the results to the server
   $.ajax({
     beforeSend: console.log(`sending answers...`),
@@ -737,28 +752,27 @@ function calculateQuizResult() {
     type: "POST",
     data: { UsersAnswers },
     success: function (data) {
+    
       console.log(data)
-      $("#generated-quiz-modal-progress-bar").hide();
-      $quizResultContainer.addClass('fade-in');
-      $quizResultContainer.show();
-      
+
+
       setTimeout(() => {
         $(`#welcome-banner`).hide();
-        setTimeout(() => {
-          $("#generated-quiz-modal").modal('hide');
-          if (data.Error != null) {
-            console.log(data.Error.message)
-            $streamerRevealContainer.show()
-          } else {
-            console.log(data.Results);
-            $(`#main-container`).addClass('wide-container');
-            displayStreamerResults(data.Results);
-            $streamerRevealContainer.addClass("fade-in");
-            $streamerRevealContainer.show();
-            $quizRestartButton.show();
-            console.log("complete.")
-          }
-        }, 350);
+
+        $("#generated-quiz-modal").modal('hide');
+        if (data.Error != null) {
+          console.log(data.Error.message)
+          $streamerRevealContainer.show()
+        } else {
+          console.log(data.Results);
+          $(`#main-container`).addClass('wide-container');
+          displayStreamerResults(data.Results);
+          $streamerRevealContainer.addClass("fade-in");
+          $streamerRevealContainer.show();
+          $quizRestartButton.show();
+          console.log("complete.")
+        }
+
       }, 2500)
     },
     complete: function (xhr, status) {
@@ -782,13 +796,13 @@ function displayStreamerResults(results) {
   for (var i = 0; i < 150; i++) {
     create(i);
   }
-  
+
   function create(i) {
     var width = Math.random() * 8;
     var height = width * 0.4;
     var colourIdx = Math.ceil(Math.random() * 3);
     var colour = "red";
-    switch(colourIdx) {
+    switch (colourIdx) {
       case 1:
         colour = "yellow";
         break;
@@ -798,33 +812,33 @@ function displayStreamerResults(results) {
       default:
         colour = "red";
     }
-    $('<div class="confetti-'+i+' '+colour+'"></div>').css({
-      "width" : width+"px",
-      "height" : height+"px",
-      "top" : -Math.random()*20+"%",
-      "left" : Math.random()*100+"%",
-      "opacity" : Math.random()+0.5,
-      "transform" : "rotate("+Math.random()*360+"deg)"
-    }).appendTo('.confetti-container');  
-    
+    $('<div class="confetti-' + i + ' ' + colour + '"></div>').css({
+      "width": width + "px",
+      "height": height + "px",
+      "top": -Math.random() * 20 + "%",
+      "left": Math.random() * 100 + "%",
+      "opacity": Math.random() + 0.5,
+      "transform": "rotate(" + Math.random() * 360 + "deg)"
+    }).appendTo('.confetti-container');
+
     drop(i);
   }
-  
+
   function drop(x) {
-    $('.confetti-'+x).animate({
+    $('.confetti-' + x).animate({
       top: "100%",
-      left: "+="+Math.random()*15+"%"
-    }, Math.random()*2000 + 2000, function() {
+      left: "+=" + Math.random() * 15 + "%"
+    }, Math.random() * 2000 + 2000, function () {
       reset(x);
     });
   }
-  
+
   function reset(x) {
-    $('.confetti-'+x).animate({
-      "top" : -Math.random()*20+"%",
-      "left" : "-="+Math.random()*15+"%"
-    }, 0, function() {
-      drop(x);             
+    $('.confetti-' + x).animate({
+      "top": -Math.random() * 20 + "%",
+      "left": "-=" + Math.random() * 15 + "%"
+    }, 0, function () {
+      drop(x);
     });
   }
 }
