@@ -5,7 +5,7 @@ var debug = require('debug')('streamer-matcher:server');
 var http = require('http');
 var public = path.join(__dirname, 'public');
 
-const calculateStreamer = require('./backend/calculate_streamer');
+const calculateStreamer = require('./backend/calculate_streamer_2');
 const createStreamer = require('./backend/create_streamer');
 const LoadLanguageJSON = require('./backend/localizations/localization');
 
@@ -25,7 +25,7 @@ app.set('port', port);
 
 // Home/Main quiz page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(public, 'new_index.html'));
+    res.sendFile(path.join(public, 'index.html'));
 });
 
 // Called at the end of the quiz

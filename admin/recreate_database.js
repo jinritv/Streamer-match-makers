@@ -24,8 +24,8 @@ const defaultEncoding = "utf8";
 
 // CSV streamer data file
 const streamerDataFilePath = process.argv[2]  // Path of downloaded spreadsheet, like "C:/streamer_data.csv";
-const headerRowNum = 0;  // 0-based row index of header columns
-const dataStartRowNum = 1;  // 0-based row index of start of data
+const headerRowNum = 1;  // 0-based row index of header columns
+const dataStartRowNum = 4;  // 0-based row index of start of data
 
 // DB schema name
 const postgresSchemaName = "public";
@@ -47,9 +47,8 @@ async function recreateDatabase() {
     console.log("Reading CSV file to get streamer data...")
     const csvFileData = fs.readFileSync(streamerDataFilePath, defaultEncoding);
     const csvJsonData = parseCsvDataToJson(csvFileData);
-    //console.log(csvJsonData);
-    //console.log(`Total ${csvJsonData.length} streamer data are found. Updating DB...`);
-    
+    console.log(`Total ${csvJsonData.length} streamer data are found. Updating DB...`);
+
     // Step 3. Add streamer data into DB and display any errors for failed inserts.
     // Note that each DB transaction only adds one streamer. It is possible that some streamers were
     // added and others were not, but no streamer is "partially" added.
@@ -111,7 +110,6 @@ function parseCsvDataToJson(csvFileData) {
   const csvRows = d3.csvParseRows(csvFileData);
   const headerRow = csvRows[headerRowNum];
   const dataRows = csvRows.slice(dataStartRowNum);
-  //console.log(dataRows);
   // Filter out rows that are not header or data
   const sanitizedCsvData = d3.csvFormatRows([headerRow, ...dataRows]);
   // Each row is object of [dbcolumn]:value, i.g. {user_name: "Jinritv", streamer_extra: "Jinri Lee", ...}

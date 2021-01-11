@@ -18,11 +18,7 @@ var pressTimer;
 var ResultStats = {};
 
 // The theme, either 'light' or 'dark'
-const THEMES = {
-  Dark: 'dark-mode',
-  Light: 'light-mode'
-}
-var CurrentTheme = THEMES.Light;
+var Theme = 'light';
 
 // what language is currently being displayed on the screen
 let _CURRENT_LANGUAGE_;
@@ -39,18 +35,6 @@ var ICONS = {};
 // The languages choices we have translations for (to display in the drop-down)
 var AVAILABLE_LANGUAGES = [];
 
-// jquery elements
-var $Labels = {};
-
-// change the class of the wrapper to change the theme colors
-var $ThemeWrapper, $themeLabel;
-
-var $languageLabel, $languageIcon;
-
-var $quizContinueButton, $quizBackButton, $quizRestartButton;
-
-var $quizResultContainer, $streamerRevealContainer;
-
 // We want to load the language text first, then load the rest
 // of the site. So put any functions in here that will be called
 // after we receive our language translation JSON.
@@ -58,7 +42,6 @@ const CallbackLoadRestOfSite = () => {
   // generate all the HTML we need for the quiz
   BuildQuiz(); // This is defined in 'create_quiz.js'
   // setup our bootstrap elements like the sliders
-  assignJqueryElements();
   setupElements();
   // setup the callbacks for the different events
   setupCallbacks();
@@ -68,40 +51,6 @@ const CallbackLoadRestOfSite = () => {
   SetupLanguageDropdown();
   //starts page animations
   animateElements();
-}
-
-function assignLabels() {
-  // only changes when the language changes
-  const LABEL_IDS = [
-    "page-title",
-    "logoText",
-    "copyright-text",
-    "animated-words-label",
-    "find-streamer-button",
-  ];
-  LABEL_IDS.forEach(labelID => {
-    $Labels[labelID] = $(`#${labelID}`);
-  });
-}
-
-function assignThemes() {
-  $ThemeWrapper = $('#page-top');
-  $themeIcon = $('#theme-icon');
-  $themeLabel = $('#theme-label');
-}
-
-function assignJqueryElements() {
-  // static labels (do not change once loaded)
-  assignLabels();
-  // elements for handling theming
-  assignThemes();
-  $languageLabel = $(`#current-language-label`);
-  $languageIcon = $(`#current-language-icon`);
-  $quizContinueButton = $(`#continue-button`);
-  $quizBackButton = $(`#back-button`);
-  $quizRestartButton = $(`#restart-button`);
-  $quizResultContainer = $(`#generated-question-result-container`);
-  $streamerRevealContainer = $(`#generated-streamer-reveal-container`);
 }
 
 // This is called when the page is loaded
@@ -123,10 +72,9 @@ const CallbackOnLanguageChanged = () => {
 // gets the default language, which we retreive from the browser
 function getDefaultLanguage() {
   let lang = navigator.language;
-  console.log({ BrowserLanguage: lang, SupportedLanguages: navigator.languages });
+  console.log({BrowserLanguage: lang, SupportedLanguages: navigator.languages});
   return lang;
 }
-
 
 // handles the downloading of language texts from our server
 function SetupLanguage(language, CallbackOnLanguageLoaded) {
@@ -180,24 +128,31 @@ function sadKEK(label, message) {
 }
 
 function addTextToStaticElements() {
-  for (const [elementID, elementRef] of Object.entries($Labels)) {
-    elementRef.html(getText(elementID));
-  }
-  let nextTheme = CurrentTheme == THEMES.Dark ? THEMES.Light : THEMES.Dark;
-  $themeIcon.text(CurrentTheme == THEMES.Dark ? '🌞' : '🌚')
-  $themeLabel.text(getText(`${nextTheme}-label`));
+  [
+    "page-title",
+    "logoText",
+    "copyright-text",
+    "animated-words-label",
+    "find-streamer-button",
+    "dark-mode-label"
+  ].forEach(element => {
+    $(`#${element}`).html(getText(element))
+  })
 }
 
 // Toggles the theme to dark/light mode
-function toggleDarkMode() {
-  // remove current theme
-  $ThemeWrapper.removeClass(CurrentTheme);
-  // get opposite of current theme for the next theme
-  let nextTheme = CurrentTheme == THEMES.Dark ? THEMES.Light : THEMES.Dark;
-  $ThemeWrapper.addClass(nextTheme);
-  $themeIcon.text(nextTheme == THEMES.Dark ? '🌞' : '🌚')
-  $themeLabel.text(getText(`${CurrentTheme}-label`));
-  CurrentTheme = nextTheme;
+function toggleDarkMode(){
+  if(Theme=='light'){
+    Theme='dark';
+    $('#page-top').removeClass('light-mode');
+    $('#page-top').addClass('dark-mode');
+    $('#dark-mode-label').text(getTranslation('light-mode-label'));
+  } else {
+    Theme='light';
+    $('#page-top').removeClass('dark-mode');
+    $('#page-top').addClass('light-mode');
+    $('#dark-mode-label').text(getTranslation('dark-mode-label'));
+  }
 }
 
 function generateDropdownOptions() {
@@ -217,8 +172,8 @@ function updateLanguage(language) {
   $(`[id^="generated-dropdown-option-"]`).removeClass('active');
   // set current active language
   $(`#generated-dropdown-option-${language}`).addClass('active');
-  $languageLabel.html(getText(`drop-down-label-${language}`))
-  $languageIcon.attr('src', getLanguageIcon(language));
+  $(`#current-language-label`).html(getText(`drop-down-label-${language}`))
+  $(`#current-language-icon`).attr('src', getLanguageIcon(language));
   setLanguage(language);
   SetupLanguage(language, CallbackOnLanguageChanged);
 }
@@ -283,12 +238,12 @@ function InitializeStarryRatings() {
     // default rank
     UsersAnswers['ranks'][question.unique_question_identifier] = 3;
 
-    let starRatingId = `question${i + 1}-weight-star-rating`
+    let starRatingId = `question${i+1}-weight-star-rating`
     let starRatingEl = document.getElementById(starRatingId);
-
+    
     if (starRatingEl) {
       new Starry(starRatingEl, {
-        name: starRatingId,
+        name: starRatingId, 
         beginWith: 60, // 3 out of 5 stars
         multiple: true,
         onRate: function (rating) {
@@ -309,8 +264,8 @@ function HideElementsAtQuizStart() {
     $(`#generated-quiz-modal-question${i}-container`).hide()
   }
 
-  $quizResultContainer.hide();
-  $streamerRevealContainer.hide()
+  $(`#generated-question-result-container`).hide()
+  $(`#generated-streamer-reveal-container`).hide()
   QUIZ_QUESTIONS.forEach(question => {
     if (question.question_type == QuestionTypes.TimeRange) {
       question.answer_settings.forEach(timeInput => {
@@ -319,10 +274,10 @@ function HideElementsAtQuizStart() {
     }
   })
 
-  $quizRestartButton.hide();
+  $(`#restart-button`).hide();
   // disable the continue button by default
-  $quizContinueButton.prop('disabled', true);
-  $quizBackButton.prop('disabled', true);
+  $(`#continue-button`).prop('disabled', true);
+  $(`#back-button`).prop('disabled', true);
 }
 
 function setSliderDisplay(sliderName, settings) {
@@ -340,8 +295,6 @@ function setSliderDisplay(sliderName, settings) {
 }
 
 function openGeneratedQuizModal() {
-  // prod database not changed yet
-  // return;
   $("#generated-quiz-modal").modal('show');
 }
 
@@ -431,7 +384,7 @@ function selectButton(question, selection) {
   $(`#generated-quiz-modal-button_${question}_${selection}`).addClass('active');
   //save the selection
   UsersAnswers[question] = selection;
-  $quizContinueButton.prop('disabled', false);
+  $(`#continue-button`).prop('disabled', false);
 }
 
 function selectMultipleButton(question, selection) {
@@ -455,9 +408,9 @@ function selectMultipleButton(question, selection) {
 
   //if no answer, block the continue button
   if (UsersAnswers[question].length == 0) {
-    $quizContinueButton.prop('disabled', true)
+    $(`#continue-button`).prop('disabled', true)
   } else {
-    $quizContinueButton.prop('disabled', false)
+    $(`#continue-button`).prop('disabled', false)
   }
   console.log(UsersAnswers)
 }
@@ -471,16 +424,16 @@ function nextQuestion() {
   if (CurrentQuestion == QUIZ_QUESTIONS.length) {
     $('#generated-quiz-modal-progress-label').html(getText('results'));
     $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-out");
-    $quizContinueButton.hide();
-    $quizBackButton.hide();
+    $("#continue-button").hide();
+    $("#back-button").hide();
     setTimeout(() => {
-      $quizResultContainer.addClass('fade-in');
-      $quizResultContainer.show();
-      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide();
+      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
+      $(`#generated-question-result-container`).addClass("fade-in")
+      $(`#generated-question-result-container`).show()
       calculateQuizResult();
     }, 250);
   } else {
-
+    
     // go to next question
 
     // slide out current question
@@ -490,11 +443,11 @@ function nextQuestion() {
     setTimeout(() => {
       $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
       // disable the continue button by default for this question
-      $quizContinueButton.prop('disabled', true)
+      $(`#continue-button`).prop('disabled', true)
       // and unfocus it
-      $quizContinueButton.blur()
+      $(`#continue-button`).blur()
       // enable or disable the continue button by default for the next question
-      $quizContinueButton.prop('disabled', QUIZ_QUESTIONS[CurrentQuestion].disableContinueButtonByDefault)
+      $(`#continue-button`).prop('disabled', QUIZ_QUESTIONS[CurrentQuestion].disableContinueButtonByDefault)
       // increment the question
       CurrentQuestion += 1;
       // change the title
@@ -506,38 +459,27 @@ function nextQuestion() {
   }
 }
 
-function lastQuestion() {
+function lastQuestion(){
   // adjusts the display progress bar
   backProgressBar(CurrentQuestion);
 
   //Enable continue button immediately when going back
-  $quizContinueButton.prop('disabled', false)
+  $(`#continue-button`).prop('disabled', false)
 
-  // wait 250 ms before sliding back one question
-  setTimeout(() => {
-    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
-    // decrement the question
-    CurrentQuestion -= 1;
-    // change the title
-    $('#generated-quiz-modal-progress-label').html(getText("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length]));
-    // slide in the next
-    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-in")
-    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).show()
-  }, 250);
+    // wait 250 ms before sliding back one question
+    setTimeout(() => {
+      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
+      // decrement the question
+      CurrentQuestion -= 1;
+      // change the title
+      $('#generated-quiz-modal-progress-label').html(getText("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length]));
+      // slide in the next
+      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-in")
+      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).show()
+    }, 250);
 }
 
 function restartQuiz() {
-  for (var i = 0; i < 150; i++) {
-    $(`.confetti-${i}`).remove();
-  }
-  $(`#main-container`).removeClass('wide-container');
-  $(`#welcome-banner`).show();
-
-  $quizResultContainer.removeClass('fade-in');
-  $quizResultContainer.hide();
-
-  
- 
   // reset the global variables
   CurrentQuestion = 1;
   UsersAnswers = {};
@@ -546,7 +488,6 @@ function restartQuiz() {
   $(`button.active`).removeClass(`active`);
   //initialization again
   BuildQuiz();
-  assignJqueryElements();
   setupElements();
   setupCallbacks();
   // change the title
@@ -555,18 +496,18 @@ function restartQuiz() {
   $(`#generated-question1-container`).addClass("fade-in")
   $(`#generated-question1-container`).show();
   // show the continue button
-  $quizContinueButton.show();
+  $(`#continue-button`).show();
   // adjust progress bar to first question
   adjustProgressBar(0);
 }
 
-function checkQuestion(questionNum) {
+function checkQuestion(questionNum){
   //Check Question and enable/disable BACK Button
-  if (questionNum == 1) {
-    $quizBackButton.prop('disabled', true);
+  if(questionNum == 1){
+    $(`#back-button`).prop('disabled', true);
   }
-  else {
-    $quizBackButton.prop('disabled', false);
+  else{
+    $(`#back-button`).prop('disabled', false);
   }
 }
 
@@ -589,29 +530,8 @@ function closeQuizModal() {
 }
 
 function animateElements() {
-  $("#sm-circle").hide();
-  $("#md-circle").hide();
-  $("#lg-circle").hide();
-  $('.detective').addClass('slide-in-bottom');
-  $('.detective').css('opacity','100');
-  setTimeout(()=>{
-    $("#sm-circle").addClass('scale-up-center');
-    $("#sm-circle").show();
-    setTimeout(()=>{
-      $("#md-circle").addClass('scale-up-center');
-      $("#md-circle").show();
-      setTimeout(()=>{
-        $("#lg-circle").addClass('scale-up-center');
-        $("#lg-circle").show();
-        $("#welcome-text").css('opacity','100');
-      },200)
-    },200)
-    setTextAnimation();
-  },250)
-
-  /**
-   * disabling page animations for now
-   *   $("#bg-rectangle").addClass("bounce-in-top");
+  setTextAnimation();
+  $("#bg-rectangle").addClass("bounce-in-top");
   $("#bg-rectangle").show();
   $("#dancing-jinri").addClass("slide-in-right");
   $("#dancing-jinri").show();
@@ -619,86 +539,48 @@ function animateElements() {
   $("#start-quiz-button").addClass("fade-in");
   $("#start-quiz-button-modal").addClass("fade-in");
   $("#welcome-text").addClass("swing-in-left-fwd")
-   */
-
 }
 
-const ERASE = "erase";
-const WRITE = "write";
-let textEraseAnimationTimer;
-let words;
-let currentWord;
-let currentDirection = WRITE;
-let wordListIndex = 0;
-let delay = false;
-let addedQuestionMark = false;
-
-const matchesMade = 2000;
-let currentMatchesMade = 0;
+var textEraseAnimationTimer;
 
 function setTextAnimation() {
   clearInterval(textEraseAnimationTimer);
-  words = getText('animated-words');
-  currentWord = words[wordListIndex];
-  textEraseAnimationTimer = setInterval(eraseAndWriteText, 33);
+  textEraseAnimationTimer = animateText();
 }
 
-function eraseAndWriteText() {
-  // we wait a bit before erasing
-  if (delay) {
-    return;
-  }
-
-  if (addedQuestionMark) {
-    keyword.innerHTML = currentWord;
-    addedQuestionMark = false;
-    return
-  }
-
-  // get text thats displayed right now
-  var remainingText = keyword.innerHTML;
-  // get the length of it
-  var l = remainingText.length;
-  // if theres some characters in it
-  if (currentDirection == 'erase') {
+function animateText() {
+  var index = 0;
+  var words = getText('animated-words');
+  keyword.innerHTML = words[0]
+  function erase() {
+    var remainingText = keyword.innerHTML;
+    var l = remainingText.length;
     if (l > 0) {
-      // then erase 1 character
       keyword.innerHTML = remainingText.substring(0, l - 1);
-    } else {
-      currentDirection = 'write';
-      wordListIndex += 1;
-      // no characters, change to next word
-      if (wordListIndex == words.length) {
-        wordListIndex = 0;
-      }
-      // get a new word to animate
-      currentWord = words[wordListIndex];
+      setTimeout(erase, 33);
     }
-  } else {
-    // if we have not written the whole word yet
-    if (l < currentWord.length) {
-      // write 1 character
-      keyword.innerHTML += currentWord.charAt(l);
-    } else {
-      // done writing the word, so add black question mark and delay a bit
-      // the mockup UI has the question mark as black, so we must also 
-      // remove the question mark from the localization files. 
-      keyword.innerHTML += `<span class="dark-text">?</span>`;
-      addedQuestionMark = true;
-      delay = true;
-      setTimeout(() => {
-        delay = false;
-        currentDirection = 'erase';
-      }, 800)
+    else {
+      index += 1;
+      setTimeout(enter, 33);
     }
-
   }
+  function enter() {
+    if (index == words.length - 1) {
+      index = 0;
+    }
+    var remainingText = keyword.innerHTML;
+    var l = remainingText.length;
+    var w = words[index];
+    if (l < w.length) {
+      keyword.innerHTML += w.charAt(l);
+      setTimeout(enter, 33);
+    }
+  }
+  return setInterval(erase, 1500);
 }
 
 //retreives the language's icon to display on the dropdown menu.
 function getLanguageIcon(language) {
-  // hack to return globe image
-  return './images/globe.PNG';
   if (ICONS[language]) {
     return ICONS[language]
   }
@@ -718,14 +600,14 @@ function insertValuesIntoText(text, values) {
   for (let index = 0; index < text.length; index++) {
     // we are looking for substrings that are formatted lke this: [*]
     let str = text.substring(index, index + 3);
-    if (str == PLACEHOLDER) {
+    if (str==PLACEHOLDER) {
       // keeping track of how many placeholders we find in the text
       valuesToInsert += 1;
     }
   }
   // for each placeholder we replace it with a value from the array
-  for (let valueIndex = 0; valueIndex < valuesToInsert; valueIndex++) {
-    if (values[valueIndex]) {
+  for(let valueIndex = 0; valueIndex < valuesToInsert; valueIndex++){
+    if(values[valueIndex]){
       completeText = text.replace(PLACEHOLDER, values[valueIndex])
     } else {
       // if the value array doesn't have enough values to insert, it's replaced with an error text
@@ -763,7 +645,6 @@ function getLanguage() {
 }
 
 function calculateQuizResult() {
- 
   // Send the results to the server
   $.ajax({
     beforeSend: console.log(`sending answers...`),
@@ -771,27 +652,23 @@ function calculateQuizResult() {
     type: "POST",
     data: { UsersAnswers },
     success: function (data) {
-    
       console.log(data)
-
-
       setTimeout(() => {
-        $(`#welcome-banner`).hide();
-
-        $("#generated-quiz-modal").modal('hide');
-        if (data.Error != null) {
-          console.log(data.Error.message)
-          $streamerRevealContainer.show()
-        } else {
-          console.log(data.Results);
-          $(`#main-container`).addClass('wide-container');
-          displayStreamerResults(data.Results);
-          $streamerRevealContainer.addClass("fade-in");
-          $streamerRevealContainer.show();
-          $quizRestartButton.show();
-          console.log("complete.")
-        }
-
+        $(`#generated-question-result-container`).addClass("fade-out")
+        setTimeout(() => {
+          $(`#generated-question-result-container`).hide()
+          if (data.Error != null) {
+            console.log(data.Error.message)
+            $(`#generated-streamer-reveal-container`).show()
+          } else {
+            console.log(data.Results);
+            displayStreamerResults(data.Results);
+            $(`#generated-streamer-reveal-container`).addClass("fade-in");
+            $(`#generated-streamer-reveal-container`).show();
+            $("#restart-button").show();
+            console.log("complete.")
+          }
+        }, 350);
       }, 2500)
     },
     complete: function (xhr, status) {
@@ -812,54 +689,6 @@ function displayStreamerResults(results) {
     $(`#streamer-${index + 1}-twitch_link`).attr("href", `https://twitch.tv/${streamer.user_name}`);
     $($(".streamer-info-container").get(index)).attr("streamer_id", streamer.id);
   });
-  for (var i = 0; i < 150; i++) {
-    create(i);
-  }
-
-  function create(i) {
-    var width = Math.random() * 8;
-    var height = width * 0.4;
-    var colourIdx = Math.ceil(Math.random() * 3);
-    var colour = "red";
-    switch (colourIdx) {
-      case 1:
-        colour = "yellow";
-        break;
-      case 2:
-        colour = "blue";
-        break;
-      default:
-        colour = "red";
-    }
-    $('<div class="confetti-' + i + ' ' + colour + '"></div>').css({
-      "width": width + "px",
-      "height": height + "px",
-      "top": -Math.random() * 20 + "%",
-      "left": Math.random() * 100 + "%",
-      "opacity": Math.random() + 0.5,
-      "transform": "rotate(" + Math.random() * 360 + "deg)"
-    }).appendTo('.confetti-container');
-
-    drop(i);
-  }
-
-  function drop(x) {
-    $('.confetti-' + x).animate({
-      top: "100%",
-      left: "+=" + Math.random() * 15 + "%"
-    }, Math.random() * 2000 + 2000, function () {
-      reset(x);
-    });
-  }
-
-  function reset(x) {
-    $('.confetti-' + x).animate({
-      "top": -Math.random() * 20 + "%",
-      "left": "-=" + Math.random() * 15 + "%"
-    }, 0, function () {
-      drop(x);
-    });
-  }
 }
 
 function captureTimeInputs() {
