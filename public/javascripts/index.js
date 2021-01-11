@@ -593,6 +593,7 @@ function animateElements() {
   $("#md-circle").hide();
   $("#lg-circle").hide();
   $('.detective').addClass('slide-in-bottom');
+  $('.detective').css('opacity','100');
   setTimeout(()=>{
     $("#sm-circle").addClass('scale-up-center');
     $("#sm-circle").show();
