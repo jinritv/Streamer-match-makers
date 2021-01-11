@@ -18,7 +18,11 @@ var pressTimer;
 var ResultStats = {};
 
 // The theme, either 'light' or 'dark'
-var Theme = 'light';
+const THEMES = {
+  Dark: 'dark-mode',
+  Light: 'light-mode'
+}
+var CurrentTheme = THEMES.Light;
 
 // what language is currently being displayed on the screen
 let _CURRENT_LANGUAGE_;
@@ -35,6 +39,18 @@ var ICONS = {};
 // The languages choices we have translations for (to display in the drop-down)
 var AVAILABLE_LANGUAGES = [];
 
+// jquery elements
+var $Labels = {};
+
+// change the class of the wrapper to change the theme colors
+var $ThemeWrapper, $themeLabel;
+
+var $languageLabel, $languageIcon;
+
+var $quizContinueButton, $quizBackButton, $quizRestartButton;
+
+var $quizResultContainer, $streamerRevealContainer;
+
 // We want to load the language text first, then load the rest
 // of the site. So put any functions in here that will be called
 // after we receive our language translation JSON.
@@ -42,6 +58,7 @@ const CallbackLoadRestOfSite = () => {
   // generate all the HTML we need for the quiz
   BuildQuiz(); // This is defined in 'create_quiz.js'
   // setup our bootstrap elements like the sliders
+  assignJqueryElements();
   setupElements();
   // setup the callbacks for the different events
   setupCallbacks();
@@ -51,6 +68,40 @@ const CallbackLoadRestOfSite = () => {
   SetupLanguageDropdown();
   //starts page animations
   animateElements();
+}
+
+function assignLabels(){
+   // only changes when the language changes
+   const LABEL_IDS = [
+    "page-title",
+    "logoText",
+    "copyright-text",
+    "animated-words-label",
+    "find-streamer-button",
+  ];
+  LABEL_IDS.forEach(labelID=>{
+    $Labels[labelID] = $(`#${labelID}`);
+  });
+}
+
+function assignThemes(){
+  $ThemeWrapper = $('#page-top');
+  $themeIcon = $('#theme-icon');
+  $themeLabel = $('#theme-label');
+}
+
+function assignJqueryElements(){
+  // static labels (do not change once loaded)
+  assignLabels();
+  // elements for handling theming
+  assignThemes();
+  $languageLabel = $(`#current-language-label`);
+  $languageIcon = $(`#current-language-icon`);
+  $quizContinueButton = $(`#continue-button`);
+  $quizBackButton = $(`#back-button`);
+  $quizRestartButton = $(`#restart-button`);
+  $quizResultContainer = $(`#generated-question-result-container`);
+  $streamerRevealContainer = $(`#generated-streamer-reveal-container`);
 }
 
 // This is called when the page is loaded
@@ -75,6 +126,7 @@ function getDefaultLanguage() {
   console.log({BrowserLanguage: lang, SupportedLanguages: navigator.languages});
   return lang;
 }
+
 
 // handles the downloading of language texts from our server
 function SetupLanguage(language, CallbackOnLanguageLoaded) {
@@ -128,31 +180,24 @@ function sadKEK(label, message) {
 }
 
 function addTextToStaticElements() {
-  [
-    "page-title",
-    "logoText",
-    "copyright-text",
-    "animated-words-label",
-    "find-streamer-button",
-    "dark-mode-label"
-  ].forEach(element => {
-    $(`#${element}`).html(getText(element))
-  })
+  for (const [elementID, elementRef] of Object.entries($Labels)) {
+    elementRef.html(getText(elementID));
+  }
+  let nextTheme = CurrentTheme == THEMES.Dark ? THEMES.Light : THEMES.Dark;
+  $themeIcon.text(CurrentTheme == THEMES.Dark?'🌞':'🌚')
+  $themeLabel.text(getText(`${nextTheme}-label`));
 }
 
 // Toggles the theme to dark/light mode
 function toggleDarkMode(){
-  if(Theme=='light'){
-    Theme='dark';
-    $('#page-top').removeClass('light-mode');
-    $('#page-top').addClass('dark-mode');
-    $('#dark-mode-label').text(getTranslation('light-mode-label'));
-  } else {
-    Theme='light';
-    $('#page-top').removeClass('dark-mode');
-    $('#page-top').addClass('light-mode');
-    $('#dark-mode-label').text(getTranslation('dark-mode-label'));
-  }
+  // remove current theme
+  $ThemeWrapper.removeClass(CurrentTheme);
+  // get opposite of current theme for the next theme
+  let nextTheme = CurrentTheme == THEMES.Dark ? THEMES.Light : THEMES.Dark;
+  $ThemeWrapper.addClass(nextTheme);
+  $themeIcon.text(nextTheme==THEMES.Dark?'🌞':'🌚')
+  $themeLabel.text(getText(`${CurrentTheme}-label`));
+  CurrentTheme = nextTheme;
 }
 
 function generateDropdownOptions() {
@@ -172,8 +217,8 @@ function updateLanguage(language) {
   $(`[id^="generated-dropdown-option-"]`).removeClass('active');
   // set current active language
   $(`#generated-dropdown-option-${language}`).addClass('active');
-  $(`#current-language-label`).html(getText(`drop-down-label-${language}`))
-  $(`#current-language-icon`).attr('src', getLanguageIcon(language));
+  $languageLabel.html(getText(`drop-down-label-${language}`))
+  $languageIcon.attr('src', getLanguageIcon(language));
   setLanguage(language);
   SetupLanguage(language, CallbackOnLanguageChanged);
 }
@@ -264,8 +309,8 @@ function HideElementsAtQuizStart() {
     $(`#generated-quiz-modal-question${i}-container`).hide()
   }
 
-  $(`#generated-question-result-container`).hide()
-  $(`#generated-streamer-reveal-container`).hide()
+  $quizResultContainer.hide();
+  $streamerRevealContainer.hide()
   QUIZ_QUESTIONS.forEach(question => {
     if (question.question_type == QuestionTypes.TimeRange) {
       question.answer_settings.forEach(timeInput => {
@@ -274,10 +319,10 @@ function HideElementsAtQuizStart() {
     }
   })
 
-  $(`#restart-button`).hide();
+  $quizRestartButton.hide();
   // disable the continue button by default
-  $(`#continue-button`).prop('disabled', true);
-  $(`#back-button`).prop('disabled', true);
+  $quizContinueButton.prop('disabled', true);
+  $quizBackButton.prop('disabled', true);
 }
 
 function setSliderDisplay(sliderName, settings) {
@@ -386,7 +431,7 @@ function selectButton(question, selection) {
   $(`#generated-quiz-modal-button_${question}_${selection}`).addClass('active');
   //save the selection
   UsersAnswers[question] = selection;
-  $(`#continue-button`).prop('disabled', false);
+  $quizContinueButton.prop('disabled', false);
 }
 
 function selectMultipleButton(question, selection) {
@@ -410,9 +455,9 @@ function selectMultipleButton(question, selection) {
 
   //if no answer, block the continue button
   if (UsersAnswers[question].length == 0) {
-    $(`#continue-button`).prop('disabled', true)
+    $quizContinueButton.prop('disabled', true)
   } else {
-    $(`#continue-button`).prop('disabled', false)
+    $quizContinueButton.prop('disabled', false)
   }
   console.log(UsersAnswers)
 }
@@ -426,12 +471,10 @@ function nextQuestion() {
   if (CurrentQuestion == QUIZ_QUESTIONS.length) {
     $('#generated-quiz-modal-progress-label').html(getText('results'));
     $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-out");
-    $("#continue-button").hide();
-    $("#back-button").hide();
+    $quizContinueButton.hide();
+    $quizBackButton.hide();
     setTimeout(() => {
-      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
-      $(`#generated-question-result-container`).addClass("fade-in")
-      $(`#generated-question-result-container`).show()
+      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide();
       calculateQuizResult();
     }, 250);
   } else {
@@ -445,11 +488,11 @@ function nextQuestion() {
     setTimeout(() => {
       $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
       // disable the continue button by default for this question
-      $(`#continue-button`).prop('disabled', true)
+      $quizContinueButton.prop('disabled', true)
       // and unfocus it
-      $(`#continue-button`).blur()
+      $quizContinueButton.blur()
       // enable or disable the continue button by default for the next question
-      $(`#continue-button`).prop('disabled', QUIZ_QUESTIONS[CurrentQuestion].disableContinueButtonByDefault)
+      $quizContinueButton.prop('disabled', QUIZ_QUESTIONS[CurrentQuestion].disableContinueButtonByDefault)
       // increment the question
       CurrentQuestion += 1;
       // change the title
@@ -466,7 +509,7 @@ function lastQuestion(){
   backProgressBar(CurrentQuestion);
 
   //Enable continue button immediately when going back
-  $(`#continue-button`).prop('disabled', false)
+  $quizContinueButton.prop('disabled', false)
 
     // wait 250 ms before sliding back one question
     setTimeout(() => {
@@ -498,7 +541,7 @@ function restartQuiz() {
   $(`#generated-question1-container`).addClass("fade-in")
   $(`#generated-question1-container`).show();
   // show the continue button
-  $(`#continue-button`).show();
+  $quizContinueButton.show();
   // adjust progress bar to first question
   adjustProgressBar(0);
 }
@@ -506,10 +549,10 @@ function restartQuiz() {
 function checkQuestion(questionNum){
   //Check Question and enable/disable BACK Button
   if(questionNum == 1){
-    $(`#back-button`).prop('disabled', true);
+    $quizBackButton.prop('disabled', true);
   }
   else{
-    $(`#back-button`).prop('disabled', false);
+    $quizBackButton.prop('disabled', false);
   }
 }
 
@@ -695,19 +738,24 @@ function calculateQuizResult() {
     data: { UsersAnswers },
     success: function (data) {
       console.log(data)
+      $("#generated-quiz-modal-progress-bar").hide();
+      $quizResultContainer.addClass('fade-in');
+      $quizResultContainer.show();
+      
       setTimeout(() => {
-        $(`#generated-question-result-container`).addClass("fade-out")
+        $(`#welcome-banner`).hide();
         setTimeout(() => {
-          $(`#generated-question-result-container`).hide()
+          $("#generated-quiz-modal").modal('hide');
           if (data.Error != null) {
             console.log(data.Error.message)
-            $(`#generated-streamer-reveal-container`).show()
+            $streamerRevealContainer.show()
           } else {
             console.log(data.Results);
+            $(`#main-container`).addClass('wide-container');
             displayStreamerResults(data.Results);
-            $(`#generated-streamer-reveal-container`).addClass("fade-in");
-            $(`#generated-streamer-reveal-container`).show();
-            $("#restart-button").show();
+            $streamerRevealContainer.addClass("fade-in");
+            $streamerRevealContainer.show();
+            $quizRestartButton.show();
             console.log("complete.")
           }
         }, 350);
@@ -731,6 +779,54 @@ function displayStreamerResults(results) {
     $(`#streamer-${index + 1}-twitch_link`).attr("href", `https://twitch.tv/${streamer.user_name}`);
     $($(".streamer-info-container").get(index)).attr("streamer_id", streamer.id);
   });
+  for (var i = 0; i < 150; i++) {
+    create(i);
+  }
+  
+  function create(i) {
+    var width = Math.random() * 8;
+    var height = width * 0.4;
+    var colourIdx = Math.ceil(Math.random() * 3);
+    var colour = "red";
+    switch(colourIdx) {
+      case 1:
+        colour = "yellow";
+        break;
+      case 2:
+        colour = "blue";
+        break;
+      default:
+        colour = "red";
+    }
+    $('<div class="confetti-'+i+' '+colour+'"></div>').css({
+      "width" : width+"px",
+      "height" : height+"px",
+      "top" : -Math.random()*20+"%",
+      "left" : Math.random()*100+"%",
+      "opacity" : Math.random()+0.5,
+      "transform" : "rotate("+Math.random()*360+"deg)"
+    }).appendTo('.confetti-container');  
+    
+    drop(i);
+  }
+  
+  function drop(x) {
+    $('.confetti-'+x).animate({
+      top: "100%",
+      left: "+="+Math.random()*15+"%"
+    }, Math.random()*2000 + 2000, function() {
+      reset(x);
+    });
+  }
+  
+  function reset(x) {
+    $('.confetti-'+x).animate({
+      "top" : -Math.random()*20+"%",
+      "left" : "-="+Math.random()*15+"%"
+    }, 0, function() {
+      drop(x);             
+    });
+  }
 }
 
 function captureTimeInputs() {

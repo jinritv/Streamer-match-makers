@@ -57,6 +57,7 @@ Put all other css in the quizstyle.css file
 .matches-made-text{
     color:var(--brand-success-dark);
 }
+
     
 .btn-start-quiz,
 .btn-start-quiz:active,
@@ -187,7 +188,7 @@ body {
     color: var(--brand-success);
 }
 
-#dark-mode-label {
+#theme-label {
     color: var(--text-color);
 }
 
@@ -230,8 +231,20 @@ body {
 	background: var(--brand-med-pink);
 }
 
+
+.percent-match{
+    color: var(--pure-white);
+}
+.streamer-username{
+    color: var(--pure-white);
+}
+
 .streamer-info-container {
-    background: var(--brand-really-light-pink);
+  
+background: linear-gradient(156.04deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+filter: drop-shadow(5px 5px 25px rgba(50, 50, 50, 0.85));
+backdrop-filter: blur(100px);
+background-color: gray;
     border-color:var(--brand-dark-pink);
 }
 
