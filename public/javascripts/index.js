@@ -589,7 +589,25 @@ function closeQuizModal() {
 }
 
 function animateElements() {
-  setTextAnimation();
+  $("#sm-circle").hide();
+  $("#md-circle").hide();
+  $("#lg-circle").hide();
+  $('.detective').addClass('slide-in-bottom');
+  setTimeout(()=>{
+    $("#sm-circle").addClass('scale-up-center');
+    $("#sm-circle").show();
+    setTimeout(()=>{
+      $("#md-circle").addClass('scale-up-center');
+      $("#md-circle").show();
+      setTimeout(()=>{
+        $("#lg-circle").addClass('scale-up-center');
+        $("#lg-circle").show();
+        $("#welcome-text").css('opacity','100');
+      },200)
+    },200)
+    setTextAnimation();
+  },250)
+
   /**
    * disabling page animations for now
    *   $("#bg-rectangle").addClass("bounce-in-top");
