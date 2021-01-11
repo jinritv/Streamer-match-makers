@@ -353,11 +353,11 @@ background-color: gray;
      }
   
      .dropdown-item-container{
-         background-color: var(--pure-white);
+         background-color: var(--btn-inside);
      }
     
 .dropdown-menu{
-    background-color: var(--pure-white);
+    background-color: var(--btn-inside);
 }
 .footer {   
     background-color:var(--footer-color)!important;
