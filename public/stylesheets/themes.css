@@ -136,7 +136,7 @@ Put all other css in the quizstyle.css file
     --btn-outlines: var(--btnoutline-light);
     --btn-inside: var(--btninside-light);
 
-    --background-color: var(--background-light);
+    --background-color: var(--background-light); 
 }
 
 /* When this class is added to the main page element, it changes the variables for the colors */
@@ -188,6 +188,9 @@ we change the theme.
 
 */
 
+.dark-mode #TwiriLogo{
+    filter: invert(98%) sepia(100%) saturate(3382%) hue-rotate(279deg) brightness(98%) contrast(99%);
+}
 .background-container{
     background-color: var(--background-color);
 }
