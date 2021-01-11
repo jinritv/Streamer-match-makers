@@ -52,6 +52,19 @@ Put all other css in the quizstyle.css file
     --brand-text-dark: #343434; 
 
     --modal-background-dark: #1A2138;
+    --header-bgcolor-light: var(--pure-white);
+    --header-bgcolor-dark: #1A2138;
+
+    --logo-text-color-light: #585858;
+    --logo-text-color-dark:  #ffff;
+
+    --headeroutline-light: #710273;
+    --headeroutline-dark: #F29CB9;
+
+    --btnoutline-light: #710273;
+    --btnoutline-dark: #F29CB9;
+    --btninside-light:#fff;
+    --btninside-dark:#1A2138;
     
 }
 
@@ -86,7 +99,8 @@ Put all other css in the quizstyle.css file
     border-radius: 8px;
     border-width:2px;
     background-color: var(--pure-white);
-    border-color: var(--brand-text-color);
+    border-color: var(--btn-outlines);
+    background-color: var(--btn-inside);
 }
 
 .light-mode {
@@ -107,6 +121,16 @@ Put all other css in the quizstyle.css file
     --text-color-headline: var(--brand-text-dark);
     --modal-background: var(--pure-white);
     --question-color: var(--brand-text-dark);
+
+    /*Header Footer*/
+    --headerfooter-color: var(--header-bgcolor-light);
+    --footercolor-text: #6c757d;
+    --logocolor: var(--logo-text-color-light);
+    --headeroutline: var(--headeroutline-light);
+
+    /*Buttons*/
+    --btn-outlines: var(--btnoutline-light);
+    --btn-inside: var(--btninside-light);
 }
 
 /* When this class is added to the main page element, it changes the variables for the colors */
@@ -128,6 +152,16 @@ Put all other css in the quizstyle.css file
     --text-color-headline: var(--brand-text-light);
     --modal-background: var(--modal-background-dark);
     --question-color: var(--pure-white);
+
+    /*Header Footer*/
+    --headerfooter-color: var(--header-bgcolor-dark);
+    --footercolor-text: var(--pure-white);
+    --logocolor: var(--logo-text-color-dark);
+    --headeroutline: var(--headeroutline-dark);
+
+    /*Buttons*/
+    --btn-outlines: var(--btnoutline-dark);
+    --btn-inside:var(--btninside-dark);
 }
 
 
@@ -139,6 +173,12 @@ so we can easily change color when
 we change the theme. 
 
 */
+
+#logoText {
+    color: var(--logocolor);
+    font-size: 24px !important;
+}
+
 .sphere-lg
 {
     background-color: var(--background-square-color);
@@ -155,16 +195,20 @@ we change the theme.
     opacity: 15%;
 }
 .page-header{
-    background-color: var(--pure-white);
-    border-bottom-width: 2px;
+    background-color: var(--headerfooter-color);
+    border-bottom-width: 1px;
     border-bottom-style:solid;
-    border-bottom-color: var(--brand-text-color);
+    border-bottom-color: var(--headeroutline);
     box-shadow:  0 6px 4px -4px rgba(0, 0, 0, 0.164); 
 }
 
 .page-footer{
-    background-color: var(--pure-white);
+    background-color: var(--headerfooter-color);
     box-shadow:  6px 0 4px 4px rgba(0, 0, 0, 0.233); 
+}
+
+.footer-text{
+    color: var(--footercolor-text);
 }
 
 .btn span {
@@ -215,10 +259,6 @@ body {
     color: var(--brand-light-pink) !important;
 }
 
-
-#logoText {
-    color:var(--brand-text-color);
-}
 
 .progress-bar-checkpoint {
     border-right-color: var(--pure-white);
