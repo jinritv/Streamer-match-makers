@@ -13,26 +13,13 @@ Put all other css in the quizstyle.css file
     Any time we want to change the color of something, change the variable to one of these root colors.
     If the color you want doesn't exist, make a new label for it and add it here. 
     */
-    --brand-primary-light: #FFB6D3;
-    --brand-primary: #f29cb9;
-    --brand-primary-dark:#D983A0;
-    --brand-success-dark: #C08D2F;
-    --brand-success: #d9a648;
-    --brand-success-light: #F3C062;
-    --brand-info: #bf7111;
-    --brand-warning: #710273;
-    --brand-danger: #3f0140;
-
-    --brand-text-color: #710273;
-
-
     --pure-white: #fff;
     --pure-black: #000000;
     --light-grey:#adb5bd;
     --dark-grey:#6c757d;
 
     --brand-really-dark-purple: #120918;
-    --brand-dark-pink: #D0729B;
+    --brand-dark-pink: #5f355f;
     --brand-med-pink: #bf7dd3;
     --brand-med-pink-2:#856585;
 
@@ -43,101 +30,33 @@ Put all other css in the quizstyle.css file
  
     --brand-button-background: #a364b6;
     --brand-border: #bd96bd;
-    --brand-secondary-background: #710273;
+    --brand-secondary-background: #f6e0fa;
     --brand-btn-primary-focus-dropshadow: rgba(186, 60, 198, 0.5);
     --brand-svg-button-dropshadow: rgba(218, 185, 223, 0.63);
     --brand-continue-button-dropshadow: #dab9dfe7;
-
-    --brand-text-light: #ffff;
-    --brand-text-dark: #343434; 
-
-    --modal-background-dark: #1A2138;
-    --header-bgcolor-light: var(--pure-white);
-    --header-bgcolor-dark: #1A2138;
-
-    --logo-text-color-light: #585858;
-    --logo-text-color-dark:  #ffff;
-
-    --headeroutline-light: #710273;
-    --headeroutline-dark: #F29CB9;
-
-    --btnoutline-light: #710273;
-    --btnoutline-dark: #F29CB9;
-    --btninside-light:#fff;
-    --btninside-dark:#1A2138;
     
-}
-
-.dark-text-color{
-    color:var(--brand-really-dark-purple);
-}
-
-.matches-made-text{
-    color:var(--brand-success-dark);
-}
-
-    
-.btn-start-quiz,
-.btn-start-quiz:active,
-.btn-start-quiz:visited,
-.btn-start-quiz:focus {
-    background-color: var(--brand-success);
-    border-color: var(--brand-success-dark);
-}
-.btn-start-quiz:hover{
-    background-color: var(--brand-success-light);
-    border-color: var(--brand-success);
-}
-.btn-start-quiz{
-    margin-top:24px;
-    padding-top:8px;
-    padding-bottom:8px;
-    border-radius: 4px;
-}
-
-.btn-dropdown{
-    border-radius: 8px;
-    border-width:2px;
-    background-color: var(--pure-white);
-    border-color: var(--btn-outlines);
-    background-color: var(--btn-inside);
 }
 
 .light-mode {
     /* Default mode is light mode */
     --progress-label-color: var(--brand-dark-pink);
-    --h4-text-color: var(--brand-text-dark);
+    --h4-text-color: var(--brand-dark-pink);
     --text-color: var(--brand-dark-pink);
     --text-color-inverse: var(--brand-really-light-pink);
     --page-background-color: var(--pure-white);
     --modal-background-color: var(--pure-white);
     --footer-color: var(--brand-really-light-pink);
-    --animated-words-label: var(--brand-really-dark-purple);
+    --animated-words-label: var(--brand-dark-pink);
     --logo-text-color: var(--brand-dark-pink);
     --progress-background-color: var(--brand-really-light-pink);
     --background-square-color: var(--brand-secondary-background);
-
-
-    --text-color-headline: var(--brand-text-dark);
-    --modal-background: var(--pure-white);
-    --question-color: var(--brand-text-dark);
-
-    /*Header Footer*/
-    --headerfooter-color: var(--header-bgcolor-light);
-    --footercolor-text: #6c757d;
-    --logocolor: var(--logo-text-color-light);
-    --headeroutline: var(--headeroutline-light);
-
-    /*Buttons*/
-    --btn-outlines: var(--btnoutline-light);
-    --btn-inside: var(--btninside-light);
 }
 
 /* When this class is added to the main page element, it changes the variables for the colors */
 .dark-mode {
     --progress-background-color: var(--brand-light-pink-2);
     --progress-label-color: var(--brand-really-light-pink);
-    --h4-text-color: var(--pure-white);
+    --h4-text-color: var(--brand-med-pink);
     --logo-text-color: var(--brand-really-light-pink);
     --animated-words-label: var(--brand-really-light-pink);
     --text-color: var(--brand-really-light-pink);
@@ -147,24 +66,6 @@ Put all other css in the quizstyle.css file
     --button-text-color: var(--brand-really-light-pink);
     --footer-color: var(--brand-dark-pink);
     --background-square-color: var(--brand-dark-pink);
-
-
-    --text-color-headline: var(--brand-text-light);
-    --modal-background: var(--modal-background-dark);
-    --question-color: var(--pure-white);
-
-    /*Header Footer*/
-    --headerfooter-color: var(--header-bgcolor-dark);
-    --footercolor-text: var(--pure-white);
-    --logocolor: var(--logo-text-color-dark);
-    --headeroutline: var(--headeroutline-dark);
-
-    /*Buttons*/
-    --btn-outlines: var(--btnoutline-dark);
-    --btn-inside:var(--btninside-dark);
-
-    /*dropdown */
-    --dropdown-label-text: var(--pure-white);
 }
 
 
@@ -176,50 +77,12 @@ so we can easily change color when
 we change the theme. 
 
 */
-
-#logoText {
-    color: var(--logocolor);
-    font-size: 24px !important;
-}
-
-.sphere-lg
-{
-    background-color: var(--background-square-color);
-    opacity: 5%;
-}
-.sphere-med
-{
-    background-color: var(--background-square-color);
-    opacity: 11%;
-}
-.sphere-small
-{
-    background-color: var(--background-square-color);
-    opacity: 15%;
-}
-.page-header{
-    background-color: var(--headerfooter-color);
-    border-bottom-width: 1px;
-    border-bottom-style:solid;
-    border-bottom-color: var(--headeroutline);
-    box-shadow:  0 6px 4px -4px rgba(0, 0, 0, 0.164); 
-}
-
-.page-footer{
-    background-color: var(--headerfooter-color);
-    box-shadow:  6px 0 4px 4px rgba(0, 0, 0, 0.233); 
-}
-
-.footer-text{
-    color: var(--footercolor-text);
-}
-
 .btn span {
-    color: var(--brand-text-dark);
+    color: var(--button-text-color);
 }
 
 #generated-quiz-modal-progress-label{
-    color: var(--question-color);
+    color: var(--progress-label-color);
 }
 
 h4 {
@@ -231,19 +94,15 @@ body {
 }
 
 .modal-content {
-    background-color: var(--modal-background);
+    background-color: var(--modal-background-color);
 }
 
 #bg-rectangle {
     background: var(--background-square-color);
 }
 
-.dark-text{
-    color: var(--text-color-headline);
-}
-
-.info-text{
-    color: var(--text-color-headline);
+#animated-words-label{
+    color: var(--animated-words-label);
 }
 
 #copyright-text{
@@ -251,10 +110,10 @@ body {
 }
 
 #keyword {
-    color: var(--brand-success);
+    color: var(--brand-light-pink);
 }
 
-#theme-label {
+#dark-mode-label {
     color: var(--text-color);
 }
 
@@ -262,9 +121,16 @@ body {
     color: var(--brand-light-pink) !important;
 }
 
+.progress {
+    background-color:var(--progress-background-color);
+}
+
+#logoText {
+    color: var(--logo-text-color) !important
+}
 
 .progress-bar-checkpoint {
-    border-right-color: var(--pure-white);
+    border-right-color: var(--modal-background-color);
 }
 
 .progress-bar {
@@ -293,21 +159,8 @@ body {
 	background: var(--brand-med-pink);
 }
 
-/* Text Size*/
-.percent-match{
-    color: var(--pure-white);
-    font-size: 40px;
-}
-.streamer-username{
-    color: var(--pure-white);
-}
-
 .streamer-info-container {
-  
-background: linear-gradient(156.04deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
-filter: drop-shadow(5px 5px 25px rgba(50, 50, 50, 0.85));
-backdrop-filter: blur(100px);
-background-color: gray;
+    background: var(--brand-really-light-pink);
     border-color:var(--brand-dark-pink);
 }
 
@@ -318,6 +171,28 @@ background-color: gray;
     stroke: var(--brand-border);
 }
 
+
+.btn-primary {
+    background-color:var(--brand-button-background);
+    border-color:var(--brand-border);
+}
+.btn-primary.focus, .btn-primary:focus,.btn-primary:hover {
+    background-color:var(--brand-med-pink);
+    border-color:var(--brand-dark-pink);
+}
+.btn-primary.focus,.btn-primary:focus {
+    box-shadow:0 0 0 .2rem var(--brand-btn-primary-focus-dropshadow)
+}
+
+.btn-primary:not(:disabled):not(.disabled).active,.btn-primary:not(:disabled):not(.disabled):active,.show>.btn-primary.dropdown-toggle {
+    background-color:var(--brand-med-pink);
+    border-color:var(--brand-dark-pink);
+}
+
+
+.btn{
+    border-color: transparent;
+}
 
 .slider-handle{ 
     background: var(--brand-light-pink);
@@ -356,12 +231,11 @@ background-color: gray;
      }
   
      .dropdown-item-container{
-         background-color: var(--pure-white);
+         background-color: var(--page-background-color);
      }
-    
-.dropdown-menu{
-    background-color: var(--pure-white);
-}
+     .dropdown-menu{
+        background-color: var(--page-background-color);
+     }
 .footer {   
     background-color:var(--footer-color)!important;
  }
@@ -410,10 +284,3 @@ background-color: gray;
     filter: drop-shadow(0px 8px 12px var(--brand-continue-button-dropshadow))
 }
 
-#current-language-label{
-    color: var(--dropdown-label-text);
-}
-
-.language-dropdown-text{
-    color:var(--brand-text-dark);
-}

@@ -1,10 +1,11 @@
 // Is there a better way to store this html?
 const HTMLStrings = {
-    LanguageDropDownItem: (language,icon,name) => (`<div class="dropdown-item-container"><a id="generated-dropdown-option-${language}" onclick="updateLanguage('${language}')" class="dropdown-item language-dropdown" href="#"><span class="language-dropdown-text">${name}</span></a></div>`),
+    LanguageDropDownItem: (language,icon,name) => (`<div class="dropdown-item-container"><a id="generated-dropdown-option-${language}" onclick="updateLanguage('${language}')" class="dropdown-item language-dropdown" href="#"><img class="dropdown-lang-icon" src="${icon}"/><span class="language-dropdown-text">${name}</span></a></div>`),
     LanguageDropDown: (languageIcon,languageDisplayName,dropDownOptions) => (`<div id="language-dropdown" class="btn-group">
-    <button type="button" class="btn btn-dropdown dropdown-toggle" data-toggle="dropdown"
-    aria-haspopup="true" aria-expanded="false"><img class="dropdown-lang-icon" id="current-language-icon" src="${languageIcon}"/><span class="language-dropdown-text" id="current-language-label">${languageDisplayName}</span></button>
-  
+    <button type="button" class="btn btn-quiz-answer"><img class="dropdown-lang-icon" id="current-language-icon" src="${languageIcon}"/><span class="language-dropdown-text" id="current-language-label">${languageDisplayName}</span></button>
+    <button type="button" class="btn btn-quiz-answer dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+    </button>
     <div class="dropdown-menu">
       ${dropDownOptions}
     </div>
@@ -16,7 +17,9 @@ const HTMLStrings = {
       <div id="question${questionNum}-weight-star-rating" class="mb-3"></div>
     </div>`),
     ModalFooter: () => `<div class="modal-footer justify-content-center" style="position: relative;">
-  
+    <button id="restart-button" type="button" onclick="restartQuiz()"
+        class="btn btn-quiz-answer btn-quiz-continue">
+    <span>${getText('restart')}</span></button>
   </div>
   <div class="btn-back justify-content-center"> 
     <button id="back-button" type="button" onclick="lastQuestion()"
@@ -62,102 +65,56 @@ const HTMLStrings = {
       </div>
     </div>`,
     FirstPlaceStreamer: () => `
-    <div class="container-fluid streamer-info-container winner">
-    <div class="crown-container">
-    <div class="crown">
-    <img src="/images/crown.png">
-    </div>
-
-
-    </div>
+    <div class="container streamer-info-container" style="width: 60%;">
         <div class="row">
             <div class="col">
-                <div style="border-radius: 50%; border-color:#DAB9DF; border-width: 2px; height:120px; width:120px; margin-bottom: 24px; margin-top:12px; overflow: hidden; margin-left:auto; margin-right:auto;">
+                <div style="border-radius: 50%; border-color:#DAB9DF; border-width: 2px; height:60px; width:60px; margin-bottom: 24px; margin-top:12px; overflow: hidden;">
                     <img id="streamer-1-logo" style="max-width: 100%; max-height: 100%;" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e0bbc79b-7c05-473b-a95c-508cd88c5991-profile_image-300x300.png" />
                 </div>
             </div>
+            <div class="col">
+                <div class="float-right" style="padding-top: 12px;"><span><strong style="color: #009900;" id="streamer-1-match">98</strong>% ${getText('match')}</span></div>
+            </div>
         </div>
         <div class="row">
             <div class="col">
                 <div>
-                    <span class="streamer-username" id="streamer-1-user_name" >JinriTV</span>
+                    <span id="streamer-1-user_name" >JinriTV</span>
                 </div>
             </div>
-        </div>
-        <div class="row socials-container">
             <div class="col">
-                <div >
-                    <a id="streamer-1-ig_link">
-                        <img style="max-width: 100%; max-height: 100%; padding-bottom: 12px;" src="/images/iglogo.png" />
+                <div class="float-right" style="height:30px; width:30px; ">
+                    <a id="streamer-1-twitch_link">
+                        <img style="max-width: 100%; max-height: 100%; padding-bottom: 12px;" src="/images/twitch_PNG48.png" />
                     </a>
                 </div>
             </div>
-            <div class="col">
-            <div >
-                <a id="streamer-1-twitch_link">
-                    <img style="max-width: 100%; max-height: 100%; padding-bottom: 12px;" src="/images/twitchlogo.png" />
-                </a>
-            </div>
         </div>
-        <div class="col">
-        <div >
-            <a id="streamer-1-twitter_link">
-                <img style="max-width: 100%; max-height: 100%; padding-bottom: 12px;" src="/images/twitterlogo.png" />
-            </a>
-        </div>
-    </div>
-        </div>
-        <div style="position: absolute; bottom: 0; margin-bottom:24px; left:0; right:0;">
-  <span class="percent-match"><strong id="streamer-1-match">98</strong>%</span>
-</div>
-  </div>
- `,
+  </div>`,
     OtherStreamer: (streamerId) => (`
-    <div class="container-fluid ">
-        <div class="row">
-            <div class="col">
-                <div style="border-radius: 50%; border-color:#DAB9DF; border-width: 2px; height:100px; width:100px; margin-bottom: 24px; margin-top:12px; overflow: hidden; margin-left:auto; margin-right:auto;">
-                <img id="streamer-${streamerId}-logo" style="max-width: 100%; max-height: 100%;" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e0bbc79b-7c05-473b-a95c-508cd88c5991-profile_image-300x300.png" />
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div>
-                <span class="streamer-username" id="streamer-${streamerId}-user_name" >JinriTV</span>
-                </div>
-            </div>
-        </div>
-        <div class="row socials-container">
-            <div class="col">
-                <div >
-                <a  id="streamer-${streamerId}-ig_link">
-                        <img style="max-width: 100%; max-height: 100%; padding-bottom: 12px;" src="/images/iglogo.png" />
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-            <div >
-            <a  id="streamer-${streamerId}-twitch_link">
-                    <img style="max-width: 100%; max-height: 100%; padding-bottom: 12px;" src="/images/twitchlogo.png" />
-                </a>
-            </div>
-        </div>
+    <div class="row">
         <div class="col">
-        <div >
-        <a  id="streamer-${streamerId}-twitter_link">
-                <img style="max-width: 100%; max-height: 100%; padding-bottom: 12px;" src="/images/twitterlogo.png" />
-            </a>
-        </div>
-    </div>
-        </div>
-        <div class="row">
-          <div class="col">
-           
-          </div>
-        </div>
-  </div>
-  <div style="position: absolute; bottom: 0; margin-bottom:24px; left:0; right:0;">
-    <span class="percent-match"><strong id="streamer-${streamerId}-match">98</strong>%</span>
-  </div>`)
+            <div style="border-radius: 50%; border-color:#DAB9DF; border-width: 2px; height:60px; width:60px; margin-bottom: 24px; margin-top:12px; overflow: hidden;">
+                <img id="streamer-${streamerId}-logo" style="max-width: 100%; max-height: 100%;" src="https://static-cdn.jtvnw.net/jtv_user_pictures/e0bbc79b-7c05-473b-a95c-508cd88c5991-profile_image-300x300.png" />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="float-right" style="padding-top: 12px;"><span><strong id="streamer-${streamerId}-match">98</strong>% ${getText('match')}</span></div>
+                      </div>
+                    </div>
+                    <div class="row" style="padding-bottom: 12px;">
+                      <div class="col">
+                        <div>
+                         <span id="streamer-${streamerId}-user_name" >JinriTV</span>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="float-right" style="height:30px; width:30px; ">
+                          <a  id="streamer-${streamerId}-twitch_link">
+                            <img style="max-width: 100%; max-height: 100%; padding-bottom: 12px;"
+                            src="/images/twitch_PNG48.png" />
+                          </a>
+                        </div>
+                      </div>
+                    </div>`)
 }
