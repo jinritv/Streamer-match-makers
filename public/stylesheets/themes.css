@@ -428,6 +428,3 @@ background-color: gray;
     color: var(--dropdown-label-text);
 }
 
-.language-dropdown-text{
-    color:var(--brand-text-dark);
-}
