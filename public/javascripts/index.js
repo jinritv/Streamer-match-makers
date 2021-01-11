@@ -729,7 +729,14 @@ function insertValuesIntoText(text, values) {
       completeText = text.replace(PLACEHOLDER, values[valueIndex])
     } else {
       // if the value array doesn't have enough values to insert, it's replaced with an error text
-      completeText = text.replace(PLACEHOLDER, MISSING_VALUE)
+      //hack to make the slider work because when values[valueIndex] is 0 it is counted as false
+      if(values[valueIndex]===0){
+        completeText = text.replace(PLACEHOLDER, '0')
+      } else {
+        completeText = text.replace(PLACEHOLDER, MISSING_VALUE)
+      }
+
+    
     }
     // sets the updated version of the text, containing 1 less placeholder
     text = completeText;
