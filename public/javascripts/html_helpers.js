@@ -12,7 +12,7 @@ const HTMLStrings = {
     QuestionContainerOpen: (questionNum) => (`<div id="generated-quiz-modal-question${questionNum}-container" style="z-index: 1;">`),
     QuestionContainerClose: `</div>`,
     QuestionSearchWeight:(questionNum) => (`<div class="d-flex flex-column align-items-center justify-content-center">
-      <div>${getText('search-weight')}</div>
+      <div class="star-rating-label">${getText('search-weight')}</div>
       <div id="question${questionNum}-weight-star-rating" class="mb-3"></div>
     </div>`),
     ModalFooter: () => `<div class="modal-footer justify-content-center" style="position: relative;">

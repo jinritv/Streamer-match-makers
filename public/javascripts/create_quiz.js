@@ -308,9 +308,9 @@ const generateInputFunctions = {
       htmlString += `<div id="generated-${question.unique_question_identifier}-${answerTime.value_name}" style="position: relative;">
           <div class="d-flex flex-column text-center">
             <span style="color:#bf7dd3"><strong>${getText(`time-range-${question.unique_question_identifier}-${answerTime.value_name}`)}</strong></span>
-            <span>${getText(`time-range-${question.unique_question_identifier}-from`)}</span>
+            <span class="time-label">${getText(`time-range-${question.unique_question_identifier}-from`)}</span>
             <input id="generated-${question.unique_question_identifier}-${answerTime.value_name}-from" class="time text-center" type="text" value="${answerTime.minDefault}" />
-            <span>${getText(`time-range-${question.unique_question_identifier}-to`)}</span>
+            <span class="time-label">${getText(`time-range-${question.unique_question_identifier}-to`)}</span>
             <input id="generated-${question.unique_question_identifier}-${answerTime.value_name}-to" class="time text-center" type="text" value="${answerTime.maxDefault}" />
           </div>
         </div>`;

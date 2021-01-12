@@ -332,6 +332,7 @@ function setSliderDisplay(sliderName, settings) {
   let maxDefault = settings.defaultMax;
   let displayText = getText(`range-display-${sliderName}`, [minDefault, maxDefault]);
   $(`#generated-${sliderName}-slider-display`).html(displayText);
+  $(`#generated-${sliderName}-slider-display`).addClass('slider-display-text');
   SLIDERS[sliderName] = $(`#generated-slider_${sliderName}`).slider({ id: `generated-slider_${sliderName}`, min: minRange, max: maxRange, range: true, value: [minDefault, maxDefault], tooltip: 'hide' });
   UsersAnswers[sliderName] = {
     min: minDefault,

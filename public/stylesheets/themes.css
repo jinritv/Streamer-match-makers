@@ -428,3 +428,15 @@ background-color: gray;
     color: var(--dropdown-label-text);
 }
 
+.slider-display-text{
+    color: var(--dropdown-label-text);
+}
+.custom-control-label{
+    color: var(--dropdown-label-text);
+}
+.time-label{
+    color: var(--dropdown-label-text);
+}
+.star-rating-label{
+    color: var(--dropdown-label-text);
+}
