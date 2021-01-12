@@ -24,6 +24,7 @@ module.exports.getStreamerLogos = async function (usernames) {
 
     const username_to_logo = {}
     for(let user of responseJson.users) {
+        console.log(user.logo)
         username_to_logo[user.name] = user.logo;
     }
     return username_to_logo;
