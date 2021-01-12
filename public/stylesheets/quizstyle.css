@@ -157,6 +157,7 @@ body {
 .winner{
     border-color: goldenrod !important;
     border-width: 4px; 
+    border-style:solid;
 }
 
 
