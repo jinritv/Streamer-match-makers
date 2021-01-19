@@ -21,11 +21,15 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 app.set('port', port);
 
 // Home/Main quiz page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(public, 'new_index.html'));
+    res.render('new_index');
 });
 
 // Called at the end of the quiz
@@ -75,7 +79,7 @@ app.post("/getLocalization", (req, res, next)=>{
 // Not-found page
 app.get("/404", (req, res) => {
     res.status(404);
-    res.sendFile(path.join(public, 'not_found.html'));
+    res.render('not_found');
 });
 
 app.use(express.static('public'));
