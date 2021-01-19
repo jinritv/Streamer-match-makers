@@ -136,7 +136,7 @@ const QUIZ_QUESTIONS = [
     disableContinueButtonByDefault: false,
     answer_settings: {
       min: 0,
-      max: 10000,
+      max: 1000,
       incrementBy: 50,
       defaultMin: 2500,
       defaultMax: 7500
