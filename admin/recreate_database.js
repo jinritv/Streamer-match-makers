@@ -11,6 +11,7 @@
 
 const { getSequelizeFromConfig, testConnection } = require("../db/db");
 const fs = require("fs");
+const path = require("path");
 const { QueryTypes } = require("sequelize");
 const { findOrCreateStreamerFromData } = require("../db/find_or_create_streamer");
 
@@ -19,11 +20,11 @@ const d3 = require("d3-dsv");
 const { isNotEmpty, keyCount } = require("../util/objectutil");
 
 // DB schema file
-const dbSchemaFilePath = "../db/db.sql";
+const dbSchemaFilePath = path.join(__dirname, "../db/db.sql");
 const defaultEncoding = "utf8";
 
 // CSV streamer data file
-const streamerDataFilePath = process.argv[2]  // Path of downloaded spreadsheet, like "C:/streamer_data.csv";
+const streamerDataFilePath = path.join(process.cwd(),process.argv[2]);  // Path of downloaded spreadsheet, like "C:/streamer_data.csv"
 const headerRowNum = 0;  // 0-based row index of header columns
 const dataStartRowNum = 1;  // 0-based row index of start of data
 
