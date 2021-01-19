@@ -3,7 +3,6 @@ var path = require('path');
 var logger = require('morgan');
 var debug = require('debug')('streamer-matcher:server');
 var http = require('http');
-var public = path.join(__dirname, 'public');
 
 const calculateStreamer = require('./backend/calculate_streamer');
 const createStreamer = require('./backend/create_streamer');
