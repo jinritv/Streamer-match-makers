@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "prettify": "npx prettier --write ."
   },
   "dependencies": {
     "axios": "^0.21.1",
