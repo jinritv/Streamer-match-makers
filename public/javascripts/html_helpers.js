@@ -1,21 +1,29 @@
 // Is there a better way to store this html?
 const HTMLStrings = {
-    LanguageDropDownItem: (language,icon,name) => (`<div class="dropdown-item-container"><a id="generated-dropdown-option-${language}" onclick="updateLanguage('${language}')" class="dropdown-item language-dropdown" href="#"><span class="language-dropdown-text">${name}</span></a></div>`),
-    LanguageDropDown: (languageIcon,languageDisplayName,dropDownOptions) => (`<div id="language-dropdown" class="btn-group">
+  LanguageDropDownItem: (language, icon, name) =>
+    `<div class="dropdown-item-container"><a id="generated-dropdown-option-${language}" onclick="updateLanguage('${language}')" class="dropdown-item language-dropdown" href="#"><span class="language-dropdown-text">${name}</span></a></div>`,
+  LanguageDropDown: (
+    languageIcon,
+    languageDisplayName,
+    dropDownOptions
+  ) => `<div id="language-dropdown" class="btn-group">
     <button type="button" class="btn btn-dropdown dropdown-toggle" data-toggle="dropdown"
     aria-haspopup="true" aria-expanded="false"><img class="dropdown-lang-icon" id="current-language-icon" src="${languageIcon}"/><span class="language-dropdown-text" id="current-language-label">${languageDisplayName}</span></button>
   
     <div class="dropdown-menu">
       ${dropDownOptions}
     </div>
-  </div>`),
-    QuestionContainerOpen: (questionNum) => (`<div id="generated-quiz-modal-question${questionNum}-container" style="z-index: 1;">`),
-    QuestionContainerClose: `</div>`,
-    QuestionSearchWeight:(questionNum) => (`<div class="d-flex flex-column align-items-center justify-content-center">
-      <div>${getText('search-weight')}</div>
+  </div>`,
+  QuestionContainerOpen: (questionNum) =>
+    `<div id="generated-quiz-modal-question${questionNum}-container" style="z-index: 1;">`,
+  QuestionContainerClose: `</div>`,
+  QuestionSearchWeight: (
+    questionNum
+  ) => `<div class="d-flex flex-column align-items-center justify-content-center">
+      <div>${getText("search-weight")}</div>
       <div id="question${questionNum}-weight-star-rating" class="mb-3"></div>
-    </div>`),
-    ModalFooter: () => `<div class="modal-footer justify-content-center" style="position: relative;">
+    </div>`,
+  ModalFooter: () => `<div class="modal-footer justify-content-center" style="position: relative;">
   
   </div>
   <div class="btn-back justify-content-center"> 
@@ -27,22 +35,36 @@ const HTMLStrings = {
   <div class="modal-footer justify-content-center">   
     <button id="continue-button" type="button" onclick="nextQuestion()"
     class="btn btn-quiz-answer btn-quiz-continue">
-    <span>${getText('continue')}</span>
+    <span>${getText("continue")}</span>
     </button>
   </div>`,
-    ProgressBarOpen: `<div class="progress">`,
-    ProgressBarCheckpoint: (questionNum, leftSideValue) => (`<div id="generated-quiz-modal-progress-bar-${questionNum}" class="progress-bar-checkpoint" style="left:${leftSideValue}%"><span></span></div>`),
-    ProgressBarClose: (percentagePerQuestion) => (`<div id="generated-quiz-modal-progress-bar" class="progress-bar" role="progressbar" style="width: ${percentagePerQuestion}%;"><span></span></div></div>`),
-    BasicAnswerButton: (question, answer, onclickFunctionName) => (`<button id="generated-quiz-modal-button_${question.unique_question_identifier}_${answer}" type="button" onclick="${onclickFunctionName}('${question.unique_question_identifier}','${answer}')"
+  ProgressBarOpen: `<div class="progress">`,
+  ProgressBarCheckpoint: (questionNum, leftSideValue) =>
+    `<div id="generated-quiz-modal-progress-bar-${questionNum}" class="progress-bar-checkpoint" style="left:${leftSideValue}%"><span></span></div>`,
+  ProgressBarClose: (percentagePerQuestion) =>
+    `<div id="generated-quiz-modal-progress-bar" class="progress-bar" role="progressbar" style="width: ${percentagePerQuestion}%;"><span></span></div></div>`,
+  BasicAnswerButton: (
+    question,
+    answer,
+    onclickFunctionName
+  ) => `<button id="generated-quiz-modal-button_${
+    question.unique_question_identifier
+  }_${answer}" type="button" onclick="${onclickFunctionName}('${
+    question.unique_question_identifier
+  }','${answer}')"
     class="btn btn-quiz-answer">
-    <span>${getText(`button-text-${question.unique_question_identifier}-${answer}`)}</span>
-  </button>`),
-    BasicQuestionTitle: (questionTitle) => (`<div class="d-flex flex-row mb-3 justify-content-center">
+    <span>${getText(
+      `button-text-${question.unique_question_identifier}-${answer}`
+    )}</span>
+  </button>`,
+  BasicQuestionTitle: (
+    questionTitle
+  ) => `<div class="d-flex flex-row mb-3 justify-content-center">
                                 <h4>${questionTitle}</h4>
-                            </div>`),
-    NewButtonRowOpen: `<div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">`,
-    NewButtonRowClose: `</div>`,
-    LoadingScreen: () => `
+                            </div>`,
+  NewButtonRowOpen: `<div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">`,
+  NewButtonRowClose: `</div>`,
+  LoadingScreen: () => `
     <div class="row mb-3 justify-content-center">
         <img style="width:50%;height:50%" src="/images/mascot.png"/>
     </div>
@@ -53,7 +75,7 @@ const HTMLStrings = {
         <div></div>
         <div></div>
       </div>
-      <h4>${getText('loading-message')}</h4>
+      <h4>${getText("loading-message")}</h4>
       <div class="lds-ellipsis">
         <div></div>
         <div></div>
@@ -61,7 +83,7 @@ const HTMLStrings = {
         <div></div>
       </div>
     </div>`,
-    FirstPlaceStreamer: () => `
+  FirstPlaceStreamer: () => `
     <div class="container-fluid streamer-info-container winner">
     <div class="crown-container">
     <div class="crown">
@@ -112,7 +134,7 @@ const HTMLStrings = {
 </div>
   </div>
  `,
-    OtherStreamer: (streamerId) => (`
+  OtherStreamer: (streamerId) => `
     <div class="container-fluid ">
         <div class="row">
             <div class="col">
@@ -159,5 +181,5 @@ const HTMLStrings = {
   </div>
   <div style="position: absolute; bottom: 0; margin-bottom:24px; left:0; right:0;">
     <span class="percent-match"><strong id="streamer-${streamerId}-match">98</strong>%</span>
-  </div>`)
-}
+  </div>`,
+};

@@ -6,168 +6,161 @@ This file is for color variables and defining colors for class properties.
 Put all other css in the quizstyle.css file
 
 */
-:root{
-    /*
+:root {
+  /*
     These are "global" colors, and are the basic color pallet that we make the site with.
     Don't hard-code any colors other than in this :root element. 
     Any time we want to change the color of something, change the variable to one of these root colors.
     If the color you want doesn't exist, make a new label for it and add it here. 
     */
-    --brand-primary-light: #FFB6D3;
-    --brand-primary: #f29cb9;
-    --brand-primary-dark:#D983A0;
-    --brand-success-dark: #C08D2F;
-    --brand-success: #d9a648;
-    --brand-success-light: #F3C062;
-    --brand-info: #bf7111;
-    --brand-warning: #710273;
-    --brand-danger: #3f0140;
+  --brand-primary-light: #ffb6d3;
+  --brand-primary: #f29cb9;
+  --brand-primary-dark: #d983a0;
+  --brand-success-dark: #c08d2f;
+  --brand-success: #d9a648;
+  --brand-success-light: #f3c062;
+  --brand-info: #bf7111;
+  --brand-warning: #710273;
+  --brand-danger: #3f0140;
 
-    --brand-text-color: #710273;
+  --brand-text-color: #710273;
 
+  --pure-white: #fff;
+  --pure-black: #000000;
+  --light-grey: #adb5bd;
+  --dark-grey: #6c757d;
 
-    --pure-white: #fff;
-    --pure-black: #000000;
-    --light-grey:#adb5bd;
-    --dark-grey:#6c757d;
+  --brand-really-dark-purple: #120918;
+  --brand-dark-pink: #d0729b;
+  --brand-med-pink: #bf7dd3;
+  --brand-med-pink-2: #856585;
 
-    --brand-really-dark-purple: #120918;
-    --brand-dark-pink: #D0729B;
-    --brand-med-pink: #bf7dd3;
-    --brand-med-pink-2:#856585;
+  --brand-light-pink: #dab9df;
+  --brand-light-pink-2: #d8c2db;
+  --brand-xtra-light-pink: #fdf4ff;
+  --brand-really-light-pink: #f8e9fb;
 
-    --brand-light-pink: #DAB9DF;
-    --brand-light-pink-2: #d8c2db;
-    --brand-xtra-light-pink: #fdf4ff; 
-    --brand-really-light-pink: #F8E9FB; 
- 
-    --brand-button-background: #a364b6;
-    --brand-border: #bd96bd;
-    --brand-secondary-background: #710273;
-    --brand-btn-primary-focus-dropshadow: rgba(186, 60, 198, 0.5);
-    --brand-svg-button-dropshadow: rgba(218, 185, 223, 0.63);
-    --brand-continue-button-dropshadow: #dab9dfe7;
+  --brand-button-background: #a364b6;
+  --brand-border: #bd96bd;
+  --brand-secondary-background: #710273;
+  --brand-btn-primary-focus-dropshadow: rgba(186, 60, 198, 0.5);
+  --brand-svg-button-dropshadow: rgba(218, 185, 223, 0.63);
+  --brand-continue-button-dropshadow: #dab9dfe7;
 
-    --brand-text-light: #ffff;
-    --brand-text-dark: #343434; 
+  --brand-text-light: #ffff;
+  --brand-text-dark: #343434;
 
-    --modal-background-dark: #1A2138;
-    --header-bgcolor-light: var(--pure-white);
-    --header-bgcolor-dark: #1A2138;
+  --modal-background-dark: #1a2138;
+  --header-bgcolor-light: var(--pure-white);
+  --header-bgcolor-dark: #1a2138;
 
-    --logo-text-color-light: #585858;
-    --logo-text-color-dark:  #ffff;
+  --logo-text-color-light: #585858;
+  --logo-text-color-dark: #ffff;
 
-    --headeroutline-light: #710273;
-    --headeroutline-dark: #F29CB9;
+  --headeroutline-light: #710273;
+  --headeroutline-dark: #f29cb9;
 
-    --btnoutline-light: #710273;
-    --btnoutline-dark: #F29CB9;
-    --btninside-light:#fff;
-    --btninside-dark:#1A2138;
-    
+  --btnoutline-light: #710273;
+  --btnoutline-dark: #f29cb9;
+  --btninside-light: #fff;
+  --btninside-dark: #1a2138;
 }
 
-.dark-text-color{
-    color:var(--brand-really-dark-purple);
+.dark-text-color {
+  color: var(--brand-really-dark-purple);
 }
 
-.matches-made-text{
-    color:var(--brand-success-dark);
+.matches-made-text {
+  color: var(--brand-success-dark);
 }
 
-    
 .btn-start-quiz,
 .btn-start-quiz:active,
 .btn-start-quiz:visited,
 .btn-start-quiz:focus {
-    background-color: var(--brand-success);
-    border-color: var(--brand-success-dark);
+  background-color: var(--brand-success);
+  border-color: var(--brand-success-dark);
 }
-.btn-start-quiz:hover{
-    background-color: var(--brand-success-light);
-    border-color: var(--brand-success);
+.btn-start-quiz:hover {
+  background-color: var(--brand-success-light);
+  border-color: var(--brand-success);
 }
-.btn-start-quiz{
-    margin-top:24px;
-    padding-top:8px;
-    padding-bottom:8px;
-    border-radius: 4px;
+.btn-start-quiz {
+  margin-top: 24px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 4px;
 }
 
-.btn-dropdown{
-    border-radius: 8px;
-    border-width:2px;
-    background-color: var(--pure-white);
-    border-color: var(--btn-outlines);
-    background-color: var(--btn-inside);
+.btn-dropdown {
+  border-radius: 8px;
+  border-width: 2px;
+  background-color: var(--pure-white);
+  border-color: var(--btn-outlines);
+  background-color: var(--btn-inside);
 }
 
 .light-mode {
-    /* Default mode is light mode */
-    --progress-label-color: var(--brand-dark-pink);
-    --h4-text-color: var(--brand-text-dark);
-    --text-color: var(--brand-dark-pink);
-    --text-color-inverse: var(--brand-really-light-pink);
-    --page-background-color: var(--pure-white);
-    --modal-background-color: var(--pure-white);
-    --footer-color: var(--brand-really-light-pink);
-    --animated-words-label: var(--brand-really-dark-purple);
-    --logo-text-color: var(--brand-dark-pink);
-    --progress-background-color: var(--brand-really-light-pink);
-    --background-square-color: var(--brand-secondary-background);
+  /* Default mode is light mode */
+  --progress-label-color: var(--brand-dark-pink);
+  --h4-text-color: var(--brand-text-dark);
+  --text-color: var(--brand-dark-pink);
+  --text-color-inverse: var(--brand-really-light-pink);
+  --page-background-color: var(--pure-white);
+  --modal-background-color: var(--pure-white);
+  --footer-color: var(--brand-really-light-pink);
+  --animated-words-label: var(--brand-really-dark-purple);
+  --logo-text-color: var(--brand-dark-pink);
+  --progress-background-color: var(--brand-really-light-pink);
+  --background-square-color: var(--brand-secondary-background);
 
+  --text-color-headline: var(--brand-text-dark);
+  --modal-background: var(--pure-white);
+  --question-color: var(--brand-text-dark);
 
-    --text-color-headline: var(--brand-text-dark);
-    --modal-background: var(--pure-white);
-    --question-color: var(--brand-text-dark);
+  /*Header Footer*/
+  --headerfooter-color: var(--header-bgcolor-light);
+  --footercolor-text: #6c757d;
+  --logocolor: var(--logo-text-color-light);
+  --headeroutline: var(--headeroutline-light);
 
-    /*Header Footer*/
-    --headerfooter-color: var(--header-bgcolor-light);
-    --footercolor-text: #6c757d;
-    --logocolor: var(--logo-text-color-light);
-    --headeroutline: var(--headeroutline-light);
-
-    /*Buttons*/
-    --btn-outlines: var(--btnoutline-light);
-    --btn-inside: var(--btninside-light);
+  /*Buttons*/
+  --btn-outlines: var(--btnoutline-light);
+  --btn-inside: var(--btninside-light);
 }
 
 /* When this class is added to the main page element, it changes the variables for the colors */
 .dark-mode {
-    --progress-background-color: var(--brand-light-pink-2);
-    --progress-label-color: var(--brand-really-light-pink);
-    --h4-text-color: var(--pure-white);
-    --logo-text-color: var(--brand-really-light-pink);
-    --animated-words-label: var(--brand-really-light-pink);
-    --text-color: var(--brand-really-light-pink);
-    --text-color-inverse: var(--brand-dark-pink);
-    --page-background-color: var(--brand-really-dark-purple);
-    --modal-background-color: var(--brand-really-dark-purple);
-    --button-text-color: var(--brand-really-light-pink);
-    --footer-color: var(--brand-dark-pink);
-    --background-square-color: var(--brand-dark-pink);
+  --progress-background-color: var(--brand-light-pink-2);
+  --progress-label-color: var(--brand-really-light-pink);
+  --h4-text-color: var(--pure-white);
+  --logo-text-color: var(--brand-really-light-pink);
+  --animated-words-label: var(--brand-really-light-pink);
+  --text-color: var(--brand-really-light-pink);
+  --text-color-inverse: var(--brand-dark-pink);
+  --page-background-color: var(--brand-really-dark-purple);
+  --modal-background-color: var(--brand-really-dark-purple);
+  --button-text-color: var(--brand-really-light-pink);
+  --footer-color: var(--brand-dark-pink);
+  --background-square-color: var(--brand-dark-pink);
 
+  --text-color-headline: var(--brand-text-light);
+  --modal-background: var(--modal-background-dark);
+  --question-color: var(--pure-white);
 
-    --text-color-headline: var(--brand-text-light);
-    --modal-background: var(--modal-background-dark);
-    --question-color: var(--pure-white);
+  /*Header Footer*/
+  --headerfooter-color: var(--header-bgcolor-dark);
+  --footercolor-text: var(--pure-white);
+  --logocolor: var(--logo-text-color-dark);
+  --headeroutline: var(--headeroutline-dark);
 
-    /*Header Footer*/
-    --headerfooter-color: var(--header-bgcolor-dark);
-    --footercolor-text: var(--pure-white);
-    --logocolor: var(--logo-text-color-dark);
-    --headeroutline: var(--headeroutline-dark);
+  /*Buttons*/
+  --btn-outlines: var(--btnoutline-dark);
+  --btn-inside: var(--btninside-dark);
 
-    /*Buttons*/
-    --btn-outlines: var(--btnoutline-dark);
-    --btn-inside:var(--btninside-dark);
-
-    /*dropdown */
-    --dropdown-label-text: var(--pure-white);
+  /*dropdown */
+  --dropdown-label-text: var(--pure-white);
 }
-
-
 
 /*
 
@@ -178,242 +171,250 @@ we change the theme.
 */
 
 #logoText {
-    color: var(--logocolor);
-    font-size: 24px !important;
+  color: var(--logocolor);
+  font-size: 24px !important;
 }
 
-.sphere-lg
-{
-    background-color: var(--background-square-color);
-    opacity: 5%;
+.sphere-lg {
+  background-color: var(--background-square-color);
+  opacity: 5%;
 }
-.sphere-med
-{
-    background-color: var(--background-square-color);
-    opacity: 11%;
+.sphere-med {
+  background-color: var(--background-square-color);
+  opacity: 11%;
 }
-.sphere-small
-{
-    background-color: var(--background-square-color);
-    opacity: 15%;
+.sphere-small {
+  background-color: var(--background-square-color);
+  opacity: 15%;
 }
-.page-header{
-    background-color: var(--headerfooter-color);
-    border-bottom-width: 1px;
-    border-bottom-style:solid;
-    border-bottom-color: var(--headeroutline);
-    box-shadow:  0 6px 4px -4px rgba(0, 0, 0, 0.164); 
+.page-header {
+  background-color: var(--headerfooter-color);
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--headeroutline);
+  box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.164);
 }
 
-.page-footer{
-    background-color: var(--headerfooter-color);
-    box-shadow:  6px 0 4px 4px rgba(0, 0, 0, 0.233); 
+.page-footer {
+  background-color: var(--headerfooter-color);
+  box-shadow: 6px 0 4px 4px rgba(0, 0, 0, 0.233);
 }
 
-.footer-text{
-    color: var(--footercolor-text);
+.footer-text {
+  color: var(--footercolor-text);
 }
 
 .btn span {
-    color: var(--brand-text-dark);
+  color: var(--brand-text-dark);
 }
 
-#generated-quiz-modal-progress-label{
-    color: var(--question-color);
+#generated-quiz-modal-progress-label {
+  color: var(--question-color);
 }
 
 h4 {
-    color: var(--h4-text-color);
+  color: var(--h4-text-color);
 }
 
 body {
-    background-color: var(--page-background-color);
+  background-color: var(--page-background-color);
 }
 
 .modal-content {
-    background-color: var(--modal-background);
+  background-color: var(--modal-background);
 }
 
 #bg-rectangle {
-    background: var(--background-square-color);
+  background: var(--background-square-color);
 }
 
-.dark-text{
-    color: var(--text-color-headline);
+.dark-text {
+  color: var(--text-color-headline);
 }
 
-.info-text{
-    color: var(--text-color-headline);
+.info-text {
+  color: var(--text-color-headline);
 }
 
-#copyright-text{
-    color: var(--text-color);
+#copyright-text {
+  color: var(--text-color);
 }
 
 #keyword {
-    color: var(--brand-success);
+  color: var(--brand-success);
 }
 
 #theme-label {
-    color: var(--text-color);
+  color: var(--text-color);
 }
 
 .divider-custom.divider-light .divider-custom-icon {
-    color: var(--brand-light-pink) !important;
+  color: var(--brand-light-pink) !important;
 }
 
-
 .progress-bar-checkpoint {
-    border-right-color: var(--pure-white);
+  border-right-color: var(--pure-white);
 }
 
 .progress-bar {
-    color:var(--brand-really-light-pink);
-    background-color:var(--brand-med-pink);
+  color: var(--brand-really-light-pink);
+  background-color: var(--brand-med-pink);
 }
 
 .language-dropdown {
-    color:var(--button-text-color);
-    border-color:var(--brand-light-pink);
+  color: var(--button-text-color);
+  border-color: var(--brand-light-pink);
 }
 
-.language-dropdown.focus, .language-dropdown:focus,.language-dropdown:hover {
-    color:var(--text-color);
-    background-color:var(--brand-light-pink);
-    border-color:var(--brand-dark-pink);
+.language-dropdown.focus,
+.language-dropdown:focus,
+.language-dropdown:hover {
+  color: var(--text-color);
+  background-color: var(--brand-light-pink);
+  border-color: var(--brand-dark-pink);
 }
 
-.language-dropdown:not(:disabled):not(.disabled).active,.language-dropdown:not(:disabled):not(.disabled):active,.show>.language-dropdown.dropdown-toggle {
-    color:var(--text-color-inverse);
-    background-color:var(--brand-light-pink);
-    border-color:var(--brand-light-pink);
+.language-dropdown:not(:disabled):not(.disabled).active,
+.language-dropdown:not(:disabled):not(.disabled):active,
+.show > .language-dropdown.dropdown-toggle {
+  color: var(--text-color-inverse);
+  background-color: var(--brand-light-pink);
+  border-color: var(--brand-light-pink);
 }
 
 .slider-selection {
-	background: var(--brand-med-pink);
+  background: var(--brand-med-pink);
 }
 
 /* Text Size*/
-.percent-match{
-    color: var(--pure-white);
-    font-size: 40px;
+.percent-match {
+  color: var(--pure-white);
+  font-size: 40px;
 }
-.streamer-username{
-    color: var(--pure-white);
+.streamer-username {
+  color: var(--pure-white);
 }
 
 .streamer-info-container {
-  
-background: linear-gradient(156.04deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
-filter: drop-shadow(5px 5px 25px rgba(50, 50, 50, 0.85));
-backdrop-filter: blur(100px);
-background-color: gray;
-    border-color:var(--brand-dark-pink);
+  background: linear-gradient(
+    156.04deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  filter: drop-shadow(5px 5px 25px rgba(50, 50, 50, 0.85));
+  backdrop-filter: blur(100px);
+  background-color: gray;
+  border-color: var(--brand-dark-pink);
 }
 
 .svg-buttons {
-    filter: drop-shadow(0px 8px 12px var(--brand-svg-button-dropshadow))
+  filter: drop-shadow(0px 8px 12px var(--brand-svg-button-dropshadow));
 }
 .svg-buttons:hover svg line {
-    stroke: var(--brand-border);
+  stroke: var(--brand-border);
 }
 
-
-.slider-handle{ 
-    background: var(--brand-light-pink);
-    border-color: var(--brand-med-pink);
-    }
-  
-    .custom-control-input:checked~.custom-control-label:before {
-      color:var(--brand-light-pink);
-      border-color:var(--brand-dark-pink);
-      background-color:var(--brand-light-pink);
-     }
-     .custom-control-label:before {
-     
-      background-color:var(--pure-white);
-      border-color: var(--light-grey);
-     }
- 
-     .custom-control-input:focus~.custom-control-label:before {
-      box-shadow:0 0 0 .2rem var(--brand-btn-primary-focus-dropshadow);
-     }
-     .custom-control-input:focus:not(:checked)~.custom-control-label:before {
-      border-color:var(--brand-dark-pink);
-     }
-     .custom-control-input:not(:disabled):active~.custom-control-label:before {
-      color:var(--pure-white);
-      background-color:var(--brand-med-pink);
-      border-color:var(--brand-dark-pink);
-     }
-     .custom-control-input:disabled~.custom-control-label,
-     .custom-control-input[disabled]~.custom-control-label {
-      color:var(--dark-grey);
-     }
-     .custom-control-input:disabled~.custom-control-label:before,
-     .custom-control-input[disabled]~.custom-control-label:before {
-      background-color:var(--light-grey);
-     }
-  
-     .dropdown-item-container{
-         background-color: var(--pure-white);
-     }
-    
-.dropdown-menu{
-    background-color: var(--pure-white);
+.slider-handle {
+  background: var(--brand-light-pink);
+  border-color: var(--brand-med-pink);
 }
-.footer {   
-    background-color:var(--footer-color)!important;
- }
+
+.custom-control-input:checked ~ .custom-control-label:before {
+  color: var(--brand-light-pink);
+  border-color: var(--brand-dark-pink);
+  background-color: var(--brand-light-pink);
+}
+.custom-control-label:before {
+  background-color: var(--pure-white);
+  border-color: var(--light-grey);
+}
+
+.custom-control-input:focus ~ .custom-control-label:before {
+  box-shadow: 0 0 0 0.2rem var(--brand-btn-primary-focus-dropshadow);
+}
+.custom-control-input:focus:not(:checked) ~ .custom-control-label:before {
+  border-color: var(--brand-dark-pink);
+}
+.custom-control-input:not(:disabled):active ~ .custom-control-label:before {
+  color: var(--pure-white);
+  background-color: var(--brand-med-pink);
+  border-color: var(--brand-dark-pink);
+}
+.custom-control-input:disabled ~ .custom-control-label,
+.custom-control-input[disabled] ~ .custom-control-label {
+  color: var(--dark-grey);
+}
+.custom-control-input:disabled ~ .custom-control-label:before,
+.custom-control-input[disabled] ~ .custom-control-label:before {
+  background-color: var(--light-grey);
+}
+
+.dropdown-item-container {
+  background-color: var(--pure-white);
+}
+
+.dropdown-menu {
+  background-color: var(--pure-white);
+}
+.footer {
+  background-color: var(--footer-color) !important;
+}
 
 .btn-quiz-continue {
-    color:var(--pure-white) !important;
-    background-color:var(--brand-light-pink);
-    filter: drop-shadow(0px 8px 12px var(--brand-continue-button-dropshadow))
+  color: var(--pure-white) !important;
+  background-color: var(--brand-light-pink);
+  filter: drop-shadow(0px 8px 12px var(--brand-continue-button-dropshadow));
 }
 
-.btn-quiz-continue.disabled,.btn-quiz-answer:disabled{
-    color:var(--text-color-inverse);
-    background-color:var(--light-grey);
-    border-color:var(--light-grey);
-    filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.233))
+.btn-quiz-continue.disabled,
+.btn-quiz-answer:disabled {
+  color: var(--text-color-inverse);
+  background-color: var(--light-grey);
+  border-color: var(--light-grey);
+  filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.233));
 }
 
 .btn-quiz-answer {
-    color:var(--text-color);
-    border-color:var(--brand-light-pink);
+  color: var(--text-color);
+  border-color: var(--brand-light-pink);
 }
 
-.btn-quiz-answer.focus, .btn-quiz-answer:focus,.btn-quiz-answer:hover {
-    color:var(--text-color-inverse);
-    background-color:var(--brand-light-pink-2);
-    border-color: var(--brand-med-pink-2)
+.btn-quiz-answer.focus,
+.btn-quiz-answer:focus,
+.btn-quiz-answer:hover {
+  color: var(--text-color-inverse);
+  background-color: var(--brand-light-pink-2);
+  border-color: var(--brand-med-pink-2);
 }
-.btn-quiz-answer.focus,.btn-quiz-answer:focus {
-    box-shadow:0 0 0 .2rem var(--brand-btn-primary-focus-dropshadow);
+.btn-quiz-answer.focus,
+.btn-quiz-answer:focus {
+  box-shadow: 0 0 0 0.2rem var(--brand-btn-primary-focus-dropshadow);
 }
-.btn-quiz-answer.disabled,.btn-quiz-answer:disabled{
-    color:var(--text-color-inverse);
-    background-color:var(--light-grey);
-    border-color:var(--light-grey);
+.btn-quiz-answer.disabled,
+.btn-quiz-answer:disabled {
+  color: var(--text-color-inverse);
+  background-color: var(--light-grey);
+  border-color: var(--light-grey);
 }
-.btn-quiz-answer:not(:disabled):not(.disabled).active,.btn-quiz-answer:not(:disabled):not(.disabled):active,.show>.btn-quiz-answer.dropdown-toggle {
-    color:var(--pure-black);
-    background-color:var(--brand-light-pink);
-    border-color:var(--brand-light-pink);
+.btn-quiz-answer:not(:disabled):not(.disabled).active,
+.btn-quiz-answer:not(:disabled):not(.disabled):active,
+.show > .btn-quiz-answer.dropdown-toggle {
+  color: var(--pure-black);
+  background-color: var(--brand-light-pink);
+  border-color: var(--brand-light-pink);
 }
 
 .btn-quiz-restart {
-    color: var(--brand-xtra-light-pink);
-    background-color: var(--brand-light-pink);
-    border-color:var(--brand-light-pink);
-    filter: drop-shadow(0px 8px 12px var(--brand-continue-button-dropshadow))
+  color: var(--brand-xtra-light-pink);
+  background-color: var(--brand-light-pink);
+  border-color: var(--brand-light-pink);
+  filter: drop-shadow(0px 8px 12px var(--brand-continue-button-dropshadow));
 }
 
-#current-language-label{
-    color: var(--dropdown-label-text);
+#current-language-label {
+  color: var(--dropdown-label-text);
 }
 
-.language-dropdown-text{
-    color:var(--brand-text-dark);
+.language-dropdown-text {
+  color: var(--brand-text-dark);
 }
