@@ -138,8 +138,8 @@ const QUIZ_QUESTIONS = [
       min: 0,
       max: 1000,
       incrementBy: 50,
-      defaultMin: 2500,
-      defaultMax: 7500
+      defaultMin: 250,
+      defaultMax: 750
     },
   },
 
