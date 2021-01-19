@@ -72,11 +72,21 @@ app.post("/getLocalization", (req, res, next)=>{
   LoadLanguageJSON(LANGUAGE_TO_GET, getLanguageJSONCallback);
 });
 
+// Not-found page
+app.get("/404", (req, res) => {
+    res.status(404);
+    res.sendFile(path.join(public, 'not_found.html'));
+});
+
 app.use(express.static('public'));
 var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+app.get("*", (req, res) => {
+    res.redirect("/404");
+});
 
 /**
  * Event listener for HTTP server "error" event.
