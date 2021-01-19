@@ -16,17 +16,17 @@ const QuestionTypes = {
   },
   RangeSlider: "rangeslider",
   TimeRange: "timerange",
-}
+};
 
 // Specific settings for each type of question
 const QuestionTypeSettings = {
   [QuestionTypes.Buttons.MultipleSelection]: {
     buttonsPerRow: 4, // buttons to put on a single row before making a new row
-    onclickFunctionName: 'selectMultipleButton' // name of the function to run in the onclick handler
+    onclickFunctionName: "selectMultipleButton", // name of the function to run in the onclick handler
   },
   [QuestionTypes.Buttons.SingleSelection]: {
-    buttonsPerRow: 1,  
-    onclickFunctionName: 'selectButton'
+    buttonsPerRow: 1,
+    onclickFunctionName: "selectButton",
   },
   [QuestionTypes.RangeSlider]: {
     // no default settings for this type of question
@@ -34,7 +34,7 @@ const QuestionTypeSettings = {
   [QuestionTypes.TimeRange]: {
     // no default settings for this type of question
   },
-}
+};
 
 // the quiz's questions will be built and displayed in the order they appear in this array
 const QUIZ_QUESTIONS = [
@@ -44,14 +44,15 @@ const QUIZ_QUESTIONS = [
     question_type: QuestionTypes.Buttons.MultipleSelection, // type of question as explained above
     disableContinueButtonByDefault: true, // should the 'Continue' button get disabled when the question is displayed (is the it instantly skippable?)
     buttonsPerRow: 3, // if you include this property, you override the default buttons per row
-    onclickFunctionName: 'exampleOnClickFunction', // you can override the function that is called when the button is pressed
-    answer_settings: [ // list values for the answers here
+    onclickFunctionName: "exampleOnClickFunction", // you can override the function that is called when the button is pressed
+    answer_settings: [
+      // list values for the answers here
       "english",
       "korean",
       "japanese",
       "chinese",
       "french",
-      "spanish"
+      "spanish",
     ],
   },
 
@@ -72,7 +73,7 @@ const QUIZ_QUESTIONS = [
       "movies",
       "music",
       "dancing",
-      "yoga"
+      "yoga",
     ],
   },
 
@@ -81,11 +82,7 @@ const QUIZ_QUESTIONS = [
     unique_question_identifier: "subonly",
     question_type: QuestionTypes.Buttons.SingleSelection,
     disableContinueButtonByDefault: true,
-    answer_settings: [
-      "all",
-      "sub-only",
-      "follower-only"
-    ]
+    answer_settings: ["all", "sub-only", "follower-only"],
   },
 
   //Question 4: Mature
@@ -93,7 +90,7 @@ const QUIZ_QUESTIONS = [
     unique_question_identifier: "mature",
     question_type: QuestionTypes.Buttons.SingleSelection,
     disableContinueButtonByDefault: true,
-    answer_settings: [ true, false ]
+    answer_settings: [true, false],
   },
 
   // Question 5: chat vibes
@@ -125,8 +122,8 @@ const QUIZ_QUESTIONS = [
       "fast",
       "slow",
       "wholesome",
-      "toxic"
-    ]
+      "toxic",
+    ],
   },
 
   // Question 6: average_viewers
@@ -139,7 +136,7 @@ const QUIZ_QUESTIONS = [
       max: 10000,
       incrementBy: 50,
       defaultMin: 2500,
-      defaultMax: 7500
+      defaultMax: 7500,
     },
   },
 
@@ -148,16 +145,17 @@ const QUIZ_QUESTIONS = [
     unique_question_identifier: "watchtime",
     question_type: QuestionTypes.TimeRange,
     disableContinueButtonByDefault: false,
-    answer_settings: [{
-      value_name: "weekdays",
-      minDefault: "9:30",
-      maxDefault: "17:30",
-    },
-    {
-      value_name: "weekends",
-      minDefault: "9:30",
-      maxDefault: "17:30",
-    },
+    answer_settings: [
+      {
+        value_name: "weekdays",
+        minDefault: "9:30",
+        maxDefault: "17:30",
+      },
+      {
+        value_name: "weekends",
+        minDefault: "9:30",
+        maxDefault: "17:30",
+      },
     ],
   },
 ];
@@ -168,7 +166,10 @@ function BuildQuiz() {
   let quizHtml = `<div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header text-center">
-            <h5 class="modal-title w-100" id="generated-quiz-modal-progress-label">${getText("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length])}</h5>
+            <h5 class="modal-title w-100" id="generated-quiz-modal-progress-label">${getText(
+              "generated-quiz-modal-progress-label",
+              [CurrentQuestion, QUIZ_QUESTIONS.length]
+            )}</h5>
           </div>
               ${generateProgressBar(QUIZ_QUESTIONS.length)}
           <div class="modal-body">
@@ -183,10 +184,10 @@ function BuildQuiz() {
         </div>
       </div>`;
   $(`#generated-quiz-modal`).html(quizHtml);
-  $(`#generated-result-page`).html(CreateResultPage())
+  $(`#generated-result-page`).html(CreateResultPage());
 }
 
-function CreateResultPage(){
+function CreateResultPage() {
   return `<div id="generated-streamer-reveal-container" class="container-fluid">
   <div class="row mb-3 justify-content-center">
   <h4>These are your top</h4>
@@ -225,27 +226,35 @@ function CreateResultPage(){
   <div class="col" style="text-align:center;">
   <button id="restart-button" type="button" onclick="restartQuiz()"
   class="btn btn-quiz-answer btn-quiz-restart">
-<span>${getText('restart')}</span></button>
+<span>${getText("restart")}</span></button>
   </div>
   <div class="col"></div>
  
   </div>
-</div>`
+</div>`;
 }
 
 function GenerateQuestionInputs(question) {
-  let questionType = (Object.values(QuestionTypes.Buttons).includes(question.question_type)) ? 'buttonselect' : question.question_type;
+  let questionType = Object.values(QuestionTypes.Buttons).includes(
+    question.question_type
+  )
+    ? "buttonselect"
+    : question.question_type;
   return generateInputFunctions[questionType](question);
 }
 
 // Thhe main functions that build the inputs for each question
 const generateInputFunctions = {
-  'buttonselect': (question) => {
-    let htmlString = HTMLStrings.BasicQuestionTitle(getText(`question-text-${question.unique_question_identifier}`));
+  buttonselect: (question) => {
+    let htmlString = HTMLStrings.BasicQuestionTitle(
+      getText(`question-text-${question.unique_question_identifier}`)
+    );
     let numInCurrentRow = 0; // keeps track of how many buttons are on the current row
     // check if we have overidden the number of buttons per row
     // if we have not overriden it, it will use the default for that question type's settings.
-    let buttonsPerRow = (question.buttonsPerRow ? question.buttonsPerRow : QuestionTypeSettings[question.question_type].buttonsPerRow);
+    let buttonsPerRow = question.buttonsPerRow
+      ? question.buttonsPerRow
+      : QuestionTypeSettings[question.question_type].buttonsPerRow;
     htmlString += HTMLStrings.NewButtonRowOpen; // create a new row to start
     question.answer_settings.forEach((answer, indx) => {
       // check if we can add this button to the current row, or we need to make a new row
@@ -258,31 +267,53 @@ const generateInputFunctions = {
         numInCurrentRow = 0;
       }
       // check if onlickFunction is overridden for this question
-      let onclickFunctionName = question.onclickFunctionName ? question.onclickFunctionName : QuestionTypeSettings[question.question_type].onclickFunctionName;
+      let onclickFunctionName = question.onclickFunctionName
+        ? question.onclickFunctionName
+        : QuestionTypeSettings[question.question_type].onclickFunctionName;
       // add the button html to the rest of the html
-      htmlString += HTMLStrings.BasicAnswerButton(question, answer, onclickFunctionName);
+      htmlString += HTMLStrings.BasicAnswerButton(
+        question,
+        answer,
+        onclickFunctionName
+      );
 
       numInCurrentRow += 1;
-    })
+    });
     htmlString += HTMLStrings.NewButtonRowClose; // close the row now
     return htmlString;
   },
   [QuestionTypes.RangeSlider]: (question) => {
-    let defaultDisplayValues = [question.answer_settings.defaultMin,question.answer_settings.defaultMax];
+    let defaultDisplayValues = [
+      question.answer_settings.defaultMin,
+      question.answer_settings.defaultMax,
+    ];
     let htmlString = `<div class="d-flex flex-column mb-3 justify-content-center text-center">
-        <h4>${getText(`question-text-${question.unique_question_identifier}`)}</h4>
-        <span id="generated-${question.unique_question_identifier}-slider-display">${getText(`range-display-${question.unique_question_identifier}`,defaultDisplayValues)}</span>
+        <h4>${getText(
+          `question-text-${question.unique_question_identifier}`
+        )}</h4>
+        <span id="generated-${
+          question.unique_question_identifier
+        }-slider-display">${getText(
+      `range-display-${question.unique_question_identifier}`,
+      defaultDisplayValues
+    )}</span>
       </div>     
       <div class="d-flex flex-row justify-content-center quiz-slider-container">
-      <div id='generated-${question.unique_question_identifier}-minus' class="btn btn-outline-light svg-buttons" style="margin-right: 24px;">
+      <div id='generated-${
+        question.unique_question_identifier
+      }-minus' class="btn btn-outline-light svg-buttons" style="margin-right: 24px;">
         <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
           <line x1='0' y1='30' x2='60' y2='30' stroke='#C4C4C4' style="stroke-width: 6px;" />
         </svg>
       </div>
       <div style="display:flex;align-items:center;">
-        <input id="generated-slider_${question.unique_question_identifier}" type="text" />
+        <input id="generated-slider_${
+          question.unique_question_identifier
+        }" type="text" />
       </div>
-      <div id='generated-${question.unique_question_identifier}-plus' tabindex="0" class="btn btn-outline-light svg-buttons"
+      <div id='generated-${
+        question.unique_question_identifier
+      }-plus' tabindex="0" class="btn btn-outline-light svg-buttons"
         style="margin-left:24px;">
         <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
           <line x1='0' y1='30' x2='60' y2='30' stroke='#C4C4C4' style="stroke-width: 6px;" />
@@ -294,40 +325,67 @@ const generateInputFunctions = {
   },
   [QuestionTypes.TimeRange]: (question) => {
     let htmlString = `<div class="d-flex flex-row mb-3 justify-content-center">
-        <h4>${getText(`question-text-${question.unique_question_identifier}`)}</h4>
+        <h4>${getText(
+          `question-text-${question.unique_question_identifier}`
+        )}</h4>
       </div><div class="d-flex flex-column mb-3"><div class="d-flex flex-row mb-3 justify-content-center">`;
-    question.answer_settings.forEach(answerTime => {
+    question.answer_settings.forEach((answerTime) => {
       htmlString += `<div class="custom-control custom-switch" style="margin-right:48px;">
-          <input type="checkbox" class="custom-control-input" id="generated-switch_${question.unique_question_identifier}_${answerTime.value_name}"
-            onclick="toggleTimeInput('${question.unique_question_identifier}','${answerTime.value_name}'); captureTimeInputs()">
-          <label class="custom-control-label" for="generated-switch_${question.unique_question_identifier}_${answerTime.value_name}">${getText(`time-range-${question.unique_question_identifier}-${answerTime.value_name}`)}</label>
+          <input type="checkbox" class="custom-control-input" id="generated-switch_${
+            question.unique_question_identifier
+          }_${answerTime.value_name}"
+            onclick="toggleTimeInput('${
+              question.unique_question_identifier
+            }','${answerTime.value_name}'); captureTimeInputs()">
+          <label class="custom-control-label" for="generated-switch_${
+            question.unique_question_identifier
+          }_${answerTime.value_name}">${getText(
+        `time-range-${question.unique_question_identifier}-${answerTime.value_name}`
+      )}</label>
         </div>`;
-    })
+    });
     htmlString += `</div><div class="d-flex flex-row mb-3 justify-content-center">`;
-    question.answer_settings.forEach(answerTime => {
-      htmlString += `<div id="generated-${question.unique_question_identifier}-${answerTime.value_name}" style="position: relative;">
+    question.answer_settings.forEach((answerTime) => {
+      htmlString += `<div id="generated-${
+        question.unique_question_identifier
+      }-${answerTime.value_name}" style="position: relative;">
           <div class="d-flex flex-column text-center">
-            <span style="color:#bf7dd3"><strong>${getText(`time-range-${question.unique_question_identifier}-${answerTime.value_name}`)}</strong></span>
-            <span>${getText(`time-range-${question.unique_question_identifier}-from`)}</span>
-            <input id="generated-${question.unique_question_identifier}-${answerTime.value_name}-from" class="time text-center" type="text" value="${answerTime.minDefault}" />
-            <span>${getText(`time-range-${question.unique_question_identifier}-to`)}</span>
-            <input id="generated-${question.unique_question_identifier}-${answerTime.value_name}-to" class="time text-center" type="text" value="${answerTime.maxDefault}" />
+            <span style="color:#bf7dd3"><strong>${getText(
+              `time-range-${question.unique_question_identifier}-${answerTime.value_name}`
+            )}</strong></span>
+            <span>${getText(
+              `time-range-${question.unique_question_identifier}-from`
+            )}</span>
+            <input id="generated-${question.unique_question_identifier}-${
+        answerTime.value_name
+      }-from" class="time text-center" type="text" value="${
+        answerTime.minDefault
+      }" />
+            <span>${getText(
+              `time-range-${question.unique_question_identifier}-to`
+            )}</span>
+            <input id="generated-${question.unique_question_identifier}-${
+        answerTime.value_name
+      }-to" class="time text-center" type="text" value="${
+        answerTime.maxDefault
+      }" />
           </div>
         </div>`;
-    })
+    });
     htmlString += `</div></div>`;
     return htmlString;
   },
-}
+};
 
 function generateQuestionsHtml() {
   let allQuestions = ``;
   QUIZ_QUESTIONS.forEach((question, index) => {
     let questionNum = index + 1;
-    let questionHtml = HTMLStrings.QuestionContainerOpen(questionNum) 
-      + GenerateQuestionInputs(question) 
-      + HTMLStrings.QuestionSearchWeight(questionNum)
-      + HTMLStrings.QuestionContainerClose;
+    let questionHtml =
+      HTMLStrings.QuestionContainerOpen(questionNum) +
+      GenerateQuestionInputs(question) +
+      HTMLStrings.QuestionSearchWeight(questionNum) +
+      HTMLStrings.QuestionContainerClose;
     allQuestions += questionHtml;
   });
   return allQuestions;
@@ -342,8 +400,12 @@ function generateProgressBar(numOfQuestions) {
     // without this check, the beginning of the progress bar has a checkpoint as well
     // and it cuts off the rounded edge so we remove it to look nicer
     if (left != 0) {
-      progressBarHtml += HTMLStrings.ProgressBarCheckpoint(questionNum, left)
+      progressBarHtml += HTMLStrings.ProgressBarCheckpoint(questionNum, left);
     }
   }
-  return HTMLStrings.ProgressBarOpen + progressBarHtml + HTMLStrings.ProgressBarClose(questionPercentage);
+  return (
+    HTMLStrings.ProgressBarOpen +
+    progressBarHtml +
+    HTMLStrings.ProgressBarClose(questionPercentage)
+  );
 }

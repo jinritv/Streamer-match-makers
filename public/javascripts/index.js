@@ -1,12 +1,12 @@
-// UsersAnswers is a dynamic object that stores the answers to the quiz questions. 
+// UsersAnswers is a dynamic object that stores the answers to the quiz questions.
 // Update it as soon as possible (like in the onchange event)
-// and the end of the quiz, this is what is sent to our API to calculate the streamer. 
+// and the end of the quiz, this is what is sent to our API to calculate the streamer.
 var UsersAnswers = {};
 
 // CurrentQuestion represents which question we are on
 var CurrentQuestion = 1;
 
-// holds the references to the sliders so we can call 
+// holds the references to the sliders so we can call
 // functions on it
 var SLIDERS = {};
 
@@ -19,9 +19,9 @@ var ResultStats = {};
 
 // The theme, either 'light' or 'dark'
 const THEMES = {
-  Dark: 'dark-mode',
-  Light: 'light-mode'
-}
+  Dark: "dark-mode",
+  Light: "light-mode",
+};
 var CurrentTheme = THEMES.Light;
 
 // what language is currently being displayed on the screen
@@ -68,7 +68,7 @@ const CallbackLoadRestOfSite = () => {
   SetupLanguageDropdown();
   //starts page animations
   animateElements();
-}
+};
 
 function assignLabels() {
   // only changes when the language changes
@@ -79,15 +79,15 @@ function assignLabels() {
     "animated-words-label",
     "find-streamer-button",
   ];
-  LABEL_IDS.forEach(labelID => {
+  LABEL_IDS.forEach((labelID) => {
     $Labels[labelID] = $(`#${labelID}`);
   });
 }
 
 function assignThemes() {
-  $ThemeWrapper = $('#page-top');
-  $themeIcon = $('#theme-icon');
-  $themeLabel = $('#theme-label');
+  $ThemeWrapper = $("#page-top");
+  $themeIcon = $("#theme-icon");
+  $themeLabel = $("#theme-label");
 }
 
 function assignJqueryElements() {
@@ -118,32 +118,34 @@ const CallbackOnLanguageChanged = () => {
   SetupLanguageDropdown();
   restartQuiz();
   setTextAnimation();
-}
+};
 
 // gets the default language, which we retreive from the browser
 function getDefaultLanguage() {
   let lang = navigator.language;
-  console.log({ BrowserLanguage: lang, SupportedLanguages: navigator.languages });
+  console.log({
+    BrowserLanguage: lang,
+    SupportedLanguages: navigator.languages,
+  });
   return lang;
 }
-
 
 // handles the downloading of language texts from our server
 function SetupLanguage(language, CallbackOnLanguageLoaded) {
   // first check if the desired language is already loaded (empty if not loaded)
-  if (TEXTS['this-language']) {
+  if (TEXTS["this-language"]) {
     console.log({
-      CurrentLanguage: TEXTS['this-language'],
-      RequestedLanguage: language
+      CurrentLanguage: TEXTS["this-language"],
+      RequestedLanguage: language,
     });
-    if (TEXTS['this-language'] == language) {
+    if (TEXTS["this-language"] == language) {
       console.log("Language already loaded.");
-      return
+      return;
     }
   }
   // if its not loaded, or we need to change the language, make the request
   $.ajax({
-    beforeSend: console.log('getting localized texts...'),
+    beforeSend: console.log("getting localized texts..."),
     url: "/getLocalization",
     type: "POST",
     data: { language },
@@ -154,7 +156,7 @@ function SetupLanguage(language, CallbackOnLanguageLoaded) {
         // This error comes when trying to load the json file with fs.readFile()
         // If there is an error, we will receive the en-US language texts.
         if (data.Results.Error) {
-          console.error(data.Results.Error)
+          console.error(data.Results.Error);
         }
         AVAILABLE_LANGUAGES = data.Results.AvailableLanguages;
         TEXTS = data.Results.Texts;
@@ -165,17 +167,16 @@ function SetupLanguage(language, CallbackOnLanguageLoaded) {
       }
     },
     complete: (xhr, status) => {
-      if (status == 'error') {
-        console.log('error')
+      if (status == "error") {
+        console.log("error");
       }
-    }
-  })
+    },
+  });
 }
-
 
 // returns an error message and outputs and error to the console.
 function sadKEK(label, message) {
-  console.error(`${getLanguage()} language error for '${label}': ${message}`)
+  console.error(`${getLanguage()} language error for '${label}': ${message}`);
   return `<span style="color:red">${message} <img src="https://cdn.betterttv.net/emote/5d72ae0aa32edb714a9df060/1x"/></span>`;
 }
 
@@ -184,7 +185,7 @@ function addTextToStaticElements() {
     elementRef.html(getText(elementID));
   }
   let nextTheme = CurrentTheme == THEMES.Dark ? THEMES.Light : THEMES.Dark;
-  $themeIcon.text(CurrentTheme == THEMES.Dark ? '🌞' : '🌚')
+  $themeIcon.text(CurrentTheme == THEMES.Dark ? "🌞" : "🌚");
   $themeLabel.text(getText(`${nextTheme}-label`));
 }
 
@@ -195,7 +196,7 @@ function toggleDarkMode() {
   // get opposite of current theme for the next theme
   let nextTheme = CurrentTheme == THEMES.Dark ? THEMES.Light : THEMES.Dark;
   $ThemeWrapper.addClass(nextTheme);
-  $themeIcon.text(nextTheme == THEMES.Dark ? '🌞' : '🌚')
+  $themeIcon.text(nextTheme == THEMES.Dark ? "🌞" : "🌚");
   $themeLabel.text(getText(`${CurrentTheme}-label`));
   CurrentTheme = nextTheme;
 }
@@ -203,29 +204,33 @@ function toggleDarkMode() {
 function generateDropdownOptions() {
   let dropdownHtml = ``;
   let languages = Object.values(AVAILABLE_LANGUAGES);
-  languages.forEach(language => {
+  languages.forEach((language) => {
     let icon = getLanguageIcon(language);
     let name = getText(`drop-down-label-${language}`);
-    dropdownHtml += HTMLStrings.LanguageDropDownItem(language, icon, name)
-  })
+    dropdownHtml += HTMLStrings.LanguageDropDownItem(language, icon, name);
+  });
   return dropdownHtml;
 }
 
 function updateLanguage(language) {
-  console.log('updating ', language)
+  console.log("updating ", language);
   // unselect previous language choice
-  $(`[id^="generated-dropdown-option-"]`).removeClass('active');
+  $(`[id^="generated-dropdown-option-"]`).removeClass("active");
   // set current active language
-  $(`#generated-dropdown-option-${language}`).addClass('active');
-  $languageLabel.html(getText(`drop-down-label-${language}`))
-  $languageIcon.attr('src', getLanguageIcon(language));
+  $(`#generated-dropdown-option-${language}`).addClass("active");
+  $languageLabel.html(getText(`drop-down-label-${language}`));
+  $languageIcon.attr("src", getLanguageIcon(language));
   setLanguage(language);
   SetupLanguage(language, CallbackOnLanguageChanged);
 }
 
 function SetupLanguageDropdown() {
-  let dropdownHtml = HTMLStrings.LanguageDropDown(getLanguageIcon(getLanguage()), getText(`drop-down-label-${getLanguage()}`), generateDropdownOptions())
-  $(`#generated-language-dropdown`).html(dropdownHtml)
+  let dropdownHtml = HTMLStrings.LanguageDropDown(
+    getLanguageIcon(getLanguage()),
+    getText(`drop-down-label-${getLanguage()}`),
+    generateDropdownOptions()
+  );
+  $(`#generated-language-dropdown`).html(dropdownHtml);
 }
 
 function setupElements() {
@@ -239,16 +244,22 @@ function setupElements() {
 }
 
 function InitializeSliders() {
-  QUIZ_QUESTIONS.forEach(question => {
+  QUIZ_QUESTIONS.forEach((question) => {
     if (question.question_type == QuestionTypes.RangeSlider) {
-      setSliderDisplay(question.unique_question_identifier, question.answer_settings);
-      setSliderEventHandlers(question.unique_question_identifier, question.answer_settings);
+      setSliderDisplay(
+        question.unique_question_identifier,
+        question.answer_settings
+      );
+      setSliderEventHandlers(
+        question.unique_question_identifier,
+        question.answer_settings
+      );
     }
-  })
+  });
 }
 
 function InitializeTimePickers() {
-  $('.time').clockTimePicker({
+  $(".time").clockTimePicker({
     onClose: function () {
       captureTimeInputs();
     },
@@ -256,34 +267,34 @@ function InitializeTimePickers() {
     required: true,
     // custom colors
     colors: {
-      buttonTextColor: '#bf7dd3',
-      clockFaceColor: '#EEEEEE',
-      clockInnerCircleTextColor: '#888888',
-      clockInnerCircleUnselectableTextColor: '#CCCCCC',
-      clockOuterCircleTextColor: '#000000',
-      clockOuterCircleUnselectableTextColor: '#CCCCCC',
-      hoverCircleColor: '#DDDDDD',
-      popupBackgroundColor: '#FFFFFF',
-      popupHeaderBackgroundColor: '#0797FF',
-      popupHeaderTextColor: '#FFFFFF',
-      selectorColor: '#DAB9DF',
-      selectorNumberColor: '#FFFFFF',
-      signButtonColor: '#FFFFFF',
-      signButtonBackgroundColor: '#0797FF'
+      buttonTextColor: "#bf7dd3",
+      clockFaceColor: "#EEEEEE",
+      clockInnerCircleTextColor: "#888888",
+      clockInnerCircleUnselectableTextColor: "#CCCCCC",
+      clockOuterCircleTextColor: "#000000",
+      clockOuterCircleUnselectableTextColor: "#CCCCCC",
+      hoverCircleColor: "#DDDDDD",
+      popupBackgroundColor: "#FFFFFF",
+      popupHeaderBackgroundColor: "#0797FF",
+      popupHeaderTextColor: "#FFFFFF",
+      selectorColor: "#DAB9DF",
+      selectorNumberColor: "#FFFFFF",
+      signButtonColor: "#FFFFFF",
+      signButtonBackgroundColor: "#0797FF",
     },
   });
 }
 
 function InitializeStarryRatings() {
-  UsersAnswers['ranks'] = {};
+  UsersAnswers["ranks"] = {};
 
   for (var i = 0; i < QUIZ_QUESTIONS.length; ++i) {
     let question = QUIZ_QUESTIONS[i];
 
     // default rank
-    UsersAnswers['ranks'][question.unique_question_identifier] = 3;
+    UsersAnswers["ranks"][question.unique_question_identifier] = 3;
 
-    let starRatingId = `question${i + 1}-weight-star-rating`
+    let starRatingId = `question${i + 1}-weight-star-rating`;
     let starRatingEl = document.getElementById(starRatingId);
 
     if (starRatingEl) {
@@ -292,37 +303,40 @@ function InitializeStarryRatings() {
         beginWith: 60, // 3 out of 5 stars
         multiple: true,
         onRate: function (rating) {
-          UsersAnswers['ranks'][question.unique_question_identifier] = parseInt(rating) || 3;
-        }
+          UsersAnswers["ranks"][question.unique_question_identifier] =
+            parseInt(rating) || 3;
+        },
       });
     }
   }
 }
 
 function UnselectAllSwitches() {
-  $(`[id^="generated-switch_"]`).prop('checked', "");
+  $(`[id^="generated-switch_"]`).prop("checked", "");
 }
 
 function HideElementsAtQuizStart() {
   // Hides all the questions to start (except for the 1st)
   for (i = CurrentQuestion + 1; i <= QUIZ_QUESTIONS.length; i++) {
-    $(`#generated-quiz-modal-question${i}-container`).hide()
+    $(`#generated-quiz-modal-question${i}-container`).hide();
   }
 
   $quizResultContainer.hide();
-  $streamerRevealContainer.hide()
-  QUIZ_QUESTIONS.forEach(question => {
+  $streamerRevealContainer.hide();
+  QUIZ_QUESTIONS.forEach((question) => {
     if (question.question_type == QuestionTypes.TimeRange) {
-      question.answer_settings.forEach(timeInput => {
-        $(`#generated-${question.unique_question_identifier}-${timeInput.value_name}`).hide()
-      })
+      question.answer_settings.forEach((timeInput) => {
+        $(
+          `#generated-${question.unique_question_identifier}-${timeInput.value_name}`
+        ).hide();
+      });
     }
-  })
+  });
 
   $quizRestartButton.hide();
   // disable the continue button by default
-  $quizContinueButton.prop('disabled', true);
-  $quizBackButton.prop('disabled', true);
+  $quizContinueButton.prop("disabled", true);
+  $quizBackButton.prop("disabled", true);
 }
 
 function setSliderDisplay(sliderName, settings) {
@@ -330,19 +344,29 @@ function setSliderDisplay(sliderName, settings) {
   let maxRange = settings.max;
   let minDefault = settings.defaultMin;
   let maxDefault = settings.defaultMax;
-  let displayText = getText(`range-display-${sliderName}`, [minDefault, maxDefault]);
+  let displayText = getText(`range-display-${sliderName}`, [
+    minDefault,
+    maxDefault,
+  ]);
   $(`#generated-${sliderName}-slider-display`).html(displayText);
-  SLIDERS[sliderName] = $(`#generated-slider_${sliderName}`).slider({ id: `generated-slider_${sliderName}`, min: minRange, max: maxRange, range: true, value: [minDefault, maxDefault], tooltip: 'hide' });
+  SLIDERS[sliderName] = $(`#generated-slider_${sliderName}`).slider({
+    id: `generated-slider_${sliderName}`,
+    min: minRange,
+    max: maxRange,
+    range: true,
+    value: [minDefault, maxDefault],
+    tooltip: "hide",
+  });
   UsersAnswers[sliderName] = {
     min: minDefault,
-    max: maxDefault
+    max: maxDefault,
   };
 }
 
 function openGeneratedQuizModal() {
   // prod database not changed yet
   // return;
-  $("#generated-quiz-modal").modal('show');
+  $("#generated-quiz-modal").modal("show");
 }
 
 function setSliderEventHandlers(sliderName, settings) {
@@ -351,61 +375,104 @@ function setSliderEventHandlers(sliderName, settings) {
 
   // we want to increment the value when holding the mouse button down,
   // and if we click, only increment by 1 unit
-  $(`#generated-${sliderName}-minus`).mouseup(function () {
-    // Clear timeout
-    clearInterval(pressTimer);
-    return false;
-  }).mousedown(function () {
-    if (UsersAnswers[sliderName].min > settings.min) {
-      SLIDERS[sliderName].slider('setValue', [(UsersAnswers[sliderName].min - settings.incrementBy), UsersAnswers[sliderName].max], true); // must be true to call the 'slide' event
-    }
-    // Set interval
-    pressTimer = window.setInterval(function () {
+  $(`#generated-${sliderName}-minus`)
+    .mouseup(function () {
+      // Clear timeout
+      clearInterval(pressTimer);
+      return false;
+    })
+    .mousedown(function () {
       if (UsersAnswers[sliderName].min > settings.min) {
-        SLIDERS[sliderName].slider('setValue', [(UsersAnswers[sliderName].min - settings.incrementBy), UsersAnswers[sliderName].max], true); // must be true to call the 'slide' event
+        SLIDERS[sliderName].slider(
+          "setValue",
+          [
+            UsersAnswers[sliderName].min - settings.incrementBy,
+            UsersAnswers[sliderName].max,
+          ],
+          true
+        ); // must be true to call the 'slide' event
       }
-    }, incrementDelay);
-    return false;
-  });
-  $(`#generated-${sliderName}-plus`).mouseup(function () {
-    clearInterval(pressTimer);
-    return false;
-  }).mousedown(function () {
-    if (UsersAnswers[sliderName].max < settings.max) {
-      SLIDERS[sliderName].slider('setValue', [UsersAnswers[sliderName].min, (UsersAnswers[sliderName].max + settings.incrementBy)], true); // must be true to call the 'slide' event
-    }
-    // Set interval
-    pressTimer = window.setInterval(function () {
+      // Set interval
+      pressTimer = window.setInterval(function () {
+        if (UsersAnswers[sliderName].min > settings.min) {
+          SLIDERS[sliderName].slider(
+            "setValue",
+            [
+              UsersAnswers[sliderName].min - settings.incrementBy,
+              UsersAnswers[sliderName].max,
+            ],
+            true
+          ); // must be true to call the 'slide' event
+        }
+      }, incrementDelay);
+      return false;
+    });
+  $(`#generated-${sliderName}-plus`)
+    .mouseup(function () {
+      clearInterval(pressTimer);
+      return false;
+    })
+    .mousedown(function () {
       if (UsersAnswers[sliderName].max < settings.max) {
-        SLIDERS[sliderName].slider('setValue', [UsersAnswers[sliderName].min, (UsersAnswers[sliderName].max + settings.incrementBy)], true); // must be true to call the 'slide' event
+        SLIDERS[sliderName].slider(
+          "setValue",
+          [
+            UsersAnswers[sliderName].min,
+            UsersAnswers[sliderName].max + settings.incrementBy,
+          ],
+          true
+        ); // must be true to call the 'slide' event
       }
-    }, 100);
-    return false;
-  });
+      // Set interval
+      pressTimer = window.setInterval(function () {
+        if (UsersAnswers[sliderName].max < settings.max) {
+          SLIDERS[sliderName].slider(
+            "setValue",
+            [
+              UsersAnswers[sliderName].min,
+              UsersAnswers[sliderName].max + settings.incrementBy,
+            ],
+            true
+          ); // must be true to call the 'slide' event
+        }
+      }, 100);
+      return false;
+    });
 }
 
 function setupCallbacks() {
-  // When the range is adjusted, display the changes in text, 
-  // and save the value to the UserAnswers array. 
+  // When the range is adjusted, display the changes in text,
+  // and save the value to the UserAnswers array.
   // Setup the sliders, assuming 1 slider with 2 values per question
-  QUIZ_QUESTIONS.forEach(question => {
+  QUIZ_QUESTIONS.forEach((question) => {
     if (question.question_type == QuestionTypes.RangeSlider) {
-      $(`#generated-slider_${question.unique_question_identifier}`).on("slide", (changeEvt) => adjustSliderEventHandler(question.unique_question_identifier, question.answer_settings, changeEvt))
+      $(`#generated-slider_${question.unique_question_identifier}`).on(
+        "slide",
+        (changeEvt) =>
+          adjustSliderEventHandler(
+            question.unique_question_identifier,
+            question.answer_settings,
+            changeEvt
+          )
+      );
     }
-  })
+  });
 }
 
 const adjustSliderEventHandler = (sliderName, settings, changeEvt) => {
   let minRange = changeEvt.value[0];
   let maxRange = changeEvt.value[1];
-  let maxRangeDisplay = ((maxRange == settings.max) ? `${maxRange}+` : maxRange);
-  let displayText = getText(`range-display-${sliderName}`, [minRange, maxRangeDisplay]);
+  let maxRangeDisplay = maxRange == settings.max ? `${maxRange}+` : maxRange;
+  let displayText = getText(`range-display-${sliderName}`, [
+    minRange,
+    maxRangeDisplay,
+  ]);
   $(`#generated-${sliderName}-slider-display`).html(displayText);
   UsersAnswers[sliderName] = {
     min: minRange,
-    max: maxRange
-  }
-}
+    max: maxRange,
+  };
+};
 
 function toggleTimeInput(question, selection) {
   let selectedSwitch = `#generated-switch_${question}_${selection}`;
@@ -418,20 +485,20 @@ function toggleTimeInput(question, selection) {
 
 function exampleOnClickFunction(question, selection) {
   // this does nothing special, its just to show you can override the default onclick function for buttons.
-  // since this example is used for the languages question, 
+  // since this example is used for the languages question,
   // it's multiple select so we'll just call that function normally anyways
   // since we don't actually need to provide a unique function
-  selectMultipleButton(question, selection)
+  selectMultipleButton(question, selection);
 }
 
 function selectButton(question, selection) {
   // unselect previous choices
-  $(`[id^="generated-quiz-modal-button_${question}"]`).removeClass('active');
+  $(`[id^="generated-quiz-modal-button_${question}"]`).removeClass("active");
   // select current choice
-  $(`#generated-quiz-modal-button_${question}_${selection}`).addClass('active');
+  $(`#generated-quiz-modal-button_${question}_${selection}`).addClass("active");
   //save the selection
   UsersAnswers[question] = selection;
-  $quizContinueButton.prop('disabled', false);
+  $quizContinueButton.prop("disabled", false);
 }
 
 function selectMultipleButton(question, selection) {
@@ -441,46 +508,53 @@ function selectMultipleButton(question, selection) {
       var index = UsersAnswers[question].indexOf(selection);
       if (index > -1) {
         UsersAnswers[question].splice(index, 1);
-        $(`#generated-quiz-modal-button_${question}_${selection}`).removeClass('active');
+        $(`#generated-quiz-modal-button_${question}_${selection}`).removeClass(
+          "active"
+        );
       }
     } else {
-      UsersAnswers[question].push(selection)
-      $(`#generated-quiz-modal-button_${question}_${selection}`).addClass('active');
+      UsersAnswers[question].push(selection);
+      $(`#generated-quiz-modal-button_${question}_${selection}`).addClass(
+        "active"
+      );
     }
   } else {
     UsersAnswers[question] = [];
-    UsersAnswers[question].push(selection)
-    $(`#generated-quiz-modal-button_${question}_${selection}`).addClass('active');
+    UsersAnswers[question].push(selection);
+    $(`#generated-quiz-modal-button_${question}_${selection}`).addClass(
+      "active"
+    );
   }
 
   //if no answer, block the continue button
   if (UsersAnswers[question].length == 0) {
-    $quizContinueButton.prop('disabled', true)
+    $quizContinueButton.prop("disabled", true);
   } else {
-    $quizContinueButton.prop('disabled', false)
+    $quizContinueButton.prop("disabled", false);
   }
-  console.log(UsersAnswers)
+  console.log(UsersAnswers);
 }
 
 function nextQuestion() {
-  console.log(UsersAnswers)
+  console.log(UsersAnswers);
   // adjusts the display progress bar
   adjustProgressBar(CurrentQuestion);
 
   // see if we are on the last question
   if (CurrentQuestion == QUIZ_QUESTIONS.length) {
-    $('#generated-quiz-modal-progress-label').html(getText('results'));
-    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-out");
+    $("#generated-quiz-modal-progress-label").html(getText("results"));
+    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass(
+      "fade-out"
+    );
     $quizContinueButton.hide();
     $quizBackButton.hide();
     setTimeout(() => {
-      $quizResultContainer.addClass('fade-in');
+      $quizResultContainer.addClass("fade-in");
       $quizResultContainer.show();
       $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide();
       calculateQuizResult();
     }, 250);
   } else {
-
     // go to next question
 
     // slide out current question
@@ -488,20 +562,30 @@ function nextQuestion() {
 
     // wait 250 ms before sliding in next question
     setTimeout(() => {
-      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
+      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide();
       // disable the continue button by default for this question
-      $quizContinueButton.prop('disabled', true)
+      $quizContinueButton.prop("disabled", true);
       // and unfocus it
-      $quizContinueButton.blur()
+      $quizContinueButton.blur();
       // enable or disable the continue button by default for the next question
-      $quizContinueButton.prop('disabled', QUIZ_QUESTIONS[CurrentQuestion].disableContinueButtonByDefault)
+      $quizContinueButton.prop(
+        "disabled",
+        QUIZ_QUESTIONS[CurrentQuestion].disableContinueButtonByDefault
+      );
       // increment the question
       CurrentQuestion += 1;
       // change the title
-      $('#generated-quiz-modal-progress-label').html(getText("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length]));
+      $("#generated-quiz-modal-progress-label").html(
+        getText("generated-quiz-modal-progress-label", [
+          CurrentQuestion,
+          QUIZ_QUESTIONS.length,
+        ])
+      );
       // slide in the next
-      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-in")
-      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).show()
+      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass(
+        "fade-in"
+      );
+      $(`#generated-quiz-modal-question${CurrentQuestion}-container`).show();
     }, 250);
   }
 }
@@ -511,18 +595,25 @@ function lastQuestion() {
   backProgressBar(CurrentQuestion);
 
   //Enable continue button immediately when going back
-  $quizContinueButton.prop('disabled', false)
+  $quizContinueButton.prop("disabled", false);
 
   // wait 250 ms before sliding back one question
   setTimeout(() => {
-    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide()
+    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide();
     // decrement the question
     CurrentQuestion -= 1;
     // change the title
-    $('#generated-quiz-modal-progress-label').html(getText("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length]));
+    $("#generated-quiz-modal-progress-label").html(
+      getText("generated-quiz-modal-progress-label", [
+        CurrentQuestion,
+        QUIZ_QUESTIONS.length,
+      ])
+    );
     // slide in the next
-    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-in")
-    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).show()
+    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass(
+      "fade-in"
+    );
+    $(`#generated-quiz-modal-question${CurrentQuestion}-container`).show();
   }, 250);
 }
 
@@ -530,14 +621,12 @@ function restartQuiz() {
   for (var i = 0; i < 150; i++) {
     $(`.confetti-${i}`).remove();
   }
-  $(`#main-container`).removeClass('wide-container');
+  $(`#main-container`).removeClass("wide-container");
   $(`#welcome-banner`).show();
 
-  $quizResultContainer.removeClass('fade-in');
+  $quizResultContainer.removeClass("fade-in");
   $quizResultContainer.hide();
 
-  
- 
   // reset the global variables
   CurrentQuestion = 1;
   UsersAnswers = {};
@@ -550,9 +639,14 @@ function restartQuiz() {
   setupElements();
   setupCallbacks();
   // change the title
-  $('#generated-quiz-modal-progress-label').html(getText("generated-quiz-modal-progress-label", [CurrentQuestion, QUIZ_QUESTIONS.length]));
+  $("#generated-quiz-modal-progress-label").html(
+    getText("generated-quiz-modal-progress-label", [
+      CurrentQuestion,
+      QUIZ_QUESTIONS.length,
+    ])
+  );
   // show the first quiz container
-  $(`#generated-question1-container`).addClass("fade-in")
+  $(`#generated-question1-container`).addClass("fade-in");
   $(`#generated-question1-container`).show();
   // show the continue button
   $quizContinueButton.show();
@@ -563,51 +657,56 @@ function restartQuiz() {
 function checkQuestion(questionNum) {
   //Check Question and enable/disable BACK Button
   if (questionNum == 1) {
-    $quizBackButton.prop('disabled', true);
-  }
-  else {
-    $quizBackButton.prop('disabled', false);
+    $quizBackButton.prop("disabled", true);
+  } else {
+    $quizBackButton.prop("disabled", false);
   }
 }
 
 function adjustProgressBar(index) {
   let questionNum = index + 1;
-  $("#generated-quiz-modal-progress-bar").css("width", `${((questionNum) / QUIZ_QUESTIONS.length * 100)}%`);
+  $("#generated-quiz-modal-progress-bar").css(
+    "width",
+    `${(questionNum / QUIZ_QUESTIONS.length) * 100}%`
+  );
 
   checkQuestion(questionNum);
 }
 
 function backProgressBar(index) {
   let questionNum = index - 1;
-  $("#generated-quiz-modal-progress-bar").css("width", `${((questionNum) / QUIZ_QUESTIONS.length * 100)}%`);
+  $("#generated-quiz-modal-progress-bar").css(
+    "width",
+    `${(questionNum / QUIZ_QUESTIONS.length) * 100}%`
+  );
 
   checkQuestion(questionNum);
 }
 
 function closeQuizModal() {
-  $("#quiz-modal").modal('hide');
+  $("#quiz-modal").modal("hide");
 }
 
 function animateElements() {
   $("#sm-circle").hide();
   $("#md-circle").hide();
   $("#lg-circle").hide();
-  $('.detective').addClass('slide-in-bottom');
-  $('.detective').css('opacity','100');
-  setTimeout(()=>{
-    $("#sm-circle").addClass('scale-up-center');
+  $(".detective").addClass("slide-in-bottom");
+  $(".detective").css("opacity", "100");
+  setTimeout(() => {
+    $("#sm-circle").addClass("scale-up-center");
     $("#sm-circle").show();
-    setTimeout(()=>{
-      $("#md-circle").addClass('scale-up-center');
+    setTimeout(() => {
+      $("#md-circle").addClass("scale-up-center");
       $("#md-circle").show();
-      setTimeout(()=>{
-        $("#lg-circle").addClass('scale-up-center');
+      setTimeout(() => {
+        $("#lg-circle").addClass("scale-up-center");
         $("#lg-circle").show();
-        $("#welcome-text").css('opacity','100');
-      },200)
-    },200)
+        $("#welcome-text").css("opacity", "100");
+      }, 200);
+    }, 200);
     setTextAnimation();
-  },250)
+  }, 250);
 
   /**
    * disabling page animations for now
@@ -620,7 +719,6 @@ function animateElements() {
   $("#start-quiz-button-modal").addClass("fade-in");
   $("#welcome-text").addClass("swing-in-left-fwd")
    */
-
 }
 
 const ERASE = "erase";
@@ -638,7 +736,7 @@ let currentMatchesMade = 0;
 
 function setTextAnimation() {
   clearInterval(textEraseAnimationTimer);
-  words = getText('animated-words');
+  words = getText("animated-words");
   currentWord = words[wordListIndex];
   textEraseAnimationTimer = setInterval(eraseAndWriteText, 33);
 }
@@ -652,7 +750,7 @@ function eraseAndWriteText() {
   if (addedQuestionMark) {
     keyword.innerHTML = currentWord;
     addedQuestionMark = false;
-    return
+    return;
   }
 
   // get text thats displayed right now
@@ -660,12 +758,12 @@ function eraseAndWriteText() {
   // get the length of it
   var l = remainingText.length;
   // if theres some characters in it
-  if (currentDirection == 'erase') {
+  if (currentDirection == "erase") {
     if (l > 0) {
       // then erase 1 character
       keyword.innerHTML = remainingText.substring(0, l - 1);
     } else {
-      currentDirection = 'write';
+      currentDirection = "write";
       wordListIndex += 1;
       // no characters, change to next word
       if (wordListIndex == words.length) {
@@ -681,35 +779,34 @@ function eraseAndWriteText() {
       keyword.innerHTML += currentWord.charAt(l);
     } else {
       // done writing the word, so add black question mark and delay a bit
-      // the mockup UI has the question mark as black, so we must also 
-      // remove the question mark from the localization files. 
+      // the mockup UI has the question mark as black, so we must also
+      // remove the question mark from the localization files.
       keyword.innerHTML += `<span class="dark-text">?</span>`;
       addedQuestionMark = true;
       delay = true;
       setTimeout(() => {
         delay = false;
-        currentDirection = 'erase';
-      }, 800)
+        currentDirection = "erase";
+      }, 800);
     }
-
   }
 }
 
 //retreives the language's icon to display on the dropdown menu.
 function getLanguageIcon(language) {
   // hack to return globe image
-  return './images/globe.PNG';
+  return "./images/globe.PNG";
   if (ICONS[language]) {
-    return ICONS[language]
+    return ICONS[language];
   }
-  return '';
+  return "";
 }
 
 // Inserts values from an array into a string
 // use [*] to mark a place in text where a value should be inserted.
 // example text: "Between [*] and [*] average viewers",
 // the two placeholders will be replaced in order,
-// from the values in the values array.  
+// from the values in the values array.
 function insertValuesIntoText(text, values) {
   let completeText = "";
   const PLACEHOLDER = "[*]";
@@ -726,10 +823,10 @@ function insertValuesIntoText(text, values) {
   // for each placeholder we replace it with a value from the array
   for (let valueIndex = 0; valueIndex < valuesToInsert; valueIndex++) {
     if (values[valueIndex]) {
-      completeText = text.replace(PLACEHOLDER, values[valueIndex])
+      completeText = text.replace(PLACEHOLDER, values[valueIndex]);
     } else {
       // if the value array doesn't have enough values to insert, it's replaced with an error text
-      completeText = text.replace(PLACEHOLDER, MISSING_VALUE)
+      completeText = text.replace(PLACEHOLDER, MISSING_VALUE);
     }
     // sets the updated version of the text, containing 1 less placeholder
     text = completeText;
@@ -738,7 +835,7 @@ function insertValuesIntoText(text, values) {
   return completeText;
 }
 
-// Replaces the old getTranslation() function, this one reads the 
+// Replaces the old getTranslation() function, this one reads the
 // text from the JSON object we received from the server.
 function getText(label, params = []) {
   // check if there is translation for this label, then use it
@@ -751,7 +848,7 @@ function getText(label, params = []) {
     //else just return the entire text
     return TEXTS[label];
   }
-  return sadKEK(label, 'missing label');
+  return sadKEK(label, "missing label");
 }
 
 function setLanguage(language) {
@@ -763,7 +860,6 @@ function getLanguage() {
 }
 
 function calculateQuizResult() {
- 
   // Send the results to the server
   $.ajax({
     beforeSend: console.log(`sending answers...`),
@@ -771,34 +867,31 @@ function calculateQuizResult() {
     type: "POST",
     data: { UsersAnswers },
     success: function (data) {
-    
-      console.log(data)
-
+      console.log(data);
 
       setTimeout(() => {
         $(`#welcome-banner`).hide();
 
-        $("#generated-quiz-modal").modal('hide');
+        $("#generated-quiz-modal").modal("hide");
         if (data.Error != null) {
-          console.log(data.Error.message)
-          $streamerRevealContainer.show()
+          console.log(data.Error.message);
+          $streamerRevealContainer.show();
         } else {
           console.log(data.Results);
-          $(`#main-container`).addClass('wide-container');
+          $(`#main-container`).addClass("wide-container");
           displayStreamerResults(data.Results);
           $streamerRevealContainer.addClass("fade-in");
           $streamerRevealContainer.show();
           $quizRestartButton.show();
-          console.log("complete.")
+          console.log("complete.");
         }
-
-      }, 2500)
+      }, 2500);
     },
     complete: function (xhr, status) {
-      if (status == 'error') {
-        console.log('error')
+      if (status == "error") {
+        console.log("error");
       }
-    }
+    },
   });
 }
 
@@ -807,10 +900,16 @@ function displayStreamerResults(results) {
   ResultStats = results.stats;
   streamers.forEach((streamer, index) => {
     $(`#streamer-${index + 1}-user_name`).text(streamer.user_name);
-    $(`#streamer-${index + 1}-logo`).attr('src', streamer.logo);
+    $(`#streamer-${index + 1}-logo`).attr("src", streamer.logo);
     $(`#streamer-${index + 1}-match`).text(streamer.match_value);
-    $(`#streamer-${index + 1}-twitch_link`).attr("href", `https://twitch.tv/${streamer.user_name}`);
-    $($(".streamer-info-container").get(index)).attr("streamer_id", streamer.id);
+    $(`#streamer-${index + 1}-twitch_link`).attr(
+      "href",
+      `https://twitch.tv/${streamer.user_name}`
+    );
+    $($(".streamer-info-container").get(index)).attr(
+      "streamer_id",
+      streamer.id
+    );
   });
   for (var i = 0; i < 150; i++) {
     create(i);
@@ -831,52 +930,68 @@ function displayStreamerResults(results) {
       default:
         colour = "red";
     }
-    $('<div class="confetti-' + i + ' ' + colour + '"></div>').css({
-      "width": width + "px",
-      "height": height + "px",
-      "top": -Math.random() * 20 + "%",
-      "left": Math.random() * 100 + "%",
-      "opacity": Math.random() + 0.5,
-      "transform": "rotate(" + Math.random() * 360 + "deg)"
-    }).appendTo('.confetti-container');
+    $('<div class="confetti-' + i + " " + colour + '"></div>')
+      .css({
+        width: width + "px",
+        height: height + "px",
+        top: -Math.random() * 20 + "%",
+        left: Math.random() * 100 + "%",
+        opacity: Math.random() + 0.5,
+        transform: "rotate(" + Math.random() * 360 + "deg)",
+      })
+      .appendTo(".confetti-container");
 
     drop(i);
   }
 
   function drop(x) {
-    $('.confetti-' + x).animate({
-      top: "100%",
-      left: "+=" + Math.random() * 15 + "%"
-    }, Math.random() * 2000 + 2000, function () {
-      reset(x);
-    });
+    $(".confetti-" + x).animate(
+      {
+        top: "100%",
+        left: "+=" + Math.random() * 15 + "%",
+      },
+      Math.random() * 2000 + 2000,
+      function () {
+        reset(x);
+      }
+    );
   }
 
   function reset(x) {
-    $('.confetti-' + x).animate({
-      "top": -Math.random() * 20 + "%",
-      "left": "-=" + Math.random() * 15 + "%"
-    }, 0, function () {
-      drop(x);
-    });
+    $(".confetti-" + x).animate(
+      {
+        top: -Math.random() * 20 + "%",
+        left: "-=" + Math.random() * 15 + "%",
+      },
+      0,
+      function () {
+        drop(x);
+      }
+    );
   }
 }
 
 function captureTimeInputs() {
   var offset = new Date().getTimezoneOffset();
-  QUIZ_QUESTIONS.forEach(question => {
+  QUIZ_QUESTIONS.forEach((question) => {
     if (question.question_type == QuestionTypes.TimeRange) {
-      let timeObj = {}
-      question.answer_settings.forEach(timeRange => {
-        timeObj[timeRange.value_name] = ($(`#generated-switch_${question.unique_question_identifier}_${timeRange.value_name}`).prop("checked") == true);
-        timeObj[`${timeRange.value_name}From`] = $(`#generated-${question.unique_question_identifier}-${timeRange.value_name}-from`).val();
-        timeObj[`${timeRange.value_name}To`] = $(`#generated-${question.unique_question_identifier}-${timeRange.value_name}-to`).val();
-      })
+      let timeObj = {};
+      question.answer_settings.forEach((timeRange) => {
+        timeObj[timeRange.value_name] =
+          $(
+            `#generated-switch_${question.unique_question_identifier}_${timeRange.value_name}`
+          ).prop("checked") == true;
+        timeObj[`${timeRange.value_name}From`] = $(
+          `#generated-${question.unique_question_identifier}-${timeRange.value_name}-from`
+        ).val();
+        timeObj[`${timeRange.value_name}To`] = $(
+          `#generated-${question.unique_question_identifier}-${timeRange.value_name}-to`
+        ).val();
+      });
       timeObj.userOffsetMinute = offset * -1;
       UsersAnswers[question.unique_question_identifier] = timeObj;
     }
-  })
-
+  });
 }
 
 function setupStatsTooltipHover() {
@@ -888,7 +1003,7 @@ function setupStatsTooltipHover() {
       var el = $(this);
       var id = el.attr("streamer_id");
       if (!(id in ResultStats)) {
-        return ""
+        return "";
       }
 
       var tooltip = "<table style='text-align: left'>";
@@ -902,16 +1017,16 @@ function setupStatsTooltipHover() {
         tooltip += "</tr>";
       }
       tooltip += "</table>";
-      return tooltip
+      return tooltip;
     },
-  })
+  });
 }
 
 function statsTooltipColor(v) {
   if (v >= 70) {
-    return "#1df51d"
+    return "#1df51d";
   } else if (v < 30) {
-    return "#f52525"
+    return "#f52525";
   }
-  return "white"
+  return "white";
 }

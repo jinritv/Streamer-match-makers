@@ -1,10 +1,8 @@
-
 // TODO: Is it a good idea to load env variables here, or per each entry point?
-if (process.env.NODE_ENV !== 'production') {
-  const envPath = require('path').join(__dirname, "..", ".env")
-  require('dotenv').config({path: envPath});
+if (process.env.NODE_ENV !== "production") {
+  const envPath = require("path").join(__dirname, "..", ".env");
+  require("dotenv").config({ path: envPath });
 }
-
 
 // Various config values for DB
 const dbConfig = {
@@ -14,7 +12,6 @@ const dbConfig = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   dialect: "postgres",
-}
-
+};
 
 module.exports = dbConfig;
