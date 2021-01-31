@@ -1,0 +1,9 @@
+<div class="background-container confetti-container">
+    <% var i; %>
+    <% for (i = 1; i <= streamersBgImages; i++) { %>
+        <img src=<%= "/images/streamer" + i + ".png" %> class="streamer-image profile-<%= i %>">
+    <% } %>
+    <div id="sm-circle" class="base-circle sphere-small"></div>
+    <div id="md-circle" class="base-circle sphere-med"></div>
+    <div id="lg-circle" class="base-circle sphere-lg"></div>
+  </div>

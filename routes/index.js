@@ -5,9 +5,14 @@ const calculateStreamer = require("../backend/calculate_streamer");
 const createStreamer = require("../backend/create_streamer");
 const LoadLanguageJSON = require("../backend/localizations/localization");
 
+
+const viewData = {
+  streamersBgImages: 8 //how many fuzzy pfp we have to display
+}
+
 // Home/Main quiz page
 router.get("/", (req, res) => {
-  res.render("new_index");
+  res.render("index",viewData);
 });
 
 // Called at the end of the quiz

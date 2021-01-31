@@ -1,119 +1,33 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title id="page-title"></title>
-
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico?v=1.1" />
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@200&display=swap" rel="stylesheet"> 
-
-    <!-- Animations -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css"
-      integrity="sha256-6hqHMqXTVEds1R8HgKisLm3l/doneQs+rS1a5NLmwwo=" crossorigin="anonymous" />
-    <link href="/stylesheets/animations.css" rel="stylesheet" />
-
-    <!-- Core theme CSS (includes Bootstrap) -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="/stylesheets/bootstrap-slider.css" rel="stylesheet" />
-
-    <!-- Our custom CSS -->
-    <link href="/stylesheets/quizstyle.css" rel="stylesheet" />
-    <link href="/stylesheets/themes.css" rel="stylesheet" />
-    <link href="/starry-rating/starry.min.css" rel="stylesheet" />
-  </head>
-
-  <body id="page-top" class="light-mode">
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
-      <div class="container" id="logo-container">
-        <img src="https://cdn.discordapp.com/attachments/741373796014882940/742567482774257684/logo.png"
-          style="width:50px;height:50px;margin-right:10px;" id="TwiriLogo" />
-        <a class="navbar-brand js-scroll-trigger" href="#page-top" id="logoText"></a>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul id="generated-language-dropdown" class="navbar-nav ml-auto"></ul>
+﻿<%- include ("./partials/header") %>
+  <!-- Begin page content -->
+  <main id="main-container" role="main" class="container">
+    <div id="welcome-banner" style="z-index:777;" class="welcome-container row">
+      <div id="welcome-text" style="z-index:777; opacity: 0;" class="col-lg-6">
+        <div class="row animated-words-container align-items-center">
+          <span>
+            <span id="animated-words-label" class="animated-words dark-text"></span>
+            <span class="animated-words" id="keyword"></span>
+          </span>
+        </div>
+        <p class="info-text">
+          Twiri helps you discover new Twitch streamers<br>who are just your type.
+        </p>
+        <span class="matches-made-text"><span id="num-matches">2000</span>+ matches made</span>
+        <div class="row">
+          <button type="button" onclick="openGeneratedQuizModal()" class="btn btn-start-quiz">
+            <span id="find-streamer-button" style="font-size: 1.5em; color: cornsilk;"></span>
+          </button>
         </div>
       </div>
-    </nav>
-   
-    <div id="bg-rectangle" style="display: none;" />
-    <div class="container d-flex align-items-center flex-column welcome-container" id="welcome-card">
-      <div id="welcome-banner" class="row container-fluid">
-        <div id="welcome-text" class="column colLeft text-center">
-          <h1 id="animated-words-label"></h1>
-          <h1 class="primary-color" id="keyword"></h1>
-        </div>
-        <div id="dancing-jinri" class="column colRight text-center" style="display: none;">
-          <img src="/images/mascot.png" />
-        </div>
-      </div>
-      <!-- Button trigger modal -->
-      <div id="quiz-content" class="row container-fluid" style="display: none;">
-        <div class="col" />
-        <div class="divider-custom">
-          <div class="divider-custom-line"></div>
-          <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-          <div class="divider-custom-line"></div>
-        </div>
-      </div>
-
-      <!-- Icon Divider-->
-      <div class="divider-custom divider-light" style="opacity: 0; position: absolute; top: 500px;"
-        id="start-quiz-button-modal">
-        <div class="divider-custom-icon">
-          <i class="fas fa-star"></i>
-        </div>
-        <button type="button" class="btn btn-primary" onclick="openGeneratedQuizModal()"
-          style="margin-right:12px;margin-left:12px; border-radius: 16px;">
-          <span id="find-streamer-button"></span>
-        </button>
-        <div class="divider-custom-icon">
-          <i class="fas fa-star"></i>
+      <div style="z-index:777;" class="col-lg-6 justify-content-center">
+        <div class="detective" style="opacity:0;">
+          <img class="img_detective" src="/images/mascot.png"/>
         </div>
       </div>
     </div>
-
-    <!-- Footer-->
-    <div class="footer d-flex justify-content-center">
-      <!-- Copyright Section-->
-      <div id="copyright-text"></div>
-      <div onclick="toggleDarkMode()" id="dark-mode-toggle">
-        <span id="dark-mode-toggle-icon"></span>
-        <span id="dark-mode-label"></span>
-      </div>
+    <div id="generated-result-page" style="z-index:500;" class="results-container">
+ 
     </div>
-
-    <!-- Loading Scripts -->
-    <!-- Bootstrap core JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
-    <!-- Third party plugin JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"
-      integrity="sha256-yUWanhHkxj+3ow0qZE6AtzP8lZkwLvPagULL6PnZMz0=" crossorigin="anonymous"></script>
-    <!-- Core theme JS-->
-    <script src="/javascripts/bootstrap-slider.min.js"></script>
-    <script src="/javascripts/scripts.js"></script>
-    <script src="/javascripts/html_helpers.js"></script>
-    <script src="/javascripts/create_quiz.js"></script>
-    <script src="/javascripts/index.js"></script>
-    <script src="/javascripts/jquery-clock-timepicker.min.js"></script>
-    <script src="/starry-rating/starry.min.js"></script>
-  </body>
-
-  <!-- Generated Modal (questions are added here after page loads) -->
-  <div class="modal fade" id="generated-quiz-modal" tabindex="-1" role="dialog">
-    <!---
-      the question pages are created and added in here after the page loads. Check the BuildQuiz() function
-      in the create_quiz.js script file.
-    -->
-  </div>
-</html>
+    <%- include ("./partials/background", {streamersBgImages}) %>
+  </main>
+<%- include ("./partials/footer") %>
