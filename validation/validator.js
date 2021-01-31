@@ -1,7 +1,5 @@
-
 const { isNotEmpty } = require("../util/objectutil");
 
- 
 // Currently, dataTypes are not used anywhere. It will be removed if no use is found
 const dataTypes = {
   boolean: "boolean",
@@ -9,8 +7,7 @@ const dataTypes = {
   string: "string",
   datetime: "datetime",
   stringlist: "stringlist",
-}
-
+};
 
 /**
  * Schema for the intermediate JSON objects between business logic and ORM.
@@ -22,122 +19,122 @@ const dataTypes = {
  * 4. defaultValue: Default value of the field if missing in input JSON
  * 5. converter: converter function to validate input and convert to DB-friendly value.
  *    Type conversion can also occur (i.g. "true" -> true)
- * 
+ *
  * TODO: The default values for empty fields were randomly set and need to be re-examined.
  **/
 const dataFields = {
   // streamers table
-  "user_name": {
+  user_name: {
     dataType: dataTypes.string,
     required: true,
     converter: usernameConverter,
   },
-  "display_name": {
+  display_name: {
     dataType: dataTypes.string,
     required: false,
     defaultValue: null,
     converter: identity,
   },
-  "streamer_name": {
+  streamer_name: {
     dataType: dataTypes.string,
     required: false,
     defaultValue: null,
     converter: identity,
   },
-  "is_partner": {
+  is_partner: {
     dataType: dataTypes.boolean,
     required: false,
     defaultValue: null,
     converter: booleanConverter,
   },
-  "is_fulltime": {
+  is_fulltime: {
     dataType: dataTypes.boolean,
     defaultValue: null,
     converter: booleanConverter,
   },
-  "uses_cam": {
+  uses_cam: {
     dataType: dataTypes.boolean,
     defaultValue: true,
     converter: usesCamConverter,
   },
-  "mature_stream": {
+  mature_stream: {
     dataType: dataTypes.boolean,
     defaultValue: false,
     converter: booleanConverter,
   },
-  "dob_year": {
+  dob_year: {
     dataType: dataTypes.integer,
     defaultValue: null,
     converter: nonNegativeIntegerConverter,
   },
-  "logo": {
+  logo: {
     dataType: dataTypes.string,
     defaultValue: null,
     converter: identity,
   },
-  "description": {
+  description: {
     dataType: dataTypes.string,
     defaultValue: null,
-    converter: identity, 
+    converter: identity,
   },
   // streamers_stats table
-  "followers": {
+  followers: {
     dataType: dataTypes.integer,
     defaultValue: 5000,
     converter: nonNegativeIntegerConverter,
   },
-  "voice": {
+  voice: {
     dataType: dataTypes.integer,
     defaultValue: 3,
     converter: voiceConverter,
   },
-  "avg_viewers": {
+  avg_viewers: {
     dataType: dataTypes.integer,
     defaultValue: 5000,
     converter: nonNegativeIntegerConverter,
   },
-  "avg_stream_duration": {
+  avg_stream_duration: {
     dataType: dataTypes.integer,
     defaultValue: null,
     converter: nonNegativeIntegerConverter,
   },
-  "viewer_participation": {
+  viewer_participation: {
     dataType: dataTypes.integer,
     defaultValue: null,
     converter: nonNegativeIntegerConverter,
   },
   // categories table
-  "categories": {
+  categories: {
     dataType: dataTypes.stringlist,
     defaultValue: [],
     converter: stringListConverter,
   },
   // languages table
-  "languages": {
+  languages: {
     dataType: dataTypes.stringlist,
     defaultValue: [],
     converter: stringListConverter,
   },
   // locations table
-  "location": {
+  location: {
     dataType: dataTypes.string,
     defaultValue: null,
     converter: identity,
   },
   // nationalities table
-  "nationalities": {
+  nationalities: {
     dataType: dataTypes.stringlist,
     defaultValue: [],
     converter: stringListConverter,
   },
   // tags table
-  "tags": {
+  tags: {
     dataType: dataTypes.stringlist,
     defaultValue: [],
     converter: stringListConverter,
   },
   // vibes table
-  "vibes": {
+  vibes: {
     dataType: dataTypes.stringlist,
     defaultValue: [],
     converter: stringListConverter,
@@ -150,10 +147,8 @@ const dataFields = {
   },*/
 };
 
-
 // Names of fields only
 const allFieldNames = new Set(Object.keys(dataFields));
-
 
 // validata Data and returns [validated, error];
 // validated is null if there is any error
@@ -161,34 +156,46 @@ const allFieldNames = new Set(Object.keys(dataFields));
 function validateData(data) {
   const output = {};
   const errors = {};
-  for(let [columnName, value] of Object.entries(data)) {
+  for (let [columnName, value] of Object.entries(data)) {
     // Ignore unrecognized column names.
     // They are probably unpublished values or notes in spreadsheet
-    if(!allFieldNames.has(columnName)) {
+    if (!allFieldNames.has(columnName)) {
       continue;
     }
     const columnProps = dataFields[columnName];
     try {
       const converted = convertColumnValue(
-          columnName, value, columnProps.required, columnProps.defaultValue, columnProps.converter);
+        columnName,
+        value,
+        columnProps.required,
+        columnProps.defaultValue,
+        columnProps.converter
+      );
       output[columnName] = converted;
-    } catch(error) {
+    } catch (error) {
       errors[columnName] = error.message;
     }
   }
-  if(isNotEmpty(errors)) {  // Return errors if there is any
-      return [null, errors];
+  if (isNotEmpty(errors)) {
+    // Return errors if there is any
+    return [null, errors];
   }
   return [output, null];
 }
 
-function convertColumnValue(columnName, inputValue, required, defaultValue, converterFunc) {
+function convertColumnValue(
+  columnName,
+  inputValue,
+  required,
+  defaultValue,
+  converterFunc
+) {
   // HACK: Converting all input values to string saves a lot of type checking in the future.
   const stringValue = String(inputValue).trim();
 
-  if(inputValue === undefined || inputValue === null || stringValue === "") {
+  if (inputValue === undefined || inputValue === null || stringValue === "") {
     // Check if a required field is missing
-    if(required) {
+    if (required) {
       throw new Error(`Missing value for required column ${columnName}`);
     }
     return defaultValue;
@@ -207,12 +214,11 @@ function identity(inputValue) {
 function usernameConverter(inputValue) {
   const value = inputValue.trim().toLowerCase();
   // Twitch username format. Only accepts alphanumeric and _, also between 4 and 25 characters
-  if(/^[a-z0-9_]{4,25}$/.test(value)) {
+  if (/^[a-z0-9_]{4,25}$/.test(value)) {
     return value;
   }
   throw new Error(`'${inputValue}' is not in a valid Twitch username format`);
 }
-
 
 // Converter for non-negative integer column values
 function nonNegativeIntegerConverter(inputValue) {
@@ -220,58 +226,55 @@ function nonNegativeIntegerConverter(inputValue) {
   // Remove all commas before conversion
   const value = inputValue.replace(/,/g, "");
   const numValue = Number(value);
-  if(!Number.isInteger(numValue)) {
+  if (!Number.isInteger(numValue)) {
     throw new Error(`'${inputValue}' cannot be converted to an integer`);
   }
-  if(numValue < 0) {
-    throw new Error(`'${inputValue}' is not a non-negative number`)
+  if (numValue < 0) {
+    throw new Error(`'${inputValue}' is not a non-negative number`);
   }
-  
+
   return numValue;
 }
 
 function voiceConverter(inputValue) {
   const value = inputValue.toLowerCase();
-  if(value === "high") {
+  if (value === "high") {
     return 5;
   }
-  if(value === "low") {
+  if (value === "low") {
     return 1;
   }
   return nonNegativeIntegerConverter(inputValue);
 }
 
-
 // Converter for boolean column values
 function booleanConverter(inputValue) {
   const value = inputValue.toLowerCase();
   // Truthy values
-  if(["1", "yes", "y", "true", "t"].includes(value)) {
+  if (["1", "yes", "y", "true", "t"].includes(value)) {
     return true;
   }
   // Falsey values
-  if(["0", "no", "n", "false", "f"].includes(value)) {
+  if (["0", "no", "n", "false", "f"].includes(value)) {
     return false;
   }
   // Other values are probably input errors
   throw new Error(`'${inputValue}' cannot be converted to a boolean value`);
 }
 
-
 // Special converter for uses_cam column
 function usesCamConverter(inputValue) {
   // uses_cam column has special values "Cam" and "No Cam"
   const value = inputValue.toLowerCase();
-  if(value === "cam") {
+  if (value === "cam") {
     return true;
   }
-  if(value === "no cam") {
+  if (value === "no cam") {
     return false;
   }
   // Otherwise, use standard boolean converter
   return booleanConverter(inputValue);
 }
-
 
 // Strings separated by comma , or slash /
 // All splited tokens are trimmed and converted to lowercase.
@@ -279,14 +282,14 @@ function usesCamConverter(inputValue) {
 function stringListConverter(inputValue) {
   const tokens = inputValue.split(/[,\/]/);
   const output = [];
-  for(let token of tokens) {
+  for (let token of tokens) {
     const trimmed = token.toLowerCase().trim();
-    if(trimmed) {  // Skip empty tokens
+    if (trimmed) {
+      // Skip empty tokens
       output.push(trimmed);
     }
   }
   return output;
 }
-
 
 module.exports = { validateData };
