@@ -66,7 +66,7 @@ function setQuizData(extraData) {
 }
 
 // handles the downloading of language texts from our server
-function getPageHTML(callbackOnLanguageLoaded) {
+function getPageHTML() {
   let language = getLanguage();
   // get all the server-rendered html in our desired language
   $.ajax({
