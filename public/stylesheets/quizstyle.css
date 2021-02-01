@@ -118,8 +118,11 @@ h1 {
   right: -96px;
 }
 
-.socials-container {
-  margin-top: 48px;
+.socials-container{
+    margin-top: 70px;
+    width: 230px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .language-dropdown {
@@ -150,12 +153,10 @@ body {
 }
 
 .streamer-info-container {
-  border-radius: 24px;
-  border-width: 2px;
-  border-style: solid;
-  height: 60vh;
-  text-align: center;
-  position: relative;
+    border-radius: 24px; 
+    height:60vh;
+    text-align: center;
+    position: relative;
 }
 
 .percent-match {
@@ -167,9 +168,10 @@ body {
   height: 55vh;
 }
 
-.winner {
-  border-color: goldenrod !important;
-  border-width: 4px;
+.winner{
+    border-color: goldenrod !important;
+    border-width: 4px; 
+    border-style:solid;
 }
 
 .modal-footer {
@@ -303,9 +305,6 @@ body {
   font-size: 3em;
 }
 
-.animated-words-container {
-}
-
 .info-text {
   font-size: 1em;
 }
@@ -357,9 +356,6 @@ Unique elements (id)
   z-index: -1;
 }
 
-#logoText {
-  font-size: 24px !important;
-}
 
 #jiriLogo {
   padding: 10px;

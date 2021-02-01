@@ -331,7 +331,7 @@ function animateElements() {
 //retreives the language's icon to display on the dropdown menu.
 function getLanguageIcon(language) {
   // hack to return globe image
-  return "./images/globe.png";
+  return './images/globe.png';
 }
 
 function calculateQuizResult() {
