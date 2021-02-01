@@ -42,7 +42,8 @@ router.post('/getQuizData', function(req, res){
       'light-mode-label': result.Texts['light-mode-label'],
       'generated-quiz-modal-progress-label': result.Texts['generated-quiz-modal-progress-label'],
       'range-display-average_viewers': result.Texts['range-display-average_viewers'],
-      'results': result.Texts['results']
+      'results': result.Texts['results'],
+      'this-language':result.Texts['this-language']
     } 
     res.send({
       Quiz,

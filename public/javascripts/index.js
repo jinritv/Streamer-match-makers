@@ -6,59 +6,48 @@ var UsersAnswers = {};
 // CurrentQuestion represents which question we are on
 var CurrentQuestion = 1;
 
-// holds the references to the sliders so we can call
-// functions on it
-var SLIDERS = {};
-
-// a timer for if the increment/decrement buttons are long-held,
-// since we want to continue to increment/decrement when button is held
-var pressTimer;
-
 // statistic of scoring result
 var ResultStats = {};
-
-// The theme, either 'light' or 'dark'
-const THEMES = {
-  Dark: "dark-mode",
-  Light: "light-mode",
-};
-var CurrentTheme = THEMES.Light;
-
-// what language is currently being displayed on the screen
-let _CURRENT_LANGUAGE_;
-
-// Every text we display to the user comes from this object, which we
-// store as .json files on the server, which is loaded when we open
-// the site page (default to browser language), and when we change the language from
-// the dropdown.
-var TEXTS = {};
-
-// change the class of the wrapper to change the theme colors
-var $ThemeWrapper, $themeLabel;
 
 var $quizContinueButton, $quizBackButton, $quizRestartButton;
 
 var $quizResultContainer, $streamerRevealContainer;
 
-// We want to load the language text first, then load the rest
-// of the site. So put any functions in here that will be called
-// after we receive our language translation JSON.
-const LoadRestOfSite = () => {
-  
-  // setup our bootstrap elements like the sliders
-  assignJqueryElements();
-   // setup the callbacks for the different events
-  setupElements();
-  //starts page animations
-  animateElements();
+// This is called when the page is loaded
+$(() => {
+  // Set default language
+  setLanguage(getDefaultLanguage());
+  // downloads the site's texts and then the callback to load the rest of the site
+  getPageHTML();
+});
+
+// loads the rest of the data in JSON form (not rendered html)
+function GetRestOfSiteData() {
+  $.ajax({
+    beforeSend: console.log("getting rest of data"),
+    url: "/getQuizData",
+    type: "POST",
+    data: { language: getLanguage() },
+    success: (data) => {
+      if (data.err) {
+        console.error("Error getting quiz data!");
+      } else {
+        // data is loaded so now start the page effects
+        setQuizData(data);
+        assignJqueryElements();
+        setupElements();
+        UnselectAllSwitches();
+        HideElementsAtQuizStart();
+        animateElements();
+      }
+    },
+    complete: (xhr, status) => {
+      if (status == "error") {
+        $('#full-page').html(xhr.responseText);
+      }
+    },
+  });
 };
-
-
-function assignThemes() {
-  $ThemeWrapper = $("#full-page");
-  $themeIcon = $("#theme-icon");
-  $themeLabel = $("#theme-label");
-}
 
 function assignJqueryElements() {
   // elements for handling theming
@@ -71,75 +60,16 @@ function assignJqueryElements() {
 }
 
 // sets things that we cant just render with ejs
-function setQuizData(extraData){
-  TEXTS = extraData.requiredTexts;
+function setQuizData(extraData) {
+  setTexts(extraData.requiredTexts);
   QUIZ_QUESTIONS = extraData.Quiz.Questions;
 }
 
-// loads the rest of the data in JSON form (not rendered html)
-const GetRestOfSiteData = (onLoaded) => {
-   $.ajax({
-    beforeSend: console.log("getting rest of data"),
-    url: "/getQuizData",
-    type: "POST",
-    data: { language: getLanguage() },
-    success: (data) => {
-      if (data.err) {
-        console.error("Error getting quiz data!");
-      } else {
-        setQuizData(data);
-        onLoaded(LoadRestOfSite);
-      }
-    },
-    complete: (xhr, status) => {
-      if (status == "error") {
-        $('#full-page').html(xhr.responseText);
-      }
-    },
-  });
- 
-};
-
-// This is called when the page is loaded
-$(() => {
-  // Set default language
-  setLanguage(getDefaultLanguage());
-  // downloads the site's texts and then the callback to load the rest of the site
-  SetupLanguage(GetRestOfSiteData);
-});
-
-// This is called after we change our language and receive the new JSON data
-const CallbackOnLanguageChanged = () => {
-  restartQuiz();
-  setTextAnimation();
-};
-
-// gets the default language, which we retreive from the browser
-function getDefaultLanguage() {
-  let lang = navigator.language;
-  console.log({
-    BrowserLanguage: lang,
-    SupportedLanguages: navigator.languages,
-  });
-  return lang;
-}
-
 // handles the downloading of language texts from our server
-function SetupLanguage(callbackOnLanguageLoaded) {
+function getPageHTML(callbackOnLanguageLoaded) {
   let language = getLanguage();
-  // first check if the desired language is already loaded (empty if not loaded)
-  if (TEXTS["this-language"]) {
-    console.log({
-      CurrentLanguage: TEXTS["this-language"],
-      RequestedLanguage: language,
-    });
-    if (TEXTS["this-language"] == language) {
-      console.log("Language already loaded.");
-      return;
-    }
-  }
-   // get all the server-rendered html in our desired language
-   $.ajax({
+  // get all the server-rendered html in our desired language
+  $.ajax({
     beforeSend: console.log("getting html for language..."),
     url: "/getHtml",
     type: "POST",
@@ -150,7 +80,7 @@ function SetupLanguage(callbackOnLanguageLoaded) {
       } else {
         $('#full-page').html(data);
         // now we load the rest of the site
-       callbackOnLanguageLoaded(LoadRestOfSite);
+        GetRestOfSiteData();
       }
     },
     complete: (xhr, status) => {
@@ -161,120 +91,17 @@ function SetupLanguage(callbackOnLanguageLoaded) {
   });
 }
 
-// returns an error message and outputs and error to the console.
-function sadKEK(label, message) {
-  console.error(`${getLanguage()} language error for '${label}': ${message}`);
-  return `<span style="color:red">${message} <img src="https://cdn.betterttv.net/emote/5d72ae0aa32edb714a9df060/1x"/></span>`;
-}
-
-// Toggles the theme to dark/light mode
-function toggleDarkMode() {
-  // remove current theme
-  $ThemeWrapper.removeClass(CurrentTheme);
-  // get opposite of current theme for the next theme
-  let nextTheme = CurrentTheme == THEMES.Dark ? THEMES.Light : THEMES.Dark;
-  $ThemeWrapper.addClass(nextTheme);
-  $themeIcon.text(nextTheme == THEMES.Dark ? "🌞" : "🌚");
-  $themeLabel.text(getText(`${CurrentTheme}-label`));
-  CurrentTheme = nextTheme;
-}
-
 function updateLanguage(language) {
   console.log("updating ", language);
-  // unselect previous language choice
-  $(`[id^="generated-dropdown-option-"]`).removeClass("active");
-  // set current active language
-  $(`#generated-dropdown-option-${language}`).addClass("active");
- // $languageLabel.html(getText(`drop-down-label-${language}`));
   setLanguage(language);
-  SetupLanguage(CallbackOnLanguageChanged);
-}
-
-function setupElements() {
-  QUIZ_QUESTIONS.forEach((question)=>{
-    if(question.question_type == 'rangeslider'){
-      setSliderDisplay(
-        question.unique_question_identifier,
-        question.answer_settings
-      );
-      setSliderEventHandlers(
-        question.unique_question_identifier,
-        question.answer_settings
-      );
-      $(`#generated-slider_${question.unique_question_identifier}`).on( "slide",
-        (changeEvt) =>
-          adjustSliderEventHandler(
-            question.unique_question_identifier,
-            question.answer_settings,
-            changeEvt
-          )
-      );
-    } 
-    else if (question.question_type == 'timerange'){
-      question.answer_settings.forEach((timeInput) => {
-        $(`#generated-${question.unique_question_identifier}-${timeInput.value_name}`).hide();
-    });
+  // first check if the desired language is already loaded (empty if not loaded)
+  let loadedLang = getThisLanguageText();
+  console.log(loadedLang)
+  if (loadedLang == language) {
+    console.log("Language already loaded.");
+    return;
   }
-  })
-  InitializeTimePickers();
-  InitializeStarryRatings();
-  UnselectAllSwitches();
-  HideElementsAtQuizStart();
-  // statistic tooltip hovefr
-  setupStatsTooltipHover();
-}
-
-function InitializeTimePickers() {
-  $(".time").clockTimePicker({
-    onClose: function () {
-      captureTimeInputs();
-    },
-    alwaysSelectHoursFirst: true,
-    required: true,
-    // custom colors
-    colors: {
-      buttonTextColor: "#bf7dd3",
-      clockFaceColor: "#EEEEEE",
-      clockInnerCircleTextColor: "#888888",
-      clockInnerCircleUnselectableTextColor: "#CCCCCC",
-      clockOuterCircleTextColor: "#000000",
-      clockOuterCircleUnselectableTextColor: "#CCCCCC",
-      hoverCircleColor: "#DDDDDD",
-      popupBackgroundColor: "#FFFFFF",
-      popupHeaderBackgroundColor: "#0797FF",
-      popupHeaderTextColor: "#FFFFFF",
-      selectorColor: "#DAB9DF",
-      selectorNumberColor: "#FFFFFF",
-      signButtonColor: "#FFFFFF",
-      signButtonBackgroundColor: "#0797FF",
-    },
-  });
-}
-
-function InitializeStarryRatings() {
-  UsersAnswers["ranks"] = {};
-
-  for (var i = 0; i < QUIZ_QUESTIONS.length; ++i) {
-    let question = QUIZ_QUESTIONS[i];
-
-    // default rank
-    UsersAnswers["ranks"][question.unique_question_identifier] = 3;
-
-    let starRatingId = `question${i + 1}-weight-star-rating`;
-    let starRatingEl = document.getElementById(starRatingId);
-
-    if (starRatingEl) {
-      new Starry(starRatingEl, {
-        name: starRatingId,
-        beginWith: 60, // 3 out of 5 stars
-        multiple: true,
-        onRate: function (rating) {
-          UsersAnswers["ranks"][question.unique_question_identifier] =
-            parseInt(rating) || 3;
-        },
-      });
-    }
-  }
+  restartQuiz();
 }
 
 function UnselectAllSwitches() {
@@ -295,121 +122,9 @@ function HideElementsAtQuizStart() {
   $quizBackButton.prop("disabled", true);
 }
 
-function setSliderDisplay(sliderName, settings) {
-  let minRange = settings.min;
-  let maxRange = settings.max;
-  let minDefault = settings.defaultMin;
-  let maxDefault = settings.defaultMax;
-  let displayText = getText(`range-display-${sliderName}`, [
-    minDefault,
-    maxDefault,
-  ]);
-  $(`#generated-${sliderName}-slider-display`).html(displayText);
-  SLIDERS[sliderName] = $(`#generated-slider_${sliderName}`).slider({
-    id: `generated-slider_${sliderName}`,
-    min: minRange,
-    max: maxRange,
-    range: true,
-    value: [minDefault, maxDefault],
-    tooltip: "hide",
-  });
-  UsersAnswers[sliderName] = {
-    min: minDefault,
-    max: maxDefault,
-  };
-}
-
 function openGeneratedQuizModal() {
-  // prod database not changed yet
-  // return;
   $("#generated-quiz-modal").modal("show");
 }
-
-function setSliderEventHandlers(sliderName, settings) {
-  // how many milliseconds to hold down the button before it starts incrementing
-  const incrementDelay = 100;
-
-  // we want to increment the value when holding the mouse button down,
-  // and if we click, only increment by 1 unit
-  $(`#generated-${sliderName}-minus`)
-    .mouseup(function () {
-      // Clear timeout
-      clearInterval(pressTimer);
-      return false;
-    })
-    .mousedown(function () {
-      if (UsersAnswers[sliderName].min > settings.min) {
-        SLIDERS[sliderName].slider(
-          "setValue",
-          [
-            UsersAnswers[sliderName].min - settings.incrementBy,
-            UsersAnswers[sliderName].max,
-          ],
-          true
-        ); // must be true to call the 'slide' event
-      }
-      // Set interval
-      pressTimer = window.setInterval(function () {
-        if (UsersAnswers[sliderName].min > settings.min) {
-          SLIDERS[sliderName].slider(
-            "setValue",
-            [
-              UsersAnswers[sliderName].min - settings.incrementBy,
-              UsersAnswers[sliderName].max,
-            ],
-            true
-          ); // must be true to call the 'slide' event
-        }
-      }, incrementDelay);
-      return false;
-    });
-  $(`#generated-${sliderName}-plus`)
-    .mouseup(function () {
-      clearInterval(pressTimer);
-      return false;
-    })
-    .mousedown(function () {
-      if (UsersAnswers[sliderName].max < settings.max) {
-        SLIDERS[sliderName].slider(
-          "setValue",
-          [
-            UsersAnswers[sliderName].min,
-            UsersAnswers[sliderName].max + settings.incrementBy,
-          ],
-          true
-        ); // must be true to call the 'slide' event
-      }
-      // Set interval
-      pressTimer = window.setInterval(function () {
-        if (UsersAnswers[sliderName].max < settings.max) {
-          SLIDERS[sliderName].slider(
-            "setValue",
-            [
-              UsersAnswers[sliderName].min,
-              UsersAnswers[sliderName].max + settings.incrementBy,
-            ],
-            true
-          ); // must be true to call the 'slide' event
-        }
-      }, 100);
-      return false;
-    });
-}
-
-const adjustSliderEventHandler = (sliderName, settings, changeEvt) => {
-  let minRange = changeEvt.value[0];
-  let maxRange = changeEvt.value[1];
-  let maxRangeDisplay = maxRange == settings.max ? `${maxRange}+` : maxRange;
-  let displayText = getText(`range-display-${sliderName}`, [
-    minRange,
-    maxRangeDisplay,
-  ]);
-  $(`#generated-${sliderName}-slider-display`).html(displayText);
-  UsersAnswers[sliderName] = {
-    min: minRange,
-    max: maxRange,
-  };
-};
 
 function toggleTimeInput(question, selection) {
   let selectedSwitch = `#generated-switch_${question}_${selection}`;
@@ -494,10 +209,6 @@ function nextQuestion() {
   } else {
     // go to next question
 
-    // slide out current question
-    //$(`#generated-quiz-modal-question${CurrentQuestion}-container`).addClass("fade-in")
-
-    // wait 250 ms before sliding in next question
     setTimeout(() => {
       $(`#generated-quiz-modal-question${CurrentQuestion}-container`).hide();
       // disable the continue button by default for this question
@@ -555,16 +266,14 @@ function lastQuestion() {
 }
 
 function restartQuiz() {
-  for (var i = 0; i < 150; i++) {
-    $(`.confetti-${i}`).remove();
-  }
+  RemoveConfetti();
   CurrentQuestion = 1;
   UsersAnswers = {};
   $(`#main-container`).removeClass("wide-container");
   // get rid of unwanted effects
   $(`*`).removeClass(`fade-out`);
   // rerender fresh quiz HTML
-  SetupLanguage(GetRestOfSiteData);
+  getPageHTML();
 }
 
 function checkQuestion(questionNum) {
@@ -596,10 +305,6 @@ function backProgressBar(index) {
   checkQuestion(questionNum);
 }
 
-function closeQuizModal() {
-  $("#quiz-modal").modal("hide");
-}
-
 function animateElements() {
   $("#sm-circle").hide();
   $("#md-circle").hide();
@@ -622,143 +327,11 @@ function animateElements() {
   }, 250);
 }
 
-const ERASE = "erase";
-const WRITE = "write";
-let textEraseAnimationTimer;
-let words;
-let currentWord;
-let currentDirection = WRITE;
-let wordListIndex = 0;
-let delay = false;
-let addedQuestionMark = false;
-
-const matchesMade = 2000;
-let currentMatchesMade = 0;
-
-function setTextAnimation() {
-  clearInterval(textEraseAnimationTimer);
-  words = getText("animated-words");
-  currentWord = words[wordListIndex];
-  textEraseAnimationTimer = setInterval(eraseAndWriteText, 33);
-}
-
-function eraseAndWriteText() {
-  // we wait a bit before erasing
-  if (delay) {
-    return;
-  }
-
-  if (addedQuestionMark) {
-    keyword.innerHTML = currentWord;
-    addedQuestionMark = false;
-    return;
-  }
-
-  // get text thats displayed right now
-  var remainingText = keyword.innerHTML;
-  // get the length of it
-  var l = remainingText.length;
-  // if theres some characters in it
-  if (currentDirection == "erase") {
-    if (l > 0) {
-      // then erase 1 character
-      keyword.innerHTML = remainingText.substring(0, l - 1);
-    } else {
-      currentDirection = "write";
-      wordListIndex += 1;
-      // no characters, change to next word
-      if (wordListIndex == words.length) {
-        wordListIndex = 0;
-      }
-      // get a new word to animate
-      currentWord = words[wordListIndex];
-    }
-  } else {
-    // if we have not written the whole word yet
-    if (l < currentWord.length) {
-      // write 1 character
-      keyword.innerHTML += currentWord.charAt(l);
-    } else {
-      // done writing the word, so add black question mark and delay a bit
-      // the mockup UI has the question mark as black, so we must also
-      // remove the question mark from the localization files.
-      keyword.innerHTML += `<span class="dark-text">?</span>`;
-      addedQuestionMark = true;
-      delay = true;
-      setTimeout(() => {
-        delay = false;
-        currentDirection = "erase";
-      }, 800);
-    }
-  }
-}
 
 //retreives the language's icon to display on the dropdown menu.
 function getLanguageIcon(language) {
   // hack to return globe image
   return "./images/globe.png";
-}
-
-// Inserts values from an array into a string
-// use [*] to mark a place in text where a value should be inserted.
-// example text: "Between [*] and [*] average viewers",
-// the two placeholders will be replaced in order,
-// from the values in the values array.
-function insertValuesIntoText(text, values) {
-  let completeText = "";
-  const PLACEHOLDER = "[*]";
-  const MISSING_VALUE = "[missing]";
-  let valuesToInsert = 0;
-  for (let index = 0; index < text.length; index++) {
-    // we are looking for substrings that are formatted lke this: [*]
-    let str = text.substring(index, index + 3);
-    if (str == PLACEHOLDER) {
-      // keeping track of how many placeholders we find in the text
-      valuesToInsert += 1;
-    }
-  }
-  // for each placeholder we replace it with a value from the array
-  for (let valueIndex = 0; valueIndex < valuesToInsert; valueIndex++) {
-    if (values[valueIndex]) {
-      completeText = text.replace(PLACEHOLDER, values[valueIndex]);
-    } else {
-      if(values[valueIndex]==0){
-        completeText = text.replace(PLACEHOLDER, values[valueIndex]);
-      } else {
-  // if the value array doesn't have enough values to insert, it's replaced with an error text
-  completeText = text.replace(PLACEHOLDER, MISSING_VALUE);
-      }
-    
-    }
-    // sets the updated version of the text, containing 1 less placeholder
-    text = completeText;
-  }
-
-  return completeText;
-}
-
-// Replaces the old getTranslation() function, this one reads the
-// text from the JSON object we received from the server.
-function getText(label, params = []) {
-  // check if there is translation for this label, then use it
-  if (TEXTS[label]) {
-    // if there are params to insert
-    if (params.length > 0) {
-      // insert the values into the string
-      return insertValuesIntoText(TEXTS[label], params);
-    }
-    //else just return the entire text
-    return TEXTS[label];
-  }
-  return sadKEK(label, "missing label");
-}
-
-function setLanguage(language) {
-  _CURRENT_LANGUAGE_ = language;
-}
-
-function getLanguage() {
-  return _CURRENT_LANGUAGE_;
 }
 
 function calculateQuizResult() {
@@ -811,64 +384,7 @@ function displayStreamerResults(results) {
       streamer.id
     );
   });
-  for (var i = 0; i < 150; i++) {
-    create(i);
-  }
-
-  function create(i) {
-    var width = Math.random() * 8;
-    var height = width * 0.4;
-    var colourIdx = Math.ceil(Math.random() * 3);
-    var colour = "red";
-    switch (colourIdx) {
-      case 1:
-        colour = "yellow";
-        break;
-      case 2:
-        colour = "blue";
-        break;
-      default:
-        colour = "red";
-    }
-    $('<div class="confetti-' + i + " " + colour + '"></div>')
-      .css({
-        width: width + "px",
-        height: height + "px",
-        top: -Math.random() * 20 + "%",
-        left: Math.random() * 100 + "%",
-        opacity: Math.random() + 0.5,
-        transform: "rotate(" + Math.random() * 360 + "deg)",
-      })
-      .appendTo(".confetti-container");
-
-    drop(i);
-  }
-
-  function drop(x) {
-    $(".confetti-" + x).animate(
-      {
-        top: "100%",
-        left: "+=" + Math.random() * 15 + "%",
-      },
-      Math.random() * 2000 + 2000,
-      function () {
-        reset(x);
-      }
-    );
-  }
-
-  function reset(x) {
-    $(".confetti-" + x).animate(
-      {
-        top: -Math.random() * 20 + "%",
-        left: "-=" + Math.random() * 15 + "%",
-      },
-      0,
-      function () {
-        drop(x);
-      }
-    );
-  }
+  MakeConfetti();
 }
 
 function captureTimeInputs() {
@@ -894,39 +410,4 @@ function captureTimeInputs() {
   });
 }
 
-function setupStatsTooltipHover() {
-  $(".streamer-info-container").tooltip({
-    placement: "right",
-    sanitize: false,
-    html: true,
-    title: function () {
-      var el = $(this);
-      var id = el.attr("streamer_id");
-      if (!(id in ResultStats)) {
-        return "";
-      }
 
-      var tooltip = "<table style='text-align: left'>";
-      for (var k in ResultStats[id]) {
-        var v = ResultStats[id][k];
-        var kColor = statsTooltipColor(v);
-        tooltip += "<tr>";
-        tooltip += "<td>" + k + "</td>";
-        tooltip += "<td>:</td>";
-        tooltip += "<td style='color:" + kColor + "'>" + v + "%</td>";
-        tooltip += "</tr>";
-      }
-      tooltip += "</table>";
-      return tooltip;
-    },
-  });
-}
-
-function statsTooltipColor(v) {
-  if (v >= 70) {
-    return "#1df51d";
-  } else if (v < 30) {
-    return "#f52525";
-  }
-  return "white";
-}
