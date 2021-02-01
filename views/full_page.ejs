@@ -1,0 +1,46 @@
+<%- include ("./partials/header",{
+    BrandName: getText('logoText'),
+    thisLang: ThisLang,
+    Languages, 
+}) %>
+<!-- Begin page content -->
+<main id="main-container" role="main" class="container">
+  <div id="welcome-banner" style="z-index:777;" class="welcome-container row">
+    <div id="welcome-text" style="z-index:777; opacity: 0;" class="col-lg-6">
+      <div class="row animated-words-container align-items-center">
+        <span>
+          <span id="animated-words-label" class="animated-words dark-text"><%- getText('animated-words-label') %></span>
+          <span class="animated-words" id="keyword"></span>
+        </span>
+      </div>
+      <p class="info-text">
+         <%- getText('welcome-banner-title')%>
+      </p>
+      <span class="matches-made-text"><span id="num-matches">2000</span>+ <%-  getText('welcome-banner-matches-made') %></span>
+      <div class="row">
+        <button type="button" onclick="openGeneratedQuizModal()" class="btn btn-start-quiz">
+          <span id="find-streamer-button" style="font-size: 1.5em; color: cornsilk;"><%-  getText('find-streamer-button') %></span>
+        </button>
+      </div>
+    </div>
+    <div style="z-index:777;" class="col-lg-6 justify-content-center">
+      <div class="detective" style="opacity:0;">
+        <img class="img_detective" src="/images/mascot.png"/>
+      </div>
+  </div>
+  </div>
+  <div id="generated-result-page" style="z-index:500;" class="results-container">
+    <%- include("./partials/result_page", {getText}) %>
+  </div>
+  <%- include ("./partials/background") %>
+</main>
+
+<%- include ("./partials/footer",{
+    CopyrightText:  getText('copyright-text'),
+    About:  getText('footer-about'),
+    Submit:  getText('footer-submit'),
+    Contribute:  getText('footer-contribute'),
+    DarkMode:  getText('dark-mode-label')
+}) %>
+
+<%- include ("./partials/quiz_modal",{ getText, Quiz }) %>

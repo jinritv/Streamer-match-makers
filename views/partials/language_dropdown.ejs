@@ -1,0 +1,12 @@
+<% let languageOptions = Object.values(Languages.Tags); %>
+<div id="language-dropdown" class="btn-group dropdown">
+    <button class="btn btn-dropdown dropdown-toggle" type="button" id="btn-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img class="dropdown-lang-icon" id="current-language-icon" src="/images/globe.png"/>
+        <span class="language-dropdown-text" id="current-language-label"><%=Languages.Names[thisLang] %></span>
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btn-dropdown">
+        <% languageOptions.forEach((language) => { %>
+            <a id=<%=`generated-dropdown-option-${language}`%> onclick="updateLanguage('<%=language%>')" class="dropdown-item language-dropdown language-dropdown-text" href="#"><%=Languages.Names[language] %></a>
+            <%   }); %>
+    </div>
+  </div>

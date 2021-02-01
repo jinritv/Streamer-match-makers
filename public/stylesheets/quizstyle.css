@@ -645,7 +645,7 @@ Unique elements (id)
     left: 40%;
   }
   .btn-start-quiz {
-    width: 50%;
+    min-width: 50%;
   }
 
   .btn-quiz-answer {

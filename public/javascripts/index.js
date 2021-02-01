@@ -33,19 +33,8 @@ let _CURRENT_LANGUAGE_;
 // the dropdown.
 var TEXTS = {};
 
-// Urls of the language icons we get with our call to load languages
-var ICONS = {};
-
-// The languages choices we have translations for (to display in the drop-down)
-var AVAILABLE_LANGUAGES = [];
-
-// jquery elements
-var $Labels = {};
-
 // change the class of the wrapper to change the theme colors
 var $ThemeWrapper, $themeLabel;
-
-var $languageLabel, $languageIcon;
 
 var $quizContinueButton, $quizBackButton, $quizRestartButton;
 
@@ -54,49 +43,26 @@ var $quizResultContainer, $streamerRevealContainer;
 // We want to load the language text first, then load the rest
 // of the site. So put any functions in here that will be called
 // after we receive our language translation JSON.
-const CallbackLoadRestOfSite = () => {
-  // generate all the HTML we need for the quiz
-  BuildQuiz(); // This is defined in 'create_quiz.js'
+const LoadRestOfSite = () => {
+  
   // setup our bootstrap elements like the sliders
   assignJqueryElements();
+   // setup the callbacks for the different events
   setupElements();
-  // setup the callbacks for the different events
-  setupCallbacks();
-  // change language for the elements that come in the static html
-  addTextToStaticElements();
-  // creates the dropdown menu for language selection
-  SetupLanguageDropdown();
   //starts page animations
   animateElements();
 };
 
-function assignLabels() {
-  // only changes when the language changes
-  const LABEL_IDS = [
-    "page-title",
-    "logoText",
-    "copyright-text",
-    "animated-words-label",
-    "find-streamer-button",
-  ];
-  LABEL_IDS.forEach((labelID) => {
-    $Labels[labelID] = $(`#${labelID}`);
-  });
-}
 
 function assignThemes() {
-  $ThemeWrapper = $("#page-top");
+  $ThemeWrapper = $("#full-page");
   $themeIcon = $("#theme-icon");
   $themeLabel = $("#theme-label");
 }
 
 function assignJqueryElements() {
-  // static labels (do not change once loaded)
-  assignLabels();
   // elements for handling theming
   assignThemes();
-  $languageLabel = $(`#current-language-label`);
-  $languageIcon = $(`#current-language-icon`);
   $quizContinueButton = $(`#continue-button`);
   $quizBackButton = $(`#back-button`);
   $quizRestartButton = $(`#restart-button`);
@@ -104,18 +70,46 @@ function assignJqueryElements() {
   $streamerRevealContainer = $(`#generated-streamer-reveal-container`);
 }
 
+// sets things that we cant just render with ejs
+function setQuizData(extraData){
+  TEXTS = extraData.requiredTexts;
+  QUIZ_QUESTIONS = extraData.Quiz.Questions;
+}
+
+// loads the rest of the data in JSON form (not rendered html)
+const GetRestOfSiteData = (onLoaded) => {
+   $.ajax({
+    beforeSend: console.log("getting rest of data"),
+    url: "/getQuizData",
+    type: "POST",
+    data: { language: getLanguage() },
+    success: (data) => {
+      if (data.err) {
+        console.error("Error getting quiz data!");
+      } else {
+        setQuizData(data);
+        onLoaded(LoadRestOfSite);
+      }
+    },
+    complete: (xhr, status) => {
+      if (status == "error") {
+        $('#full-page').html(xhr.responseText);
+      }
+    },
+  });
+ 
+};
+
 // This is called when the page is loaded
 $(() => {
   // Set default language
-  _CURRENT_LANGUAGE_ = getDefaultLanguage();
+  setLanguage(getDefaultLanguage());
   // downloads the site's texts and then the callback to load the rest of the site
-  SetupLanguage(getDefaultLanguage(), CallbackLoadRestOfSite);
+  SetupLanguage(GetRestOfSiteData);
 });
 
 // This is called after we change our language and receive the new JSON data
 const CallbackOnLanguageChanged = () => {
-  addTextToStaticElements();
-  SetupLanguageDropdown();
   restartQuiz();
   setTextAnimation();
 };
@@ -131,7 +125,8 @@ function getDefaultLanguage() {
 }
 
 // handles the downloading of language texts from our server
-function SetupLanguage(language, CallbackOnLanguageLoaded) {
+function SetupLanguage(callbackOnLanguageLoaded) {
+  let language = getLanguage();
   // first check if the desired language is already loaded (empty if not loaded)
   if (TEXTS["this-language"]) {
     console.log({
@@ -143,32 +138,24 @@ function SetupLanguage(language, CallbackOnLanguageLoaded) {
       return;
     }
   }
-  // if its not loaded, or we need to change the language, make the request
-  $.ajax({
-    beforeSend: console.log("getting localized texts..."),
-    url: "/getLocalization",
+   // get all the server-rendered html in our desired language
+   $.ajax({
+    beforeSend: console.log("getting html for language..."),
+    url: "/getHtml",
     type: "POST",
     data: { language },
     success: (data) => {
       if (data.err) {
-        console.error("Error getting language texts");
+        console.error("Error getting html!");
       } else {
-        // This error comes when trying to load the json file with fs.readFile()
-        // If there is an error, we will receive the en-US language texts.
-        if (data.Results.Error) {
-          console.error(data.Results.Error);
-        }
-        AVAILABLE_LANGUAGES = data.Results.AvailableLanguages;
-        TEXTS = data.Results.Texts;
-        ICONS = data.Results.Icons;
-
+        $('#full-page').html(data);
         // now we load the rest of the site
-        CallbackOnLanguageLoaded();
+       callbackOnLanguageLoaded(LoadRestOfSite);
       }
     },
     complete: (xhr, status) => {
       if (status == "error") {
-        console.log("error");
+        $('#full-page').html(xhr.responseText);
       }
     },
   });
@@ -178,15 +165,6 @@ function SetupLanguage(language, CallbackOnLanguageLoaded) {
 function sadKEK(label, message) {
   console.error(`${getLanguage()} language error for '${label}': ${message}`);
   return `<span style="color:red">${message} <img src="https://cdn.betterttv.net/emote/5d72ae0aa32edb714a9df060/1x"/></span>`;
-}
-
-function addTextToStaticElements() {
-  for (const [elementID, elementRef] of Object.entries($Labels)) {
-    elementRef.html(getText(elementID));
-  }
-  let nextTheme = CurrentTheme == THEMES.Dark ? THEMES.Light : THEMES.Dark;
-  $themeIcon.text(CurrentTheme == THEMES.Dark ? "🌞" : "🌚");
-  $themeLabel.text(getText(`${nextTheme}-label`));
 }
 
 // Toggles the theme to dark/light mode
@@ -201,51 +179,20 @@ function toggleDarkMode() {
   CurrentTheme = nextTheme;
 }
 
-function generateDropdownOptions() {
-  let dropdownHtml = ``;
-  let languages = Object.values(AVAILABLE_LANGUAGES);
-  languages.forEach((language) => {
-    let icon = getLanguageIcon(language);
-    let name = getText(`drop-down-label-${language}`);
-    dropdownHtml += HTMLStrings.LanguageDropDownItem(language, icon, name);
-  });
-  return dropdownHtml;
-}
-
 function updateLanguage(language) {
   console.log("updating ", language);
   // unselect previous language choice
   $(`[id^="generated-dropdown-option-"]`).removeClass("active");
   // set current active language
   $(`#generated-dropdown-option-${language}`).addClass("active");
-  $languageLabel.html(getText(`drop-down-label-${language}`));
-  $languageIcon.attr("src", getLanguageIcon(language));
+ // $languageLabel.html(getText(`drop-down-label-${language}`));
   setLanguage(language);
-  SetupLanguage(language, CallbackOnLanguageChanged);
-}
-
-function SetupLanguageDropdown() {
-  let dropdownHtml = HTMLStrings.LanguageDropDown(
-    getLanguageIcon(getLanguage()),
-    getText(`drop-down-label-${getLanguage()}`),
-    generateDropdownOptions()
-  );
-  $(`#generated-language-dropdown`).html(dropdownHtml);
+  SetupLanguage(CallbackOnLanguageChanged);
 }
 
 function setupElements() {
-  InitializeSliders();
-  InitializeTimePickers();
-  InitializeStarryRatings();
-  UnselectAllSwitches();
-  HideElementsAtQuizStart();
-  // statistic tooltip hovefr
-  setupStatsTooltipHover();
-}
-
-function InitializeSliders() {
-  QUIZ_QUESTIONS.forEach((question) => {
-    if (question.question_type == QuestionTypes.RangeSlider) {
+  QUIZ_QUESTIONS.forEach((question)=>{
+    if(question.question_type == 'rangeslider'){
       setSliderDisplay(
         question.unique_question_identifier,
         question.answer_settings
@@ -254,8 +201,27 @@ function InitializeSliders() {
         question.unique_question_identifier,
         question.answer_settings
       );
-    }
-  });
+      $(`#generated-slider_${question.unique_question_identifier}`).on( "slide",
+        (changeEvt) =>
+          adjustSliderEventHandler(
+            question.unique_question_identifier,
+            question.answer_settings,
+            changeEvt
+          )
+      );
+    } 
+    else if (question.question_type == 'timerange'){
+      question.answer_settings.forEach((timeInput) => {
+        $(`#generated-${question.unique_question_identifier}-${timeInput.value_name}`).hide();
+    });
+  }
+  })
+  InitializeTimePickers();
+  InitializeStarryRatings();
+  UnselectAllSwitches();
+  HideElementsAtQuizStart();
+  // statistic tooltip hovefr
+  setupStatsTooltipHover();
 }
 
 function InitializeTimePickers() {
@@ -323,16 +289,6 @@ function HideElementsAtQuizStart() {
 
   $quizResultContainer.hide();
   $streamerRevealContainer.hide();
-  QUIZ_QUESTIONS.forEach((question) => {
-    if (question.question_type == QuestionTypes.TimeRange) {
-      question.answer_settings.forEach((timeInput) => {
-        $(
-          `#generated-${question.unique_question_identifier}-${timeInput.value_name}`
-        ).hide();
-      });
-    }
-  });
-
   $quizRestartButton.hide();
   // disable the continue button by default
   $quizContinueButton.prop("disabled", true);
@@ -438,25 +394,6 @@ function setSliderEventHandlers(sliderName, settings) {
       }, 100);
       return false;
     });
-}
-
-function setupCallbacks() {
-  // When the range is adjusted, display the changes in text,
-  // and save the value to the UserAnswers array.
-  // Setup the sliders, assuming 1 slider with 2 values per question
-  QUIZ_QUESTIONS.forEach((question) => {
-    if (question.question_type == QuestionTypes.RangeSlider) {
-      $(`#generated-slider_${question.unique_question_identifier}`).on(
-        "slide",
-        (changeEvt) =>
-          adjustSliderEventHandler(
-            question.unique_question_identifier,
-            question.answer_settings,
-            changeEvt
-          )
-      );
-    }
-  });
 }
 
 const adjustSliderEventHandler = (sliderName, settings, changeEvt) => {
@@ -621,37 +558,13 @@ function restartQuiz() {
   for (var i = 0; i < 150; i++) {
     $(`.confetti-${i}`).remove();
   }
-  $(`#main-container`).removeClass("wide-container");
-  $(`#welcome-banner`).show();
-
-  $quizResultContainer.removeClass("fade-in");
-  $quizResultContainer.hide();
-
-  // reset the global variables
   CurrentQuestion = 1;
   UsersAnswers = {};
+  $(`#main-container`).removeClass("wide-container");
   // get rid of unwanted effects
   $(`*`).removeClass(`fade-out`);
-  $(`button.active`).removeClass(`active`);
-  //initialization again
-  BuildQuiz();
-  assignJqueryElements();
-  setupElements();
-  setupCallbacks();
-  // change the title
-  $("#generated-quiz-modal-progress-label").html(
-    getText("generated-quiz-modal-progress-label", [
-      CurrentQuestion,
-      QUIZ_QUESTIONS.length,
-    ])
-  );
-  // show the first quiz container
-  $(`#generated-question1-container`).addClass("fade-in");
-  $(`#generated-question1-container`).show();
-  // show the continue button
-  $quizContinueButton.show();
-  // adjust progress bar to first question
-  adjustProgressBar(0);
+  // rerender fresh quiz HTML
+  SetupLanguage(GetRestOfSiteData);
 }
 
 function checkQuestion(questionNum) {
@@ -707,18 +620,6 @@ function animateElements() {
     }, 200);
     setTextAnimation();
   }, 250);
-
-  /**
-   * disabling page animations for now
-   *   $("#bg-rectangle").addClass("bounce-in-top");
-  $("#bg-rectangle").show();
-  $("#dancing-jinri").addClass("slide-in-right");
-  $("#dancing-jinri").show();
-  $("#logo-container").addClass("slide-in-blurred-left")
-  $("#start-quiz-button").addClass("fade-in");
-  $("#start-quiz-button-modal").addClass("fade-in");
-  $("#welcome-text").addClass("swing-in-left-fwd")
-   */
 }
 
 const ERASE = "erase";
@@ -796,10 +697,6 @@ function eraseAndWriteText() {
 function getLanguageIcon(language) {
   // hack to return globe image
   return "./images/globe.png";
-  if (ICONS[language]) {
-    return ICONS[language];
-  }
-  return "";
 }
 
 // Inserts values from an array into a string
@@ -825,8 +722,13 @@ function insertValuesIntoText(text, values) {
     if (values[valueIndex]) {
       completeText = text.replace(PLACEHOLDER, values[valueIndex]);
     } else {
-      // if the value array doesn't have enough values to insert, it's replaced with an error text
-      completeText = text.replace(PLACEHOLDER, MISSING_VALUE);
+      if(values[valueIndex]==0){
+        completeText = text.replace(PLACEHOLDER, values[valueIndex]);
+      } else {
+  // if the value array doesn't have enough values to insert, it's replaced with an error text
+  completeText = text.replace(PLACEHOLDER, MISSING_VALUE);
+      }
+    
     }
     // sets the updated version of the text, containing 1 less placeholder
     text = completeText;
@@ -868,10 +770,8 @@ function calculateQuizResult() {
     data: { UsersAnswers },
     success: function (data) {
       console.log(data);
-
       setTimeout(() => {
         $(`#welcome-banner`).hide();
-
         $("#generated-quiz-modal").modal("hide");
         if (data.Error != null) {
           console.log(data.Error.message);
@@ -974,7 +874,7 @@ function displayStreamerResults(results) {
 function captureTimeInputs() {
   var offset = new Date().getTimezoneOffset();
   QUIZ_QUESTIONS.forEach((question) => {
-    if (question.question_type == QuestionTypes.TimeRange) {
+    if (question.question_type == 'timerange') {
       let timeObj = {};
       question.answer_settings.forEach((timeRange) => {
         timeObj[timeRange.value_name] =

@@ -1,0 +1,31 @@
+<div class="d-flex flex-row mb-3 justify-content-center">
+    <h4><%=getText(`question-text-${question.unique_question_identifier}`)%></h4>
+</div>
+<%
+let numInCurrentRow = 0; // keeps track of how many buttons are on the current row
+// check if we have overidden the number of buttons per row
+// if we have not overriden it, it will use the default for that question type's settings.
+let buttonsPerRow = question.buttonsPerRow ? question.buttonsPerRow : Quiz.Settings[question.question_type].buttonsPerRow;
+
+// create a new row to start 
+%>
+<div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+<% question.answer_settings.forEach((answer, indx) => { %>
+  <% // check if we can add this button to the current row, or we need to make a new row %>
+  <% if (numInCurrentRow >= buttonsPerRow) { %>
+    <% // close the row and open a new one, and reset counter %>
+    </div>
+    <div class="d-flex flex-row mb-3 justify-content-center quiz-button-container">
+    <% numInCurrentRow = 0; %>
+ <% } %>
+ <% 
+  // check if onlickFunction is overridden for this question
+  let onclickFunctionName = question.onclickFunctionName ? question.onclickFunctionName : Quiz.Settings[question.question_type].onclickFunctionName; 
+  %>
+<button id=<%=`generated-quiz-modal-button_${question.unique_question_identifier}_${answer}`%> type="button" onclick=<%=`${onclickFunctionName}('${question.unique_question_identifier}','${answer}')`%> class="btn btn-quiz-answer">
+    <span><%=getText(`button-text-${question.unique_question_identifier}-${answer}`)%></span>
+  </button>
+<% 
+  numInCurrentRow += 1;
+}); %>
+</div>

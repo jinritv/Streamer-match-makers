@@ -13,6 +13,11 @@ const Languages = {
     "fr-FR": "",
     // add a new language here
   },
+  Names: {
+    "en-US":"English",
+    "de-DE":"Deutsche",
+    "fr-FR":"Français"
+  }
 };
 
 // Sets the filepath for the JSON language file, and loads it
@@ -50,13 +55,67 @@ const CallbackLanguageFileLoad = (callbackFileLoaded) => (err, rawdata) => {
   // add the Icons and AvailableLanguages to our data that we send back to the client, and any error message
   callbackFileLoaded(
     {
-      AvailableLanguages: Languages.Tags,
+      Languages,
       Texts: languageData,
-      Icons: Languages.Icons,
       Error: errorMessage,
     },
     null
   );
 };
 
-module.exports = LoadLanguageJSON;
+// Inserts values from an array into a string
+// use [*] to mark a place in text where a value should be inserted.
+// example text: "Between [*] and [*] average viewers",
+// the two placeholders will be replaced in order,
+// from the values in the values array.
+function insertValuesIntoText(text, values) {
+  let completeText = "";
+  const PLACEHOLDER = "[*]";
+  const MISSING_VALUE = "[missing]";
+  let valuesToInsert = 0;
+  for (let index = 0; index < text.length; index++) {
+    // we are looking for substrings that are formatted lke this: [*]
+    let str = text.substring(index, index + 3);
+    if (str == PLACEHOLDER) {
+      // keeping track of how many placeholders we find in the text
+      valuesToInsert += 1;
+    }
+  }
+  // for each placeholder we replace it with a value from the array
+  for (let valueIndex = 0; valueIndex < valuesToInsert; valueIndex++) {
+    if (values[valueIndex]) {
+      completeText = text.replace(PLACEHOLDER, values[valueIndex]);
+    } else {
+      // if the value array doesn't have enough values to insert, it's replaced with an error text
+      completeText = text.replace(PLACEHOLDER, MISSING_VALUE);
+    }
+    // sets the updated version of the text, containing 1 less placeholder
+    text = completeText;
+  }
+
+  return completeText;
+}
+
+// Replaces the old getTranslation() function, this one reads the
+// text from the JSON object we received from the server.
+const getText = (TEXTS) => (label, params = []) => {
+  // check if there is translation for this label, then use it
+  if (TEXTS[label]) {
+    // if there are params to insert
+    if (params.length > 0) {
+      // insert the values into the string
+      return insertValuesIntoText(TEXTS[label], params);
+    }
+    //else just return the entire text
+    return TEXTS[label];
+  }
+  return sadKEK(label, "missing label");
+}
+
+// returns an error message and outputs and error to the console.
+function sadKEK(label, message) {
+  console.error(`language error for '${label}': ${message}`);
+  return `*${message}*`;
+}
+
+module.exports = {LoadLanguageJSON, getText};
