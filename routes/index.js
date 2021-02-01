@@ -3,12 +3,56 @@ var router = express.Router();
 
 const calculateStreamer = require("../backend/calculate_streamer");
 const createStreamer = require("../backend/create_streamer");
-const LoadLanguageJSON = require("../backend/localizations/localization");
+const {LoadLanguageJSON, getText} = require("../backend/localizations/localization");
+
+const {Quiz} = require("../backend/quiz_questions");
 
 // Home/Main quiz page
 router.get("/", (req, res) => {
-  res.render("new_index");
+  res.render("index");
 });
+
+// renders the html for the quiz and most of the page
+router.post('/getHtml', function(req, res){
+  let LANGUAGE_TO_GET = req.body.language;
+  console.log(`rendering html for ${LANGUAGE_TO_GET}`);
+  const onLangLoaded = (result, error)=>{ 
+    res.render("./full_page", {
+      // quiz questions we need to render the quiz html
+      Quiz,
+      // our function to get texts (pre-loaded with our language's text)
+      getText: getText(result.Texts),
+      // languages available
+      Languages:result.Languages,
+      // the language we use
+      ThisLang: LANGUAGE_TO_GET,
+    });
+  }
+  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded)
+});
+
+// renders the html for the quiz and most of the page
+router.post('/getQuizData', function(req, res){
+  let LANGUAGE_TO_GET = req.body.language;
+  console.log(`getting rest of data for ${LANGUAGE_TO_GET}`);
+  const onLangLoaded = (result, error)=>{
+    let requiredTexts = {
+      'animated-words': result.Texts['animated-words'],
+      'dark-mode-label': result.Texts['dark-mode-label'],
+      'light-mode-label': result.Texts['light-mode-label'],
+      'generated-quiz-modal-progress-label': result.Texts['generated-quiz-modal-progress-label'],
+      'range-display-average_viewers': result.Texts['range-display-average_viewers'],
+      'results': result.Texts['results'],
+      'this-language':result.Texts['this-language']
+    } 
+    res.send({
+      Quiz,
+      requiredTexts
+    });
+  }
+
+  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded)
+})
 
 // Called at the end of the quiz
 router.post("/calculateStreamer", (req, res, next) => {

@@ -81,6 +81,22 @@ I tried to keep the structure as simple as possible, so that anyone who wants to
 
 # Release Notes
 
+## 2021-02-01 
+
+_EJS view engine_
+
+- implemented the EJS templating engine 
+- divided the quiz into reusable partials, stored in the /partials folder
+- changed how the website is loaded on the client-side
+- renders the html on the server with the proper language text before sending it back to the client
+- fixed german/french language 
+- removed translated names for languages, now all languages are just simply called what they are in their native language (for example English will always display as English, French will always display as Français, etc)
+- removed html_helpers.js
+- removed create_quiz.js
+- added quiz_questions.js to the backend folder (storing the question data)
+- implementing routing system for endpoints
+- organized client-side javascript into their own files (confetti, setup, text-handling, etc..)
+
 ## 2020-12-11
 
 _dark mode_

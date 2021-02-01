@@ -1,0 +1,32 @@
+<div class="modal fade" id="generated-quiz-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h5 class="modal-title w-100" id="generated-quiz-modal-progress-label"><%=getText("generated-quiz-modal-progress-label",[1, Quiz.Questions.length])%></h5>
+          </div>
+          <%- include("./progress_bar",{numOfQuestions:Quiz.Questions.length}) %>
+          <div class="modal-body">
+            <div class="d-flex flex-column">
+              <%- include("./questions", { getText, Quiz }) %>
+            
+            <div id="generated-question-result-container">
+              <%- include("./loading_screen") %>
+            </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-center" style="position: relative;"></div>
+        <div class="btn-back justify-content-center"> 
+          <button id="back-button" type="button" onclick="lastQuestion()"
+          class="btn btn-quiz-answer btn-quiz-back">
+          <span>back</span>
+          </button>
+        </div> 
+        <div class="modal-footer justify-content-center">   
+          <button id="continue-button" type="button" onclick="nextQuestion()"
+          class="btn btn-quiz-answer btn-quiz-continue">
+          <span><%=getText("continue")%></span>
+          </button>
+        </div>
+        </div>
+      </div>
+  </div>

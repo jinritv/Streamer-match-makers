@@ -1,0 +1,16 @@
+<div class="progress">
+<% let questionPercentage = 100 / numOfQuestions; %>
+<% for (let questionNum = 1; questionNum <= numOfQuestions; questionNum++) {  %> 
+    <%    
+    let checkpointSize = questionPercentage * questionNum; 
+    let left = 100 - checkpointSize; 
+    // without this check, the beginning of the progress bar has a checkpoint as well
+    // and it cuts off the rounded edge so we remove it to look nicer
+    %>
+    <%  if (left != 0) {  %> 
+        <div id=<%="generated-quiz-modal-progress-bar-"+questionNum%> class="progress-bar-checkpoint" style=<%="left:"+left+"%"%>><span></span></div>
+    <% }
+  } %>
+  
+
+<div id="generated-quiz-modal-progress-bar" class="progress-bar" role="progressbar" style=<%="width:"+questionPercentage+"%"%>><span></span></div></div>

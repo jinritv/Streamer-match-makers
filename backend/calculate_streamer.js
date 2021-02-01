@@ -6,6 +6,7 @@ const {
   Categories,
   StreamersNationalities,
 } = require("../models/models");
+const { getStreamerLogos } = require("./get_streamers");
 
 // holds the default values for the 'Points' of each attribute.
 const ATTRIBUTE_POINTS_DEFAULTS = {
@@ -134,6 +135,8 @@ async function calculateStreamer(quizValues, callback) {
     streamersMap[r.id] = r;
   });
 
+  // give updated link to logo
+  await updateStreamerObjsWithLogo(streamersMap);
   // add the match value to the result
   const matchedStreamersResult = matchedStreamers.map((streamer) => {
     if (!(streamer.id in streamersMap)) {
@@ -156,6 +159,21 @@ async function calculateStreamer(quizValues, callback) {
     null
   );
 }
+
+/**
+ * Update streamer profile pic (logo) with the current one, using Twitch API
+ * TODO: Cache
+ */
+async function updateStreamerObjsWithLogo(streamerObj) {
+  const user_names = Object.values(streamerObj).map(obj => obj.user_name);
+
+  // Get the current logos
+  const logo_dict = await getStreamerLogos(user_names);
+  Object.values(streamerObj).forEach(obj => {
+    obj.logo = logo_dict[obj.user_name] || obj.logo;  // Update if necessary
+  });
+}
+
 
 /** THIS IS NOT COMPLETE!
 
