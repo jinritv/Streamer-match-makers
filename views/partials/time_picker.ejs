@@ -1,0 +1,22 @@
+<div class="d-flex flex-row mb-3 justify-content-center">
+    <h4><%=getText(`question-text-${question.unique_question_identifier}`)%></h4>
+  </div><div class="d-flex flex-column mb-3"><div class="d-flex flex-row mb-3 justify-content-center">`
+<% question.answer_settings.forEach((answerTime) => { %>
+  <div class="custom-control custom-switch" style="margin-right:48px;">
+      <input type="checkbox" class="custom-control-input" id=<%=`generated-switch_${question.unique_question_identifier}_${answerTime.value_name}`%> onclick="toggleTimeInput('<%=question.unique_question_identifier%>','<%=answerTime.value_name%>'); captureTimeInputs();">
+      <label class="custom-control-label" for=<%=`generated-switch_${question.unique_question_identifier}_${answerTime.value_name}`%>><%=getText(`time-range-${question.unique_question_identifier}-${answerTime.value_name}`)%></label>
+    </div>
+<% }); %>
+</div><div class="d-flex flex-row mb-3 justify-content-center">
+<% question.answer_settings.forEach((answerTime) => { %>
+  <div id=<%=`generated-${question.unique_question_identifier}-${answerTime.value_name}`%> style="position: relative;">
+      <div class="d-flex flex-column text-center">
+        <span style="color:#bf7dd3"><strong><%=getText(`time-range-${question.unique_question_identifier}-${answerTime.value_name}`)%></strong></span>
+        <span><%=getText(`time-range-${question.unique_question_identifier}-from`)%></span>
+        <input id=<%=`generated-${question.unique_question_identifier}-${answerTime.value_name}-from`%> class="time text-center" type="text" value=<%=`${answerTime.minDefault}`%> />
+        <span><%=getText(`time-range-${question.unique_question_identifier}-to`)%></span>
+        <input id=<%=`generated-${question.unique_question_identifier}-${answerTime.value_name}-to`%> class="time text-center" type="text" value=<%=`${answerTime.maxDefault}`%> />
+      </div>
+    </div>
+<% }); %>
+</div></div>

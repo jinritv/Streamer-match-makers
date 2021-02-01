@@ -1,12 +1,9 @@
-
-const fetch = require('node-fetch');
-
+const fetch = require("node-fetch");
 
 // TODO: Change this to Twitch official client ID
 const ClientId = "s2frr164040bp9l6mgurxaz32i6rm1";
 
-const Url = "https://api.twitch.tv/v5/users?login="
-
+const Url = "https://api.twitch.tv/v5/users?login=";
 
 // Update streamer profile pic (logo) with the current one, using Twitch API
 // TODO: Cache

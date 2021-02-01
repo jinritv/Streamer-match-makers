@@ -4,4 +4,4 @@ To update model sequelize model files from DB, run the following command.
 It will create or update models for all tables
 
 $ npm install -g sequelize sequelize-auto pg pg-hstore lodash
-$ sequelize-auto -h [host] -p [port] -d [db_name]  -u [username] -x [password] --dialect postgres -o "./" -l es6 --cm p -a ../db/autoconfig.json
+$ sequelize-auto -h [host] -p [port] -d [db_name] -u [username] -x [password] --dialect postgres -o "./" -l es6 --cm p -a ../db/autoconfig.json
