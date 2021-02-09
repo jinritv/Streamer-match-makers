@@ -7,14 +7,29 @@ const {LoadLanguageJSON, getText} = require("../backend/localizations/localizati
 
 const {Quiz} = require("../backend/quiz_questions");
 
-// Home/Main quiz page
-router.get("/", (req, res) => {
-  res.render("index");
+router.get("/setTheme/:theme", (req, res) => {
+	req.session.theme = req.params.theme;
+	req.session.save();
+});
+router.get("/setLang/:lang", (req, res) => {
+	req.session.language = req.params.lang;
+	req.session.save();
 });
 
+// Home/Main quiz page
+router.get("/", (req, res) => {
+	if (!req.session.theme)
+	{
+		req.session.theme = "light-mode";
+	}
+    let THEME_TO_SHOW = req.session.theme;
+    res.render("index", {
+	Theme: THEME_TO_SHOW,
+    });
+});
 // renders the html for the quiz and most of the page
 router.post('/getHtml', function(req, res){
-  let LANGUAGE_TO_GET = req.body.language;
+  let LANGUAGE_TO_GET = req.session.language && req.session.language != "" ? req.session.language : req.body.language;
   console.log(`rendering html for ${LANGUAGE_TO_GET}`);
   const onLangLoaded = (result, error)=>{ 
     res.render("./full_page", {
