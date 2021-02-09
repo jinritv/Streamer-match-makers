@@ -15,7 +15,7 @@ const ATTRIBUTE_POINTS_DEFAULTS = {
   content: 1.5,
   subonly: 1.0,
   mature: 1.0,
-  "chat-vibe": 1.0,
+  chat_vibe: 1.0,
   watchtime: 1.5,
 };
 
@@ -318,19 +318,19 @@ function matchStreamers(prefs, streamers) {
     // chat vibe check
     let chatVibes = streamer.ChatVibes.map((row) => row.vibe.toLowerCase());
     let matchVibes = 0;
-    prefs["chat-vibe"].forEach((vibe) => {
+    prefs.chat_vibe.forEach((vibe) => {
       if (chatVibes.includes(vibe.toLowerCase())) {
         matchVibes += 1;
       }
     });
 
-    if (prefs["chat-vibe"].length != 0) {
+    if (prefs.chat_vibe.length != 0) {
       let vibeScore =
-        (matchVibes * ATTRIBUTE_POINTS["chat-vibe"]) /
-        prefs["chat-vibe"].length;
+        (matchVibes * ATTRIBUTE_POINTS.chat_vibe) /
+        prefs.chat_vibe.length;
       scores += vibeScore;
-      stats[streamer.id]["Chat Vibe"] = Math.ceil(
-        (vibeScore / ATTRIBUTE_POINTS["chat-vibe"]) * 100
+      stats[streamer.id].chat_vibe = Math.ceil(
+        (vibeScore / ATTRIBUTE_POINTS.chat_vibe) * 100
       );
     }
 
