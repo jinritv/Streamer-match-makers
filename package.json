@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "www": "PORT=3001 nodemon ./bin/www",
+    "start-www": "PORT=3001 nodemon ./bin/www",
     "prettify": "npx prettier --write ."
   },
   "dependencies": {
