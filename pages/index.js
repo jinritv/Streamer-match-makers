@@ -1,10 +1,11 @@
-function Home() {
+import Header from './components/Header'
+import Footer from './components/Footer'
+import QuizButton from './components/QuizButton'
+
+export default function Index() {
   return (
     <>
-      <header className="page-header">
-        <img src="/images/logo.svg" />
-        <h1>Twiri, Stream Seeker</h1>
-      </header>
+      <Header />
       <main className="page-main">
         <div className="billboard">
           <h2>
@@ -15,26 +16,10 @@ function Home() {
             type.
           </h3>
           <h2>2000+ matches made</h2>
-          <button type="button" onClick={toggleQuizModal}>
-            Find a Streamer
-          </button>
+          <QuizButton />
         </div>
       </main>
-      <footer className="page-footer">
-        <nav>
-          <ul>
-            <li>About</li>
-            <li>Submit Your Stream</li>
-            <li>Contribute</li>
-          </ul>
-        </nav>
-        <div className="page-footer-utility">
-          <div className="copyright">Copyright &copy; 2020</div>
-          <div className="theme-toggle">☀️</div>
-        </div>
-      </footer>
+      <Footer />
     </>
   )
 }
-
-export default Home

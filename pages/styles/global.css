@@ -10,6 +10,8 @@ html {
 body {
   margin: 0;
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--background);
+  color: var(--color);
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -23,8 +25,6 @@ ul {
   padding-left: 0;
 }
 
-li {}
-
 #__next {
   display: flex;
   flex-flow: column nowrap;
@@ -36,7 +36,7 @@ li {}
   flex-flow: row nowrap;
   flex: 0 1 auto;
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--background);
   border-bottom: 1px solid #710273;
   box-shadow: 0 6px 4px -4px rgb(0 0 0 / 16%);
   padding: 1rem;
@@ -52,7 +52,7 @@ li {}
   align-items: center;
   justify-content: center;
   flex: 1 0 auto;
-  background-color: plum;
+  /* background-color: plum; */
 }
 
 .billboard {
@@ -103,4 +103,5 @@ li {}
 
 .theme-toggle {
   margin-right: 1rem;
+  cursor: pointer;
 }
