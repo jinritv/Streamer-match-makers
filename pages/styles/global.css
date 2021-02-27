@@ -114,6 +114,26 @@ ul {
 }
 
 @media screen and (min-width: 768px) {
+  #__next {
+    height: 100vh;
+  }
+
+  .page-header {
+    height: auto;
+  }
+
+  .page-main {
+    height: auto;
+  }
+
+  .page-footer {
+    flex-flow: row nowrap;
+  }
+
+  .page-footer nav {
+    margin-bottom: 0;
+  }
+
   .page-footer nav ul {
     display: flex;
     flex-flow: row nowrap;
@@ -121,5 +141,14 @@ ul {
 
   .page-footer nav ul li {
     margin-right: 2rem;
+    margin-bottom: 0;
+  }
+
+  .page-footer nav ul li:last-child {
+    margin-right: 0;
+  }
+
+  .page-footer-utility {
+    justify-content: flex-end;
   }
 }
