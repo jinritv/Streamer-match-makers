@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import ProgressBar from './ProgressBar'
+import Question from './Question'
 
 export default function Quiz(props) {
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -33,49 +35,34 @@ export default function Quiz(props) {
   } = props.quiz.Questions[currentQuestion]
 
   return (
-    <div>
+    <>
+      <div className="quiz-question-counter">
+        Question {questionNumber} of {quizLength}
+      </div>
+      <ProgressBar quizLength={quizLength} currentQuestion={currentQuestion} />
       <Question
         key={id}
         id={id}
         type={type}
-        quizLength={quizLength}
-        questionNumber={questionNumber}
         answers={answers}
         translation={props.translation}
       />
-      <button type="button" onClick={prevQuestion}>
-        ← Back
-      </button>
-      <button type="button" onClick={nextQuestion}>
-        Continue →
-      </button>
-    </div>
-  )
-}
-
-function Question(props) {
-  function renderAnswers(type, answers) {
-    switch (type) {
-      case 'multipleselection':
-        return answers.map((answer) => {
-          return <div key={answer}>{answer}</div>
-        })
-      case 'singleselection':
-        return <div>singleselection</div>
-      case 'rangeslider':
-        return <div>rangeslider</div>
-      case 'timerange':
-        return <div>timerange</div>
-    }
-  }
-
-  return (
-    <div>
-      <div>
-        Question {props.questionNumber} of {props.quizLength}
+      <div className="quiz-nav-buttons">
+        <button
+          type="button"
+          className="quiz-nav-button-back"
+          onClick={prevQuestion}
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          className="quiz-nav-button-continue"
+          onClick={nextQuestion}
+        >
+          Continue
+        </button>
       </div>
-      <div>{props.translation[`question-text-${props.id}`]}</div>
-      <div>{renderAnswers(props.type, props.answers)}</div>
-    </div>
+    </>
   )
 }

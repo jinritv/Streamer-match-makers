@@ -14,10 +14,10 @@ export default function QuizButton(props) {
       <button onClick={open}>Find a Streamer</button>
       <DialogOverlay isOpen={showQuiz} onDismiss={close}>
         <DialogContent aria-label="Streamer quiz">
-          <button className="close-button" onClick={close}>
+          {/* <button className="quiz-close-button" onClick={close}>
             <VisuallyHidden>Close</VisuallyHidden>
-            <span aria-hidden>×</span>
-          </button>
+            <span aria-hidden>X</span>
+          </button> */}
           <Quiz quiz={props.quiz} translation={props.translation} />
         </DialogContent>
       </DialogOverlay>
