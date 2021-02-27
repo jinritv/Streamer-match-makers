@@ -109,6 +109,22 @@ ul {
   cursor: pointer;
 }
 
+/* Quiz dialog/modal */
+body [data-reach-dialog-overlay] {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+body [data-reach-dialog-content] {
+  flex: 1 0 auto;
+  width: auto;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+}
+
 @media screen and (min-width: 768px) {
   #__next {
     height: 100vh;
@@ -146,5 +162,13 @@ ul {
 
   .page-footer-utility {
     justify-content: flex-end;
+  }
+
+  body [data-reach-dialog-content] {
+    width: 100%;
+    max-width: 70vw;
+    min-height: 50vh;
+    max-height: 70vh;
+    padding: 2rem;
   }
 }
