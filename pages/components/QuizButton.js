@@ -18,7 +18,11 @@ export default function QuizButton(props) {
             <VisuallyHidden>Close</VisuallyHidden>
             <span aria-hidden>X</span>
           </button> */}
-          <Quiz quiz={props.quiz} translation={props.translation} />
+          <Quiz
+            quiz={props.quiz}
+            translation={props.translation}
+            closeQuiz={close}
+          />
         </DialogContent>
       </DialogOverlay>
     </>

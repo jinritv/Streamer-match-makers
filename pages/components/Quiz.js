@@ -19,7 +19,7 @@ export default function Quiz(props) {
   function prevQuestion() {
     if (currentQuestion === 0) {
       // close quiz
-      console.log('close quiz')
+      props.closeQuiz()
       return
     }
     setCurrentQuestion(currentQuestion - 1)
