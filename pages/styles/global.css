@@ -1,3 +1,7 @@
+:root {
+  --twiri-header-height: 5rem;
+}
+
 html {
   box-sizing: border-box;
   font-size: 16px;
@@ -28,7 +32,6 @@ ul {
 #__next {
   display: flex;
   flex-flow: column nowrap;
-  height: 100vh;
 }
 
 .page-header {
@@ -40,6 +43,9 @@ ul {
   border-bottom: 1px solid #710273;
   box-shadow: 0 6px 4px -4px rgb(0 0 0 / 16%);
   padding: 1rem;
+  height: var(--twiri-header-height);
+  font-size: 0.8rem;
+  align-items: center;
 }
 
 .page-header h1 {
@@ -52,11 +58,11 @@ ul {
   align-items: center;
   justify-content: center;
   flex: 1 0 auto;
-  /* background-color: plum; */
+  height: calc(100vh - var(--twiri-header-height));
 }
 
 .billboard {
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .page-footer {
@@ -65,36 +71,37 @@ ul {
 
 .page-footer {
   display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: space-between;
+  flex-flow: column nowrap;
+  align-items: flex-start;
   padding: 1rem;
+  border-top: 1px solid #710273;
+  box-shadow: 0 -6px 4px -4px rgb(0 0 0 / 16%);
 }
 
 .page-footer nav {
   flex: 1 0 auto;
+  margin-bottom: 2rem;
 }
 
 .page-footer nav ul {
   display: flex;
-  flex-flow: row nowrap;
-  /* padding: 1rem; */
+  flex-flow: column nowrap;
 }
 
 .page-footer nav ul li {
-  margin-right: 2rem;
-  /* margin-bottom: 0.5rem; */
+  margin-bottom: 0.5rem;
 }
 
 .page-footer nav ul li:last-child {
-  margin-right: 0;
+  margin-bottom: 0;
 }
 
 .page-footer-utility {
   display: flex;
   flex-flow: row nowrap;
-  flex: 0 1 auto;
-  align-items: center;
+  justify-content: space-between;
+  line-height: 1rem;
+  width: 100%;
 }
 
 .copyright {
@@ -104,4 +111,15 @@ ul {
 .theme-toggle {
   margin-right: 1rem;
   cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  .page-footer nav ul {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+
+  .page-footer nav ul li {
+    margin-right: 2rem;
+  }
 }
