@@ -19,10 +19,10 @@ export default function ThemeToggleButton() {
 const themes = {
   light: {
     background: '#fff',
-    color: '#000',
+    color: '#222',
   },
   dark: {
-    background: '#222',
+    background: '#1a2138',
     color: '#fff',
   },
 }

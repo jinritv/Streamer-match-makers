@@ -11,7 +11,9 @@ export default function QuizButton(props) {
 
   return (
     <>
-      <button onClick={open}>Find a Streamer</button>
+      <button className="cta-button" onClick={open}>
+        Find a Streamer
+      </button>
       <DialogOverlay isOpen={showQuiz} onDismiss={close}>
         <DialogContent aria-label="Streamer quiz">
           {/* <button className="quiz-close-button" onClick={close}>
