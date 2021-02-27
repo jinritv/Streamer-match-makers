@@ -37,7 +37,7 @@ export default function Index(props) {
             type.
           </h3>
           <h2>2000+ matches made</h2>
-          <QuizButton />
+          <QuizButton quiz={props.Quiz} translation={props.translation} />
         </div>
       </main>
       <Footer />
