@@ -1,8 +1,29 @@
 import Header from './components/Header'
 import Footer from './components/Footer'
 import QuizButton from './components/QuizButton'
+import { useEffect } from 'react'
 
-export default function Index() {
+export async function getStaticProps(context) {
+  const res = await fetch(`http://localhost:3000/api/getQuizData`, {
+    method: 'POST',
+    body: JSON.stringify({ language: 'en-US' }),
+  })
+
+  const { Quiz, translation } = await res.json()
+
+  return {
+    props: {
+      Quiz,
+      translation,
+    },
+  }
+}
+
+export default function Index(props) {
+  useEffect(() => {
+    console.log(props)
+  }, [props])
+
   return (
     <>
       <Header />
