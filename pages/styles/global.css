@@ -146,7 +146,7 @@ body [data-reach-dialog-content] {
   border-radius: 0.75rem;
   background: var(--background);
   color: var(--color);
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .quiz-close-button {
@@ -177,7 +177,7 @@ body [data-reach-dialog-content] {
   background-color: #fff;
   overflow: hidden;
   border-radius: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .quiz-progress-bar-segment {
@@ -242,7 +242,7 @@ body [data-reach-dialog-content] {
   padding-right: 1rem;
   /* font-weight: bold; */
   text-align: center;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 .quiz-answers {
@@ -253,6 +253,10 @@ body [data-reach-dialog-content] {
   margin-bottom: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.quiz-answers button {
+  flex: 1 0 auto;
 }
 
 .quiz-answers[data-quiz-answers-type="multipleselection"] button,
@@ -267,11 +271,11 @@ body [data-reach-dialog-content] {
   font-size: 1rem;
   padding: 1rem;
   text-transform: capitalize;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
   margin-bottom: 1rem;
   outline: none;
-  min-width: 8rem;
+  min-width: 6rem;
 }
 
 .quiz-answers[data-quiz-answers-type="multipleselection"] button:hover,
@@ -296,7 +300,40 @@ body [data-reach-dialog-content] {
   text-align: center;
 }
 
-/* Tablet and higher screen size */
+.quiz-time-range {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1 0 100%;
+  margin-bottom: 1rem;
+}
+
+.quiz-time-range label {
+  display: block;
+}
+
+input[type="time"] {
+  display: block;
+}
+
+input[type="checkbox"] {
+  margin: 0;
+  margin-right: 0.5rem;
+  height: 1rem;
+  width: 1rem;
+}
+
+.quiz-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.quiz-checkbox label {
+  font-weight: bold;
+}
+
+/*
+  Tablet and higher screen size
+*/
 @media screen and (min-width: 768px) {
   #__next {
     height: 100vh;
@@ -357,6 +394,15 @@ body [data-reach-dialog-content] {
   .quiz-progress-bar-segment-complete {
     border-right: 4px solid #fff;
   }
+
+  .quiz-question {
+    font-size: 2rem;
+  }
+
+  .quiz-answers button {
+    flex: 0 1 auto;
+  }
+
 }
 
 /* Laptop and higher screen size */

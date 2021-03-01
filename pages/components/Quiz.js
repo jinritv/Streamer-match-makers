@@ -13,7 +13,15 @@ export default function Quiz(props) {
     languages: [],
     mature: null,
     subonly: null,
-    watchtime: {},
+    watchtime: {
+      userOffsetMinute: new Date().getTimezoneOffset() * -1,
+      weekdays: false,
+      weekdaysFrom: '09:30',
+      weekdaysTo: '17:40',
+      weekends: false,
+      weekendsFrom: '09:30',
+      weekendsTo: '17:40',
+    },
     ranks: {
       average_viewers: 3,
       'chat-vibe': 3,
@@ -43,15 +51,12 @@ export default function Quiz(props) {
   }, [answers])
 
   // useEffect(() => {
-  //   console.log('currentAnswer', currentAnswer)
-  // }, [currentAnswer])
+  //   setCurrentAnswer(answers[questionId])
+  // }, [])
 
-  // useEffect(() => {
-  //   if (questionId === 'average_viewers') {
-  //     let { min, max } = answerSettings
-  //     setCurrentAnswer({ min, max })
-  //   }
-  // }, [questionId, answerSettings])
+  useEffect(() => {
+    console.log('currentAnswer', currentAnswer)
+  }, [currentAnswer])
 
   const questionNumber = currentQuestion + 1
   const quizLength = props.quiz.Questions.length
@@ -134,6 +139,14 @@ function reducer(state, action) {
       return {
         ...state,
         [action.questionId]: action.answer,
+      }
+    case 'watchtime':
+      return {
+        ...state,
+        [action.questionId]: {
+          ...state[action.questionId],
+          ...action.answer,
+        },
       }
     default:
       throw new Error()

@@ -7,11 +7,11 @@ export default function ProgressBar(props) {
     <div className="quiz-progress-bar">
       {segments.map((i) => {
         const segmentClassName =
-          props.currentQuestion > i
+          props.currentQuestion >= i
             ? 'quiz-progress-bar-segment-complete'
             : 'quiz-progress-bar-segment'
 
-        return <span key={i} className={segmentClassName} />
+        return <div key={i} className={segmentClassName} />
       })}
     </div>
   )
