@@ -1,9 +1,51 @@
-import { useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import ProgressBar from './ProgressBar'
 import Question from './Question'
 
 export default function Quiz(props) {
   const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [currentAnswer, setCurrentAnswer] = useState(null)
+  // answers - updates everytime "continue" is clicked
+  const [answers, answersDispatch] = useReducer(reducer, {
+    average_viewers: { min: 2500, max: 7500 },
+    'chat-vibe': [],
+    content: [],
+    languages: [],
+    mature: null,
+    subonly: null,
+    watchtime: {},
+    ranks: {
+      average_viewers: 3,
+      'chat-vibe': 3,
+      content: 3,
+      languages: 3,
+      mature: 3,
+      subonly: 3,
+      watchtime: 3,
+    },
+  })
+
+  const {
+    answer_settings: answerSettings,
+    // buttonsPerRow,
+    // disableContinueButtonByDefault,
+    // onclickFunctionName,
+    unique_question_identifier: questionId,
+    question_type: questionType,
+  } = props.quiz.Questions[currentQuestion]
+
+  useEffect(() => {
+    console.log('Quiz props', props)
+  }, [props])
+
+  useEffect(() => {
+    console.log('answers', answers)
+  }, [answers])
+
+  useEffect(() => {
+    console.log('currentAnswer', currentAnswer)
+  }, [currentAnswer])
+
   const questionNumber = currentQuestion + 1
   const quizLength = props.quiz.Questions.length
 
@@ -13,6 +55,12 @@ export default function Quiz(props) {
       console.log('submit quiz')
       return
     }
+
+    // update overall quiz answers state
+    answersDispatch({ type: questionType, questionId, answer: currentAnswer })
+    // reset answer
+    setCurrentAnswer(null)
+    // go to next question
     setCurrentQuestion(currentQuestion + 1)
   }
 
@@ -25,15 +73,6 @@ export default function Quiz(props) {
     setCurrentQuestion(currentQuestion - 1)
   }
 
-  const {
-    answer_settings: answers,
-    // buttonsPerRow,
-    // disableContinueButtonByDefault,
-    // onclickFunctionName,
-    unique_question_identifier: id,
-    question_type: type,
-  } = props.quiz.Questions[currentQuestion]
-
   return (
     <>
       <div className="quiz-question-counter">
@@ -41,10 +80,12 @@ export default function Quiz(props) {
       </div>
       <ProgressBar quizLength={quizLength} currentQuestion={currentQuestion} />
       <Question
-        key={id}
-        id={id}
-        type={type}
-        answers={answers}
+        key={questionId}
+        id={questionId}
+        type={questionType}
+        answerSettings={answerSettings}
+        currentAnswer={currentAnswer}
+        setCurrentAnswer={setCurrentAnswer}
         translation={props.translation}
       />
       <div className="quiz-nav-buttons">
@@ -59,10 +100,33 @@ export default function Quiz(props) {
           type="button"
           className="quiz-nav-button-continue"
           onClick={nextQuestion}
+          disabled={currentAnswer === null}
         >
           Continue
         </button>
       </div>
     </>
   )
+}
+
+function reducer(state, action) {
+  /**
+   *  Action types = answer types?
+   *
+   *  multipleselection
+   *  singleselection
+   *  rangeslider
+   *  timerange
+   *
+   */
+  switch (action.type) {
+    case 'multipleselection':
+    case 'singleselection':
+      return {
+        ...state,
+        [action.questionId]: action.answer,
+      }
+    default:
+      throw new Error()
+  }
 }
