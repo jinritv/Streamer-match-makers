@@ -10,6 +10,7 @@
     "prettify": "npx prettier --write ."
   },
   "dependencies": {
+    "@radix-ui/react-slider": "^0.0.5",
     "@reach/dialog": "^0.13.2",
     "@reach/visually-hidden": "^0.13.2",
     "axios": "^0.21.1",

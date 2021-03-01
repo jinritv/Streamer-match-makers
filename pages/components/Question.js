@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
+import RangeSlider from './RangeSlider'
 
 export default function Question(props) {
-  useEffect(() => {
-    console.log('answerSettings', props.answerSettings)
-  }, [])
+  // useEffect(() => {
+  //   console.log('answerSettings', props.answerSettings)
+  // }, [])
 
   function handleMultipleSelection(answer) {
     return (e) => {
@@ -19,6 +20,11 @@ export default function Question(props) {
     return () => {
       props.setCurrentAnswer(answer)
     }
+  }
+
+  function handleRangeSliderChange(values) {
+    const [min, max] = values
+    props.setCurrentAnswer({ min, max })
   }
 
   function renderAnswers(type, answers) {
@@ -42,12 +48,15 @@ export default function Question(props) {
             const answerText = props.answerSettings[index]
               ? 'Mature'
               : 'Family-friendly'
+
+            const answerValue = answerText === 'Mature' ? true : false
+
             return (
               <button
                 type="button"
                 key={answer}
-                onClick={handleSingleSelection(answerText)}
-                data-selected={props.currentAnswer === answerText}
+                onClick={handleSingleSelection(answerValue)}
+                data-selected={props.currentAnswer === answerValue}
               >
                 {answerText}
               </button>
@@ -66,7 +75,27 @@ export default function Question(props) {
           )
         })
       case 'rangeslider':
-        return <span>rangeslider</span>
+        const { defaultMin, defaultMax, min, max } = props.answerSettings
+        let defaultMinText = props.currentAnswer?.min ?? defaultMin
+        let defaultMaxText = props.currentAnswer?.max ?? defaultMax
+        let rangeText = `Between ${defaultMinText} and ${defaultMaxText} `
+
+        if (props.id === 'average_viewers') {
+          rangeText += 'viewers'
+        }
+
+        return (
+          <>
+            <p className="quiz-range-title">{rangeText}</p>
+            <RangeSlider
+              defaultMin={defaultMin}
+              defaultMax={defaultMax}
+              min={min}
+              max={max}
+              onValueChange={handleRangeSliderChange}
+            />
+          </>
+        )
       case 'timerange':
         return <span>timerange</span>
     }

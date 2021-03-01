@@ -291,6 +291,11 @@ body [data-reach-dialog-content] {
   border-color: #d8c2db;
 }
 
+.quiz-range-title {
+  flex: 1 0 100%;
+  text-align: center;
+}
+
 /* Tablet and higher screen size */
 @media screen and (min-width: 768px) {
   #__next {

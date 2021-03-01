@@ -34,17 +34,24 @@ export default function Quiz(props) {
     question_type: questionType,
   } = props.quiz.Questions[currentQuestion]
 
-  useEffect(() => {
-    console.log('Quiz props', props)
-  }, [props])
+  // useEffect(() => {
+  //   console.log('Quiz props', props)
+  // }, [props])
 
   useEffect(() => {
     console.log('answers', answers)
   }, [answers])
 
-  useEffect(() => {
-    console.log('currentAnswer', currentAnswer)
-  }, [currentAnswer])
+  // useEffect(() => {
+  //   console.log('currentAnswer', currentAnswer)
+  // }, [currentAnswer])
+
+  // useEffect(() => {
+  //   if (questionId === 'average_viewers') {
+  //     let { min, max } = answerSettings
+  //     setCurrentAnswer({ min, max })
+  //   }
+  // }, [questionId, answerSettings])
 
   const questionNumber = currentQuestion + 1
   const quizLength = props.quiz.Questions.length
@@ -122,6 +129,8 @@ function reducer(state, action) {
   switch (action.type) {
     case 'multipleselection':
     case 'singleselection':
+    case 'rangeslider':
+    case 'timerange':
       return {
         ...state,
         [action.questionId]: action.answer,
