@@ -4,13 +4,14 @@ import Question from './Question'
 
 export default function Quiz(props) {
   const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [currentAnswer, setCurrentAnswer] = useState(null)
-  // answers - updates everytime "continue" is clicked
   const [answers, answersDispatch] = useReducer(reducer, {
     average_viewers: { min: 2500, max: 7500 },
     'chat-vibe': [],
     content: [],
     languages: [],
+    // 'chat-vibe': null,
+    // content: null,
+    // languages: null,
     mature: null,
     subonly: null,
     watchtime: {
@@ -42,24 +43,22 @@ export default function Quiz(props) {
     question_type: questionType,
   } = props.quiz.Questions[currentQuestion]
 
-  // useEffect(() => {
-  //   console.log('Quiz props', props)
-  // }, [props])
+  // const [currentAnswer, setCurrentAnswer] = useState(answers[questionId])
 
   useEffect(() => {
     console.log('answers', answers)
   }, [answers])
 
   // useEffect(() => {
-  //   setCurrentAnswer(answers[questionId])
-  // }, [])
-
-  useEffect(() => {
-    console.log('currentAnswer', currentAnswer)
-  }, [currentAnswer])
+  //   console.log('currentAnswer', currentAnswer)
+  // }, [currentAnswer])
 
   const questionNumber = currentQuestion + 1
   const quizLength = props.quiz.Questions.length
+
+  function updateAnswer(type = questionType, id = questionId, answer) {
+    answersDispatch({ type, id, answer })
+  }
 
   function nextQuestion() {
     if (currentQuestion + 1 === quizLength) {
@@ -68,10 +67,10 @@ export default function Quiz(props) {
       return
     }
 
-    // update overall quiz answers state
-    answersDispatch({ type: questionType, questionId, answer: currentAnswer })
-    // reset answer
-    setCurrentAnswer(null)
+    // // update overall quiz answers state
+    // answersDispatch({ type: questionType, questionId, answer: currentAnswer })
+    // // reset answer
+    // setCurrentAnswer(null)
     // go to next question
     setCurrentQuestion(currentQuestion + 1)
   }
@@ -96,8 +95,10 @@ export default function Quiz(props) {
         id={questionId}
         type={questionType}
         answerSettings={answerSettings}
-        currentAnswer={currentAnswer}
-        setCurrentAnswer={setCurrentAnswer}
+        updateAnswer={updateAnswer}
+        // currentAnswer={answers[questionId]}
+        // setCurrentAnswer={setCurrentAnswer}
+        completedAnswers={answers}
         translation={props.translation}
       />
       <div className="quiz-nav-buttons">
@@ -112,7 +113,10 @@ export default function Quiz(props) {
           type="button"
           className="quiz-nav-button-continue"
           onClick={nextQuestion}
-          disabled={currentAnswer === null}
+          disabled={
+            answers[questionId] === null ||
+            (Array.isArray(answers[questionId]) && !answers[questionId].length)
+          }
         >
           Continue
         </button>
@@ -133,18 +137,29 @@ function reducer(state, action) {
    */
   switch (action.type) {
     case 'multipleselection':
-    case 'singleselection':
-    case 'rangeslider':
-    case 'timerange':
+      if (state[action.id]?.includes(action.answer)) {
+        return {
+          ...state,
+          [action.id]: state[action.id].filter(
+            (item) => item !== action.answer
+          ),
+        }
+      }
       return {
         ...state,
-        [action.questionId]: action.answer,
+        [action.id]: [...new Set([...state[action.id], action.answer])],
+      }
+    case 'singleselection':
+    case 'rangeslider':
+      return {
+        ...state,
+        [action.id]: action.answer,
       }
     case 'watchtime':
       return {
         ...state,
-        [action.questionId]: {
-          ...state[action.questionId],
+        [action.id]: {
+          ...state[action.id],
           ...action.answer,
         },
       }

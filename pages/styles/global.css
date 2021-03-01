@@ -278,11 +278,11 @@ body [data-reach-dialog-content] {
   min-width: 6rem;
 }
 
-.quiz-answers[data-quiz-answers-type="multipleselection"] button:hover,
+/* .quiz-answers[data-quiz-answers-type="multipleselection"] button:hover,
 .quiz-answers[data-quiz-answers-type="singleselection"] button:hover {
   background-color: #d8c2db;
   border-color: #856585;
-}
+} */
 
 .quiz-answers[data-quiz-answers-type="multipleselection"] button:active,
 .quiz-answers[data-quiz-answers-type="singleselection"] button:active {
