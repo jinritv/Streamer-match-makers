@@ -54,7 +54,8 @@ export default function Quiz(props) {
   function nextQuestion() {
     if (currentQuestion + 1 === quizLength) {
       // submit quiz
-      console.log('submit quiz')
+
+      submitQuiz(answers)
       return
     }
 
@@ -68,6 +69,26 @@ export default function Quiz(props) {
       return
     }
     setCurrentQuestion(currentQuestion - 1)
+  }
+
+  function submitQuiz(answers) {
+    console.log('submitting quiz...', answers)
+
+    // Temp code while backend is changed
+    alert('Submitting quiz...')
+
+    props.closeQuiz()
+
+    // fetch('/api/calculateStreamer', {
+    //   method: 'POST',
+    //   body: JSON.stringify(answers),
+    // })
+    //   .then((res) => {
+    //     return res.json()
+    //   })
+    //   .then((data) => {
+    //     console.log('/api/calculateStreamer', data)
+    //   })
   }
 
   return (
