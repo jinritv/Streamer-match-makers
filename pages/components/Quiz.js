@@ -150,12 +150,16 @@ function reducer(state, action) {
         [action.id]: [...new Set([...state[action.id], action.answer])],
       }
     case 'singleselection':
+      return {
+        ...state,
+        [action.id]: action.answer,
+      }
     case 'rangeslider':
       return {
         ...state,
         [action.id]: action.answer,
       }
-    case 'watchtime':
+    case 'timerange':
       return {
         ...state,
         [action.id]: {
