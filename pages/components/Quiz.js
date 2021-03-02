@@ -9,9 +9,6 @@ export default function Quiz(props) {
     'chat-vibe': [],
     content: [],
     languages: [],
-    // 'chat-vibe': null,
-    // content: null,
-    // languages: null,
     mature: null,
     subonly: null,
     watchtime: {
@@ -43,15 +40,9 @@ export default function Quiz(props) {
     question_type: questionType,
   } = props.quiz.Questions[currentQuestion]
 
-  // const [currentAnswer, setCurrentAnswer] = useState(answers[questionId])
-
   useEffect(() => {
     console.log('answers', answers)
   }, [answers])
-
-  // useEffect(() => {
-  //   console.log('currentAnswer', currentAnswer)
-  // }, [currentAnswer])
 
   const questionNumber = currentQuestion + 1
   const quizLength = props.quiz.Questions.length
@@ -67,11 +58,6 @@ export default function Quiz(props) {
       return
     }
 
-    // // update overall quiz answers state
-    // answersDispatch({ type: questionType, questionId, answer: currentAnswer })
-    // // reset answer
-    // setCurrentAnswer(null)
-    // go to next question
     setCurrentQuestion(currentQuestion + 1)
   }
 
@@ -96,8 +82,6 @@ export default function Quiz(props) {
         type={questionType}
         answerSettings={answerSettings}
         updateAnswer={updateAnswer}
-        // currentAnswer={answers[questionId]}
-        // setCurrentAnswer={setCurrentAnswer}
         completedAnswers={answers}
         translation={props.translation}
       />
