@@ -20,6 +20,7 @@ function setLanguage(language) {
   }
   
   function getLanguage() {
+    if ($("#sLang").html() != "") { _CURRENT_LANGUAGE = $("#Lang").html(); }
     return _CURRENT_LANGUAGE_;
   }
 
