@@ -2,10 +2,10 @@
 
 const Sequelize = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  return Tags.init(sequelize, DataTypes);
+  return ChatVibes.init(sequelize, DataTypes);
 };
 
-class Tags extends Sequelize.Model {
+class ChatVibes extends Sequelize.Model {
   static init(sequelize, DataTypes) {
     super.init(
       {
@@ -15,18 +15,18 @@ class Tags extends Sequelize.Model {
           allowNull: false,
           primaryKey: true,
         },
-        tag: {
+        chatvibe: {
           type: DataTypes.STRING,
-          allowNull: true,
+          allowNull: false,
         },
       },
       {
         sequelize,
-        tableName: "tags",
+        tableName: "chatvibes",
         schema: "public",
         timestamps: false,
       }
     );
-    return Tags;
+    return ChatVibes;
   }
 }

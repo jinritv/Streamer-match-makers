@@ -3,7 +3,7 @@ const THEMES = {
     Dark: "dark-mode",
     Light: "light-mode",
   };
-  var CurrentTheme = THEMES.Light;
+  var CurrentTheme = $("body").hasClass(THEMES.Light) ? THEMES.Light : THEMES.Dark;
 
   // change the class of the wrapper to change the theme colors
 var $ThemeWrapper, $themeLabel, $themeIcon;
@@ -25,4 +25,7 @@ function toggleDarkMode() {
     $themeIcon.text(nextTheme == THEMES.Dark ? "🌞" : "🌚");
     $themeLabel.text(getText(`${CurrentTheme}-label`));
     CurrentTheme = nextTheme;
+    $.get('/setTheme/' + CurrentTheme, function (json) {
+		let nothing = "";
+    });
   }
