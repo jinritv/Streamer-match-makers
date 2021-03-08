@@ -29,11 +29,11 @@ class StreamersStats extends Sequelize.Model {
           type: DataTypes.INTEGER,
           allowNull: true,
         },
-        voice: {
+        avg_viewers: {
           type: DataTypes.INTEGER,
           allowNull: true,
         },
-        avg_viewers: {
+        avg_start_time: {
           type: DataTypes.INTEGER,
           allowNull: true,
         },
@@ -41,16 +41,16 @@ class StreamersStats extends Sequelize.Model {
           type: DataTypes.INTEGER,
           allowNull: true,
         },
-        viewer_participation: {
+        streams_per_week: {
           type: DataTypes.INTEGER,
           allowNull: true,
         },
-        start_stream: {
+        stream_start_date: {
           type: DataTypes.TIME,
           allowNull: true,
         },
         chat_mode: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
           allowNull: true,
         },
       },

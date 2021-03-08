@@ -26,8 +26,8 @@ const defaultEncoding = "utf8";
 
 // CSV streamer data file
 const streamerDataFilePath = path.join(process.cwd(), process.argv[2]); // Path of downloaded spreadsheet, like "C:/streamer_data.csv"
-const headerRowNum = 0; // 0-based row index of header columns
-const dataStartRowNum = 1; // 0-based row index of start of data
+const headerRowNum = 7; // 0-based row index of header columns
+const dataStartRowNum = 8; // 0-based row index of start of data
 
 // DB schema name
 const postgresSchemaName = "public";

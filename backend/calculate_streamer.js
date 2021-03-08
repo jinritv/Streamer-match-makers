@@ -1,11 +1,5 @@
 const { Op } = require("sequelize");
-const {
-  Streamers,
-  StreamersStats,
-  Languages,
-  Categories,
-  StreamersNationalities,
-} = require("../models/models");
+const {Streamers} = require("../models/models");
 const { getStreamerLogos } = require("./get_streamers");
 
 // holds the default values for the 'Points' of each attribute.
@@ -15,7 +9,7 @@ const ATTRIBUTE_POINTS_DEFAULTS = {
   content: 1.5,
   subonly: 1.0,
   mature: 1.0,
-  "chat-vibe": 1.0,
+  chat_vibe: 1.0,
   watchtime: 1.5,
 };
 
@@ -104,7 +98,7 @@ async function calculateStreamer(quizValues, callback) {
   // Get all the streamers from the database
   const allStreamersArray = await Streamers.findAll({
     // we only need a few columns from the main Streamer table
-    attributes: ["id", "user_name", "dob_year", "logo", "mature_stream"],
+    attributes: ["id", "user_name", "nickname", "logo", "mature_stream"],
     // we want to include the other associated tables such as StreamerStats, Languages, etc
     include: { all: true, nested: true },
   });
@@ -158,20 +152,6 @@ async function calculateStreamer(quizValues, callback) {
     },
     null
   );
-}
-
-/**
- * Update streamer profile pic (logo) with the current one, using Twitch API
- * TODO: Cache
- */
-async function updateStreamerObjsWithLogo(streamerObj) {
-  const user_names = Object.values(streamerObj).map(obj => obj.user_name);
-
-  // Get the current logos
-  const logo_dict = await getStreamerLogos(user_names);
-  Object.values(streamerObj).forEach(obj => {
-    obj.logo = logo_dict[obj.user_name] || obj.logo;  // Update if necessary
-  });
 }
 
 /**
@@ -316,21 +296,21 @@ function matchStreamers(prefs, streamers) {
     }
 
     // chat vibe check
-    let chatVibes = streamer.ChatVibes.map((row) => row.vibe.toLowerCase());
+    let chatVibes = streamer.ChatVibes.map((row) => row.chatvibe.toLowerCase());
     let matchVibes = 0;
-    prefs["chat-vibe"].forEach((vibe) => {
+    prefs.chat_vibe.forEach((vibe) => {
       if (chatVibes.includes(vibe.toLowerCase())) {
         matchVibes += 1;
       }
     });
 
-    if (prefs["chat-vibe"].length != 0) {
+    if (prefs.chat_vibe.length != 0) {
       let vibeScore =
-        (matchVibes * ATTRIBUTE_POINTS["chat-vibe"]) /
-        prefs["chat-vibe"].length;
+        (matchVibes * ATTRIBUTE_POINTS.chat_vibe) /
+        prefs.chat_vibe.length;
       scores += vibeScore;
       stats[streamer.id]["Chat Vibe"] = Math.ceil(
-        (vibeScore / ATTRIBUTE_POINTS["chat-vibe"]) * 100
+        (vibeScore / ATTRIBUTE_POINTS.chat_vibe) * 100
       );
     }
 
@@ -440,16 +420,6 @@ function getFollowerCountRange(follower_count) {
   return [0, 1000000]; // Returns all if not selected
 }
 
-// the database only contains a column for the DOB year,
-// not age, so we need to calculate that first
-function getStreamerAgeRange(ageRange) {
-  let thisYear = new Date().getFullYear();
-
-  const maxDOB = Number(thisYear - ageRange.min || thisYear - 25);
-  const minDOB = Number(thisYear - ageRange.max || thisYear - 75);
-
-  return [minDOB, maxDOB];
-}
 
 function getLanguageNames(languages) {
   // Frontend has long language name, DB has short language names.
@@ -468,13 +438,6 @@ function getLanguageNames(languages) {
   return languages.map((lang) => nameMap[lang]);
 }
 
-function getVoice(voice) {
-  if (!voice) {
-    return null;
-  }
-  return Number(voice.trim()[0]);
-}
-
 function getYesOrNo(condition) {
   if (!condition) {
     return false;
@@ -485,6 +448,7 @@ function getYesOrNo(condition) {
 // only handle weekdays because thats all we have
 // on DB
 function normalizeWatchtime(input) {
+
   if (input == undefined || !input.weekdays) {
     return null;
   }
