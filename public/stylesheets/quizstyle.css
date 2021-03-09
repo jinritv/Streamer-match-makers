@@ -149,7 +149,7 @@ body {
 }
 
 .language-dropdown-text {
-  margin-left: 4px;
+  margin-left: 0px;
 }
 
 .streamer-info-container {
@@ -540,21 +540,24 @@ Unique elements (id)
   max-width: 800px;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 345px) {
+ 
+  #animated-words-label {
+    font-size: 35px !important ;
+    
+  }
+  #keyword {
+    font-size: 40px !important ;
+  }
   .btn-start-quiz {
     width: 100%;
   }
-
-  .detective {
-    margin-top: 5%;
-    margin-left: 50%;
-  }
+ 
   .sphere-lg {
     width: 1700px;
     height: 1700px;
-    top: 40%;
-    left: -20%;
-    right: 20%;
+    top: 2%;
+    left: -30%;
   }
   .sphere-med {
     width: 1200px;

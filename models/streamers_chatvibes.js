@@ -19,12 +19,12 @@ class StreamersChatVibes extends Sequelize.Model {
             key: "id",
           },
         },
-        chat_vibe_id: {
+        chatvibe_id: {
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {
             model: {
-              tableName: "chat_vibes",
+              tableName: "chatvibes",
             },
             key: "id",
           },
@@ -32,7 +32,7 @@ class StreamersChatVibes extends Sequelize.Model {
       },
       {
         sequelize,
-        tableName: "streamers_chat_vibes",
+        tableName: "streamers_chatvibes",
         schema: "public",
         timestamps: false,
       }

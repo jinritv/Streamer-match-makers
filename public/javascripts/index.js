@@ -92,8 +92,16 @@ function getPageHTML() {
 }
 
 function updateLanguage(language) {
+<<<<<<< HEAD
   console.log('updating ', language)
   setLanguage(language)
+=======
+  console.log("updating ", language);
+  setLanguage(language);
+  $.get('/setLang/' + language, function (json) {
+                let nothing = "";
+    });
+>>>>>>> master
   // first check if the desired language is already loaded (empty if not loaded)
   let loadedLang = getThisLanguageText()
   console.log(loadedLang)
