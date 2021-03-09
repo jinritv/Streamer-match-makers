@@ -6,7 +6,7 @@ export default function Quiz(props) {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, answersDispatch] = useReducer(reducer, {
     average_viewers: { min: 2500, max: 7500 },
-    'chat-vibe': [],
+    chat_vibe: [],
     content: [],
     languages: [],
     mature: null,
@@ -22,7 +22,7 @@ export default function Quiz(props) {
     },
     ranks: {
       average_viewers: 3,
-      'chat-vibe': 3,
+      chat_vibe: 3,
       content: 3,
       languages: 3,
       mature: 3,
@@ -43,6 +43,10 @@ export default function Quiz(props) {
   useEffect(() => {
     console.log('answers', answers)
   }, [answers])
+
+  useEffect(() => {
+    console.log('props.quiz.Questions', props.quiz.Questions)
+  }, [props.quiz.Questions])
 
   const questionNumber = currentQuestion + 1
   const quizLength = props.quiz.Questions.length
@@ -142,6 +146,12 @@ function reducer(state, action) {
    */
   switch (action.type) {
     case 'multipleselection':
+      // handle error in case of question id not existing
+      if (!state[action.id]) {
+        //
+      }
+
+      //
       if (state[action.id]?.includes(action.answer)) {
         return {
           ...state,
@@ -150,6 +160,7 @@ function reducer(state, action) {
           ),
         }
       }
+
       return {
         ...state,
         [action.id]: [...new Set([...state[action.id], action.answer])],
