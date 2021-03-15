@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "start-www": "nodemon ./bin/www",
+    "start-next": "next start",
+    "start": "nodemon ./bin/www",
     "prettify": "npx prettier --write ."
   },
   "dependencies": {
