@@ -79,5 +79,8 @@
   "restart": "Relancer la recherche",
   "continue": "Continuer",
   "generated-quiz-modal-progress-label": "Question [*] sur [*]",
-  "range-display-average_viewers": "Entre [*] et [*] spectateurs en moyen"
+  "range-display-average_viewers": "Entre [*] et [*] spectateurs en moyen",
+  "question-text-gender":"Le genre du streamer?",
+  "button-text-gender-male":"Homme",
+  "button-text-gender-female":"Femme"
 }

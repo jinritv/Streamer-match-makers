@@ -3,6 +3,7 @@ CREATE TABLE "streamers" (
   "id" SERIAL PRIMARY KEY,
   "user_name" varchar,
   "nickname" varchar,
+  "gender" varchar,
   "is_partner" boolean,
   "uses_cam" boolean,
   "mature_stream" boolean,

@@ -10,7 +10,7 @@ const ATTRIBUTE_POINTS_DEFAULTS = {
   subonly: 1.0,
   mature: 1.0,
   chat_vibe: 1.0,
-  watchtime: 1.5,
+  gender: 1.0,
 };
 
 // Overwritten by POST from client questionnaire with request[ranks] values.
@@ -98,7 +98,7 @@ async function calculateStreamer(quizValues, callback) {
   // Get all the streamers from the database
   const allStreamersArray = await Streamers.findAll({
     // we only need a few columns from the main Streamer table
-    attributes: ["id", "user_name", "nickname", "logo", "mature_stream"],
+    attributes: ["id", "user_name", "nickname", "logo", "mature_stream", "gender"],
     // we want to include the other associated tables such as StreamerStats, Languages, etc
     include: { all: true, nested: true },
   });
@@ -192,9 +192,9 @@ function matchStreamers(prefs, streamers) {
   // array to store the matched streamers
   let matchValues = [];
   let preferredLanguages = getLanguageNames(prefs.languages);
-  let normalizedWatchtime = normalizeWatchtime(prefs.watchtime);
+  //let normalizedWatchtime = normalizeWatchtime(prefs.watchtime);
   console.log("Input categories", prefs.content);
-  console.log("Normalized watchtime", normalizedWatchtime);
+  //console.log("Normalized watchtime", normalizedWatchtime);
 
   streamers.forEach((streamer) => {
     // create an entry for the streamer in the score object
@@ -206,7 +206,7 @@ function matchStreamers(prefs, streamers) {
       Maturity: 0,
       "Chat Mode": 0,
       "Chat Vibe": 0,
-      Watchtime: 0,
+      Gender: 0,
     };
 
     // check against average viewers preference
@@ -314,17 +314,27 @@ function matchStreamers(prefs, streamers) {
       );
     }
 
-    // check for watch time
-    let watchtimeScore =
-      calculateWatchtimeScore(
-        normalizedWatchtime,
-        streamer.StreamersStat.start_stream,
-        streamer.StreamersStat.avg_stream_duration
-      ) * ATTRIBUTE_POINTS.watchtime;
-    scores += watchtimeScore;
-    stats[streamer.id]["Watchtime"] = Math.ceil(
-      (watchtimeScore / ATTRIBUTE_POINTS.watchtime) * 100
-    );
+    //check for gender preference
+    // if they chose male and female, its 100% match anyways, or 0
+    prefs.gender.forEach(gender=>{
+      if(streamer.gender == gender[0].toUpperCase()){ // we receive a string of 'male' or 'female' so we convert to M or F
+        scores += (1 * ATTRIBUTE_POINTS.gender);
+        stats[streamer.id]["Gender"] = 100; // set 100% match
+      }
+      
+    })
+
+    // // check for watch time
+    // let watchtimeScore =
+    //   calculateWatchtimeScore(
+    //     normalizedWatchtime,
+    //     streamer.StreamersStat.start_stream,
+    //     streamer.StreamersStat.avg_stream_duration
+    //   ) * ATTRIBUTE_POINTS.watchtime;
+    // scores += watchtimeScore;
+    // stats[streamer.id]["Watchtime"] = Math.ceil(
+    //   (watchtimeScore / ATTRIBUTE_POINTS.watchtime) * 100
+    // );
 
     // finally calculate the match % for our matched streamers and add them to the object we return back to the client
     let similarity = Math.round((scores / TOTAL_ATTRIBUTES) * 100);

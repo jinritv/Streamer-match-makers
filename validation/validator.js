@@ -23,6 +23,15 @@ const dataFields = {
     defaultValue: null,
     converter: identity,
   },
+  gender: {
+    required: false,
+    defaultValue: null,
+    converter: (inputValue)=>{if(inputValue=="F"||inputValue=="M"){
+      return inputValue;
+    }else{
+      throw new Error(`'${inputValue}' is not M or F`);
+    }},
+  },
   is_partner: {
     required: false,
     defaultValue: null,

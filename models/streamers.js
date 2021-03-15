@@ -23,6 +23,10 @@ class Streamers extends Sequelize.Model {
           type: DataTypes.STRING,
           allowNull: true,
         },
+        gender:{
+          type: DataTypes.STRING,
+          allowNull: true
+        },
         is_partner: {
           type: DataTypes.BOOLEAN,
           allowNull: true,
