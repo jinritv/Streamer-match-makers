@@ -140,24 +140,16 @@ const QuestionTypeSettings = {
       },
     },
   
-    // Question 7: 'watchtime'
-    {
-      unique_question_identifier: "watchtime",
-      question_type: QuestionTypes.TimeRange,
-      disableContinueButtonByDefault: false,
-      answer_settings: [
-        {
-          value_name: "weekdays",
-          minDefault: "9:30",
-          maxDefault: "17:30",
-        },
-        {
-          value_name: "weekends",
-          minDefault: "9:30",
-          maxDefault: "17:30",
-        },
-      ],
-    },
+    // Question 7: 'gender'
+      {
+        unique_question_identifier: "gender",
+        question_type: QuestionTypes.Buttons.MultipleSelection,
+        disableContinueButtonByDefault: true,
+        answer_settings: [
+          "male",
+          "female",
+        ],
+      },
   ];
 
   module.exports = {Quiz: {Types:QuestionTypes,Questions:QuizQuestions,Settings:QuestionTypeSettings}};

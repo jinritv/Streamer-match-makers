@@ -59,6 +59,7 @@ async function findOrCreateStreamer(data) {
   model.set({
     user_name: data.user_name,
     nickname: data.nickname,
+    gender: data.gender,
     is_partner: data.is_partner,
     uses_cam: data.uses_cam,
     mature_stream: data.mature_stream,
