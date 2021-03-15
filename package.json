@@ -3,10 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "start-www": "PORT=3001 nodemon ./bin/www",
     "prettify": "npx prettier --write ."
   },
   "dependencies": {
+    "@radix-ui/react-slider": "^0.0.5",
+    "@reach/dialog": "^0.13.2",
+    "@reach/visually-hidden": "^0.13.2",
     "axios": "^0.21.1",
     "cls-hooked": "^4.2.2",
     "d3-dsv": "^2.0.0",
@@ -16,10 +22,14 @@
     "express": "~4.16.1",
     "express-session": "^1.17.1",
     "morgan": "~1.9.1",
+    "next": "^10.0.7",
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.6",
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-modal": "^3.12.1",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {

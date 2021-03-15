@@ -1,0 +1,39 @@
+.root {
+  position: relative;
+  display: flex;
+  flex: 1 0 100%;
+  align-items: center;
+  user-select: none;
+  touch-action: none;
+  height: 1rem;
+}
+
+.track {
+  background-color: #f7f7f7;
+  position: relative;
+  flex-grow: 1;
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  box-shadow: inset 0 1px 2px rgb(0 0 0 / 10%);
+}
+
+.range {
+  position: absolute;
+  background-color: #bf7dd3;
+  border-radius: 9999px;
+  height: 100%;
+}
+
+.thumb {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #dab9df;
+  border: 2px solid #bf7dd3;
+  border-radius: 0.75rem;
+}
+
+.thumb:focus {
+  outline: 'none';
+  border-color: 'dodgerblue';
+}
