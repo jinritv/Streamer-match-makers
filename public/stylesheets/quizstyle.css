@@ -541,10 +541,7 @@ Unique elements (id)
 }
 
 @media (min-width: 345px) {
-  #welcome-banner {
-    margin-top: 40%;
-    text-align: center;
-  }
+ 
   #animated-words-label {
     font-size: 35px !important ;
     
@@ -555,12 +552,7 @@ Unique elements (id)
   .btn-start-quiz {
     width: 100%;
   }
-  .img_detective {
-    margin-left: 50%;
-    width: 150px;
-    height: 250px;
-  }
-
+ 
   .sphere-lg {
     width: 1700px;
     height: 1700px;

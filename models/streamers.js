@@ -19,19 +19,15 @@ class Streamers extends Sequelize.Model {
           type: DataTypes.STRING,
           allowNull: true,
         },
-        display_name: {
+        nickname: {
           type: DataTypes.STRING,
           allowNull: true,
         },
-        streamer_name: {
+        gender:{
           type: DataTypes.STRING,
-          allowNull: true,
+          allowNull: true
         },
         is_partner: {
-          type: DataTypes.BOOLEAN,
-          allowNull: true,
-        },
-        is_fulltime: {
           type: DataTypes.BOOLEAN,
           allowNull: true,
         },
@@ -41,10 +37,6 @@ class Streamers extends Sequelize.Model {
         },
         mature_stream: {
           type: DataTypes.BOOLEAN,
-          allowNull: true,
-        },
-        dob_year: {
-          type: DataTypes.INTEGER,
           allowNull: true,
         },
         logo: {

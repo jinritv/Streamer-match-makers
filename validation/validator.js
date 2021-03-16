@@ -1,23 +1,13 @@
 const { isNotEmpty } = require("../util/objectutil");
 
-// Currently, dataTypes are not used anywhere. It will be removed if no use is found
-const dataTypes = {
-  boolean: "boolean",
-  integer: "integer",
-  string: "string",
-  datetime: "datetime",
-  stringlist: "stringlist",
-};
-
 /**
  * Schema for the intermediate JSON objects between business logic and ORM.
  * Each data field has the following properties
  * 1. DB column name as key (i.g. "user_name", "display_name", "is_partner", etc)
- * 2. dataType: datatype of the DB column. Currently not in use
- * 3. required: if this field is required for validation. Validation throws error
+ * 2. required: if this field is required for validation. Validation throws error
  *    if required is true and value for that field is missing. Default to false.
- * 4. defaultValue: Default value of the field if missing in input JSON
- * 5. converter: converter function to validate input and convert to DB-friendly value.
+ * 3. defaultValue: Default value of the field if missing in input JSON
+ * 4. converter: converter function to validate input and convert to DB-friendly value.
  *    Type conversion can also occur (i.g. "true" -> true)
  *
  * TODO: The default values for empty fields were randomly set and need to be re-examined.
@@ -25,119 +15,97 @@ const dataTypes = {
 const dataFields = {
   // streamers table
   user_name: {
-    dataType: dataTypes.string,
     required: true,
     converter: usernameConverter,
   },
-  display_name: {
-    dataType: dataTypes.string,
+  nickname: {
     required: false,
     defaultValue: null,
     converter: identity,
   },
-  streamer_name: {
-    dataType: dataTypes.string,
+  gender: {
     required: false,
     defaultValue: null,
-    converter: identity,
+    converter: (inputValue)=>{if(inputValue=="F"||inputValue=="M"){
+      return inputValue;
+    }else{
+      throw new Error(`'${inputValue}' is not M or F`);
+    }},
   },
   is_partner: {
-    dataType: dataTypes.boolean,
     required: false,
     defaultValue: null,
     converter: booleanConverter,
   },
   is_fulltime: {
-    dataType: dataTypes.boolean,
     defaultValue: null,
     converter: booleanConverter,
   },
   uses_cam: {
-    dataType: dataTypes.boolean,
     defaultValue: true,
     converter: usesCamConverter,
   },
   mature_stream: {
-    dataType: dataTypes.boolean,
     defaultValue: false,
     converter: booleanConverter,
   },
-  dob_year: {
-    dataType: dataTypes.integer,
-    defaultValue: null,
-    converter: nonNegativeIntegerConverter,
-  },
   logo: {
-    dataType: dataTypes.string,
     defaultValue: null,
     converter: identity,
   },
   description: {
-    dataType: dataTypes.string,
     defaultValue: null,
     converter: identity,
   },
   // streamers_stats table
   followers: {
-    dataType: dataTypes.integer,
     defaultValue: 5000,
     converter: nonNegativeIntegerConverter,
   },
-  voice: {
-    dataType: dataTypes.integer,
-    defaultValue: 3,
-    converter: voiceConverter,
-  },
   avg_viewers: {
-    dataType: dataTypes.integer,
     defaultValue: 5000,
     converter: nonNegativeIntegerConverter,
   },
   avg_stream_duration: {
-    dataType: dataTypes.integer,
     defaultValue: null,
     converter: nonNegativeIntegerConverter,
   },
-  viewer_participation: {
-    dataType: dataTypes.integer,
+  avg_start_time: {
+    defaultValue: null,
+    converter: identity,
+  },
+  stream_start_date: {
+    defaultValue: null,
+    converter: identity,
+  },
+  streams_per_week: {
     defaultValue: null,
     converter: nonNegativeIntegerConverter,
+  },
+  chat_mode: {
+    defaultValue: null,
+    converter: chatModeConverter,
   },
   // categories table
   categories: {
-    dataType: dataTypes.stringlist,
     defaultValue: [],
     converter: stringListConverter,
   },
   // languages table
   languages: {
-    dataType: dataTypes.stringlist,
     defaultValue: [],
     converter: stringListConverter,
   },
-  // locations table
-  location: {
-    dataType: dataTypes.string,
-    defaultValue: null,
-    converter: identity,
-  },
-  // nationalities table
-  nationalities: {
-    dataType: dataTypes.stringlist,
+  // chatvibes table
+  chat_vibes: {
     defaultValue: [],
-    converter: stringListConverter,
+    converter: vibeConverter,
   },
-  // tags table
-  tags: {
-    dataType: dataTypes.stringlist,
-    defaultValue: [],
-    converter: stringListConverter,
-  },
+ 
   // vibes table
-  vibes: {
-    dataType: dataTypes.stringlist,
+  stream_vibes: {
     defaultValue: [],
-    converter: stringListConverter,
+    converter: vibeConverter,
   },
   /*{ // For future fields..
     name: "",
@@ -236,17 +204,6 @@ function nonNegativeIntegerConverter(inputValue) {
   return numValue;
 }
 
-function voiceConverter(inputValue) {
-  const value = inputValue.toLowerCase();
-  if (value === "high") {
-    return 5;
-  }
-  if (value === "low") {
-    return 1;
-  }
-  return nonNegativeIntegerConverter(inputValue);
-}
-
 // Converter for boolean column values
 function booleanConverter(inputValue) {
   const value = inputValue.toLowerCase();
@@ -291,5 +248,29 @@ function stringListConverter(inputValue) {
   }
   return output;
 }
+
+function vibeConverter(inputValue) {
+  const tokens = inputValue.split(/[,\/]/);
+  const output = [];
+  for (let token of tokens) {
+    // capitalizing the first letter of the word (to match the values in the table, which are capitaized)
+    const vibeName = token.charAt(0).toUpperCase() + token.slice(1);
+    if (vibeName) {
+      // Skip empty tokens
+      output.push(vibeName);
+    }
+  }
+  return output;
+}
+
+function chatModeConverter(inputValue){
+  // chat_mode column has special values "Anyone", "Subscribers only" and "Followers only"
+
+  const value = inputValue.toLowerCase();
+  // we dont really need to convert it, so just return 
+  return value;
+}
+
+
 
 module.exports = { validateData };

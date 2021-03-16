@@ -1,11 +1,5 @@
 const { Op } = require("sequelize");
-const {
-  Streamers,
-  StreamersStats,
-  Languages,
-  Categories,
-  StreamersNationalities,
-} = require("../models/models");
+const {Streamers} = require("../models/models");
 const { getStreamerLogos } = require("./get_streamers");
 
 // holds the default values for the 'Points' of each attribute.
@@ -16,7 +10,7 @@ const ATTRIBUTE_POINTS_DEFAULTS = {
   subonly: 1.0,
   mature: 1.0,
   chat_vibe: 1.0,
-  watchtime: 1.5,
+  gender: 1.0,
 };
 
 // Overwritten by POST from client questionnaire with request[ranks] values.
@@ -104,7 +98,7 @@ async function calculateStreamer(quizValues, callback) {
   // Get all the streamers from the database
   const allStreamersArray = await Streamers.findAll({
     // we only need a few columns from the main Streamer table
-    attributes: ["id", "user_name", "dob_year", "logo", "mature_stream"],
+    attributes: ["id", "user_name", "nickname", "logo", "mature_stream", "gender"],
     // we want to include the other associated tables such as StreamerStats, Languages, etc
     include: { all: true, nested: true },
   });
@@ -174,20 +168,6 @@ async function updateStreamerObjsWithLogo(streamerObj) {
   });
 }
 
-/**
- * Update streamer profile pic (logo) with the current one, using Twitch API
- * TODO: Cache
- */
-async function updateStreamerObjsWithLogo(streamerObj) {
-  const user_names = Object.values(streamerObj).map(obj => obj.user_name);
-
-  // Get the current logos
-  const logo_dict = await getStreamerLogos(user_names);
-  Object.values(streamerObj).forEach(obj => {
-    obj.logo = logo_dict[obj.user_name] || obj.logo;  // Update if necessary
-  });
-}
-
 
 /** THIS IS NOT COMPLETE!
 
@@ -212,9 +192,9 @@ function matchStreamers(prefs, streamers) {
   // array to store the matched streamers
   let matchValues = [];
   let preferredLanguages = getLanguageNames(prefs.languages);
-  let normalizedWatchtime = normalizeWatchtime(prefs.watchtime);
+  //let normalizedWatchtime = normalizeWatchtime(prefs.watchtime);
   console.log("Input categories", prefs.content);
-  console.log("Normalized watchtime", normalizedWatchtime);
+  //console.log("Normalized watchtime", normalizedWatchtime);
 
   streamers.forEach((streamer) => {
     // create an entry for the streamer in the score object
@@ -226,7 +206,7 @@ function matchStreamers(prefs, streamers) {
       Maturity: 0,
       "Chat Mode": 0,
       "Chat Vibe": 0,
-      Watchtime: 0,
+      Gender: 0,
     };
 
     // check against average viewers preference
@@ -316,7 +296,7 @@ function matchStreamers(prefs, streamers) {
     }
 
     // chat vibe check
-    let chatVibes = streamer.ChatVibes.map((row) => row.vibe.toLowerCase());
+    let chatVibes = streamer.ChatVibes.map((row) => row.chatvibe.toLowerCase());
     let matchVibes = 0;
     prefs.chat_vibe.forEach((vibe) => {
       if (chatVibes.includes(vibe.toLowerCase())) {
@@ -329,22 +309,32 @@ function matchStreamers(prefs, streamers) {
         (matchVibes * ATTRIBUTE_POINTS.chat_vibe) /
         prefs.chat_vibe.length;
       scores += vibeScore;
-      stats[streamer.id].chat_vibe = Math.ceil(
+      stats[streamer.id]["Chat Vibe"] = Math.ceil(
         (vibeScore / ATTRIBUTE_POINTS.chat_vibe) * 100
       );
     }
 
-    // check for watch time
-    let watchtimeScore =
-      calculateWatchtimeScore(
-        normalizedWatchtime,
-        streamer.StreamersStat.start_stream,
-        streamer.StreamersStat.avg_stream_duration
-      ) * ATTRIBUTE_POINTS.watchtime;
-    scores += watchtimeScore;
-    stats[streamer.id]["Watchtime"] = Math.ceil(
-      (watchtimeScore / ATTRIBUTE_POINTS.watchtime) * 100
-    );
+    //check for gender preference
+    // if they chose male and female, its 100% match anyways, or 0
+    prefs.gender.forEach(gender=>{
+      if(streamer.gender == gender[0].toUpperCase()){ // we receive a string of 'male' or 'female' so we convert to M or F
+        scores += (1 * ATTRIBUTE_POINTS.gender);
+        stats[streamer.id]["Gender"] = 100; // set 100% match
+      }
+      
+    })
+
+    // // check for watch time
+    // let watchtimeScore =
+    //   calculateWatchtimeScore(
+    //     normalizedWatchtime,
+    //     streamer.StreamersStat.start_stream,
+    //     streamer.StreamersStat.avg_stream_duration
+    //   ) * ATTRIBUTE_POINTS.watchtime;
+    // scores += watchtimeScore;
+    // stats[streamer.id]["Watchtime"] = Math.ceil(
+    //   (watchtimeScore / ATTRIBUTE_POINTS.watchtime) * 100
+    // );
 
     // finally calculate the match % for our matched streamers and add them to the object we return back to the client
     let similarity = Math.round((scores / TOTAL_ATTRIBUTES) * 100);
@@ -440,16 +430,6 @@ function getFollowerCountRange(follower_count) {
   return [0, 1000000]; // Returns all if not selected
 }
 
-// the database only contains a column for the DOB year,
-// not age, so we need to calculate that first
-function getStreamerAgeRange(ageRange) {
-  let thisYear = new Date().getFullYear();
-
-  const maxDOB = Number(thisYear - ageRange.min || thisYear - 25);
-  const minDOB = Number(thisYear - ageRange.max || thisYear - 75);
-
-  return [minDOB, maxDOB];
-}
 
 function getLanguageNames(languages) {
   // Frontend has long language name, DB has short language names.
@@ -468,13 +448,6 @@ function getLanguageNames(languages) {
   return languages.map((lang) => nameMap[lang]);
 }
 
-function getVoice(voice) {
-  if (!voice) {
-    return null;
-  }
-  return Number(voice.trim()[0]);
-}
-
 function getYesOrNo(condition) {
   if (!condition) {
     return false;
@@ -485,6 +458,7 @@ function getYesOrNo(condition) {
 // only handle weekdays because thats all we have
 // on DB
 function normalizeWatchtime(input) {
+
   if (input == undefined || !input.weekdays) {
     return null;
   }

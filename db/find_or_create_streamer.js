@@ -2,12 +2,10 @@ const { getSequelizeFromConfig } = require("./db");
 const {
   Categories,
   Languages,
-  Locations,
-  Nationalities,
   StreamersStats,
   Streamers,
-  Tags,
   Vibes,
+  ChatVibes
 } = require("../models/models");
 const { validateData } = require("../validation/validator");
 const { isNotEmpty } = require("../util/objectutil");
@@ -39,10 +37,8 @@ async function findOrCreateStreamerFromData(streamerData) {
       // Step 3. Set many-to-many relations
       await findOrCreateCategories(streamerModel, data.categories); // Categories
       await findOrCreateLanguages(streamerModel, data.languages); // Languages
-      await findOrCreateLocations(streamerModel, data.locations); // Locations
-      await findOrCreateNationalities(streamerModel, data.nationalities); // Nationalities
-      await findOrCreateTags(streamerModel, data.tags); // Tags
-      await findOrCreateVibes(streamerModel, data.vibes); // Vibes
+      await findOrCreateVibes(streamerModel, data.stream_vibes); // Vibes
+      await findOrCreateChatVibes(streamerModel, data.chat_vibes); // Vibes
 
       // TODO: Add collab relations
     });
@@ -62,13 +58,11 @@ async function findOrCreateStreamer(data) {
   });
   model.set({
     user_name: data.user_name,
-    display_name: data.display_name,
-    streamer_name: data.streamer_name,
+    nickname: data.nickname,
+    gender: data.gender,
     is_partner: data.is_partner,
-    is_fulltime: data.is_fulltime,
     uses_cam: data.uses_cam,
     mature_stream: data.mature_stream,
-    dob_year: data.dob_year,
     logo: data.logo,
     description: data.description,
   });
@@ -86,14 +80,18 @@ async function findOrCreateStreamerStat(streamerModel, data) {
     voice: data.voice,
     avg_viewers: data.avg_viewers,
     avg_stream_duration: data.avg_stream_duration,
+    avg_start_time: data.avg_start_time,
     viewer_participation: data.viewer_participation,
+    streams_per_week: data.streams_per_week,
+    stream_start_date: data.stream_start_date,
+    chat_mode: data.chat_mode
   });
   await model.save();
 }
 
 // Update categories table and update association with streamer
 async function findOrCreateCategories(streamerModel, category_names) {
-  console.log("category names: " + category_names);
+
   const categoryModels = await findOrCreateNames(
     Categories,
     "category",
@@ -112,36 +110,15 @@ async function findOrCreateLanguages(streamerModel, language_names) {
   await streamerModel.setLanguages(languageModels);
 }
 
-// Update locations table and update association with streamer
-async function findOrCreateLocations(streamerModel, location_names) {
-  const locationModels = await findOrCreateNames(
-    Locations,
-    "location",
-    location_names
-  );
-  await streamerModel.setLocations(locationModels);
-}
-
-// Update nationalities table and update association with streamer
-async function findOrCreateNationalities(streamerModel, nationality_names) {
-  const nationalityModels = await findOrCreateNames(
-    Nationalities,
-    "nationality",
-    nationality_names
-  );
-  await streamerModel.setNationalities(nationalityModels);
-}
-
-// Update tags table and update association with streamer
-async function findOrCreateTags(streamerModel, tag_names) {
-  const tagModels = await findOrCreateNames(Tags, "tag", tag_names);
-  await streamerModel.setTags(tagModels);
-}
-
 // Update vibes table and update association with streamer
 async function findOrCreateVibes(streamerModel, vibe_names) {
   const vibeModels = await findOrCreateNames(Vibes, "vibe", vibe_names);
   await streamerModel.setVibes(vibeModels);
+}
+// Update vibes table and update association with streamer
+async function findOrCreateChatVibes(streamerModel, vibe_names) {
+  const vibeModels = await findOrCreateNames(ChatVibes, "chatvibe", vibe_names);
+  await streamerModel.setChatVibes(vibeModels);
 }
 
 // Generic internal function to find-or-create names in table.
@@ -158,28 +135,3 @@ async function findOrCreateNames(modelClass, columnName, names) {
 }
 
 module.exports = { findOrCreateStreamerFromData };
-
-//findOrCreateStreamerFromData(tempData);
-const tempData = {
-  user_name: "name",
-  display_name: "이름",
-  streamer_name: "test name",
-  is_partner: null,
-  is_fulltime: null,
-  uses_cam: null,
-  mature_stream: null,
-  dob_year: null,
-  logo: null,
-  description: null,
-  followers: null,
-  voice: null,
-  avg_viewers: 30,
-  avg_stream_duration: null,
-  viewer_participation: null,
-  categories: ["cat1", "cat2", "cat3"],
-  languages: ["lang1", "lang2", "lang3"],
-  locations: ["location1"],
-  nationalities: ["nationality1", "nation2"],
-  tags: ["tag2", "tag3"],
-  vibes: ["vibe1", "vibe2", "vibe_new"],
-};
