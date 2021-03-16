@@ -133,21 +133,22 @@ const QuestionTypeSettings = {
       disableContinueButtonByDefault: false,
       answer_settings: {
         min: 0,
-        max: 10000,
+        max: 2000,
         incrementBy: 50,
-        defaultMin: 2500,
-        defaultMax: 7500,
+        defaultMin: 200,
+        defaultMax: 1000,
       },
     },
   
     // Question 7: 'gender'
       {
         unique_question_identifier: "gender",
-        question_type: QuestionTypes.Buttons.MultipleSelection,
+        question_type: QuestionTypes.Buttons.SingleSelection,
         disableContinueButtonByDefault: true,
         answer_settings: [
           "male",
           "female",
+          "nopreference",
         ],
       },
   ];

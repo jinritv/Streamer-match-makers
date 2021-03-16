@@ -316,13 +316,15 @@ function matchStreamers(prefs, streamers) {
 
     //check for gender preference
     // if they chose male and female, its 100% match anyways, or 0
-    prefs.gender.forEach(gender=>{
-      if(streamer.gender == gender[0].toUpperCase()){ // we receive a string of 'male' or 'female' so we convert to M or F
-        scores += (1 * ATTRIBUTE_POINTS.gender);
-        stats[streamer.id]["Gender"] = 100; // set 100% match
-      }
-      
-    })
+    
+    if(prefs.gender[0].toUpperCase() == streamer.gender || prefs.gender == "nopreference"){ // we receive a string of 'male', 'female', or "no preference" so we convert to M or F
+      scores += (1 * ATTRIBUTE_POINTS.gender);
+      stats[streamer.id]["Gender"] = 100; // set 100% match
+    }
+    else{
+      stats[streamer.id]["Gender"] = 0; // set 100% match
+    }
+    
 
     // // check for watch time
     // let watchtimeScore =

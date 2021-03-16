@@ -82,5 +82,6 @@
   "range-display-average_viewers": "Between [*] and [*] average viewers",
   "question-text-gender":"Streamer's gender?",
   "button-text-gender-male":"Male",
-  "button-text-gender-female":"Female"
+  "button-text-gender-female":"Female",
+  "button-text-gender-nopreference":"No Preference"
 }
