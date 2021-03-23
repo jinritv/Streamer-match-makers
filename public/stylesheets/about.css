@@ -1,0 +1,130 @@
+.about {
+   /* About us */
+
+font-family: Poppins;
+font-style: normal;
+font-weight: bold;
+font-size: 200px;
+
+/* or 30% */
+display: flex;
+align-items: center;
+
+color: rgba(113, 2, 115, 0.2);
+}
+
+/* image 106 */
+.mainvideo {
+background: rgba(196, 196, 196, 0.2);
+border-radius: 40px;
+min-height: 500px;
+
+}
+
+.abouttwiri {
+/* About Twiri */
+width: 1029px;
+height: 130px;
+
+font-family: Poppins;
+font-style: normal;
+font-weight: 300;
+font-size: 22px;
+line-height: 28px;
+/* or 127% */
+align-items: center;
+
+color: #131212;
+}
+
+/* Rectangle 36 */
+
+.rectangle {
+background: #FFFFFF;
+box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.25);
+border-radius: 15px;
+margin: 25px 15px;
+margin-bottom: 2ex;
+}
+
+.aboutus_img1 {
+background: url(info.png);
+}
+
+.achievement {
+    /* ACHIEVMENTS */
+
+font-family: Poppins;
+font-style: normal;
+font-weight: bold;
+font-size: 70px;
+line-height: 60px;
+/* identical to box height, or 86% */
+display: flex;
+align-items: center;
+
+color: #FFFFFF;
+}
+
+.background {
+/* Rectangle 39 */
+width:100%;
+background: #670269;
+}
+
+.proudof {
+    /* We are proud of */
+font-family: Poppins;
+font-style: normal;
+font-weight: 300;
+font-size: 30px;
+line-height: 28px;
+/* or 93% */
+display: flex;
+align-items: center;
+text-align: center;
+margin: 25px 15px;
+margin-bottom: 2ex;
+color: #FFFFFF;
+}
+
+.largenumber {
+font-family: Poppins;
+font-style: normal;
+font-weight: bold;
+font-size: 80px;
+/* identical to box height, or 75% */
+display: flex;
+align-items: center;
+letter-spacing: 0.05em;
+
+color: #FFFFFF;
+}
+
+.largetext {
+font-family: Poppins;
+font-style: normal;
+font-weight: 500;
+font-size: 25px;
+/* identical to box height, or 240% */
+display: flex;
+align-items: center;
+letter-spacing: 0.05em;
+
+color: #FFFFFF;
+}
+
+.smalltext {
+
+font-family: Poppins;
+font-style: normal;
+font-weight: 300;
+font-size: 20px;
+/* identical to box height, or 300% */
+display: flex;
+align-items: center;
+letter-spacing: 0.05em;
+
+color: #FDC510;
+
+}
