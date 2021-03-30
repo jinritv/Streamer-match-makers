@@ -2,23 +2,31 @@
     max-width: 1440px;
 }
 .offsetText_hotshot { 
-    transform: translate(0px,-20px); 
+    transform: translate(-50%,0); 
 }
 
 .about {
-   /* About us */
-font-family: Poppins;
-font-style: normal;
-font-weight: bold;
-font-size: 300px;
+    /* About us */
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 300px;
+  text-align: center;
+  color: rgba(113, 2, 115, 0.2);
 
-
-/* or 30% */
-display: flex;
-align-items: center;
-
-color: rgba(113, 2, 115, 0.2);
 }
+
+.about_small {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 80px;
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  color: #363636;
+}
+
 
 /* image 106 */
 .mainvideo {
@@ -41,11 +49,10 @@ font-size: 22px;
 line-height: 28px;
 /* or 127% */
 align-items: center;
-
+padding: 1em;
 color: #131212;
 }
 
-/* Rectangle 36 */
 
 .rectangle {
 background: #FFFFFF;
@@ -70,6 +77,7 @@ line-height: 60px;
 /* identical to box height, or 86% */
 display: flex;
 align-items: center;
+padding-top: 1em;
 
 color: #FFFFFF;
 }
@@ -77,6 +85,7 @@ color: #FFFFFF;
 .background {
 /* Rectangle 39 */
 width:100%;
+margin-top: 3em;
 background: #670269;
 }
 
@@ -137,8 +146,40 @@ justify-content: space-evenly;
 color: #FDC510;
 
 }
+.events_ron {
+  /* Events */
+font-family: Poppins;
+font-style: normal;
+font-weight: bold;
+font-size: 70px;
+line-height: 60px;
+/* identical to box height, or 86% */
+display: flex;
+align-items: center;
+margin-top: 3rem;
+margin-bottom: 2rem;
+color: #000000;
+justify-content:center;
 
- /*timeline look*/
+}
+
+.video_subtitle {
+
+font-family: Poppins;
+font-style: normal;
+font-weight: 300;
+font-size: 30px;
+line-height: 60px;
+/* identical to box height, or 200% */
+display: flex;
+align-items: center;
+justify-content:center;
+padding: 1em;
+
+color: #FFFFFF;
+
+}
+ /*timeline look from Hooyaz*/
  .timeline {
     position: relative;
     width: 100%;
