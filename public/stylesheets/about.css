@@ -1,10 +1,17 @@
+.ure_funny {
+    max-width: 1440px;
+}
+.offsetText_hotshot { 
+    transform: translate(0px,-20px); 
+}
+
 .about {
    /* About us */
-
 font-family: Poppins;
 font-style: normal;
 font-weight: bold;
-font-size: 200px;
+font-size: 300px;
+
 
 /* or 30% */
 display: flex;
@@ -18,6 +25,7 @@ color: rgba(113, 2, 115, 0.2);
 background: rgba(196, 196, 196, 0.2);
 border-radius: 40px;
 min-height: 500px;
+margin:auto; 
 
 }
 
@@ -97,7 +105,7 @@ font-size: 80px;
 display: flex;
 align-items: center;
 letter-spacing: 0.05em;
-
+justify-content: space-evenly;
 color: #FFFFFF;
 }
 
@@ -108,8 +116,8 @@ font-weight: 500;
 font-size: 25px;
 /* identical to box height, or 240% */
 display: flex;
-align-items: center;
 letter-spacing: 0.05em;
+justify-content: space-evenly;
 
 color: #FFFFFF;
 }
@@ -121,9 +129,10 @@ font-style: normal;
 font-weight: 300;
 font-size: 20px;
 /* identical to box height, or 300% */
-display: flex;
-align-items: center;
+display: flex; 
 letter-spacing: 0.05em;
+margin-bottom: 3rem;
+justify-content: space-evenly;
 
 color: #FDC510;
 
