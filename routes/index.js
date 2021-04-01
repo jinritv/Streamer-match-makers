@@ -11,6 +11,7 @@ router.get("/setTheme/:theme", (req, res) => {
 	req.session.theme = req.params.theme;
 	req.session.save();
 });
+
 router.get("/setLang/:lang", (req, res) => {
 	req.session.language = req.params.lang;
 	req.session.save();
@@ -18,15 +19,11 @@ router.get("/setLang/:lang", (req, res) => {
 
 // Home/Main quiz page
 router.get("/", (req, res) => {
-	if (!req.session.theme)
-	{
-		req.session.theme = "light-mode";
-	}
-    let THEME_TO_SHOW = req.session.theme;
-    res.render("index", {
-	Theme: THEME_TO_SHOW,
-    });
+  res.render("index", {
+	  Theme: req.session.theme ?? "light-mode",
+  });
 });
+
 // renders the html for the quiz and most of the page
 router.post('/getHtml', function(req, res){
   let LANGUAGE_TO_GET = req.session.language && req.session.language != "" ? req.session.language : req.body.language;
@@ -110,9 +107,44 @@ router.post("/getLocalization", (req, res, next) => {
   LoadLanguageJSON(LANGUAGE_TO_GET, getLanguageJSONCallback);
 });
 
+// About page
+router.get("/about", (req, res, next) => {
+  // default to en-US if there are no localization set
+  let LANGUAGE_TO_GET = req.session.language ?? "en-US";
+
+  const onLangLoaded = (result, error)=>{ 
+    res.render("about", {
+      Theme: req.session.theme ?? "light-mode",
+      // our function to get texts (pre-loaded with our language's text)
+      getText: getText(result.Texts),
+      // languages available
+      Languages:result.Languages,
+      // the language we use
+      ThisLang: LANGUAGE_TO_GET
+    });
+  }
+  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded)
+});
+
+// Contribute to the project page
+router.get("/contribution", (req, res, next) => {
+    res.render('contribution', {
+      Theme: req.session.theme ?? "light-mode"
+    });
+});
+
+// Submit your stream page
+router.get("/submission", (req, res, next) => {
+  res.render('submission', {
+    Theme: req.session.theme ?? "light-mode"
+  });
+});
+
 // Not-found page
 router.get("/404", (req, res) => {
-  res.status(404).render("not_found");
+  res.status(404).render("not_found", {
+    Theme: req.session.theme ?? "light-mode"
+  });
 });
 
 router.get("*", (req, res) => {
