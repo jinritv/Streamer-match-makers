@@ -35,6 +35,14 @@ Download PostgreSQL [here](https://www.postgresql.org/download/). When you insta
 
 Please go to the project root directory and make a copy of the `.sample-env` file, renaming it to `.env`. Open your newly created `.env` file with a text editor and enter your local DB credentials. Please make sure to not commit the `.env` file that contains the connection string.
 
+### Install dependencies
+
+Open Command Prompt and `cd` to the location of this project. First we must install the required packages. In this folder, run the command
+
+`npm install`
+
+And it should install the required packages we need (which are defined in the package.json file).
+
 ### DB connection test
 
 Run test_db_connection.js as instructed in admin/README.md, and make sure that the success message is displayed.
@@ -47,12 +55,6 @@ Run test_db_connection.js as instructed in admin/README.md, and make sure that t
 4. Run recreate_database.js as instructed in admin/README.md
 
 ## Verify Node server is working
-
-Open Command Prompt and `cd` to the location of this project. First we must install the required packages. In this folder, run the command
-
-`npm install`
-
-And it should install the required packages we need (which are defined in the package.json file).
 
 To start the server, run the command `npm start`
 
