@@ -5,13 +5,20 @@
   <link href="../stylesheets/about.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <%- include ("./partials/stylesheets") %>
+  <link href="/stylesheets/about.css" rel="stylesheet" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
 </head>
 <!-- pink circle <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640" width="640" height="640"><defs><path d="M432.9 320C432.9 382.31 382.31 432.9 320 432.9C257.69 432.9 207.1 382.31 207.1 320C207.1 257.69 257.69 207.1 320 207.1C382.31 207.1 432.9 257.69 432.9 320Z" id="a3OQc4AZJf"/></defs><g><g><g><use xlink:href="#a3OQc4AZJf" opacity="1" fill="#ff8fe7" fill-opacity="1"/></g></g></g></svg> -->
-<body id="full-page" class="<% Theme %>">
+<body id="about-page" class="<%= Theme %>">
+  <%- include ("./partials/header",{
+      BrandName: getText('logoText'),
+      thisLang: ThisLang,
+      Languages, 
+  }) %>
   <div class="container-fluid" style="max-width: 80%; margin: 0 auto;">
     <div class="row text-center" style="width: 100%; position: relative;">
         <div class="text-center about" style="width: 100%; text-align: center;">
@@ -180,6 +187,20 @@
       </div>
     </div>
   </div>
+  <%- include ("./partials/footer",{
+      CopyrightText:  getText('copyright-text'),
+      About:  getText('footer-about'),
+      Submit:  getText('footer-submit'),
+      Contribute:  getText('footer-contribute'),
+      DarkMode:  getText('dark-mode-label')
+  }) %>
+
 </body>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<script src="/javascripts/bootstrap-slider.min.js"></script>
+<script src="/javascripts/custom-theme.js"></script>
+<script src="/javascripts/text-handling.js"></script>
+<script src="/javascripts/about.js"></script>
 </html>
