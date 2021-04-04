@@ -18,7 +18,7 @@ main {
   font-family: Poppins;
   font-style: normal;
   font-weight: bold;
-  font-size: 150px;
+  font-size: 10vw;
   text-align: center;
   color: rgba(113, 2, 115, 0.2);
 
@@ -28,9 +28,9 @@ main {
   font-family: Poppins;
   font-style: normal;
   font-weight: bold;
-  font-size: 60px;
+  font-size: 4vw;
   position: absolute;
-  bottom: 20px;
+  bottom: 0;
   color: #363636;
   width: 100%;
   left: 50%;
