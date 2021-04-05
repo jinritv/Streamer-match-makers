@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <link href="../stylesheets/about.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <%- include ("./partials/stylesheets") %>
+  <link href="/stylesheets/submission.css" rel="stylesheet" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+</head>
+
+<body id="full-page" class="<%= Theme %>">
+  <%- include ("./partials/header",{
+      BrandName: getText('logoText'),
+      thisLang: ThisLang,
+      Languages, 
+  }) %>
+  <main id="submission-page-main-container">
+    <div class="submission-container container-fluid justify-content-center">
+      <div class="submission-header-container container-fluid justify-content-center mb-5" style="max-width: 60%;">
+        <div class="row justify-content-center submit-channel-text">
+          Submit a Channel
+        </div>
+        <div class="row justify-content-center channel-condition">
+          * At least 500 Followers / 10 avg. Viewers
+        </div>
+      </div>
+
+      <div class="container-fluid form-container">
+        <div class="row">
+          <div class="col-lg-3 d-none d-lg-block">
+            <div class="row justify-content-center">
+              Submitted Streamers
+            </div>
+            <div class="row justify-content-center m-2">
+              <img src="/images/streamer1.png">
+            </div>
+            <div class="row justify-content-center m-2">
+              <img src="/images/streamer5.png">
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="row mt-3 justify-content-between">
+              <div class="col-12 col-lg-5">
+                <div class="row">
+                  <label name="submitter-name">Your Name</label>
+                </div>
+                <div class="row">
+                  <input type="text" class="w-100">
+                </div>
+              </div>
+              <div class="col-12 col-lg-5">
+                <div class="row">
+                  <label name="submitter-twitch-username">Your Twitch userame</label>
+                </div>
+                <div class="row">
+                  <input type="text" class="w-100">
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 justify-content-center justify-content-lg-start">
+              Do you follow JinriTV? &nbsp;
+              <input type="radio" name="is-follower">Yes
+              &nbsp;
+              <input type="radio" name="is-follower">No
+            </div>
+            <div class="row mt-3 justify-content-between">
+              <div class="col-12 col-lg-5">
+                <div class="row">
+                  <label name="streamer-name">Streamer name</label>
+                </div>
+                <div class="row">
+                  <input type="text" class="w-100">
+                </div>
+              </div>
+              <div class="col-12 col-lg-5">
+                <div class="row">
+                  <label name="streamer-twitch-username">Streamer Twitch userame</label>
+                </div>
+                <div class="row">
+                  <input type="text" class="w-100">
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-12">
+                <div class="row">
+                  <label name="message">Message</label>
+                </div>
+                <div class="row">
+                  <textarea name="message" class="w-100"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3 justify-content-center">
+              <button type="submit" class="submit-button">Submit!</button>
+            </div>
+          </div>
+          <div class="col-lg-3 d-none d-lg-block">
+            <img src="/images/mascot.png">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </main>
+  <%- include ("./partials/footer",{
+      CopyrightText:  getText('copyright-text'),
+      About:  getText('footer-about'),
+      Submit:  getText('footer-submit'),
+      Contribute:  getText('footer-contribute'),
+      DarkMode:  getText('dark-mode-label')
+  }) %>
+
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<script src="/javascripts/bootstrap-slider.min.js"></script>
+<script src="/javascripts/custom-theme.js"></script>
+<script src="/javascripts/text-handling.js"></script>
+<script src="/javascripts/about.js"></script>
+</html>
