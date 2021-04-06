@@ -3,68 +3,76 @@ var router = express.Router();
 
 const calculateStreamer = require("../backend/calculate_streamer");
 const createStreamer = require("../backend/create_streamer");
-const {LoadLanguageJSON, getText} = require("../backend/localizations/localization");
+const {
+  LoadLanguageJSON,
+  getText,
+} = require("../backend/localizations/localization");
 
-const {Quiz} = require("../backend/quiz_questions");
+const { Quiz } = require("../backend/quiz_questions");
 
 router.get("/setTheme/:theme", (req, res) => {
-	req.session.theme = req.params.theme;
-	req.session.save();
+  req.session.theme = req.params.theme;
+  req.session.save();
 });
 
 router.get("/setLang/:lang", (req, res) => {
-	req.session.language = req.params.lang;
-	req.session.save();
+  req.session.language = req.params.lang;
+  req.session.save();
 });
 
 // Home/Main quiz page
 router.get("/", (req, res) => {
   res.render("index", {
-	  Theme: req.session.theme ?? "light-mode",
+    Theme: req.session.theme ?? "light-mode",
   });
 });
 
 // renders the html for the quiz and most of the page
-router.post('/getHtml', function(req, res){
-  let LANGUAGE_TO_GET = req.session.language && req.session.language != "" ? req.session.language : req.body.language;
+router.post("/getHtml", function (req, res) {
+  let LANGUAGE_TO_GET =
+    req.session.language && req.session.language != ""
+      ? req.session.language
+      : req.body.language;
   console.log(`rendering html for ${LANGUAGE_TO_GET}`);
-  const onLangLoaded = (result, error)=>{ 
+  const onLangLoaded = (result, error) => {
     res.render("./full_page", {
       // quiz questions we need to render the quiz html
       Quiz,
       // our function to get texts (pre-loaded with our language's text)
       getText: getText(result.Texts),
       // languages available
-      Languages:result.Languages,
+      Languages: result.Languages,
       // the language we use
       ThisLang: LANGUAGE_TO_GET,
     });
-  }
-  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded)
+  };
+  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded);
 });
 
 // renders the html for the quiz and most of the page
-router.post('/getQuizData', function(req, res){
+router.post("/getQuizData", function (req, res) {
   let LANGUAGE_TO_GET = req.body.language;
   console.log(`getting rest of data for ${LANGUAGE_TO_GET}`);
-  const onLangLoaded = (result, error)=>{
+  const onLangLoaded = (result, error) => {
     let requiredTexts = {
-      'animated-words': result.Texts['animated-words'],
-      'dark-mode-label': result.Texts['dark-mode-label'],
-      'light-mode-label': result.Texts['light-mode-label'],
-      'generated-quiz-modal-progress-label': result.Texts['generated-quiz-modal-progress-label'],
-      'range-display-average_viewers': result.Texts['range-display-average_viewers'],
-      'results': result.Texts['results'],
-      'this-language':result.Texts['this-language']
-    } 
+      "animated-words": result.Texts["animated-words"],
+      "dark-mode-label": result.Texts["dark-mode-label"],
+      "light-mode-label": result.Texts["light-mode-label"],
+      "generated-quiz-modal-progress-label":
+        result.Texts["generated-quiz-modal-progress-label"],
+      "range-display-average_viewers":
+        result.Texts["range-display-average_viewers"],
+      results: result.Texts["results"],
+      "this-language": result.Texts["this-language"],
+    };
     res.send({
       Quiz,
-      requiredTexts
+      requiredTexts,
     });
-  }
+  };
 
-  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded)
-})
+  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded);
+});
 
 // Called at the end of the quiz
 router.post("/calculateStreamer", (req, res, next) => {
@@ -112,18 +120,18 @@ router.get("/about", (req, res, next) => {
   // default to en-US if there are no localization set
   let LANGUAGE_TO_GET = req.session.language ?? "en-US";
 
-  const onLangLoaded = (result, error)=>{ 
+  const onLangLoaded = (result, error) => {
     res.render("about", {
       Theme: req.session.theme ?? "light-mode",
       // our function to get texts (pre-loaded with our language's text)
       getText: getText(result.Texts),
       // languages available
-      Languages:result.Languages,
+      Languages: result.Languages,
       // the language we use
-      ThisLang: LANGUAGE_TO_GET
+      ThisLang: LANGUAGE_TO_GET,
     });
-  }
-  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded)
+  };
+  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded);
 });
 
 // Contribute to the project page
@@ -131,31 +139,43 @@ router.get("/contribution", (req, res, next) => {
   // default to en-US if there are no localization set
   let LANGUAGE_TO_GET = req.session.language ?? "en-US";
 
-  const onLangLoaded = (result, error)=>{ 
+  const onLangLoaded = (result, error) => {
     res.render("contribution", {
       Theme: req.session.theme ?? "light-mode",
       // our function to get texts (pre-loaded with our language's text)
       getText: getText(result.Texts),
       // languages available
-      Languages:result.Languages,
+      Languages: result.Languages,
       // the language we use
-      ThisLang: LANGUAGE_TO_GET
+      ThisLang: LANGUAGE_TO_GET,
     });
-  }
-  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded)
+  };
+  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded);
 });
 
 // Submit your stream page
 router.get("/submission", (req, res, next) => {
-  res.render('submission', {
-    Theme: req.session.theme ?? "light-mode"
-  });
+  // default to en-US if there are no localization set
+  let LANGUAGE_TO_GET = req.session.language ?? "en-US";
+
+  const onLangLoaded = (result, error) => {
+    res.render("submission", {
+      Theme: req.session.theme ?? "light-mode",
+      // our function to get texts (pre-loaded with our language's text)
+      getText: getText(result.Texts),
+      // languages available
+      Languages: result.Languages,
+      // the language we use
+      ThisLang: LANGUAGE_TO_GET,
+    });
+  };
+  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded);
 });
 
 // Not-found page
 router.get("/404", (req, res) => {
   res.status(404).render("not_found", {
-    Theme: req.session.theme ?? "light-mode"
+    Theme: req.session.theme ?? "light-mode",
   });
 });
 
