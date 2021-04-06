@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <link href="../stylesheets/contribution.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <%- include ("./partials/stylesheets") %>
+  <link href="/stylesheets/contribution.css" rel="stylesheet" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+</head>
+<body id="full-page" class="<%= Theme %>">
+    <%- include ("./partials/header",{
+        BrandName: getText('logoText'),
+        thisLang: ThisLang,
+        Languages, 
+    }) %>
+    <main id="contribution-main-container" class="full-page" role="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-10">
+                <div class="text-center JR" style="width: 100%;">
+                    JR
+                  </div>
+                  <div class="offsetText_hotshot contributors" aria-hidden="true">
+                    OUR <br>
+                    CONTRIBUTORS
+                  </div>
+                  <div class="offsetText_hotshot" aria-hidden="true">
+                    Our professional team will be
+                    happy to bring amazing ideas <br>
+                    and projects to life
+                </div>
+                </div> 
+                <div class="col-2">
+                    test? does it work?
+                </div>
+            </div>
+        </div>
+    </main>
+</body>

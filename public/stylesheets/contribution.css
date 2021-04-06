@@ -1,0 +1,47 @@
+body {
+    overflow: auto;
+  }
+  
+  main {
+    margin-top: 100px;
+  }
+
+.JR {
+
+font-family: Poppins;
+font-style: normal;
+font-weight: bold;
+font-size: 400px;
+line-height: 60px;
+/* identical to box height, or 15% */
+display: flex;
+align-items: center;
+padding-top: 10%;
+
+
+color: rgba(113, 2, 115, 0.14);
+}
+
+.contributors {
+font-family: Poppins;
+font-style: normal;
+font-weight: bold;
+font-size: 60px;
+line-height: 60px;
+/* or 100% */
+display: flex;
+text-align: left;
+color: #363636;
+padding-bottom: 20px;
+}
+
+.offsetText_hotshot { 
+    transform: translate(5px,-80px); 
+}
+
+finding {
+    /* Rectangle 37 */
+background: #FFFFFF;
+border-radius: 15px;
+
+}

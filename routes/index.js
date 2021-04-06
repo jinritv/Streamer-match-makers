@@ -128,9 +128,21 @@ router.get("/about", (req, res, next) => {
 
 // Contribute to the project page
 router.get("/contribution", (req, res, next) => {
-    res.render('contribution', {
-      Theme: req.session.theme ?? "light-mode"
+  // default to en-US if there are no localization set
+  let LANGUAGE_TO_GET = req.session.language ?? "en-US";
+
+  const onLangLoaded = (result, error)=>{ 
+    res.render("contribution", {
+      Theme: req.session.theme ?? "light-mode",
+      // our function to get texts (pre-loaded with our language's text)
+      getText: getText(result.Texts),
+      // languages available
+      Languages:result.Languages,
+      // the language we use
+      ThisLang: LANGUAGE_TO_GET
     });
+  }
+  LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded)
 });
 
 // Submit your stream page
