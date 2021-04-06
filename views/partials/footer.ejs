@@ -1,6 +1,6 @@
     <div class="page-footer">
-      <div class="container d-flex justify-content-between">
-        <div>
+      <div class="row d-flex">
+        <div class="col-12 col-lg-6 ml-lg-2 mr-lg-auto text-center text-lg-left">
           <a href="/about" class="footer-text" style="cursor: pointer;"><%= About %></a>
           <span> | </span>
           <a href="/submission" class="footer-text" style="cursor: pointer;"><%= Submit %></a>
@@ -8,8 +8,8 @@
           <a href="/contribution" class="footer-text" style="cursor: pointer;"><%= Contribute %></a>
         </div>
       
-        <span class="footer-text"><%= CopyrightText %></span>
-        <div onclick="toggleDarkMode()" id="dark-mode-toggle">
+        <div class="footer-text col-6 col-lg-3 text-center text-lg-right"><%= CopyrightText %></div>
+        <div onclick="toggleDarkMode()" id="dark-mode-toggle" class="col-6 col-lg-2 mr-lg-2 text-center text-lg-right">
           <span id="theme-icon">🌚</span>
           <span id="theme-label"><%= DarkMode %></span>
         </div>

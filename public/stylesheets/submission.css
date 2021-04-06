@@ -1,0 +1,40 @@
+.submission-container .submit-channel-text {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 6vw;
+
+  color: #4B4B4B;
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.submission-container .channel-condition {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2vw;
+  /*line-height: 40px;*/
+  /* identical to box height, or 267% */
+
+  /*display: flex;
+  align-items: center;
+  text-align: center;*/
+
+  color: #CF3232;
+}
+
+.form-container input,
+.form-container textarea {
+  background: #FFFFFF;
+  border: 1px solid #D9A648;
+  box-sizing: border-box;
+  box-shadow: 4px 4px 15px rgba(255, 255, 255, 0.25);
+  border-radius: 15px;
+}
+
+.form-container .submit-button {
+  background: rgba(242, 156, 185, 0.9);
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  min-width: 200px;
+}

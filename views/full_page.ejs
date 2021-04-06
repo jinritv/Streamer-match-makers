@@ -6,18 +6,20 @@
 <!-- Begin page content -->
 <main id="main-container" role="main" class="container">
   <div id="welcome-banner" style="z-index:777;" class="welcome-container row">
-    <div id="welcome-text" style="z-index:777; opacity: 0;" class="col-lg-6">
-      <div class="row animated-words-container align-items-center">
-        <span>
-          <span id="animated-words-label" class="animated-words dark-text"><%- getText('animated-words-label') %></span>
-          <span class="animated-words" id="keyword"></span>
-        </span>
+    <div id="welcome-text" style="z-index:777; opacity: 0;" class="col-lg-6 justify-content-center justify-content-lg-start">
+      <div class="row justify-content-center justify-content-lg-start">
+        <div id="animated-words-label1" class="animated-words dark-text"><%- getText('animated-words-label1') %></div>
       </div>
-      <p class="info-text">
+      <div class="row animated-words-container justify-content-center justify-content-lg-start"">
+        <span id="animated-words-label2" class="animated-words dark-text"><%- getText('animated-words-label2') %></span>
+        &nbsp;&nbsp;
+        <span class="animated-words" id="keyword"></span>
+      </div>
+      <div class="row info-text d-flex d-lg-block text-center text-lg-left justify-content-center justify-content-lg-start">
          <%- getText('welcome-banner-title')%>
-      </p>
-      <span class="matches-made-text"><span id="num-matches">2000</span>+ <%-  getText('welcome-banner-matches-made') %></span>
-      <div class="row">
+      </div>
+      <div class="row matches-made-text d-none d-lg-block"><span id="num-matches">2000</span>+ <%-  getText('welcome-banner-matches-made') %></div>
+      <div class="row justify-content-center justify-content-lg-start">
         <button type="button" onclick="openGeneratedQuizModal()" class="btn btn-start-quiz">
           <span id="find-streamer-button" style="font-size: 1.5em; color: cornsilk;"><%-  getText('find-streamer-button') %></span>
         </button>
