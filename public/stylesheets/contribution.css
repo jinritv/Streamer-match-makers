@@ -99,6 +99,7 @@ finding {
 }
 
 .contributor-description {
+
 }
 
 .pt-contributor-container {
@@ -115,6 +116,65 @@ finding {
   overflow: hidden;
   padding: 5px;
 }
+
+.slideshow-rectangle {
+  /* Rectangle 37 */
+
+  background: #FFFFFF;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  box-shadow: 5px 5px 10px -6px rgb(155, 155, 155);
+  margin-bottom:100px
+  
+}
+
+.search-title-font {
+  /* Designer */
+
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 15px;
+  /* identical to box height, or 83% */
+  display: flex;
+  align-items: center;
+
+  color: #000000;
+}
+
+.search-subtitle {
+
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 13px;
+  /* identical to box height, or 83% */
+  display: flex;
+  align-items: center;
+
+  color: #580259;
+}
+
+.search-text {
+
+font-family: Poppins;
+font-style: normal;
+font-weight: 300;
+font-size: 15px;
+line-height: 16px;
+/* or 107% */
+display: flex;
+align-items: center;
+
+color: #606060;
+
+}
+
+
+
+
 
 @media (min-width: 769px) and (max-width: 1200px) {
   .contribution-page-container {
@@ -201,4 +261,6 @@ finding {
   .col-5 {
     max-width: 100%;
   }
+
+
 }
