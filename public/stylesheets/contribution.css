@@ -98,8 +98,7 @@ finding {
   font-weight: bold;
 }
 
-.contributor-description {
-
+.contributor-desc {
 }
 
 .pt-contributor-container {
@@ -117,64 +116,63 @@ finding {
   padding: 5px;
 }
 
-.slideshow-rectangle {
-  /* Rectangle 37 */
-
-  background: #FFFFFF;
+.carousel-row-item {
+  width: 85%;
+  position: relative;
+  bottom: 90px;
   border: 1px solid #ccc;
-  border-radius: 25px;
+  border-radius: 10px;
   box-shadow: 5px 5px 10px -6px rgb(155, 155, 155);
-  margin-bottom:100px
-  
+  overflow: hidden;
 }
 
-.search-title-font {
-  /* Designer */
-
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 15px;
-  /* identical to box height, or 83% */
-  display: flex;
-  align-items: center;
-
-  color: #000000;
-}
-
-.search-subtitle {
-
-  font-family: Poppins;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 13px;
-  /* identical to box height, or 83% */
-  display: flex;
-  align-items: center;
-
+.join-now-button {
+  position: absolute;
+  top: 105px;
+  left: 145px;
   color: #580259;
+  border-radius: 25px;
 }
 
-.search-text {
-
-font-family: Poppins;
-font-style: normal;
-font-weight: 300;
-font-size: 15px;
-line-height: 16px;
-/* or 107% */
-display: flex;
-align-items: center;
-
-color: #606060;
-
+.join-now-button:active {
+  position: absolute;
+  top: 105px;
+  left: 145px;
+  background-color: #fb00ff;
+  color: white;
+  border-radius: 25px;
 }
 
+.carousel-item img {
+  opacity: 70%;
+}
 
+.carousel-indicators li {
+  position: relative;
+  top: -70px;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: #fa9cfc77;
+}
 
+.carousel-indicators li.active {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background-color: #580259;
+}
 
+.background-circle-1 {
+  display: inline-block;
+  position: absolute;
+  top: 800px;
+  left: -350px;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background-color: rgba(113, 2, 115, 0.14);
+}
 
 @media (min-width: 769px) and (max-width: 1200px) {
   .contribution-page-container {
@@ -204,6 +202,21 @@ color: #606060;
   .contributor-item-right {
     padding: 15px;
     margin-left: 30px;
+  }
+
+  .carousel-indicators li {
+    position: relative;
+    top: -40px;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: #fa9cfc77;
+  }
+
+  .join-now-button {
+    position: absolute;
+    top: 105px;
+    left: 120px;
   }
 }
 
@@ -262,5 +275,26 @@ color: #606060;
     max-width: 100%;
   }
 
+  .carousel-row-item {
+    display: none;
+  }
 
+  .carousel-indicators {
+    display: none;
+  }
+
+  .pt-contributor-container {
+    margin-top: 50px;
+    margin-bottom: 140px;
+  }
+
+  .pt-contributor-container .row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .pt-contributor-item {
+    width: auto;
+    padding: 8px;
+  }
 }
