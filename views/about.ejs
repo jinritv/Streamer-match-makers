@@ -167,21 +167,43 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid background">
+    <div class="container-fluid background mb-5">
       <div class="row achievement text-center">
         <div class="col">
           More Videos
         </div>
       </div>
+      <!-- TWITCH EMBED REQUIREMENTS: https://dev.twitch.tv/docs/embed -->
       <div class="row">
-        <div class="col video_subtitle">
-          Streamer React on TWIRI
+        <div class="col-4">
+          <div class="row">
+            <div class="col video_subtitle text-center">
+              Streamer React on TWIRI
+            </div>
+            <div class="col">
+              <iframe src="https://clips.twitch.tv/embed?clip=SullenSpineyAxeTheRinger&parent=<%= process.env.TWIRI_URL %>" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="600"></iframe>
+            </div>
+          </div> 
         </div>
-        <div class="col video_subtitle">
-          Jinri Talks about TWIRI
+        <div class="col-4">
+          <div class="row">
+            <div class="col video_subtitle text-center">
+              Jinri Talks about TWIRI
+            </div>
+            <div class="col">
+              <iframe src="https://clips.twitch.tv/embed?clip=MotionlessMotionlessSnakeDoritosChip-1WZv6j9iLveRLtj7&parent=<%= process.env.TWIRI_URL %>" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="600"></iframe>
+            </div>
+          </div> 
         </div>
-        <div class="col video_subtitle">
-          Viewers react on TWIRI
+        <div class="col-4">
+          <div class="row">
+            <div class="col video_subtitle text-center">
+              Viewers react on TWIRI
+            </div>
+            <div class="col">
+              <iframe src="https://clips.twitch.tv/embed?clip=BillowingSourHornetBCouch-NVTL1i_Y2uBgct8b&parent=<%= process.env.TWIRI_URL %>" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="600"></iframe>
+            </div>
+          </div> 
         </div>
       </div>
     </div>
