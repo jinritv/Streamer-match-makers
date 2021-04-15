@@ -163,17 +163,6 @@ finding {
   background-color: #580259;
 }
 
-.background-circle-1 {
-  display: inline-block;
-  position: absolute;
-  top: 800px;
-  left: -350px;
-  width: 450px;
-  height: 450px;
-  border-radius: 50%;
-  background-color: rgba(113, 2, 115, 0.14);
-}
-
 @media (min-width: 769px) and (max-width: 1200px) {
   .contribution-page-container {
     display: flex;
