@@ -32,13 +32,8 @@ function setCarouselSlide(slideNum) {
 }
 
 function setCarouselIndicator(event, slideNum) {
-  var current = $(event.target).find(".active");
-  var index = $(current).index();
-  if (index + 2 > $(".carousel-indicators li").length) {
-    index = -1;
-  }
+  const current = $(event.target).find(".active");
+  const index = slideNum + 1;
   $(".carousel-indicators li").removeClass("active");
-  $(".carousel-indicators li:nth-child(" + (index + 2) + ")").addClass(
-    "active"
-  );
+  $(".carousel-indicators li:nth-child(" + index + ")").addClass("active");
 }

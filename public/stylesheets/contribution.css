@@ -117,7 +117,7 @@ finding {
 }
 
 .carousel-row-item {
-  width: 85%;
+  width: 75%;
   position: relative;
   bottom: 90px;
   border: 1px solid #ccc;
@@ -129,7 +129,7 @@ finding {
 .join-now-button {
   position: absolute;
   top: 105px;
-  left: 145px;
+  left: 85px;
   color: #580259;
   border-radius: 25px;
 }
@@ -137,7 +137,7 @@ finding {
 .join-now-button:active {
   position: absolute;
   top: 105px;
-  left: 145px;
+  left: 85px;
   background-color: #fb00ff;
   color: white;
   border-radius: 25px;
@@ -170,13 +170,41 @@ finding {
     width: 90%;
   }
 
+  .JR {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 350px;
+    line-height: 60px;
+    /* identical to box height, or 15% */
+    display: flex;
+    align-items: center;
+    color: rgba(113, 2, 115, 0.14);
+  }
+
+  .contributors {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 45px;
+    line-height: 60px;
+    /* or 100% */
+    display: flex;
+    flex-direction: column;
+    color: #363636;
+  }
+
   .title-description {
     width: 80%;
-    font-size: 23px;
+    font-size: 18px;
+  }
+
+  .offsetText_hotshot {
+    transform: translate(-17px, -110px);
   }
 
   .offsetText_description_hotshot {
-    transform: translate(-55px, -120px);
+    transform: translate(-10px, -110px);
   }
 
   .contributor-item {
@@ -186,6 +214,20 @@ finding {
     box-shadow: 5px 5px 10px -6px rgb(155, 155, 155);
     overflow: hidden;
     margin: auto;
+  }
+
+  .carousel-row-item {
+    width: 100%;
+    position: relative;
+    bottom: 90px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px -6px rgb(155, 155, 155);
+    overflow: hidden;
+  }
+
+  .carousel-item img {
+    opacity: 70%;
   }
 
   .contributor-item-right {
@@ -205,7 +247,7 @@ finding {
   .join-now-button {
     position: absolute;
     top: 105px;
-    left: 120px;
+    left: 50px;
   }
 }
 
