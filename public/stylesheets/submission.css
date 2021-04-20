@@ -1,10 +1,14 @@
+main {
+  margin-top: 50px;
+}
+
 .submission-container .submit-channel-text {
   font-family: Poppins;
   font-style: normal;
   font-weight: bold;
   font-size: 6vw;
 
-  color: #4B4B4B;
+  color: #4b4b4b;
   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
@@ -20,13 +24,13 @@
   align-items: center;
   text-align: center;*/
 
-  color: #CF3232;
+  color: #cf3232;
 }
 
 .form-container input,
 .form-container textarea {
-  background: #FFFFFF;
-  border: 1px solid #D9A648;
+  background: #ffffff;
+  border: 1px solid #d9a648;
   box-sizing: border-box;
   box-shadow: 4px 4px 15px rgba(255, 255, 255, 0.25);
   border-radius: 15px;
