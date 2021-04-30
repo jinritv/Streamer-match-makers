@@ -31,16 +31,16 @@ main {
 }
 
 .title-description {
-  width: 50%;
+  width: 60%;
   font-size: 25px;
 }
 
 .offsetText_hotshot {
-  transform: translate(-17px, -120px);
+  transform: translate(-17px, -155px);
 }
 
 .offsetText_description_hotshot {
-  transform: translate(-45px, -120px);
+  transform: translate(-10px, -155px);
 }
 
 finding {
@@ -243,11 +243,11 @@ finding {
   }
 
   .offsetText_hotshot {
-    transform: translate(-17px, -110px);
+    transform: translate(-17px, -140px);
   }
 
   .offsetText_description_hotshot {
-    transform: translate(-10px, -110px);
+    transform: translate(-10px, -135px);
   }
 
   .contributor-item {
@@ -273,7 +273,7 @@ finding {
   .carousel-row-item {
     width: 100%;
     position: relative;
-    bottom: 90px;
+    bottom: 95px;
     border: 1px solid #ccc;
     background: white;
     border-radius: 10px;
@@ -283,6 +283,10 @@ finding {
 
   .carousel-item img {
     opacity: 70%;
+  }
+
+  .carousel-indicators {
+    bottom: 35px;
   }
 
   .carousel-indicators li {
@@ -299,6 +303,15 @@ finding {
     top: 105px;
     left: 50px;
   }
+
+  .join-now-button:active {
+    position: absolute;
+    top: 105px;
+    left: 50px;
+    background-color: #fb00ff;
+    color: white;
+    border-radius: 25px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -307,7 +320,8 @@ finding {
   }
 
   .contributors {
-    font-size: 40px;
+    font-size: 35px;
+    line-height: 50px;
   }
 
   .contribution-page-container {
@@ -321,8 +335,12 @@ finding {
     font-size: 18px;
   }
 
+  .offsetText_hotshot {
+    transform: translate(-35px, -130px);
+  }
+
   .offsetText_description_hotshot {
-    transform: translate(-5px, -120px);
+    transform: translate(-5px, -130px);
   }
 
   .contributor-item {
