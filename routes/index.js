@@ -172,6 +172,11 @@ router.get("/submission", (req, res, next) => {
   LoadLanguageJSON(LANGUAGE_TO_GET, onLangLoaded);
 });
 
+router.post("/submission", (req, res, next) => {
+  console.log(req.body);
+  res.status(201).json({ status: "success" });
+});
+
 // Not-found page
 router.get("/404", (req, res) => {
   res.status(404).render("not_found", {

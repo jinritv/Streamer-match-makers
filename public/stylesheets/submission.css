@@ -34,6 +34,14 @@ main {
   box-sizing: border-box;
   box-shadow: 4px 4px 15px rgba(255, 255, 255, 0.25);
   border-radius: 15px;
+  padding: 0 15px;
+  outline: none;
+}
+
+.form-container input:focus,
+.form-container textarea:focus {
+  border-radius: 15px;
+  border: 2px solid black;
 }
 
 .form-container .submit-button {

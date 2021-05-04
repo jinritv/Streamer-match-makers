@@ -43,61 +43,67 @@
             </div>
           </div>
           <div class="col-lg-6">
-            <div class="row mt-3 justify-content-between">
-              <div class="col-12 col-lg-5">
-                <div class="row">
-                  <label name="submitter-name">Your Name</label>
+            <form onsubmit="submitFormEvent(event)">
+              <div class="row mt-3 justify-content-between">
+                <div class="col-12 col-lg-5">
+                  <div class="row">
+                    <label name="submitterName">Your Name</label>
+                  </div>
+                  <div class="row">
+                    <input name="submitterName" type="text" class="w-100">
+                  </div>
                 </div>
-                <div class="row">
-                  <input type="text" class="w-100">
-                </div>
-              </div>
-              <div class="col-12 col-lg-5">
-                <div class="row">
-                  <label name="submitter-twitch-username">Your Twitch username</label>
-                </div>
-                <div class="row">
-                  <input type="text" class="w-100">
-                </div>
-              </div>
-            </div>
-            <div class="row mt-3 justify-content-center justify-content-lg-start">
-              Do you follow JinriTV? &nbsp;
-              <input type="radio" name="is-follower">Yes
-              &nbsp;
-              <input type="radio" name="is-follower">No
-            </div>
-            <div class="row mt-3 justify-content-between">
-              <div class="col-12 col-lg-5">
-                <div class="row">
-                  <label name="streamer-name">Streamer name</label>
-                </div>
-                <div class="row">
-                  <input type="text" class="w-100">
+                <div class="col-12 col-lg-5">
+                  <div class="row">
+                    <label name="submitterTwitchUsername">Your Twitch username</label>
+                  </div>
+                  <div class="row">
+                    <input name="submitterTwitchUsername" type="text" class="w-100">
+                  </div>
                 </div>
               </div>
-              <div class="col-12 col-lg-5">
-                <div class="row">
-                  <label name="streamer-twitch-username">Streamer Twitch username</label>
+              <div class="row mt-3 justify-content-center justify-content-lg-start align-items-center">
+                <label class="pr-3 m-0">Do you follow JinriTV?</label>
+                <input type="radio" name="isFollower" value="yes" checked>
+                  <label class="pr-1 m-1">Yes</label>
+                </input>
+                <span class="p-2"></span>
+                <input type="radio" name="isFollower" value="no">
+                  <label class="p-1 m-1">No</label>
+                </input>
+              </div>
+              <div class="row mt-3 justify-content-between">
+                <div class="col-12 col-lg-5">
+                  <div class="row">
+                    <label name="streamerName">Streamer name</label>
+                  </div>
+                  <div class="row">
+                    <input name="streamerName" type="text" class="w-100">
+                  </div>
                 </div>
-                <div class="row">
-                  <input type="text" class="w-100">
+                <div class="col-12 col-lg-5">
+                  <div class="row">
+                    <label name="streamerTwitchUsername">Streamer Twitch username</label>
+                  </div>
+                  <div class="row">
+                    <input name="streamerTwitchUsername" type="text" class="w-100">
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-12">
-                <div class="row">
-                  <label name="message">Message</label>
-                </div>
-                <div class="row">
-                  <textarea name="message" class="w-100"></textarea>
+              <div class="row mt-3">
+                <div class="col-12">
+                  <div class="row">
+                    <label name="message">Message</label>
+                  </div>
+                  <div class="row">
+                    <textarea name="message" class="w-100"></textarea>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="row mt-3 justify-content-center">
-              <button type="submit" class="submit-button">Submit!</button>
-            </div>
+              <div class="row mt-3 justify-content-center">
+                <button type="submit" class="submit-button">Submit!</button>
+              </div>
+            </form>
           </div>
           <div class="col-lg-3 d-none d-lg-block">
             <img src="/images/mascot.png">
@@ -123,5 +129,5 @@
 <script src="/javascripts/bootstrap-slider.min.js"></script>
 <script src="/javascripts/custom-theme.js"></script>
 <script src="/javascripts/text-handling.js"></script>
-<script src="/javascripts/about.js"></script>
+<script src="/javascripts/submission.js"></script>
 </html>
