@@ -2,14 +2,12 @@
 <html lang="en">
 <!-- SEYTHER's Masterpiece-->
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <%- include ("./partials/stylesheets") %>
-  <link href="/stylesheets/contribution.css" rel="stylesheet" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <%- include ("./partials/stylesheets") %>
+  <link href="/stylesheets/contribution.css" rel="stylesheet" />
 </head>
 <%- include ("./partials/header",{
   BrandName: getText('logoText'),
@@ -195,7 +193,7 @@
       </div>
       <div class="pt-contributor-container container-fluid">
         <div class="row contributor-row">
-          <div class="col contributor-col text-center">
+          <div class="col pt-contributor-col-title contributor-col text-center">
             <h1>Part Time Contributors</h1>
           </div>
         </div>
@@ -246,7 +244,6 @@
   }) %>
 </body>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<%- include ("./partials/scripts") %>
 <script src="/javascripts/contribution.js"></script>
 </html>

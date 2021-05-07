@@ -2,14 +2,12 @@
 <html lang="en">
 
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <%- include ("./partials/stylesheets") %>
-  <link href="/stylesheets/submission.css" rel="stylesheet" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <%- include ("./partials/stylesheets") %>
+  <link href="/stylesheets/submission.css" rel="stylesheet" />
 </head>
 
 <body id="full-page" class="<%= Theme %>">
@@ -32,7 +30,7 @@
       <div class="container-fluid form-container">
         <div class="row">
           <div class="col-lg-3 d-none d-lg-block">
-            <div class="row justify-content-center">
+            <div class="text-label row justify-content-center">
               Submitted Streamers
             </div>
             <div class="row justify-content-center m-2">
@@ -96,7 +94,7 @@
                     <label name="message">Message</label>
                   </div>
                   <div class="row">
-                    <textarea name="message" class="w-100"></textarea>
+                    <textarea name="message" class="w-100" rows="5"></textarea>
                   </div>
                 </div>
               </div>
@@ -111,8 +109,6 @@
         </div>
       </div>
     </div>
-
-    
   </main>
   <%- include ("./partials/footer",{
       CopyrightText:  getText('copyright-text'),
@@ -124,10 +120,6 @@
 
 </body>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
-<script src="/javascripts/bootstrap-slider.min.js"></script>
-<script src="/javascripts/custom-theme.js"></script>
-<script src="/javascripts/text-handling.js"></script>
+<%- include ("./partials/scripts") %>
 <script src="/javascripts/submission.js"></script>
 </html>

@@ -29,8 +29,13 @@ Put all other css in the quizstyle.css file
   --pure-black: #000000;
   --light-grey: #adb5bd;
   --dark-grey: #6c757d;
+  --light-magenta: #ebdbea;
+  --dark-magenta: #3a3a52;
+  --dark-blue: #384f68;
+  --red: #cf3232;
+  --gold: #ae864d;
 
-  --brand-really-dark-purple: #120918;
+  --brand-really-dark-purple: #212c44;
   --brand-dark-pink: #d0729b;
   --brand-med-pink: #bf7dd3;
   --brand-med-pink-2: #856585;
@@ -60,15 +65,28 @@ Put all other css in the quizstyle.css file
   --headeroutline-light: #710273;
   --headeroutline-dark: #f29cb9;
 
-    --btnoutline-light: #710273;
-    --btnoutline-dark: #F29CB9;
-    --btninside-light:#fff;
-    --btninside-dark:#1A2138;
+  --btnoutline-light: #710273;
+  --btnoutline-dark: #f29cb9;
+  --btninside-light: #fff;
+  --btninside-dark: #1a2138;
 
-    /*Background*/
-    --background-light:#ffff;
-    --background-dark: #222B45;
-    
+  /*Background*/
+  --background-light: #ffff;
+  --background-dark: #222b45;
+
+  /* Background Sphere */
+  --background-sphere-light-1: #eee0ed;
+  --background-sphere-dark-1: #ca87a1;
+  --background-sphere-light-2: #fdeef3;
+  --background-sphere-dark-2: #b78d4f;
+  --background-sphere-light-3: #fbd7e2;
+  --background-sphere-dark-3: #ca87a1;
+  --background-sphere-light-4: #d5b5d3;
+  --background-sphere-dark-4: #b78d4f;
+  --background-sphere-light-5: #e7c085;
+  --background-sphere-dark-5: #b78d4f;
+  --background-sphere-light-6: #fdf0f5;
+  --background-sphere-dark-6: #ca87a1;
 }
 
 .dark-text-color {
@@ -106,74 +124,102 @@ Put all other css in the quizstyle.css file
 }
 
 .light-mode {
-    /* Default mode is light mode */
-    --progress-label-color: var(--brand-dark-pink);
-    --h4-text-color: var(--brand-text-dark);
-    --text-color: var(--brand-dark-pink);
-    --text-color-inverse: var(--brand-really-light-pink);
-    --page-background-color: var(--pure-white);
-    --modal-background-color: var(--pure-white);
-    --footer-color: var(--brand-really-light-pink);
-    --animated-words-label: var(--brand-really-dark-purple);
-    --logo-text-color: var(--brand-dark-pink);
-    --progress-background-color: var(--brand-really-light-pink);
-    --background-square-color: var(--brand-secondary-background);
+  /* Default mode is light mode */
+  --progress-label-color: var(--brand-dark-pink);
+  --h4-text-color: var(--brand-text-dark);
+  --text-color: var(--brand-dark-pink);
+  --text-color-inverse: var(--brand-really-light-pink);
+  --page-background-color: var(--pure-white);
+  --modal-background-color: var(--pure-white);
+  --footer-color: var(--brand-really-light-pink);
+  --animated-words-label: var(--brand-really-dark-purple);
+  --logo-text-color: var(--brand-dark-pink);
+  --progress-background-color: var(--brand-really-light-pink);
+  --background-square-color: var(--brand-secondary-background);
 
+  --text-color-headline: var(--brand-text-dark);
+  --modal-background: var(--pure-white);
+  --question-color: var(--brand-text-dark);
 
-    --text-color-headline: var(--brand-text-dark);
-    --modal-background: var(--pure-white);
-    --question-color: var(--brand-text-dark);
+  /*Header Footer*/
+  --headerfooter-color: var(--header-bgcolor-light);
+  --footercolor-text: #6c757d;
+  --logocolor: var(--logo-text-color-light);
+  --headeroutline: var(--headeroutline-light);
 
-    /*Header Footer*/
-    --headerfooter-color: var(--header-bgcolor-light);
-    --footercolor-text: #6c757d;
-    --logocolor: var(--logo-text-color-light);
-    --headeroutline: var(--headeroutline-light);
+  /*Buttons*/
+  --btn-outlines: var(--btnoutline-light);
+  --btn-inside: var(--btninside-light);
 
-    /*Buttons*/
-    --btn-outlines: var(--btnoutline-light);
-    --btn-inside: var(--btninside-light);
+  --background-color: var(--background-light);
 
-    --background-color: var(--background-light); 
+  /* Background Sphere */
+  --background-sphere-1: var(--background-sphere-light-1);
+  --background-sphere-2: var(--background-sphere-light-2);
+  --background-sphere-3: var(--background-sphere-light-3);
+  --background-sphere-4: var(--background-sphere-light-4);
+  --background-sphere-5: var(--background-sphere-light-5);
+  --background-sphere-6: var(--background-sphere-light-6);
+
+  /* About Page */
+  --about-title: var(--light-magenta);
+
+  /* Submission Page */
+  --submission-condition: var(--red);
+
+  /* Contributor Page */
+  --contributor-jr: var(--light-magenta);
 }
 
 /* When this class is added to the main page element, it changes the variables for the colors */
 .dark-mode {
-    --progress-background-color: var(--brand-light-pink-2);
-    --progress-label-color: var(--brand-really-light-pink);
-    --h4-text-color: var(--pure-white);
-    --logo-text-color: var(--brand-really-light-pink);
-    --animated-words-label: var(--brand-really-light-pink);
-    --text-color: var(--brand-really-light-pink);
-    --text-color-inverse: var(--brand-dark-pink);
-    --page-background-color: var(--brand-really-dark-purple);
-    --modal-background-color: var(--brand-really-dark-purple);
-    --button-text-color: var(--brand-really-light-pink);
-    --footer-color: var(--brand-dark-pink);
-    --background-square-color: var(--brand-dark-pink);
+  --progress-background-color: var(--brand-light-pink-2);
+  --progress-label-color: var(--brand-really-light-pink);
+  --h4-text-color: var(--pure-white);
+  --logo-text-color: var(--brand-really-light-pink);
+  --animated-words-label: var(--brand-really-light-pink);
+  --text-color: var(--brand-really-light-pink);
+  --text-color-inverse: var(--brand-dark-pink);
+  --page-background-color: var(--brand-really-dark-purple);
+  --modal-background-color: var(--brand-really-dark-purple);
+  --button-text-color: var(--brand-really-light-pink);
+  --footer-color: var(--brand-dark-pink);
+  --background-square-color: var(--brand-dark-pink);
 
+  --text-color-headline: var(--brand-text-light);
+  --modal-background: var(--modal-background-dark);
+  --question-color: var(--pure-white);
 
-    --text-color-headline: var(--brand-text-light);
-    --modal-background: var(--modal-background-dark);
-    --question-color: var(--pure-white);
+  /*Header Footer*/
+  --headerfooter-color: var(--header-bgcolor-dark);
+  --footercolor-text: var(--pure-white);
+  --logocolor: var(--logo-text-color-dark);
+  --headeroutline: var(--headeroutline-dark);
 
-    /*Header Footer*/
-    --headerfooter-color: var(--header-bgcolor-dark);
-    --footercolor-text: var(--pure-white);
-    --logocolor: var(--logo-text-color-dark);
-    --headeroutline: var(--headeroutline-dark);
+  /*Buttons*/
+  --btn-outlines: var(--btnoutline-dark);
+  --btn-inside: var(--btninside-dark);
+  --background-color: var(--background-dark);
 
-    /*Buttons*/
-    --btn-outlines: var(--btnoutline-dark);
-    --btn-inside:var(--btninside-dark);
+  /*dropdown */
+  --dropdown-label-text: var(--pure-white);
 
-    --background-color: var(--background-dark);
+  /* Background Sphere */
+  --background-sphere-1: var(--background-sphere-dark-1);
+  --background-sphere-2: var(--background-sphere-dark-2);
+  --background-sphere-3: var(--background-sphere-dark-3);
+  --background-sphere-4: var(--background-sphere-dark-4);
+  --background-sphere-5: var(--background-sphere-dark-5);
+  --background-sphere-6: var(--background-sphere-dark-6);
 
-    
+  /* About Page */
+  --about-title: var(--dark-blue);
 
-    /*dropdown */
-    --dropdown-label-text: var(--pure-white);
+  /* Submission Page */
+  --submission-condition: var(--gold);
 
+  /* Contributor Page */
+  --contributor-jr: var(--dark-magenta);
 }
 
 /*
@@ -184,11 +230,12 @@ we change the theme.
 
 */
 
-.dark-mode #TwiriLogo{
-    filter: invert(98%) sepia(100%) saturate(3382%) hue-rotate(279deg) brightness(98%) contrast(99%);
+.dark-mode #TwiriLogo {
+  filter: invert(98%) sepia(100%) saturate(3382%) hue-rotate(279deg)
+    brightness(98%) contrast(99%);
 }
-.background-container{
-    background-color: var(--background-color);
+.background-container {
+  background-color: var(--background-color);
 }
 
 #logoText {
@@ -317,66 +364,72 @@ body {
 }
 
 .streamer-info-container {
-  
-background: linear-gradient(0deg, rgba(50, 50, 50, 0.54), rgba(50, 50, 50, 0.3)), linear-gradient(156.04deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
-filter: drop-shadow(5px 5px 25px rgba(50, 50, 50, 0.85));
-backdrop-filter: blur(100px);
+  background: linear-gradient(
+      0deg,
+      rgba(50, 50, 50, 0.54),
+      rgba(50, 50, 50, 0.3)
+    ),
+    linear-gradient(
+      156.04deg,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  filter: drop-shadow(5px 5px 25px rgba(50, 50, 50, 0.85));
+  backdrop-filter: blur(100px);
 }
 
 .svg-buttons {
   filter: drop-shadow(0px 8px 12px var(--brand-svg-button-dropshadow));
 }
 .svg-buttons:hover svg line {
-    stroke: var(--brand-border);
+  stroke: var(--brand-border);
 }
 
-
-.slider-handle{ 
-    background: var(--brand-light-pink);
-    border-color: var(--brand-med-pink);
-    }
-  
-    .custom-control-input:checked~.custom-control-label:before {
-      color:var(--brand-light-pink);
-      border-color:var(--brand-dark-pink);
-      background-color:var(--brand-light-pink);
-     }
-     .custom-control-label:before {
-     
-      background-color:var(--pure-white);
-      border-color: var(--light-grey);
-     }
- 
-     .custom-control-input:focus~.custom-control-label:before {
-      box-shadow:0 0 0 .2rem var(--brand-btn-primary-focus-dropshadow);
-     }
-     .custom-control-input:focus:not(:checked)~.custom-control-label:before {
-      border-color:var(--brand-dark-pink);
-     }
-     .custom-control-input:not(:disabled):active~.custom-control-label:before {
-      color:var(--pure-white);
-      background-color:var(--brand-med-pink);
-      border-color:var(--brand-dark-pink);
-     }
-     .custom-control-input:disabled~.custom-control-label,
-     .custom-control-input[disabled]~.custom-control-label {
-      color:var(--dark-grey);
-     }
-     .custom-control-input:disabled~.custom-control-label:before,
-     .custom-control-input[disabled]~.custom-control-label:before {
-      background-color:var(--light-grey);
-     }
-  
-     .dropdown-item-container{
-         background-color: var(--btn-inside);
-     }
-    
-.dropdown-menu{
-    background-color: var(--btn-inside);
+.slider-handle {
+  background: var(--brand-light-pink);
+  border-color: var(--brand-med-pink);
 }
-.footer {   
-    background-color:var(--footer-color)!important;
- }
+
+.custom-control-input:checked ~ .custom-control-label:before {
+  color: var(--brand-light-pink);
+  border-color: var(--brand-dark-pink);
+  background-color: var(--brand-light-pink);
+}
+.custom-control-label:before {
+  background-color: var(--pure-white);
+  border-color: var(--light-grey);
+}
+
+.custom-control-input:focus ~ .custom-control-label:before {
+  box-shadow: 0 0 0 0.2rem var(--brand-btn-primary-focus-dropshadow);
+}
+.custom-control-input:focus:not(:checked) ~ .custom-control-label:before {
+  border-color: var(--brand-dark-pink);
+}
+.custom-control-input:not(:disabled):active ~ .custom-control-label:before {
+  color: var(--pure-white);
+  background-color: var(--brand-med-pink);
+  border-color: var(--brand-dark-pink);
+}
+.custom-control-input:disabled ~ .custom-control-label,
+.custom-control-input[disabled] ~ .custom-control-label {
+  color: var(--dark-grey);
+}
+.custom-control-input:disabled ~ .custom-control-label:before,
+.custom-control-input[disabled] ~ .custom-control-label:before {
+  background-color: var(--light-grey);
+}
+
+.dropdown-item-container {
+  background-color: var(--btn-inside);
+}
+
+.dropdown-menu {
+  background-color: var(--btn-inside);
+}
+.footer {
+  background-color: var(--footer-color) !important;
+}
 
 .btn-quiz-continue {
   color: var(--pure-white) !important;
@@ -433,15 +486,15 @@ backdrop-filter: blur(100px);
   color: var(--dropdown-label-text);
 }
 
-.slider-display-text{
-    color: var(--dropdown-label-text);
+.slider-display-text {
+  color: var(--dropdown-label-text);
 }
-.custom-control-label{
-    color: var(--dropdown-label-text);
+.custom-control-label {
+  color: var(--dropdown-label-text);
 }
-.time-label{
-    color: var(--dropdown-label-text);
+.time-label {
+  color: var(--dropdown-label-text);
 }
-.star-rating-label{
-    color: var(--dropdown-label-text);
+.star-rating-label {
+  color: var(--dropdown-label-text);
 }

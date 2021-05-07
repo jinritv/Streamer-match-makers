@@ -1,18 +1,22 @@
-main {
-  margin-top: 50px;
+body {
+  overflow: hidden;
 }
 
-.submission-container .submit-channel-text {
+main {
+  margin-top: 80px;
+}
+
+.submit-channel-text {
   font-family: Poppins;
   font-style: normal;
   font-weight: bold;
   font-size: 6vw;
 
-  color: #4b4b4b;
+  color: var(--text-color-headline);
   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.submission-container .channel-condition {
+.channel-condition {
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
@@ -24,7 +28,7 @@ main {
   align-items: center;
   text-align: center;*/
 
-  color: #cf3232;
+  color: var(--submission-condition);
 }
 
 .form-container input,
@@ -48,5 +52,18 @@ main {
   background: rgba(242, 156, 185, 0.9);
   box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
+  padding: 5px;
   min-width: 200px;
+}
+
+.form-container label {
+  color: var(--text-color-headline);
+}
+
+.form-container button {
+  color: var(--text-color-headline);
+}
+
+.text-label {
+  color: var(--text-color-headline);
 }
