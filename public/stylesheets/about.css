@@ -20,7 +20,7 @@ main {
   font-weight: bold;
   font-size: 10vw;
   text-align: center;
-  color: rgba(113, 2, 115, 0.2);
+  color: var(--about-title);
 }
 
 .about_small {
@@ -30,7 +30,7 @@ main {
   font-size: 4vw;
   position: absolute;
   bottom: 0;
-  color: #363636;
+  color: var(--text-color-headline);
   width: 100%;
   left: 50%;
 }
@@ -56,6 +56,7 @@ main {
 
 .about-twiri-row .abouttwiri {
   padding-top: 0.5em;
+  color: black;
 }
 
 .row-achievement .col-achievement {
@@ -113,6 +114,10 @@ main {
   width: 100%;
   margin-top: 3em;
   background: #670269;
+}
+
+.row {
+  color: white;
 }
 
 .proudof {
@@ -264,7 +269,7 @@ main {
   text-align: center;
   font-size: 16px;
   font-weight: bold;
-  color: #000;
+  color: var(--text-color-headline);
   text-transform: uppercase;
   letter-spacing: 1px;
   z-index: 1;
@@ -323,7 +328,8 @@ main {
   width: 150px;
   height: 300px;
   border-radius: 300px 0 0 300px;
-  background-color: rgba(113, 2, 115, 0.14);
+  background-color: var(--background-sphere-3);
+  z-index: -1;
 }
 
 .background-circle-2 {
@@ -334,7 +340,8 @@ main {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  background-color: rgba(113, 2, 115, 0.14);
+  background-color: var(--background-sphere-4);
+  z-index: -1;
 }
 
 .background-circle-3 {
@@ -345,7 +352,8 @@ main {
   width: 250px;
   height: 500px;
   border-radius: 500px 0 0 500px;
-  background-color: rgba(113, 2, 115, 0.14);
+  background-color: var(--background-sphere-5);
+  z-index: -1;
 }
 
 .background-circle-4 {
@@ -356,7 +364,8 @@ main {
   width: 200px;
   height: 400px;
   border-radius: 400px 0 0 400px;
-  background-color: rgba(113, 2, 115, 0.14);
+  background-color: var(--background-sphere-6);
+  z-index: -1;
 }
 
 .background-circle-5 {
@@ -367,7 +376,8 @@ main {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  background-color: rgba(113, 2, 115, 0.14);
+  background-color: var(--background-sphere-4);
+  z-index: -1;
 }
 
 @media (max-width: 767.98px) {

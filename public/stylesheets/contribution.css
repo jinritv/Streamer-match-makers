@@ -15,7 +15,7 @@ main {
   /* identical to box height, or 15% */
   display: flex;
   align-items: center;
-  color: rgba(113, 2, 115, 0.14);
+  color: var(--contributor-jr);
 }
 
 .contributors {
@@ -27,12 +27,13 @@ main {
   /* or 100% */
   display: flex;
   flex-direction: column;
-  color: #363636;
+  color: var(--text-color-headline);
 }
 
 .title-description {
   width: 60%;
   font-size: 20px;
+  color: var(--text-color-headline);
 }
 
 .offsetText_hotshot {
@@ -40,13 +41,7 @@ main {
 }
 
 .offsetText_description_hotshot {
-  transform: translate(-10px, -155px);
-}
-
-finding {
-  /* Rectangle 37 */
-  background: #ffffff;
-  border-radius: 15px;
+  transform: translate(-15px, -140px);
 }
 
 .contribution-page-container {
@@ -103,13 +98,17 @@ finding {
 }
 
 .contributor-desc {
-
+  font-size: 15px;
 }
 
 .pt-contributor-container {
   width: 70%;
   margin-top: 50px;
   margin-bottom: 100px;
+}
+
+.pt-contributor-col-title {
+  color: var(--text-color-headline);
 }
 
 .pt-contributor-item {
@@ -137,6 +136,7 @@ finding {
   position: absolute;
   top: 105px;
   left: 85px;
+  background-color: white;
   color: #580259;
   border-radius: 25px;
 }
@@ -193,7 +193,7 @@ finding {
   width: 450px;
   height: 450px;
   border-radius: 50%;
-  background-color: rgba(113, 2, 115, 0.14);
+  background-color: var(--background-sphere-1);
 }
 
 .background-circle-2 {
@@ -204,7 +204,7 @@ finding {
   width: 250px;
   height: 500px;
   border-radius: 500px 0 0 500px;
-  background-color: rgba(113, 2, 115, 0.14);
+  background-color: var(--background-sphere-2);
 }
 
 @media (min-width: 769px) and (max-width: 1200px) {
@@ -223,7 +223,6 @@ finding {
     /* identical to box height, or 15% */
     display: flex;
     align-items: center;
-    color: rgba(113, 2, 115, 0.14);
   }
 
   .contributors {
@@ -235,7 +234,6 @@ finding {
     /* or 100% */
     display: flex;
     flex-direction: column;
-    color: #363636;
   }
 
   .title-description {
@@ -396,7 +394,7 @@ finding {
   }
 
   .pt-contributor-item {
-    width: 115px;
+    width: 200px;
     background: white;
   }
 
@@ -426,7 +424,7 @@ finding {
     width: 150px;
     height: 300px;
     border-radius: 300px 0 0 300px;
-    background-color: rgba(113, 2, 115, 0.14);
+    background-color: var(--background-sphere-2);
   }
 
   .background-circle-4 {
@@ -437,7 +435,7 @@ finding {
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    background-color: rgba(113, 2, 115, 0.14);
+    background-color: var(--background-sphere-1);
   }
 
   .background-circle-5 {
@@ -448,7 +446,7 @@ finding {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: rgba(113, 2, 115, 0.14);
+    background-color: var(--background-sphere-1);
   }
 
   .background-circle-6 {
@@ -459,7 +457,7 @@ finding {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: rgba(113, 2, 115, 0.14);
+    background-color: var(--background-sphere-2);
   }
 
   .background-circle-7 {
@@ -470,6 +468,6 @@ finding {
     width: 100px;
     height: 200px;
     border-radius: 300px 0 0 300px;
-    background-color: rgba(113, 2, 115, 0.14);
+    background-color: var(--background-sphere-2);
   }
 }
