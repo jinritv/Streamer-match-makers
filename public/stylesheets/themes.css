@@ -31,9 +31,15 @@ Put all other css in the quizstyle.css file
   --dark-grey: #6c757d;
   --light-magenta: #ebdbea;
   --dark-magenta: #3a3a52;
-  --dark-blue: #384f68;
+  --purple: #680c66;
+  --dark-blue: #192237;
+  --cyan-blue: #384f68;
   --red: #cf3232;
   --gold: #ae864d;
+  --light-brown: #eac792;
+  --light-pink: #f49db8;
+  --brown: #dba453;
+  --blue: #78798d;
 
   --brand-really-dark-purple: #212c44;
   --brand-dark-pink: #d0729b;
@@ -94,18 +100,18 @@ Put all other css in the quizstyle.css file
 }
 
 .matches-made-text {
-  color: var(--brand-success-dark);
+  color: var(--matches-made-text);
 }
 
 .btn-start-quiz,
 .btn-start-quiz:active,
 .btn-start-quiz:visited,
 .btn-start-quiz:focus {
-  background-color: var(--brand-success);
-  border-color: var(--brand-success-dark);
+  background-color: var(--find-a-streamer-button);
+  border-color: var(--find-a-streamer-button);
 }
 .btn-start-quiz:hover {
-  background-color: var(--brand-success-light);
+  background-color: var(--find-a-streamer-button);
   border-color: var(--brand-success);
 }
 .btn-start-quiz {
@@ -161,14 +167,21 @@ Put all other css in the quizstyle.css file
   --background-sphere-5: var(--background-sphere-light-5);
   --background-sphere-6: var(--background-sphere-light-6);
 
+  /* Quiz Page */
+  --find-a-streamer-button: var(--brown);
+  --animated-word: var(--brown);
+  --matches-made-text: var(--brown);
+
   /* About Page */
   --about-title: var(--light-magenta);
+  --about-background: var(--purple);
 
   /* Submission Page */
   --submission-condition: var(--red);
 
   /* Contributor Page */
   --contributor-jr: var(--light-magenta);
+  --contributor-title: var(--purple);
 }
 
 /* When this class is added to the main page element, it changes the variables for the colors */
@@ -212,14 +225,21 @@ Put all other css in the quizstyle.css file
   --background-sphere-5: var(--background-sphere-dark-5);
   --background-sphere-6: var(--background-sphere-dark-6);
 
+  /* Quiz Page */
+  --find-a-streamer-button: var(--light-pink);
+  --animated-word: var(--light-pink);
+  --matches-made-text: var(--light-pink);
+
   /* About Page */
-  --about-title: var(--dark-blue);
+  --about-title: var(--cyan-blue);
+  --about-background: var(--dark-blue);
 
   /* Submission Page */
   --submission-condition: var(--gold);
 
   /* Contributor Page */
   --contributor-jr: var(--dark-magenta);
+  --contributor-title: var(--light-brown);
 }
 
 /*
@@ -309,7 +329,7 @@ body {
 }
 
 #keyword {
-  color: var(--brand-success);
+  color: var(--animated-word);
 }
 
 #theme-label {
@@ -447,6 +467,7 @@ body {
 
 .btn-quiz-answer {
   color: var(--text-color);
+  background-color: white;
   border-color: var(--brand-light-pink);
 }
 

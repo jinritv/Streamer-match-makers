@@ -93,7 +93,7 @@ main {
 }
 
 .contributor-title {
-  color: purple;
+  color: var(--contributor-title);
   font-weight: bold;
 }
 
@@ -381,6 +381,10 @@ main {
 
   .carousel-indicators {
     display: none;
+  }
+
+  .contributor-desc {
+    font-size: 13px;
   }
 
   .pt-contributor-container {

@@ -83,7 +83,7 @@ main {
 
 .rectangle {
   background: #ffffff;
-  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.25);
+  box-shadow: 5px 5px 15px #999999, -1px -1px 5px #efefef;
   border-radius: 15px;
   margin: 25px 15px;
   margin-bottom: 2ex;
@@ -113,7 +113,7 @@ main {
   /* Rectangle 39 */
   width: 100%;
   margin-top: 3em;
-  background: #670269;
+  background: var(--about-background);
 }
 
 .row {
@@ -134,6 +134,11 @@ main {
   margin: 25px 15px;
   margin-bottom: 2ex;
   color: #ffffff;
+}
+
+.video-intro {
+  width: 1200px;
+  height: 600px;
 }
 
 .largenumber {
@@ -347,7 +352,7 @@ main {
 .background-circle-3 {
   display: inline-block;
   position: absolute;
-  top: 1250px;
+  top: 1100px;
   right: 0px;
   width: 250px;
   height: 500px;
@@ -359,7 +364,7 @@ main {
 .background-circle-4 {
   display: inline-block;
   position: absolute;
-  top: 2000px;
+  top: 1850px;
   right: 0px;
   width: 200px;
   height: 400px;
@@ -371,7 +376,7 @@ main {
 .background-circle-5 {
   display: inline-block;
   position: absolute;
-  top: 3100px;
+  top: 2950px;
   left: -50px;
   width: 300px;
   height: 300px;
@@ -380,7 +385,24 @@ main {
   z-index: -1;
 }
 
-@media (max-width: 767.98px) {
+.more-videos {
+  height: 378px;
+  width: 620px;
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .video-intro {
+    width: 800px;
+    height: 400px;
+  }
+
+  .more-videos {
+    width: 300px;
+    height: 280px;
+  }
+}
+
+@media (max-width: 769px) {
   .timeline::after {
     left: 90px;
   }
@@ -424,7 +446,12 @@ main {
     border-radius: 500px 0 0 500px;
   }
 
-  .row iframe {
+  .video-intro {
+    width: 400px;
+    height: 280px;
+  }
+
+  .more-videos {
     width: 350px;
     height: 300px;
   }
