@@ -33,6 +33,7 @@ function GetRestOfSiteData() {
         console.error("Error getting quiz data!");
       } else {
         // data is loaded so now start the page effects
+        console.log(data);
         setQuizData(data);
         assignJqueryElements();
         setupElements();
@@ -43,11 +44,11 @@ function GetRestOfSiteData() {
     },
     complete: (xhr, status) => {
       if (status == "error") {
-        $('#full-page').html(xhr.responseText);
+        $("#full-page").html(xhr.responseText);
       }
     },
   });
-};
+}
 
 function assignJqueryElements() {
   // elements for handling theming
@@ -78,14 +79,14 @@ function getPageHTML() {
       if (data.err) {
         console.error("Error getting html!");
       } else {
-        $('#full-page').html(data);
+        $("#full-page").html(data);
         // now we load the rest of the site
         GetRestOfSiteData();
       }
     },
     complete: (xhr, status) => {
       if (status == "error") {
-        $('#full-page').html(xhr.responseText);
+        $("#full-page").html(xhr.responseText);
       }
     },
   });
@@ -94,12 +95,12 @@ function getPageHTML() {
 function updateLanguage(language) {
   console.log("updating ", language);
   setLanguage(language);
-  $.get('/setLang/' + language, function (json) {
-                let nothing = "";
-    });
+  $.get("/setLang/" + language, function (json) {
+    let nothing = "";
+  });
   // first check if the desired language is already loaded (empty if not loaded)
   let loadedLang = getThisLanguageText();
-  console.log(loadedLang)
+  console.log(loadedLang);
   if (loadedLang == language) {
     console.log("Language already loaded.");
     return;
@@ -330,11 +331,10 @@ function animateElements() {
   }, 250);
 }
 
-
 //retreives the language's icon to display on the dropdown menu.
 function getLanguageIcon(language) {
   // hack to return globe image
-  return './images/globe.png';
+  return "./images/globe.png";
 }
 
 function calculateQuizResult() {
@@ -393,7 +393,7 @@ function displayStreamerResults(results) {
 function captureTimeInputs() {
   var offset = new Date().getTimezoneOffset();
   QUIZ_QUESTIONS.forEach((question) => {
-    if (question.question_type == 'timerange') {
+    if (question.question_type == "timerange") {
       let timeObj = {};
       question.answer_settings.forEach((timeRange) => {
         timeObj[timeRange.value_name] =
@@ -412,5 +412,3 @@ function captureTimeInputs() {
     }
   });
 }
-
-
