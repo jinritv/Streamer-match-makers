@@ -4,7 +4,7 @@ question.answer_settings.defaultMax,
 ]; %>
 <div class="d-flex flex-column mb-3 justify-content-center text-center">
   <h4><%=getText(`question-text-${question.unique_question_identifier}`)%></h4>
-  <span id=<%=`generated-${question.unique_question_identifier}-slider-display`%>><%=getText(`range-display-${question.unique_question_identifier}`,defaultDisplayValues)%></span>
+  <span class="slider-display-text" id=<%=`generated-${question.unique_question_identifier}-slider-display`%>><%=getText(`range-display-${question.unique_question_identifier}`,defaultDisplayValues)%></span>
 </div>     
 <div class="d-flex flex-row justify-content-center quiz-slider-container">
 <div id=<%=`generated-${question.unique_question_identifier}-minus`%> class="btn btn-outline-light svg-buttons" style="margin-right: 24px;">

@@ -304,6 +304,10 @@ h4 {
   color: var(--h4-text-color);
 }
 
+.slider-display-text {
+  color: var(--question-color);
+}
+
 body {
   background-color: var(--page-background-color);
 }
