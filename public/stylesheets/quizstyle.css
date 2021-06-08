@@ -484,6 +484,15 @@ Unique elements (id)
   width: 640px;
 }
 
+@media (max-width:414px) {
+  .img_detective {
+  width: 180px;
+  margin:auto;
+  position: absolute;
+  right: 0%;
+  }
+}
+
 .base-circle {
   position: absolute;
   top: 0;

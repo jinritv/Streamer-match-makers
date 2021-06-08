@@ -89,6 +89,13 @@ main {
   margin-bottom: 2ex;
 }
 
+@media (max-width: 414px) {
+  .rectangle {
+    border-radius: 20px;
+    margin: 25px 15px;
+    margin-bottom: 2ex;
+  }
+}
 .aboutus_img1 {
   background: url(info.png);
 }
