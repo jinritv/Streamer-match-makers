@@ -48,7 +48,32 @@ function refreshTotalAttributePoints() {
 // Ex: If input is cooking, streamer must have cooking in it's category
 // but if input is food, streamer can have either food, or cooking
 const CAT_MAP = {
-  dancing: ["dancing"],
+  justchatting: ["Just Chatting"],
+  games: ["Games"],
+  sciencetech: ["Science & Technology"],
+  music: ["Music"],
+  art: ["Art"],
+  food: ["Food & Drink"],
+  talk: ["Talk Shows & Podcasts"],
+  maker: ["Makers & Crafting"],
+  travel: ["Travel & Outdoors"],
+  asmr: ["ASMR"],
+  fitness: ["Fitness & Health"],
+  events: ["Special Events"],
+  sports: ["Sports"],
+  politics: ["Politics"],
+  quiz: ["Quiz Show"],
+  crypto: ["Crypto"],
+  stock: ["Stocks and Bonds"],
+  casino: ["Casino"],
+  board: ["Board Games"],
+  bodyart: ["Beauty & Body Art"],
+  tarot: ["Tarot"],
+  makeup: ["Make-Up and Style"],
+  sleep: ["Just Sleep - Meditate, Focus, Relax"],
+  twitch: ["Twitch Plays"]
+  
+  /*dancing: ["dancing"],
   irl: ["irl", "irl outdoors"],
   music: ["music & performing arts", "singing", "piano", "music"],
   sciencetech: ["science & technology", "geoguessr"],
@@ -62,7 +87,8 @@ const CAT_MAP = {
   cooking: ["cooking", "pepega cooking"],
   ASMR: ["asmr"],
   games: ["games", "pepega gaming", "half-life", "pubg"],
-  justchatting: ["irl", "just chatting", "pepega chatting"],
+  justchatting: ["irl", "just chatting", "pepega chatting"],*/
+
 };
 
 /**
