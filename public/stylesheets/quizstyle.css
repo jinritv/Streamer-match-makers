@@ -90,6 +90,7 @@ h1 {
   border: 0 solid;
   border-radius: 0.75rem;
   outline: 0;
+  margin-bottom: 100px;
 }
 
 .progress,
@@ -116,11 +117,11 @@ h1 {
   right: -96px;
 }
 
-.socials-container{
-    margin-top: 70px;
-    width: 230px;
-    margin-left: auto;
-    margin-right: auto;
+.socials-container {
+  margin-top: 70px;
+  width: 230px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .language-dropdown {
@@ -151,10 +152,10 @@ body {
 }
 
 .streamer-info-container {
-    border-radius: 24px; 
-    height:60vh;
-    text-align: center;
-    position: relative;
+  border-radius: 24px;
+  height: 60vh;
+  text-align: center;
+  position: relative;
 }
 
 .percent-match {
@@ -166,10 +167,10 @@ body {
   height: 55vh;
 }
 
-.winner{
-    border-color: goldenrod !important;
-    border-width: 4px; 
-    border-style:solid;
+.winner {
+  border-color: goldenrod !important;
+  border-width: 4px;
+  border-style: solid;
 }
 
 .modal-footer {
@@ -261,7 +262,7 @@ body {
   padding-bottom: 12px;
   margin-right: 6px;
   margin-left: 6px;
-  white-space: nowrap;
+  white-space: normal;
   border-width: 2px;
   border-radius: 100px;
 }
@@ -352,7 +353,6 @@ Unique elements (id)
   border-radius: 100px;
   z-index: -1;
 }
-
 
 #jiriLogo {
   padding: 10px;
@@ -484,12 +484,16 @@ Unique elements (id)
   width: 640px;
 }
 
-@media (max-width:414px) {
+#generated-question-result-container h4 {
+  text-align: center;
+}
+
+@media (max-width: 414px) {
   .img_detective {
-  width: 180px;
-  margin:auto;
-  position: absolute;
-  right: 0%;
+    width: 180px;
+    margin: auto;
+    position: absolute;
+    right: 0%;
   }
 }
 
@@ -541,16 +545,14 @@ Unique elements (id)
 }
 
 @media (min-width: 345px) {
- 
   #animated-words-label {
     font-size: 35px !important ;
-    
   }
- 
+
   .btn-start-quiz {
     width: 60%;
   }
- 
+
   .sphere-lg {
     width: 1700px;
     height: 1700px;
@@ -645,5 +647,25 @@ Unique elements (id)
 
   .btn-quiz-answer {
     min-width: 130px;
+  }
+}
+
+@media (max-width: 768px) {
+  .animated-words {
+    font-size: 2em;
+  }
+
+  .btn-quiz-back {
+    width: 60px;
+  }
+
+  .slider.slider-horizontal {
+    width: 180px;
+  }
+}
+
+@media (max-width: 568px) {
+  .btn-back {
+    left: 0px;
   }
 }
