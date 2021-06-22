@@ -6,6 +6,10 @@ main {
   margin-top: 80px;
 }
 
+.submission-header-container {
+  margin-bottom: 30px;
+}
+
 .submit-channel-text {
   font-family: Poppins;
   font-style: normal;
@@ -66,4 +70,22 @@ main {
 
 .text-label {
   color: var(--text-color-headline);
+}
+
+@media (max-width: 768px) {
+  .submit-channel-text {
+    font-size: 2rem;
+  }
+
+  .channel-condition {
+    font-size: 0.8rem;
+  }
+
+  .submission-header-container {
+    margin-bottom: 0px;
+  }
+
+  .form-container {
+    margin-bottom: 100px;
+  }
 }

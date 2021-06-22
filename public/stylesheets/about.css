@@ -409,9 +409,18 @@ main {
   }
 }
 
-@media (max-width: 769px) {
+/* iPhone 6/7/8 Plus */
+@media (max-width: 414px) {
+  .about {
+    font-size: 3rem;
+  }
+
+  .about_small {
+    font-size: 1.5rem;
+  }
+
   .timeline::after {
-    left: 90px;
+    left: 210px;
   }
 
   .timelinecontainer {
@@ -420,13 +429,20 @@ main {
     padding-right: 30px;
   }
 
-  .timelinecontainer.right {
-    left: 0%;
+  .timelinecontainer.left {
+    left: -100px;
   }
 
-  .timelinecontainer.left::after,
+  .timelinecontainer.right {
+    left: 50px;
+  }
+
+  .timelinecontainer.left::after {
+    left: 300px;
+  }
+
   .timelinecontainer.right::after {
-    left: 82px;
+    left: 150px;
   }
 
   .timelinecontainer.left::before,
@@ -435,10 +451,14 @@ main {
     border-color: transparent #006e51 transparent transparent;
   }
 
-  .timelinecontainer.left .date,
+  .timelinecontainer.left .date {
+    right: auto;
+    left: 350px;
+  }
+
   .timelinecontainer.right .date {
     right: auto;
-    left: 15px;
+    left: 70px;
   }
 
   .timelinecontainer.left .icon,
@@ -447,10 +467,14 @@ main {
     left: 146px;
   }
 
-  .timelinecontainer.left .content,
-  .timelinecontainer.right .content {
+  .timelinecontainer.left .content {
     padding: 30px 30px 30px 90px;
     border-radius: 500px 0 0 500px;
+  }
+
+  .timelinecontainer.right .content {
+    padding: 30px 30px 30px 30px;
+    border-radius: 0 500px 500px 0;
   }
 
   .video-intro {
@@ -461,5 +485,78 @@ main {
   .more-videos {
     width: 350px;
     height: 300px;
+  }
+}
+
+/* iPhone 6/7/8 */
+@media (max-width: 375px) {
+  .timeline::after {
+    left: 180px;
+  }
+
+  .timelinecontainer.left {
+    left: -80px;
+  }
+
+  .timelinecontainer.right {
+    left: 10px;
+  }
+
+  .timelinecontainer.left::after {
+    left: 245px;
+  }
+
+  .timelinecontainer.left .content {
+    padding: 30px 15px 40px 70px;
+    border-radius: 500px 0 0 500px;
+  }
+
+  .timelinecontainer.left .date {
+    right: auto;
+    left: 300px;
+  }
+}
+
+/* iPhone 5/SE */
+@media (max-width: 320px) {
+  .timeline::after {
+    left: 150px;
+  }
+
+  .timelinecontainer.left {
+    left: -60px;
+  }
+
+  .timelinecontainer.right {
+    left: -20px;
+  }
+
+  .timelinecontainer.left::after {
+    left: 195px;
+  }
+
+  .timelinecontainer.left .content {
+    padding: 40px 30px 60px 20px;
+    border-radius: 500px 0 0 500px;
+  }
+
+  .timelinecontainer.right .content {
+    padding: 50px 50px 40px 20px;
+    border-radius: 0 500px 500px 0;
+  }
+
+  .timelinecontainer.left .date {
+    right: auto;
+    left: 250px;
+  }
+
+  .video-intro {
+    width: 400px;
+    height: 280px;
+  }
+
+  .more-videos {
+    width: 300px;
+    height: 280px;
   }
 }
