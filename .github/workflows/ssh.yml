@@ -26,7 +26,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.SSH_KEY}}
           command: |
-            source ~/.bashrc
+            source ~/ssh_bash
             cat ~/.bashrc
             echo "hello2"
             echo $PATH
