@@ -27,15 +27,14 @@ jobs:
           privateKey: ${{ secrets.SSH_KEY}}
           command: |
             source ~/.bashrc
+            cat ~/.bashrc
+            echo "hello2"
             echo $PATH
             echo $HOME
-            echo $NVM_DIR
             echo "hello"
-            ls -al
-            pwd
-            id
             nvm
             node
             npm
+            env
             
         
