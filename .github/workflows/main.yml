@@ -25,7 +25,9 @@ jobs:
         script: |
           pwd
           id
+          echo $PATH
           cat ~/.bashrc
+          source ~/.bashrc
           cd /twiri
           fuser 3000/tcp -k
           git pull
