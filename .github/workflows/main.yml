@@ -26,6 +26,7 @@ jobs:
           cd /twiri
           fuser 3000/tcp -k
           git pull
+          node -v
           npm i
           npm start
           
