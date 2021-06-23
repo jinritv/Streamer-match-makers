@@ -34,5 +34,6 @@ jobs:
             git pull
             npm i
             npm start &  # The & sign must be here for the workflow to end
+            exit
             
         
