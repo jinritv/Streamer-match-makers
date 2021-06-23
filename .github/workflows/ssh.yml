@@ -26,6 +26,10 @@ jobs:
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.SSH_KEY}}
           command: |
+            echo $PATH
+            echo $HOME
+            echo $NVM_DIR
+            echo "hello"
             ls -al
             pwd
             id
