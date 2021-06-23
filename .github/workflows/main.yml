@@ -22,4 +22,10 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
-        script: ls
+        script: |
+          cd /twiri
+          fuser 3000/tcp -k
+          git pull
+          npm i
+          npm start
+          
