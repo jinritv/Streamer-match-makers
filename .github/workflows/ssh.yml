@@ -26,6 +26,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.SSH_KEY}}
           command: |
+            source ~/.bashrc
             echo $PATH
             echo $HOME
             echo $NVM_DIR
