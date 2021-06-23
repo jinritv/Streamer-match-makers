@@ -25,15 +25,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.SSH_KEY}}
-          command: |
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-            cd /twiri
-            fuser 3000/tcp -k  # kill currently running node server, if any
-            git pull
-            npm i
-            npm start &  # The & sign must be here for the workflow to end
-            exit
+          command: nohup /twiri/refresh.sh > /dev/null
             
         
