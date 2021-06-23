@@ -24,10 +24,10 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           pwd
-          id
-          echo $PATH
-          cat ~/.bashrc
+          id         
           source ~/.bashrc
+          echo $PATH
+          nvm --help
           nvm
           cd /twiri
           fuser 3000/tcp -k
