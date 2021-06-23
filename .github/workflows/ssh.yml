@@ -25,6 +25,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           privateKey: ${{ secrets.SSH_KEY}}
-          command: nohup /twiri/refresh.sh > /dev/null &
+          command: ssh localhost -o StrictHostKeyChecking=no "nohup /twiri/refresh.sh > /dev/null&"
             
         
