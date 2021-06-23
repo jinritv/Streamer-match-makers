@@ -33,6 +33,6 @@ jobs:
             fuser 3000/tcp -k  # kill currently running node server, if any
             git pull
             npm i
-            npm start
+            npm start &  # The & sign must be here for the workflow to end
             
         
