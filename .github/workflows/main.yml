@@ -28,6 +28,7 @@ jobs:
           echo $PATH
           cat ~/.bashrc
           source ~/.bashrc
+          nvm
           cd /twiri
           fuser 3000/tcp -k
           git pull
