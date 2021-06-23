@@ -19,13 +19,18 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: garygrossgarten/github-action-ssh@v0.6.3
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: |
-          which nvm
-          which npm
-          pwd
-          cat ~/.bashrc
-          
+      - name: SSH command
+        uses: garygrossgarten/github-action-ssh@v0.6.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          privateKey: ${{ secrets.SSH_KEY}}
+          command: |
+            ls -al
+            pwd
+            id
+            nvm
+            node
+            npm
+            
+        
