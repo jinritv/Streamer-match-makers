@@ -1,6 +1,7 @@
 const { Op } = require("sequelize");
 const {Streamers} = require("../models/models");
 const { getStreamerLogos } = require("./get_streamers");
+const { getDatabase } = require("./db/get_database");
 
 // holds the default values for the 'Points' of each attribute.
 const ATTRIBUTE_POINTS_DEFAULTS = {
@@ -105,6 +106,7 @@ async function calculateStreamer(quizValues, callback) {
   // User answers passed from frontend
   const prefs = quizValues.UsersAnswers || {};
   console.log(`UserAnswers:`, prefs);
+  const db = getDatabase();
 
   /*
    *****************************
@@ -122,41 +124,22 @@ async function calculateStreamer(quizValues, callback) {
    */
 
   // Get all the streamers from the database
-  const allStreamersArray = await Streamers.findAll({
-    // we only need a few columns from the main Streamer table
-    attributes: ["id", "user_name", "nickname", "logo", "mature_stream", "gender"],
-    // we want to include the other associated tables such as StreamerStats, Languages, etc
-    include: { all: true, nested: true },
-  });
-  // we only want the values from the DB so we have to run the .toJSON() function on the array we got from the query
-  const allStreamers = JSON.parse(JSON.stringify(allStreamersArray));
-  //console.log(allStreamers)
+  const allStreamers = db.getAllStreamers();
+
+
   // for each streamer we run the matchingFunction to get a value
   const matchResult = matchStreamers(prefs, allStreamers);
   let matchedStreamers = matchResult[0];
   let topStats = matchResult[1];
 
-  // get required data for our streamers
-  let orQuery = [];
-  matchedStreamers.forEach((m) => {
-    orQuery.push({
-      id: m.id,
-    });
-  });
-  let rows = await Streamers.findAll({
-    attributes: ["id", "user_name", "logo"],
-    where: {
-      [Op.or]: orQuery,
-    },
-  });
+  const streamersMap = {}
+  for(const streamer of matchedStreamers) {
+    streamersMap[streamer.id] = streamer;
+  }
 
-  let streamersMap = {};
-  rows.forEach((r) => {
-    streamersMap[r.id] = r;
-  });
 
   // give updated link to logo
-  await updateStreamerObjsWithLogo(streamersMap);
+  await updateStreamerObjsWithLogo(Object.values(streamersMap));
   // add the match value to the result
   const matchedStreamersResult = matchedStreamers.map((streamer) => {
     if (!(streamer.id in streamersMap)) {
@@ -184,13 +167,13 @@ async function calculateStreamer(quizValues, callback) {
  * Update streamer profile pic (logo) with the current one, using Twitch API
  * TODO: Cache
  */
-async function updateStreamerObjsWithLogo(streamerObj) {
-  const user_names = Object.values(streamerObj).map(obj => obj.user_name);
+async function updateStreamerObjsWithLogo(streamers) {
+  const user_names = streamers.map(streamer => streamer.user_name);
 
   // Get the current logos
   const logo_dict = await getStreamerLogos(user_names);
-  Object.values(streamerObj).forEach(obj => {
-    obj.logo = logo_dict[obj.user_name] || obj.logo;  // Update if necessary
+  streamers.forEach(streamer => {
+    streamer.logo = logo_dict[streamer.user_name] || streamer.logo;  // Update if necessary
   });
 }
 
@@ -236,11 +219,11 @@ function matchStreamers(prefs, streamers) {
     };
 
     // check against average viewers preference
-    if (streamer.StreamersStat) {
+    if (streamer) {
       let viewerRange = getMinMaxViewers(prefs.average_viewers);
       let score = countNearScore(
         ATTRIBUTE_POINTS.average_viewers,
-        streamer.StreamersStat.avg_viewers,
+        streamer.avg_viewers,
         viewerRange[0],
         viewerRange[1],
         SCORE_NEAR_THRESHOLD.avg_viewers
@@ -254,9 +237,8 @@ function matchStreamers(prefs, streamers) {
     // check against language preference
     // get the streamers and the user's language arrays
     let totalLangMatch = 0;
-    let streamersLanguages = streamer.Languages.map((lang) => lang.language);
     preferredLanguages.forEach((strLang) => {
-      if (streamersLanguages.includes(strLang)) {
+      if (streamer.languages.includes(strLang)) {
         totalLangMatch += 1;
       }
     });
@@ -272,7 +254,6 @@ function matchStreamers(prefs, streamers) {
 
     //check against stream content
     let totalCatMatch = 0;
-    let streamersCategories = streamer.Categories.map((cat) => cat.category);
     prefs.content.forEach((parentCat) => {
       if (!(parentCat in CAT_MAP)) {
         throw `${parentCat} does not exist in category map`;
@@ -280,7 +261,7 @@ function matchStreamers(prefs, streamers) {
 
       let catMap = CAT_MAP[parentCat];
       for (var i = 0; i < catMap.length; i++) {
-        if (streamersCategories.includes(catMap[i])) {
+        if (streamer.categories.includes(catMap[i])) {
           totalCatMatch += 1;
           break;
         }
@@ -322,10 +303,9 @@ function matchStreamers(prefs, streamers) {
     }
 
     // chat vibe check
-    let chatVibes = streamer.ChatVibes.map((row) => row.chatvibe.toLowerCase());
     let matchVibes = 0;
     prefs.chat_vibe.forEach((vibe) => {
-      if (chatVibes.includes(vibe.toLowerCase())) {
+      if (streamer.chat_vibes.includes(vibe.toLowerCase())) {
         matchVibes += 1;
       }
     });
@@ -366,12 +346,8 @@ function matchStreamers(prefs, streamers) {
 
     // finally calculate the match % for our matched streamers and add them to the object we return back to the client
     let similarity = Math.round((scores / TOTAL_ATTRIBUTES) * 100);
-    matchValues.push({
-      id: streamer.id,
-      streamer: streamer.user_name,
-      avg_viewer: streamer.StreamersStat.avg_viewers,
-      match_percent: similarity,
-    });
+    streamer.match_percent = similarity;
+    matchValues.push(streamer);
   });
 
   // sort the streamers

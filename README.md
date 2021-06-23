@@ -13,7 +13,6 @@ These instructions will get you a copy of the project up and running on your loc
 This guide will show how to install these software:
 
 - **Node.js** - The backend environment
-- **PostgreSQL** - Our choice of database
 
 ### Installing Node.js
 
@@ -25,11 +24,6 @@ After installation, verify that Node was successfully installed by opening up a 
 
 It should display the version number of Node installed (v12.18.3).
 
-### Installing PostgreSQL
-
-Download PostgreSQL [here](https://www.postgresql.org/download/). When you install, it is strongly recommended including pgAdmin as a part of the installation package.
-
-## Verify Postgresql database server connection
 
 ### Environment setup
 
@@ -43,16 +37,13 @@ Open Command Prompt and `cd` to the location of this project. First we must inst
 
 And it should install the required packages we need (which are defined in the package.json file).
 
-### DB connection test
 
-Run test_db_connection.js as instructed in admin/README.md, and make sure that the success message is displayed.
+## Download CSV file from Google spreadsheet
 
-## Populate data into DB
-
-1. Get permission to [Google sheet](https://docs.google.com/spreadsheets/d/1yQ7YzuM5FhFB13ChTz77W2VyhzYJnjtqMBAEOwJrebI) from the Boss
-2. Open the spreadsheet, go to "Focused Targets" sheet
-3. Download the sheet info CSV file
-4. Run recreate_database.js as instructed in admin/README.md
+1. Get permission to [Google sheet](https://docs.google.com/spreadsheets/d/18HgxdbECnDFavSUQEoTYImz1QsYzEojbvRR7CUBClZM) from the Boss
+2. Open the spreadsheet, go to "Twiri Data Collection Sheet" sheet
+3. Download the sheet into CSV file
+4. Rename the file to db.csv and copy to the project root directory (where package.json is)
 
 ## Verify Node server is working
 
@@ -82,6 +73,10 @@ I tried to keep the structure as simple as possible, so that anyone who wants to
 - **.env** : This file needs to be created so we can connect to the database hosted on heroku. It should never be commited to github.
 
 # Release Notes
+
+## 2021-06-22
+
+For now, the temporary database is CSV file, which is a copy of Twiri Data Collection sheet v2.
 
 ## 2021-02-01 
 
