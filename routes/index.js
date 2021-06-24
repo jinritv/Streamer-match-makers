@@ -179,6 +179,10 @@ router.get("/404", (req, res) => {
   });
 });
 
+router.get("/ping", (req, res) => {
+  res.status(200).send("OK");
+});
+
 router.get("*", (req, res) => {
   res.redirect("/404");
 });
