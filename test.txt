@@ -1,0 +1,8 @@
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install -y nodejs
+npm install -g npm@latest
+
+
+
+# https://cloud.google.com/nodejs/getting-started/getting-started-on-compute-engine
+# This page has more detail
