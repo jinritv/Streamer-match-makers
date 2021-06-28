@@ -118,10 +118,13 @@ h1 {
 }
 
 .socials-container {
-  margin-top: 70px;
-  max-width: 230px;
-  margin-left: auto;
-  margin-right: auto;
+  width: 70%;
+  margin: auto;
+}
+
+.socials-container img {
+  width: 50%;
+  height: 50%;
 }
 
 .language-dropdown {
@@ -153,18 +156,16 @@ body {
 
 .streamer-info-container {
   border-radius: 24px;
-  height: 60vh;
   text-align: center;
   position: relative;
 }
 
 .percent-match {
-  font-size: xx-large;
+  font-size: xxx-large;
 }
 
 .others {
   margin-top: 24px;
-  height: 55vh;
 }
 
 .winner {
@@ -219,8 +220,12 @@ body {
   margin: 24px;
 }
 
+#streamer-1-user_name {
+  font-size: 3.5rem;
+}
+
 .streamer-username {
-  font-size: xx-large;
+  font-size: 1.9rem;
 }
 
 .quiz-button-container {
@@ -229,21 +234,21 @@ body {
 }
 
 .btn-quiz-continue {
-  border-radius: 100px !important;
+  border-radius: 20px;
   margin-bottom: 12px;
   max-width: 50%;
 }
 
 .btn-quiz-restart {
-  border-radius: 100px !important;
+  border-radius: 20px;
   margin-bottom: 12px;
-  max-width: 30%;
+  max-width: 35%;
   margin-left: auto;
   margin-right: auto;
 }
 
 .btn-quiz-back {
-  border-radius: 100px !important;
+  border-radius: 20px;
   margin-bottom: 12px;
 }
 .btn-back {
@@ -264,7 +269,7 @@ body {
   margin-left: 6px;
   white-space: normal;
   border-width: 2px;
-  border-radius: 100px;
+  border-radius: 20px;
 }
 
 .progress {
@@ -488,6 +493,24 @@ Unique elements (id)
   text-align: center;
 }
 
+.btn-plus {
+  margin-left: 24px;
+}
+
+.svg-plus {
+  width: 60px;
+  height: 60px;
+}
+
+.btn-minus {
+  margin-right: 24px;
+}
+
+.svg-minus {
+  width: 60px;
+  height: 60px;
+}
+
 @media (max-width: 414px) {
   .img_detective {
     width: 180px;
@@ -650,7 +673,23 @@ Unique elements (id)
   }
 }
 
+@media (max-width: 1200px) {
+  .socials-container {
+    width: 100%;
+    margin: 0;
+  }
+
+  .socials-container img {
+    width: 100%;
+    height: auto;
+  }
+}
+
 @media (max-width: 768px) {
+  #streamer-1-user_name {
+    font-size: 2.5rem;
+  }
+
   .animated-words {
     font-size: 2em;
   }
@@ -659,8 +698,23 @@ Unique elements (id)
     width: 60px;
   }
 
+  .btn-quiz-restart {
+    width: 250px;
+    max-width: min-content;
+  }
+
   .slider.slider-horizontal {
     width: 180px;
+  }
+
+  .btn-plus {
+    margin-left: 5px;
+    transform: scale(0.7);
+  }
+
+  .btn-minus {
+    margin-right: 5px;
+    transform: scale(0.7);
   }
 }
 
