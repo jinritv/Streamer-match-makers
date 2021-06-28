@@ -106,7 +106,7 @@ main {
   font-family: Poppins;
   font-style: normal;
   font-weight: bold;
-  font-size: 70px;
+  font-size: 3rem;
   line-height: 60px;
   /* identical to box height, or 86% */
   display: flex;
@@ -412,7 +412,7 @@ main {
 /* iPhone 6/7/8 Plus */
 @media (max-width: 414px) {
   .about {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   .about_small {
