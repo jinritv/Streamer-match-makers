@@ -7,16 +7,16 @@ question.answer_settings.defaultMax,
   <span class="slider-display-text" id=<%=`generated-${question.unique_question_identifier}-slider-display`%>><%=getText(`range-display-${question.unique_question_identifier}`,defaultDisplayValues)%></span>
 </div>     
 <div class="d-flex flex-row justify-content-center quiz-slider-container">
-<div id=<%=`generated-${question.unique_question_identifier}-minus`%> class="btn btn-outline-light svg-buttons" style="margin-right: 24px;">
-  <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+<div id=<%=`generated-${question.unique_question_identifier}-minus`%> class="btn btn-outline-light svg-buttons btn-minus">
+  <svg class="svg-minus" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
     <line x1='0' y1='30' x2='60' y2='30' stroke='#C4C4C4' style="stroke-width: 6px;" />
   </svg>
 </div>
 <div style="display:flex;align-items:center;">
   <input id=<%=`generated-slider_${question.unique_question_identifier}`%> type="text" />
 </div>
-<div id=<%=`generated-${question.unique_question_identifier}-plus`%> tabindex="0" class="btn btn-outline-light svg-buttons" style="margin-left:24px;">
-  <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+<div id=<%=`generated-${question.unique_question_identifier}-plus`%> tabindex="0" class="btn btn-outline-light svg-buttons btn-plus">
+  <svg class="svg-plus" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
     <line x1='0' y1='30' x2='60' y2='30' stroke='#C4C4C4' style="stroke-width: 6px;" />
     <line x1='30' y1='0' x2='30' y2='60' stroke='#C4C4C4' style="stroke-width: 6px;" />
   </svg>

@@ -308,6 +308,11 @@ we change the theme.
 
 h4 {
   color: var(--h4-text-color);
+  text-align: center;
+}
+
+h3 {
+  color: #dba453;
 }
 
 .slider-display-text {
@@ -387,7 +392,6 @@ body {
 /* Text Size*/
 .percent-match {
   color: var(--pure-white);
-  font-size: 40px;
 }
 .streamer-username {
   color: var(--pure-white);
@@ -406,7 +410,6 @@ body {
     );
   filter: drop-shadow(5px 5px 25px rgba(50, 50, 50, 0.85));
   backdrop-filter: blur(100px);
-  min-height: 450px;
 }
 
 .streamer-info-container-winner {
