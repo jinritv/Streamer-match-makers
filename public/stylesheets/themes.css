@@ -406,6 +406,11 @@ body {
     );
   filter: drop-shadow(5px 5px 25px rgba(50, 50, 50, 0.85));
   backdrop-filter: blur(100px);
+  min-height: 450px;
+}
+
+.streamer-info-container-winner {
+  min-height: 500px;
 }
 
 .svg-buttons {

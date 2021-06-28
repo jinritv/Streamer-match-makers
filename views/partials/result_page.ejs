@@ -1,45 +1,38 @@
 <div id="generated-streamer-reveal-container" class="container-fluid">
-    <div class="row mb-3 justify-content-center">
-    <h4><%=getText('results-title') %></h4>
-    
-    </div>
-    <div class="row mb-3 justify-content-center">
-    <h3><%=getText('results-subtitle') %></h3>
-    </div>
-    <div class="row mb-3 justify-content-center">
-    <div class="col justify-content-center">
-      <%- include("./first_place_result") %>
-    </div>
-  
-    <div class="col">
-    <div class="streamer-info-container others">
-        <%- include("./secondary_result",{ rank:2 }) %>
-    </div>
-  </div>
-  <div class="col">
-    <div class="streamer-info-container others">
-        <%- include("./secondary_result",{ rank:3}) %>
-    </div>
-  </div>
-      <div class="col">
-      <div class="streamer-info-container others">
-        <%- include("./secondary_result",{ rank:4 }) %>
-      </div>
-    </div>
-    <div class="col">
-      <div class="streamer-info-container others">
-        <%- include("./secondary_result",{ rank:5 }) %>
-      </div>
-    </div>
-    </div>
-    <div class="row">
-    <div class="col"></div>
-    <div class="col" style="text-align:center;">
-    <button id="restart-button" type="button" onclick="restartQuiz()"
-    class="btn btn-quiz-answer btn-quiz-restart">
-  <span><%=getText("restart")%></span></button>
-    </div>
-    <div class="col"></div>
-   
-    </div>
-  </div>
+	<div class="row mb-3 justify-content-center">
+		<h4><%=getText('results-title') %></h4> </div>
+	<div class="row mb-3 justify-content-center">
+		<h3><%=getText('results-subtitle') %></h3> </div>
+	<div class="row mb-3 justify-content-center">
+		<div class="justify-content-center col-xl-2 col-lg-4 col-md-6 col-sm-12">
+			<%- include("./first_place_result") %>
+		</div>
+		<div class="col-xl-2 col-lg-4 col-md-6 col-sm-12">
+			<div class="streamer-info-container others">
+				<%- include("./secondary_result",{ rank:2 }) %>
+			</div>
+		</div>
+		<div class="col-xl-2 col-lg-4 col-md-6 col-sm-12">
+			<div class="streamer-info-container others">
+				<%- include("./secondary_result",{ rank:3}) %>
+			</div>
+		</div>
+		<div class="col-xl-2 col-lg-4 col-md-6 col-sm-12">
+			<div class="streamer-info-container others">
+				<%- include("./secondary_result",{ rank:4 }) %>
+			</div>
+		</div>
+		<div class="col-xl-2 col-lg-4 col-md-6 col-sm-12">
+			<div class="streamer-info-container others">
+				<%- include("./secondary_result",{ rank:5 }) %>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col"></div>
+		<div class="col" style="text-align:center;">
+			<button id="restart-button" type="button" onclick="restartQuiz()" class="btn btn-quiz-answer btn-quiz-restart"> <span><%=getText("restart")%></span></button>
+		</div>
+		<div class="col"></div>
+	</div>
+</div>
