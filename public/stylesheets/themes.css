@@ -315,6 +315,15 @@ h3 {
   color: #dba453;
 }
 
+.result-title-text {
+  color: var(--h4-text-color);
+  text-align: center;
+}
+
+.result-subtitle-text {
+  color: #dba453;
+}
+
 .slider-display-text {
   color: var(--question-color);
 }
