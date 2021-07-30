@@ -17,7 +17,8 @@ function parseLanguages(languagesString) {
   for(const item of split) {
     const trimmed = item.trim();
     if(trimmed !== "") {
-      languages.push(trimmed);
+      // to upper case is needed to guard against inconsistent data, EN, En , en
+      languages.push(trimmed.toUpperCase());
     }
   }
   return languages;
@@ -41,10 +42,30 @@ function parseChatVibes(chatVibesString) {
   for(const item of split) {
     const trimmed = item.trim();
     if(trimmed !== "") {
-      chatVibes.push(trimmed);
+      // to lower case is needed to make sure no case difference cause issue in matching
+      // Ex: Funny (in DB) vs funny (in input)
+      chatVibes.push(trimmed.toLowerCase());
     }
   }
   return chatVibes;
+}
+
+function parseGender(rawGender) {
+  const trimmed = rawGender.trim();
+  if (trimmed.toUpperCase() == "F") {
+    return "F";
+  } else if (trimmed.toUpperCase() == "M") {
+    return "M";
+  }
+  return "";
+}
+
+function parseAvgViewer(rawAvgViewer) {
+  let i = parseInt(rawAvgViewer.replace(',', ''));
+  if (Number.isNaN(i)) {
+    return null;
+  }
+  return i;
 }
 
 // Gets string content of CSV file, parses it into array of {[dbcolumn]:value}
@@ -79,9 +100,9 @@ function parseCsvDataToJson(csvFileData) {
       user_name: dataRow[1].toLowerCase(),
       nickname: dataRow[2],
       logo: null,
-      mature_stream: dataRow[7] === "TRUE",
-      gender: dataRow[11],
-      avg_viewers: dataRow[14],
+      mature_stream: dataRow[7].toUpperCase() === "TRUE",
+      gender: parseGender(dataRow[11]),
+      avg_viewers: parseAvgViewer(dataRow[14]),
       languages: parseLanguages(dataRow[3]),
       categories: parseCategories(dataRow[12]),
       chat_vibes: parseChatVibes(dataRow[4])

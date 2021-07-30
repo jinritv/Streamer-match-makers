@@ -219,7 +219,7 @@ function matchStreamers(prefs, streamers) {
     };
 
     // check against average viewers preference
-    if (streamer) {
+    if (streamer.avg_viewers) {
       let viewerRange = getMinMaxViewers(prefs.average_viewers);
       let score = countNearScore(
         ATTRIBUTE_POINTS.average_viewers,
@@ -238,7 +238,8 @@ function matchStreamers(prefs, streamers) {
     // get the streamers and the user's language arrays
     let totalLangMatch = 0;
     preferredLanguages.forEach((strLang) => {
-      if (streamer.languages.includes(strLang)) {
+      // Database has uppercased language name code: EN, KR, CN etc
+      if (streamer.languages.includes(strLang.toUpperCase())) {
         totalLangMatch += 1;
       }
     });
@@ -390,8 +391,15 @@ function getMinMaxViewers(average_viewers) {
   if (!average_viewers) {
     return [2500, 7500];
   }
-  const minAvgViewer = Number(average_viewers.min || 2500);
-  const maxAvgViewer = Number(average_viewers.max || 7500);
+
+  let minAvgViewer = Number(average_viewers.min || 2500);
+  let maxAvgViewer = Number(average_viewers.max || 7500);
+
+  // frontend doesnt' send over 2000 for max value (it said 2000+ on the UI)
+  // so we modify max value if user submit 2000+ to also include large streamers
+  if (maxAvgViewer == 2000) {
+    maxAvgViewer = 10000
+  }
   return [minAvgViewer, maxAvgViewer];
 }
 
@@ -434,12 +442,12 @@ function getFollowerCountRange(follower_count) {
   return [0, 1000000]; // Returns all if not selected
 }
 
-
 function getLanguageNames(languages) {
   // Frontend has long language name, DB has short language names.
   if (!languages) {
     return [];
   }
+
   const nameMap = {
     thai: "th",
     japanese: "jp",
