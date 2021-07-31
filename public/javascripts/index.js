@@ -371,11 +371,15 @@ function calculateQuizResult() {
   });
 }
 
+
 function displayStreamerResults(results) {
   var streamers = results.result;
   ResultStats = results.stats;
   streamers.forEach((streamer, index) => {
+    console.log(streamer)
     $(`#streamer-${index + 1}-user_name`).text(streamer.user_name);
+    $(`#streamer-${index + 1}-bio`).text(streamer.bio);
+    $(`#streamer-${index + 1}-languages`).text(streamer.languages);
     $(`#streamer-${index + 1}-logo`).attr("src", streamer.logo);
     $(`#streamer-${index + 1}-match`).text(streamer.match_value);
     $(`#streamer-${index + 1}-twitch_link`).attr(
