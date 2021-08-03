@@ -405,6 +405,36 @@ body {
 .streamer-username {
   color: var(--pure-white);
 }
+.streamer-bio {
+  color: var(--pure-white);
+}
+.streamer-languages {
+  color: var(--pure-white);
+}
+.bio-accordion {
+  background-color: var(--page-background-color);
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .bio-accordion:hover {
+  background-color: var(--brand-light-pink);
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.bio-panel {
+  padding: 0 18px;
+  background-color: transparent;
+  display: none;
+  overflow: hidden;
+}
 
 .streamer-info-container {
   background: linear-gradient(

@@ -5,9 +5,7 @@ const ClientId = "s2frr164040bp9l6mgurxaz32i6rm1";
 
 const Url = "https://api.twitch.tv/v5/users?login=";
 
-// Update streamer profile pic (logo) with the current one, using Twitch API
-// TODO: Cache
-module.exports.getStreamerLogos = async function (usernames) {
+module.exports.getStreamersBio = async function (usernames) {
     const joined = usernames.join(',');
     const fullUrl= Url + joined;
 
@@ -18,10 +16,12 @@ module.exports.getStreamerLogos = async function (usernames) {
         }
     });
     const responseJson = await response.json()
-    const username_to_logo = {}
+
+    let streamerBios = {}
     for(let user of responseJson.users) {
-        console.log(user.logo)
-        username_to_logo[user.name] = user.logo;
+        
+        streamerBios[user.name] = user.bio;
     }
-    return username_to_logo;
+   
+    return streamerBios;
 };

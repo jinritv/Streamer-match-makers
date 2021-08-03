@@ -227,6 +227,12 @@ body {
 .streamer-username {
   font-size: 1.9rem;
 }
+.streamer-bio {
+  font-size: 1.2rem;
+}
+.streamer-languages {
+  font-size: 1.6rem;
+}
 
 .quiz-button-container {
   padding-left: 10%;

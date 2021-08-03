@@ -10,6 +10,8 @@ const {
 
 const { Quiz } = require("../backend/quiz_questions");
 
+const _DEFAULT_THEME_ = "dark-mode";
+
 router.get("/setTheme/:theme", (req, res) => {
   req.session.theme = req.params.theme;
   req.session.save();
@@ -23,7 +25,7 @@ router.get("/setLang/:lang", (req, res) => {
 // Home/Main quiz page
 router.get("/", (req, res) => {
   res.render("index", {
-    Theme: req.session.theme ?? "light-mode",
+    Theme: req.session.theme ? req.session.theme : _DEFAULT_THEME_,
   });
 });
 
@@ -118,11 +120,11 @@ router.post("/getLocalization", (req, res, next) => {
 // About page
 router.get("/about", (req, res, next) => {
   // default to en-US if there are no localization set
-  let LANGUAGE_TO_GET = req.session.language ?? "en-US";
+  let LANGUAGE_TO_GET = req.session.language ? req.session.language : "en-US";
 
   const onLangLoaded = (result, error) => {
     res.render("about", {
-      Theme: req.session.theme ?? "light-mode",
+      Theme: req.session.theme ? req.session.theme : _DEFAULT_THEME_,
       // our function to get texts (pre-loaded with our language's text)
       getText: getText(result.Texts),
       // languages available
@@ -137,11 +139,11 @@ router.get("/about", (req, res, next) => {
 // Contribute to the project page
 router.get("/contribution", (req, res, next) => {
   // default to en-US if there are no localization set
-  let LANGUAGE_TO_GET = req.session.language ?? "en-US";
+  let LANGUAGE_TO_GET = req.session.language ? req.session.language : "en-US";
 
   const onLangLoaded = (result, error) => {
     res.render("contribution", {
-      Theme: req.session.theme ?? "light-mode",
+      Theme: req.session.theme ? req.session.theme : _DEFAULT_THEME_,
       // our function to get texts (pre-loaded with our language's text)
       getText: getText(result.Texts),
       // languages available
@@ -156,11 +158,11 @@ router.get("/contribution", (req, res, next) => {
 // Submit your stream page
 router.get("/submission", (req, res, next) => {
   // default to en-US if there are no localization set
-  let LANGUAGE_TO_GET = req.session.language ?? "en-US";
+  let LANGUAGE_TO_GET = req.session.language ? req.session.language : "en-US";
 
   const onLangLoaded = (result, error) => {
     res.render("submission", {
-      Theme: req.session.theme ?? "light-mode",
+      Theme: req.session.theme ? req.session.theme : _DEFAULT_THEME_,
       // our function to get texts (pre-loaded with our language's text)
       getText: getText(result.Texts),
       // languages available
@@ -180,7 +182,7 @@ router.post("/submission", (req, res, next) => {
 // Not-found page
 router.get("/404", (req, res) => {
   res.status(404).render("not_found", {
-    Theme: req.session.theme ?? "light-mode",
+    Theme: req.session.theme ? req.session.theme : _DEFAULT_THEME_,
   });
 });
 
