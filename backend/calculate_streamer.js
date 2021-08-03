@@ -1,6 +1,7 @@
 const { Op } = require("sequelize");
 const {Streamers} = require("../models/models");
 const { getStreamerLogos } = require("./get_streamers");
+const { getStreamersBio } = require("./get_streamers_bios");
 const { getDatabase } = require("./db/get_database");
 
 // holds the default values for the 'Points' of each attribute.
@@ -121,6 +122,8 @@ async function calculateStreamer(quizValues, callback) {
 
   // give updated link to logo
   await updateStreamerObjsWithLogo(Object.values(streamersMap));
+
+  await getStreamersBioFromTwitch(Object.values(streamersMap));
   // add the match value to the result
   const matchedStreamersResult = matchedStreamers.map((streamer) => {
     if (!(streamer.id in streamersMap)) {
@@ -129,7 +132,7 @@ async function calculateStreamer(quizValues, callback) {
     let r = streamersMap[streamer.id];
     let streamerObj = Object.assign(
       {},
-      { id: r.id, user_name: r.user_name, logo: r.logo }
+      { id: r.id, user_name: r.user_name, logo: r.logo, bio: r.bio, languages: r.languages }
     );
     streamerObj.match_value = streamer.match_percent; // add our calculated match %
     return streamerObj;
@@ -142,6 +145,16 @@ async function calculateStreamer(quizValues, callback) {
     },
     null
   );
+}
+
+async function getStreamersBioFromTwitch(streamers) {
+  const user_names = streamers.map(streamer => streamer.user_name);
+
+  // Get the current bios from the twitch profiles
+  const biosDict = await getStreamersBio(user_names);
+  streamers.forEach(streamer => {
+    streamer.bio = biosDict[streamer.user_name];
+  });
 }
 
 /**
