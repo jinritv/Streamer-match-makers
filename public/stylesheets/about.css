@@ -472,6 +472,7 @@ main {
     border-radius: 500px 0 0 500px;
   }
 
+  .timelinecontainer.left .content,
   .timelinecontainer.right .content {
     padding: 30px 30px 30px 30px;
     border-radius: 0 500px 500px 0;
