@@ -14,15 +14,6 @@ const ATTRIBUTE_POINTS_DEFAULTS = {
   gender: 1.0,
 };
 
-// Overwritten by POST from client questionnaire with request[ranks] values.
-// NOTE: The property names in request[ranks] are equivalent to the 'unique_question_identifier'
-//       property for each question. If those identifiers do not match the fields above, the
-//       user supplied weight will be ignored and the default value above will be used for the
-//       offending field.
-let ATTRIBUTE_POINTS = {
-  ...ATTRIBUTE_POINTS_DEFAULTS,
-};
-
 // The user supplied weight value is going to be a value between 1 - 5 (equivalent to the number
 // of stars selected. When processing the user's selection, the value will be divided by the
 // following constant. With 5 total stars and a value of 5.0, all ATTRIBUTE_POINT values will be
@@ -32,16 +23,6 @@ const ATTRIBUTE_POINTS_STAR_TOTAL = 5.0;
 const SCORE_NEAR_THRESHOLD = {
   avg_viewers: 300,
 };
-
-// total of maximum score
-let TOTAL_ATTRIBUTES = 0;
-function refreshTotalAttributePoints() {
-  TOTAL_ATTRIBUTES = 0;
-
-  for (const [k, v] of Object.entries(ATTRIBUTE_POINTS)) {
-    TOTAL_ATTRIBUTES += v;
-  }
-}
 
 // key is content filter (input)
 // value is list of streamer category that can be considered
@@ -196,7 +177,11 @@ function matchStreamers(prefs, streamers) {
   let stats = {};
 
   // setup question ranks
-  processRanks(prefs.ranks);
+  let results = processRanks(prefs.ranks);
+  const RANK_SCORE = results[0];
+  const TOTAL_SCORE = results[1];
+  console.log("Rank Score: ", RANK_SCORE);
+  console.log("Total Score (100%): ", TOTAL_SCORE);
 
   // array to store the matched streamers
   let matchValues = [];
@@ -219,18 +204,18 @@ function matchStreamers(prefs, streamers) {
     };
 
     // check against average viewers preference
-    if (streamer) {
+    if (streamer.avg_viewers) {
       let viewerRange = getMinMaxViewers(prefs.average_viewers);
       let score = countNearScore(
-        ATTRIBUTE_POINTS.average_viewers,
+        RANK_SCORE.average_viewers,
         streamer.avg_viewers,
         viewerRange[0],
         viewerRange[1],
         SCORE_NEAR_THRESHOLD.avg_viewers
       );
       scores += score;
-      stats[streamer.id]["Viewers"] = Math.ceil(
-        (score / ATTRIBUTE_POINTS.average_viewers) * 100
+      stats[streamer.id]["Viewers"] = Math.round(
+        (score / RANK_SCORE.average_viewers) * 100
       );
     }
 
@@ -238,17 +223,18 @@ function matchStreamers(prefs, streamers) {
     // get the streamers and the user's language arrays
     let totalLangMatch = 0;
     preferredLanguages.forEach((strLang) => {
-      if (streamer.languages.includes(strLang)) {
+      // Database has uppercased language name code: EN, KR, CN etc
+      if (streamer.languages.includes(strLang.toUpperCase())) {
         totalLangMatch += 1;
       }
     });
     if (preferredLanguages.length != 0) {
       let langScore =
-        (totalLangMatch * ATTRIBUTE_POINTS.languages) /
+        (totalLangMatch * RANK_SCORE.languages) /
         preferredLanguages.length;
       scores += langScore;
-      stats[streamer.id]["Language"] = Math.ceil(
-        (langScore / ATTRIBUTE_POINTS.languages) * 100
+      stats[streamer.id]["Language"] = Math.round(
+        (langScore / RANK_SCORE.languages) * 100
       );
     }
 
@@ -269,10 +255,10 @@ function matchStreamers(prefs, streamers) {
     });
     if (prefs.content.length != 0) {
       let catScore =
-        (totalCatMatch * ATTRIBUTE_POINTS.content) / prefs.content.length;
+        (totalCatMatch * RANK_SCORE.content) / prefs.content.length;
       scores += catScore;
-      stats[streamer.id]["Content"] = Math.ceil(
-        (catScore / ATTRIBUTE_POINTS.content) * 100
+      stats[streamer.id]["Content"] = Math.round(
+        (catScore / RANK_SCORE.content) * 100
       );
     }
 
@@ -282,7 +268,7 @@ function matchStreamers(prefs, streamers) {
     if (prefs.subonly == "all") {
       chatModeScore = 1;
     }
-    scores += chatModeScore * ATTRIBUTE_POINTS.subonly;
+    scores += chatModeScore * RANK_SCORE.subonly;
     stats[streamer.id]["Chat Mode"] = chatModeScore * 100;
 
     // maturity check
@@ -298,7 +284,7 @@ function matchStreamers(prefs, streamers) {
         score = 1;
       }
 
-      scores += score * ATTRIBUTE_POINTS.mature;
+      scores += score * RANK_SCORE.mature;
       stats[streamer.id]["Maturity"] = score * 100;
     }
 
@@ -312,11 +298,11 @@ function matchStreamers(prefs, streamers) {
 
     if (prefs.chat_vibe.length != 0) {
       let vibeScore =
-        (matchVibes * ATTRIBUTE_POINTS.chat_vibe) /
+        (matchVibes * RANK_SCORE.chat_vibe) /
         prefs.chat_vibe.length;
       scores += vibeScore;
-      stats[streamer.id]["Chat Vibe"] = Math.ceil(
-        (vibeScore / ATTRIBUTE_POINTS.chat_vibe) * 100
+      stats[streamer.id]["Chat Vibe"] = Math.round(
+        (vibeScore / RANK_SCORE.chat_vibe) * 100
       );
     }
 
@@ -324,7 +310,7 @@ function matchStreamers(prefs, streamers) {
     // if they chose male and female, its 100% match anyways, or 0
     
     if(prefs.gender[0].toUpperCase() == streamer.gender || prefs.gender == "nopreference"){ // we receive a string of 'male', 'female', or "no preference" so we convert to M or F
-      scores += (1 * ATTRIBUTE_POINTS.gender);
+      scores += (1 * RANK_SCORE.gender);
       stats[streamer.id]["Gender"] = 100; // set 100% match
     }
     else{
@@ -345,7 +331,7 @@ function matchStreamers(prefs, streamers) {
     // );
 
     // finally calculate the match % for our matched streamers and add them to the object we return back to the client
-    let similarity = Math.round((scores / TOTAL_ATTRIBUTES) * 100);
+    let similarity = Math.round((scores / TOTAL_SCORE) * 100);
     streamer.match_percent = similarity;
     matchValues.push(streamer);
   });
@@ -390,8 +376,15 @@ function getMinMaxViewers(average_viewers) {
   if (!average_viewers) {
     return [2500, 7500];
   }
-  const minAvgViewer = Number(average_viewers.min || 2500);
-  const maxAvgViewer = Number(average_viewers.max || 7500);
+
+  let minAvgViewer = Number(average_viewers.min || 2500);
+  let maxAvgViewer = Number(average_viewers.max || 7500);
+
+  // frontend doesnt' send over 2000 for max value (it said 2000+ on the UI)
+  // so we modify max value if user submit 2000+ to also include large streamers
+  if (maxAvgViewer == 2000) {
+    maxAvgViewer = 10000
+  }
   return [minAvgViewer, maxAvgViewer];
 }
 
@@ -434,12 +427,12 @@ function getFollowerCountRange(follower_count) {
   return [0, 1000000]; // Returns all if not selected
 }
 
-
 function getLanguageNames(languages) {
   // Frontend has long language name, DB has short language names.
   if (!languages) {
     return [];
   }
+
   const nameMap = {
     thai: "th",
     japanese: "jp",
@@ -563,32 +556,29 @@ function compareTime(st_from, st_to, d1, d2) {
 }
 
 function processRanks(ranks) {
-  // Always restore attribute points to default values.
-  ATTRIBUTE_POINTS = {
-    ...ATTRIBUTE_POINTS_DEFAULTS,
-  };
-  refreshTotalAttributePoints();
-
-  if (!ranks) {
-    return;
-  }
-
+  let new_rank = {};
+  let total = 0;
   // read and update question weights from supplied user data
-  for (const [key, val] of Object.entries(ATTRIBUTE_POINTS)) {
+  for (const [key, val] of Object.entries(ATTRIBUTE_POINTS_DEFAULTS)) {
     let newWeightValue = parseFloat(ranks[key]);
-    console.log(newWeightValue);
     if (isNaN(newWeightValue)) {
+      // use from default
       // Log helpful debug information
       console.log(
         new Error(
           `Question weight for 'ATTRIBUTE_POINTS' key '${key}' was not found in client request payload. Inspect request[ranks] data for possible naming mismatch.`
         )
       );
+      new_rank[key] = val;
+      total += new_rank[key];
       continue;
     }
-    ATTRIBUTE_POINTS[key] = newWeightValue / ATTRIBUTE_POINTS_STAR_TOTAL;
+
+    new_rank[key] = newWeightValue / ATTRIBUTE_POINTS_STAR_TOTAL;
+    total += new_rank[key];
   }
-  refreshTotalAttributePoints();
+
+  return [new_rank, total];
 }
 
 module.exports = calculateStreamer;
