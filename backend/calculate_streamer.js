@@ -441,13 +441,19 @@ function getLanguageNames(languages) {
     return [];
   }
   const nameMap = {
-    thai: "th",
-    japanese: "jp",
-    korean: "kr",
-    english: "en",
-    chinese: "cn",
-    french: "fr",
-    spanish: "es",
+    thai: "TH",
+    japanese: "JP",
+    korean: "KR",
+    english: "EN",
+    mandarin: "CN",
+    french: "FR",
+    spanish: "ES",
+    russian: "RU",
+    vietnamese: "VI",
+    german: "DE",
+    tagalog: "TAG",
+    cantonese: "CA",
+    portuguese: "PT",
   };
   return languages.map((lang) => nameMap[lang]);
 }

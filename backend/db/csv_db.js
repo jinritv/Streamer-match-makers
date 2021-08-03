@@ -36,7 +36,7 @@ function parseCategories(categoriesString) {
 }
 
 function parseChatVibes(chatVibesString) {
-  const split = chatVibesString.split(",");
+  const split = chatVibesString.split(/[,\/]/);
   const chatVibes = [];
   for(const item of split) {
     const trimmed = item.trim();
@@ -71,9 +71,9 @@ function parseCsvDataToJson(csvFileData) {
   // const csvObjectRows = d3.csvParse(sanitizedCsvData);
   const csvJsonList = [];
   for(const dataRow of dataRows) {
-    if(dataRow[21] !== "DONE") {
+    /*if(dataRow[21] !== "DONE") {
       continue;
-    }
+    }*/
     const dataJson = {
       id: dataRow[1].toLowerCase(),
       user_name: dataRow[1].toLowerCase(),
