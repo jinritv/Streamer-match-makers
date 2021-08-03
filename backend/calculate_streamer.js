@@ -12,6 +12,7 @@ const ATTRIBUTE_POINTS_DEFAULTS = {
   subonly: 1.0,
   mature: 1.0,
   chat_vibe: 1.0,
+  streamer_vibe:1.0,
   gender: 1.0,
 };
 
@@ -317,6 +318,24 @@ function matchStreamers(prefs, streamers) {
       stats[streamer.id]["Chat Vibe"] = Math.round(
         (vibeScore / RANK_SCORE.chat_vibe) * 100
       );
+    }
+
+    // Streamer vibe check
+    let matchVibes_S = 0;
+    prefs.streamer_vibe.forEach((vibe) => {
+      if (streamer.streamer_vibes.includes(vibe.toLowerCase())) {
+        matchVibes_S += 1;
+      }
+    });
+
+    if (prefs.streamer_vibe.length != 0) {
+      let vibeScore_S =
+        (matchVibes_S * RANK_SCORE.streamer_vibe) /
+        prefs.streamer_vibe.length;
+      scores += vibeScore_S;
+      stats[streamer.id]["Streamer Vibe"] = Math.round(
+        (vibeScore_S / RANK_SCORE.streamer_vibe) * 100
+      )
     }
 
     //check for gender preference

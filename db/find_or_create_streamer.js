@@ -37,8 +37,8 @@ async function findOrCreateStreamerFromData(streamerData) {
       // Step 3. Set many-to-many relations
       await findOrCreateCategories(streamerModel, data.categories); // Categories
       await findOrCreateLanguages(streamerModel, data.languages); // Languages
-      await findOrCreateVibes(streamerModel, data.stream_vibes); // Vibes
-      await findOrCreateChatVibes(streamerModel, data.chat_vibes); // Vibes
+      await findOrCreateStreamerVibes(streamerModel, data.streamer_vibes); // Streamer Vibes
+      await findOrCreateChatVibes(streamerModel, data.chat_vibes); // Chat Vibes
 
       // TODO: Add collab relations
     });

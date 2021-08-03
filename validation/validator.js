@@ -102,8 +102,8 @@ const dataFields = {
     converter: vibeConverter,
   },
  
-  // vibes table
-  stream_vibes: {
+  // Streamer vibes table
+  streamer_vibes: {
     defaultValue: [],
     converter: vibeConverter,
   },

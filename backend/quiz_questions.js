@@ -146,7 +146,33 @@ const QuizQuestions = [
     ],
   },
 
-  // Question 6: average_viewers
+  // Question 6: streamer vibes
+  {
+    unique_question_identifier: "streamer_vibe",
+    question_type: QuestionTypes.Buttons.MultipleSelection,
+    disableContinueButtonByDefault: true,
+    buttonsPerRow: 4,
+    answer_settings: [
+      "artistic",
+      "blunt",
+      "chatty",
+      "dorky",
+      "engaging",
+      "friendly",
+      "funny",
+      "geeky",
+      "informative",
+      "loud",
+      "raging",
+      "shy",
+      "silly",
+      "smart",
+      "weird",
+      "wholesome",
+    ],
+  },
+
+  // Question 7: average_viewers
   {
     unique_question_identifier: "average_viewers",
     question_type: QuestionTypes.RangeSlider,
@@ -160,7 +186,7 @@ const QuizQuestions = [
     },
   },
 
-  // Question 7: 'gender'
+  // Question 8: 'gender'
   {
     unique_question_identifier: "gender",
     question_type: QuestionTypes.Buttons.SingleSelection,

@@ -36,8 +36,22 @@ function parseCategories(categoriesString) {
   return categories;
 }
 
-function parseChatVibes(chatVibesString) {
-  const split = chatVibesString.split(/[,\/]/);
+function parseChatVibes(streamerVibesString) {
+  const split = streamerVibesString.split("/");
+  const streamerVibes = [];
+  for(const item of split) {
+    const trimmed = item.trim();
+    if(trimmed !== "") {
+      // to lower case is needed to make sure no case difference cause issue in matching
+      // Ex: Funny (in DB) vs funny (in input)
+      streamerVibes.push(trimmed.toLowerCase());
+    }
+  }
+  return streamerVibes;
+}
+
+function parseStreamerVibes(chatVibesString) {
+  const split = chatVibesString.split("/");
   const chatVibes = [];
   for(const item of split) {
     const trimmed = item.trim();
@@ -105,7 +119,8 @@ function parseCsvDataToJson(csvFileData) {
       avg_viewers: parseAvgViewer(dataRow[14]),
       languages: parseLanguages(dataRow[3]),
       categories: parseCategories(dataRow[12]),
-      chat_vibes: parseChatVibes(dataRow[4])
+      chat_vibes: parseChatVibes(dataRow[4]),
+      streamer_vibes: parseStreamerVibes(dataRow[5])
     };
     csvJsonList.push(dataJson);
   }
