@@ -25,7 +25,7 @@ function parseLanguages(languagesString) {
 }
 
 function parseCategories(categoriesString) {
-  const split = categoriesString.split(",");
+  const split = categoriesString.split("/");
   const categories = [];
   for(const item of split) {
     const trimmed = item.trim();
