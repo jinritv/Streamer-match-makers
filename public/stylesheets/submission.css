@@ -11,7 +11,6 @@ main {
 }
 
 .submit-channel-text {
-  font-family: Poppins;
   font-style: normal;
   font-weight: bold;
   font-size: 6vw;
@@ -21,7 +20,6 @@ main {
 }
 
 .channel-condition {
-  font-family: Poppins;
   font-style: normal;
   font-weight: 500;
   font-size: 2vw;

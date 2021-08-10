@@ -26,12 +26,11 @@
           * At least 500 Followers / 10 avg. Viewers
         </div>
       </div>
-
       <div class="container-fluid form-container">
         <div class="row">
           <div class="col-lg-3 d-none d-lg-block">
             <div class="text-label row justify-content-center">
-              Submitted Streamers
+              <%- getText('submitted-streamer')%>
             </div>
             <div class="row justify-content-center m-2">
               <iframe width="560" height="315" src="https://www.youtube.com/embed/Th76SHjjm3c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -41,11 +40,18 @@
             </div>
           </div>
           <div class="col-lg-6">
+           <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeb787vidx-A7NMZW6jb2Nv_vBvopvYdqtgfQJG9fs5RLsn_Q/viewform?embedded=true" width="1000" height="1080" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+          <!--
+          <div class="col-lg-6">
             <form onsubmit="submitFormEvent(event)">
               <div class="row mt-3 justify-content-between">
                 <div class="col-12 col-lg-5">
                   <div class="row">
-                    <label name="submitterName">Your Name</label>
+                    <label name="submitterName">Name</label>
                   </div>
                   <div class="row">
                     <input name="submitterName" type="text" class="w-100">
@@ -109,7 +115,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>!-->
   </main>
   <%- include ("./partials/footer",{
       CopyrightText:  getText('copyright-text'),

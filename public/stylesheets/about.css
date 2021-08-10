@@ -15,7 +15,6 @@ main {
 
 .about {
   /* About us */
-  font-family: Poppins;
   font-style: normal;
   font-weight: bold;
   font-size: 10vw;
@@ -24,7 +23,6 @@ main {
 }
 
 .about_small {
-  font-family: Poppins;
   font-style: normal;
   font-weight: bold;
   font-size: 4vw;
@@ -70,7 +68,6 @@ main {
   width: 1029px;
   height: 130px;
 
-  font-family: Poppins;
   font-style: normal;
   font-weight: 300;
   font-size: 22px;
@@ -103,7 +100,6 @@ main {
 .achievement {
   /* ACHIEVMENTS */
 
-  font-family: Poppins;
   font-style: normal;
   font-weight: bold;
   font-size: 3rem;
@@ -129,7 +125,6 @@ main {
 
 .proudof {
   /* We are proud of */
-  font-family: Poppins;
   font-style: normal;
   font-weight: 300;
   font-size: 30px;
@@ -149,7 +144,6 @@ main {
 }
 
 .largenumber {
-  font-family: Poppins;
   font-style: normal;
   font-weight: bold;
   font-size: 80px;
@@ -162,7 +156,6 @@ main {
 }
 
 .largetext {
-  font-family: Poppins;
   font-style: normal;
   font-weight: 500;
   font-size: 25px;
@@ -175,7 +168,6 @@ main {
 }
 
 .smalltext {
-  font-family: Poppins;
   font-style: normal;
   font-weight: 300;
   font-size: 20px;
@@ -189,7 +181,6 @@ main {
 }
 .events_ron {
   /* Events */
-  font-family: Poppins;
   font-style: normal;
   font-weight: bold;
   font-size: 70px;
@@ -204,7 +195,6 @@ main {
 }
 
 .video_subtitle {
-  font-family: Poppins;
   font-style: normal;
   font-weight: 300;
   font-size: 30px;

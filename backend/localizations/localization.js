@@ -5,18 +5,21 @@ const Languages = {
     ENGLISH: "en-US",
     GERMAN: "de-DE",
     FRENCH: "fr-FR",
+    KOREAN: "kr-KR",
     // add a new language here
   },
   Icons: {
     "en-US": "https://cdn.betterttv.net/emote/566ca04265dbbdab32ec054a/1x",
     "de-DE": "",
     "fr-FR": "",
+    "kr-KR": "",
     // add a new language here
   },
   Names: {
     "en-US":"English",
     "de-DE":"Deutsche",
-    "fr-FR":"Français"
+    "fr-FR":"Français",
+    "kr-KR":"한국어"
   }
 };
 
