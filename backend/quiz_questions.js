@@ -57,7 +57,7 @@ const QuizQuestions = [
       "russian",
       "vietnamese",
       "german",
-      "tagalog",
+      "filipino",
       "cantonese",
       "portuguese",
     ],

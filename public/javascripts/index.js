@@ -193,6 +193,7 @@ function selectMultipleButton(question, selection) {
 
 function nextQuestion() {
   console.log(UsersAnswers);
+  $quizContinueButton.prop("disabled", true);
   // adjusts the display progress bar
   adjustProgressBar(CurrentQuestion);
 
