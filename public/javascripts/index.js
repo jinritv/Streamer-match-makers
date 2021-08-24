@@ -193,6 +193,7 @@ function selectMultipleButton(question, selection) {
 
 function nextQuestion() {
   console.log(UsersAnswers);
+  $quizContinueButton.prop("disabled", true);
   // adjusts the display progress bar
   adjustProgressBar(CurrentQuestion);
 
@@ -270,7 +271,7 @@ function lastQuestion() {
 }
 
 function restartQuiz() {
-  RemoveConfetti();
+  //RemoveConfetti();
   CurrentQuestion = 1;
   UsersAnswers = {};
   $(`#main-container`).removeClass("wide-container");
@@ -371,12 +372,11 @@ function calculateQuizResult() {
   });
 }
 
-
 function displayStreamerResults(results) {
   var streamers = results.result;
   ResultStats = results.stats;
   streamers.forEach((streamer, index) => {
-    console.log(streamer)
+    console.log(streamer);
     $(`#streamer-${index + 1}-user_name`).text(streamer.user_name);
     $(`#streamer-${index + 1}-bio`).text(streamer.bio);
     $(`#streamer-${index + 1}-languages`).text(streamer.languages);
@@ -391,7 +391,7 @@ function displayStreamerResults(results) {
       streamer.id
     );
   });
-  MakeConfetti();
+  //MakeConfetti();
 }
 
 function captureTimeInputs() {

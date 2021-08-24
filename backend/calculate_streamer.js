@@ -476,7 +476,7 @@ function getLanguageNames(languages) {
     russian: "RU",
     vietnamese: "VI",
     german: "DE",
-    tagalog: "TAG",
+    filipino: "FIL",
     cantonese: "CA",
     portuguese: "PT",
   };

@@ -28,10 +28,10 @@
       <div class="container-fluid" style="max-width: 60%; margin: 0 auto;">
         <div class="row" style="position: relative;">
             <div class="text-center about" style="width: 100%;">
-              About Us
+              <%- getText('About-Us')%>
             </div>
             <div class="text-center offsetText_hotshot about_small" aria-hidden="true">
-              About Us
+              <%- getText('About-Us')%>
             </div>
         </div>
       </div>
@@ -46,13 +46,7 @@
             <img class="people-image w-100 h-100 p-2" src="/images/people.svg">
           </div>
           <div class="col-12 col-lg-10 abouttwiri">
-            Twiri is a open sourced co-developed webpage 
-            that recommends streamers based on the user's 
-            preference by answering a series of questions. 
-            All data are crowd sourced data and all development
-            has been done by JinriCo community consisting of
-            smart and thoughtful people. To join, please 
-            follow the link below. [https://discord.gg/RpWjCk7]
+            <%- getText('about-twiri-description')%>
           </div>
         </div>
         <div class="row rectangle about-twiri-row d-flex justify-content-center">
@@ -60,12 +54,7 @@
             <img class="popup-image w-100 h-100 p-2" src="/images/popup.svg">
           </div>
           <div class="col-12 col-lg-10 abouttwiri">            
-          JinriTV is a prolific streamer with diverse interest such as
-          developing/programming apps, learning stock, data 
-          analyzing. Also, she loves doing entertainment on stream
-          such as dancing, mukbang, harp and singing. Check her out here! linktr.ee/jinritv 
-          Email for business purposes business.jinritv@gmail.com
-          
+            <%- getText('about-jinritv-description')%>          
           </div>
         </div>
       </div>
@@ -73,18 +62,19 @@
     <div class="container-fluid background">
       <div class="row achievement text-center">
         <div class="col">
-          Achievement
+          <%- getText('achievement')%>
         </div>
       </div>
       <div class="row proudof text-center">
         <div class="col">
-          We are proud of
+          <%- getText('proud-of')%>
         </div>
       </div>
       <div class="row row-achievement text-center justify-content-center">
         <div class="col-2 col-achievement">
           <!--
               we need to make a new file called achievement.ejs
+              why?
             -->
           <%- include("./partials/achievement", { number: 20, title: "Users" , subtitle: "Daily" }) %>
 
@@ -106,69 +96,68 @@
     <!-- This is @HOOYAZ, DON'T TOUCH THIS-->
     <div class="container-fluid events_ron ure_funny">
       <div class="row">
-        Events
+        <%- getText('timeline-events')%>
       </div>
     </div>
     <div class="container">
       <div class="timeline">
         <div class="timelinecontainer left">
-          <div class="date">05.22.20</div>
+          <div class="date"><%- getText('timeline-05.22.20')%></div>
           <i class="icon fa fa-home"></i>
           <div class="content">
-            <h2>Data Collection</h2>
+            <h2><%- getText('timeline-Data-Collection')%></h2>
             <p>
-              The day we started collecting Korean girl streamer data and started making connections. Through this, Jinri was able to meet with
-             Juelia, Lessa_TV, Kyumingming, and more.
+              <%- getText('timeline-data-collection-description')%>
             </p>
           </div>
         </div>
         <div class="timelinecontainer right">
-          <div class="date">06.06.20</div>
+          <div class="date"><%- getText('timeline-06.06.20')%></div>
           <i class="icon fa fa-gift"></i>
           <div class="content">
-            <h2>Ideation</h2>
+            <h2><%- getText('timeline-Ideation')%></h2>
             <p>
-              Started to brainstorm ideas in creating this website
+              <%- getText('timeline-ideation-description')%>
             </p>
           </div>
         </div>
         <div class="timelinecontainer left">
-          <div class="date">16.06.20</div>
+          <div class="date"><%- getText('timeline-16.06.20')%></div>
           <i class="icon fa fa-user"></i>
           <div class="content">
-            <h2>Jinri's first attempt at design</h2>
+            <h2><%- getText('timeline-first-design')%></h2>
             <p>
-              and........... it failed :P
+              <%- getText('timeline-design-description')%>
             </p>
           </div>
         </div>
         <div class="timelinecontainer right">
-          <div class="date">12.01.21</div>
+          <div class="date"><%- getText('timeline-12.01.21')%></div>
           <i class="icon fa fa-running"></i>
           <div class="content">
-            <h2>Closed Alpha Version</h2>
+            <h2><%- getText('timeline-alpha')%></h2>
             <p>
-              Officially released the closed alpha version and had different viewers stop by to test the program.
+              <%- getText('timeline-alpha-description')%>
             </p>
           </div>
         </div>
         <div class="timelinecontainer left">
-          <div class="date">31.05.21</div>
+          <div class="date"><%- getText('timeline-31.05.21')%></div>
           <i class="icon fa fa-cog"></i>
           <div class="content">
-            <h2>Beta Version Released</h2>
+            <h2><%- getText('timeline-beta')%></h2>
             <p>
-              To be continued...
+              <%- getText('timeline-beta-description')%>
             </p>
           </div>
         </div>
         <div class="timelinecontainer right">
-          <div class="date">TBD</div>
+          <div class="date"><%- getText('timeline-TBD')%></div>
           <i class="icon fa fa-certificate"></i>
           <div class="content">
-            <h2>Official Release</h2>
+            <h2><%- getText('timeline-Official-Release')%></h2>
             <p>
-              TBD
+              <%- getText('timeline-TBD')%>
             </p>
           </div>
         </div>
@@ -177,7 +166,7 @@
     <div class="container-fluid background mb-5">
       <div class="row achievement text-center">
         <div class="col">
-          More Videos
+          <%- getText('more-video')%>
         </div>
       </div>
       <!-- TWITCH EMBED REQUIREMENTS: https://dev.twitch.tv/docs/embed -->
@@ -185,7 +174,7 @@
         <div class="col-md-4 col-sm-12">
           <div class="row d-flex flex-column">
             <div class="col video_subtitle text-center">
-              Streamer React on TWIRI
+              <%- getText('streamer-react')%>
             </div>
             <div class="col">
               <iframe src="https://clips.twitch.tv/embed?clip=SullenSpineyAxeTheRinger&parent=<%= process.env.TWIRI_URL %>" class="more-videos" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
@@ -195,7 +184,7 @@
         <div class="col-md-4 col-sm-12">
           <div class="row d-flex flex-column">
             <div class="col video_subtitle text-center">
-              Jinri Talks about TWIRI
+              <%- getText('jinri-talk')%>
             </div>
             <div class="col">
               <iframe src="https://clips.twitch.tv/embed?clip=MotionlessMotionlessSnakeDoritosChip-1WZv6j9iLveRLtj7&parent=<%= process.env.TWIRI_URL %>" class="more-videos" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
@@ -205,7 +194,7 @@
         <div class="col-md-4 col-sm-12">
           <div class="row d-flex flex-column">
             <div class="col video_subtitle text-center">
-              Viewers react on TWIRI
+              <%- getText('viewer-react')%>
             </div>
             <div class="col">
               <iframe src="https://clips.twitch.tv/embed?clip=BillowingSourHornetBCouch-NVTL1i_Y2uBgct8b&parent=<%= process.env.TWIRI_URL %>" class="more-videos" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
