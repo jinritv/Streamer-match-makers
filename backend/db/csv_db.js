@@ -109,6 +109,12 @@ function parseCsvDataToJson(csvFileData) {
     /*if(dataRow[21] !== "DONE") {
       continue;
     }*/
+    const status = dataRow[0] ? dataRow[0].toLowerCase() : null;
+    if(status === 'x' || status === 'i') {
+      console.log('skipping', dataRow[1].toLowerCase());
+      continue;
+    }
+
     const dataJson = {
       id: dataRow[1].toLowerCase(),
       user_name: dataRow[1].toLowerCase(),
