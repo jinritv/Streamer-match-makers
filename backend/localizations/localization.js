@@ -6,6 +6,7 @@ const Languages = {
     GERMAN: "de-DE",
     FRENCH: "fr-FR",
     KOREAN: "kr-KR",
+    SPANISH: "sp-SP",
     // add a new language here
   },
   Icons: {
@@ -13,13 +14,15 @@ const Languages = {
     "de-DE": "",
     "fr-FR": "",
     "kr-KR": "",
+    "sp-SP": "",
     // add a new language here
   },
   Names: {
     "en-US":"English",
     "de-DE":"Deutsche",
     "fr-FR":"Français",
-    "kr-KR":"한국어"
+    "kr-KR":"한국어",
+    "sp-SP":"Español",
   }
 };
 

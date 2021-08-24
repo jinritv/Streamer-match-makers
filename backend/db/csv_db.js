@@ -70,6 +70,8 @@ function parseGender(rawGender) {
     return "F";
   } else if (trimmed.toUpperCase() == "M") {
     return "M";
+  } else if (trimmed.toUpperCase() == "M/F") {
+    return "MF";
   }
   return "";
 }
