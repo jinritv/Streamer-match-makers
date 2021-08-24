@@ -1,6 +1,5 @@
 $(document).ready(function () {
   setLanguage(getDefaultLanguage());
-  assignThemes();
   getDataForTheme();
 });
 
@@ -17,6 +16,7 @@ function getDataForTheme() {
       } else {
         // data is loaded so now start the page effects
         setLanguageTexts(data);
+        assignThemes();
       }
     },
   });
