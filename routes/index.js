@@ -15,11 +15,13 @@ const _DEFAULT_THEME_ = "dark-mode";
 router.get("/setTheme/:theme", (req, res) => {
   req.session.theme = req.params.theme;
   req.session.save();
+  res.status(200).send("OK");
 });
 
 router.get("/setLang/:lang", (req, res) => {
   req.session.language = req.params.lang;
   req.session.save();
+  res.status(200).send("OK");
 });
 
 // Home/Main quiz page
