@@ -55,7 +55,10 @@ router.post("/getHtml", function (req, res) {
 
 // renders the html for the quiz and most of the page
 router.post("/getQuizData", function (req, res) {
-  let LANGUAGE_TO_GET = req.body.language;
+  let LANGUAGE_TO_GET =
+    req.session.language && req.session.language != ""
+      ? req.session.language
+      : req.body.language;
   console.log(`getting rest of data for ${LANGUAGE_TO_GET}`);
   const onLangLoaded = (result, error) => {
     let requiredTexts = {
