@@ -40,5 +40,5 @@ function updateLanguage(language) {
     console.log("Language already loaded.");
     return;
   }
-  getDataForTheme();
+  window.location.reload();
 }
