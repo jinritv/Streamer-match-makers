@@ -398,8 +398,8 @@ Unique elements (id)
 }
 
 .profile-1 {
-  height: 100px;
-  width: 100px;
+  height: 140px;
+  width: 140px;
   top: 20vh;
   bottom: 0;
   left: 10vw;
@@ -463,18 +463,19 @@ Unique elements (id)
   right: 0;
 }
 .profile-9 {
-  height: 140px;
-  width: 140px;
-  top: 70vh;
+  height: 120px;
+  width: 120px;
+  top: 50vh;
   bottom: 0;
-  left: 90vw;
+  left: 40vw;
   right: 0;
+
 }.profile-10 {
-  height: 140px;
-  width: 140px;
-  top: 70vh;
+  height: 100px;
+  width: 100px;
+  top: 30vh;
   bottom: 0;
-  left: 90vw;
+  left: 88vw;
   right: 0;
 }
 .background-container {
