@@ -7,6 +7,7 @@ const Languages = {
     FRENCH: "fr-FR",
     KOREAN: "kr-KR",
     SPANISH: "sp-SP",
+    PORTUGUESE: "pt-PT",
     // add a new language here
   },
   Icons: {
@@ -15,14 +16,16 @@ const Languages = {
     "fr-FR": "",
     "kr-KR": "",
     "sp-SP": "",
+    "pt-PT": "",
     // add a new language here
   },
   Names: {
     "en-US":"English",
-    "de-DE":"Deutsche",
+    "de-DE":"Deutsch",
     "fr-FR":"Français",
     "kr-KR":"한국어",
     "sp-SP":"Español",
+    "pt-PT":"Português",
   }
 };
 

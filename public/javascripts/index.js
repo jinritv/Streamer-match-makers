@@ -271,7 +271,7 @@ function lastQuestion() {
 }
 
 function restartQuiz() {
-  //RemoveConfetti();
+  RemoveConfetti();
   CurrentQuestion = 1;
   UsersAnswers = {};
   $(`#main-container`).removeClass("wide-container");
@@ -391,7 +391,7 @@ function displayStreamerResults(results) {
       streamer.id
     );
   });
-  //MakeConfetti();
+  MakeConfetti();
 }
 
 function captureTimeInputs() {

@@ -387,8 +387,8 @@ Unique elements (id)
 
 .streamer-image {
   /* Add the blur effect */
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
   border-radius: 50%;
   /* Full height */
   height: 100px;
@@ -462,7 +462,21 @@ Unique elements (id)
   left: 90vw;
   right: 0;
 }
-
+.profile-9 {
+  height: 140px;
+  width: 140px;
+  top: 70vh;
+  bottom: 0;
+  left: 90vw;
+  right: 0;
+}.profile-10 {
+  height: 140px;
+  width: 140px;
+  top: 70vh;
+  bottom: 0;
+  left: 90vw;
+  right: 0;
+}
 .background-container {
   width: 100%;
   height: 100%;

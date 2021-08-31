@@ -529,7 +529,10 @@ body {
 }
 
 .btn-quiz-answer.focus,
-.btn-quiz-answer:focus,
+.btn-quiz-answer:focus {
+  color: var(--text-color-inverse);
+  border-color: var(--brand-med-pink-2);
+}
 .btn-quiz-answer:hover {
   color: var(--text-color-inverse);
   background-color: var(--brand-light-pink-2);
