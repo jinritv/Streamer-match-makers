@@ -1,7 +1,6 @@
 # JinriTV Streamer Matchmakers Project
 
-Creating a website to match the streamer of your type:
-[https://streamer-match-maker.herokuapp.com/](https://streamer-match-maker.herokuapp.com/)
+Creating a website to match the streamer of your type: [twiri.net](https://twiri.net)
 
 # Getting Started
 
@@ -12,7 +11,14 @@ These instructions will get you a copy of the project up and running on your loc
 **Note** This guide is for Windows OS only, maybe if someone wants to make a guide for other systems it would be appreciated.
 This guide will show how to install these software:
 
+- **git** - The version control system
 - **Node.js** - The backend environment
+
+### Installing GitHub Desktop
+
+If you don't already have git and don't want to use terminal commanads, GitHub Desktop is for you.
+
+You can install it from [here](https://desktop.github.com)
 
 ### Installing Node.js
 
