@@ -9,5 +9,6 @@ function MakeConfetti() {
 }
   
 function RemoveConfetti() {
-    confetti.clear();
+    if (confetti != null)
+        confetti.clear();
 }
