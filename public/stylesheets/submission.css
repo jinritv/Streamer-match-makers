@@ -70,6 +70,51 @@ main {
   color: var(--text-color-headline);
 }
 
+.leaderboard-results {
+  width: 70%;
+  text-align: left;
+  border-radius: 10px;
+  border-collapse: collapse;
+  border-style: hidden;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgb(141, 63, 137);
+  text-align: center;
+}
+
+.leaderboard-results thead th {
+  padding: 15px;
+  background-color: rgb(141, 63, 137);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.leaderboard-results tbody tr {
+  color: black;
+}
+
+.leaderboard-results tbody tr:hover td {
+  background: var(--brand-primary);
+}
+
+.leaderboard-results tbody td {
+  padding: 15px;
+  font-size: 15px;
+}
+
+.leaderboard-results tr:nth-child(odd) {
+  background: var(--brand-light-pink-2);
+}
+
+.leaderboard-results tr:nth-child(even) {
+  background: var(--brand-really-light-pink);
+}
+
+.ranking-coin-img {
+  width: 35px;
+  height: 35px;
+}
+
 @media (max-width: 768px) {
   .submit-channel-text {
     font-size: 2rem;
