@@ -533,7 +533,7 @@ Unique elements (id)
 }
 
 .img_detective {
-  max-width: 640px;
+  width: 640px;
 }
 
 #generated-question-result-container h4 {
