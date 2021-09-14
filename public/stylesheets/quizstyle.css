@@ -398,81 +398,100 @@ Unique elements (id)
 }
 
 .profile-1 {
-  height: 140px;
-  width: 140px;
+  height: 14vmin;
+  width: 14vmin;
+  min-height: 83px;
+  min-width: 83px;
   top: 20vh;
   bottom: 0;
   left: 10vw;
   right: 0;
 }
-
 .profile-2 {
-  height: 140px;
-  width: 140px;
+  height: 14vmin;
+  width: 14vmin;
+  min-height: 83px;
+  min-width: 83px;
   top: 75vh;
   bottom: 0;
-  left: 10vw;
+  left: 7vw;
   right: 0;
 }
 .profile-3 {
-  height: 100px;
-  width: 100px;
-  top: 70vh;
+  height: 10vmin;
+  width: 10vmin;
+  min-height: 70px;
+  min-width: 70px;
+  top: 60vh;
   bottom: 0;
   left: 15vw;
   right: 0;
 }
 .profile-4 {
-  height: 120px;
-  width: 120px;
-  top: 25vh;
+  height: 12vmin;
+  width: 12vmin;
+  min-height: 75px;
+  min-width: 75px;
+  top: 22vh;
   bottom: 0;
-  left: 55vw;
+  left: 50vw;
   right: 0;
 }
 .profile-5 {
-  height: 120px;
-  width: 120px;
+  height: 12vmin;
+  width: 12vmin;
+  min-height: 75px;
+  min-width: 75px;
   top: 10vh;
   bottom: 0;
-  left: 85vw;
+  left: 80vw;
   right: 0;
 }
 .profile-6 {
-  height: 100px;
-  width: 100px;
+  height: 10vmin;
+  width: 10vmin;
+  min-height: 70px;
+  min-width: 70px;
   top: 76vh;
   bottom: 0;
   left: 50vw;
   right: 0;
 }
 .profile-7 {
-  height: 100px;
-  width: 100px;
+  height: 10vmin;
+  width: 10vmin;
+  min-height: 70px;
+  min-width: 70px;
   top: 80vh;
   bottom: 0;
-  left: 88vw;
+  left: 80vw;
   right: 0;
 }
 .profile-8 {
-  height: 140px;
-  width: 140px;
-  top: 70vh;
+  height: 14vmin;
+  width: 14vmin;
+  min-height: 83px;
+  min-width: 83px;
+  top: 65vh;
   bottom: 0;
   left: 90vw;
   right: 0;
 }
 .profile-9 {
-  height: 120px;
-  width: 120px;
+  height: 12vmin;
+  width: 12vmin;
+  min-height: 75px;
+  min-width: 75px;
   top: 50vh;
   bottom: 0;
   left: 40vw;
   right: 0;
-
-}.profile-10 {
-  height: 100px;
-  width: 100px;
+}
+.profile-10 {
+  height: 10vmin;
+  width: 10vmin;
+  min-height: 70px;
+  min-width: 70px;
   top: 30vh;
   bottom: 0;
   left: 88vw;
