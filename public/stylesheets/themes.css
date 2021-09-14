@@ -65,7 +65,8 @@ Put all other css in the quizstyle.css file
   --header-bgcolor-light: var(--pure-white);
   --header-bgcolor-dark: #1a2138;
 
-  --logo-text-color-light: #585858;
+  --logo-text-color-light: #8E2799;
+  ;
   --logo-text-color-dark: #ffff;
 
   --headeroutline-light: #710273;
@@ -261,6 +262,8 @@ we change the theme.
 #logoText {
   color: var(--logocolor);
   font-size: 1.5rem;
+  font-weight: bold;
+  opacity: 80%;
 }
 
 #TwiriLogo {
