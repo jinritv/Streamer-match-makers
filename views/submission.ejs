@@ -42,80 +42,56 @@
           <div class="col-lg-6">
            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeb787vidx-A7NMZW6jb2Nv_vBvopvYdqtgfQJG9fs5RLsn_Q/viewform?embedded=true" width="1000" height="1080" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
           </div>
+          <div class="col-lg-3 d-none d-lg-block">
+            <div class="text-label row justify-content-center">
+              Leaderboard
+            </div>
+            <div class="row justify-content-center m-2">
+              <table class="leaderboard-results">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Points</th>
+                  </tr>
+                </thead>
+
+                <!-- remove the test data later and link to backend -->
+                <% 
+                const leaderboardList = [
+                  { rank: 1, name: "Jinritv", points: 50 },
+                  { rank: 2, name: "Loco", points: 25 },
+                  { rank: 3, name: "Extendedsilence", points: 15 },
+                  { rank: 4, name: "Secretary", points: 14 },
+                  { rank: 5, name: "underthesnow", points: 10 },
+                  { rank: 6, name: "kuro", points: 8 },
+                  { rank: 7, name: "9dog", points: 7 },
+                  { rank: 8, name: "Marktheboss", points: 5 },
+                  { rank: 9, name: "holychan", points: 5 },
+                  { rank: 10, name: "Seyther", points: 5 },
+                ];
+                %>
+                <% leaderboardList.map(item => { %>
+                  <tr>
+                    <% if (item.rank == 1) { %>
+                      <td><img src="images/miocoin-gold.png" alt="1" class="ranking-coin-img" /></td>
+                    <% } else if (item.rank == 2) { %>
+                      <td><img src="images/miocoin-silver.png" alt="2" class="ranking-coin-img" /></td>
+                    <% } else if (item.rank == 3) { %>
+                      <td><img src="images/miocoin-bronze.png" alt="3" class="ranking-coin-img" /></td>
+                    <% } else { %>
+                      <td><%= item.rank %></td>
+                    <% } %>
+                    <td><%= item.name %></td>
+                    <td><%= item.points %></td>
+                  </tr>
+                <% }); %>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-          <!--
-          <div class="col-lg-6">
-            <form onsubmit="submitFormEvent(event)">
-              <div class="row mt-3 justify-content-between">
-                <div class="col-12 col-lg-5">
-                  <div class="row">
-                    <label name="submitterName">Name</label>
-                  </div>
-                  <div class="row">
-                    <input name="submitterName" type="text" class="w-100">
-                  </div>
-                </div>
-                <div class="col-12 col-lg-5">
-                  <div class="row">
-                    <label name="submitterTwitchUsername">Your Twitch username</label>
-                  </div>
-                  <div class="row">
-                    <input name="submitterTwitchUsername" type="text" class="w-100">
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-3 justify-content-center justify-content-lg-start align-items-center">
-                <label class="m-1">Do you follow JinriTV?</label>
-                <span class="p-1"></span>
-                <input type="radio" name="isFollower" value="yes" checked>
-                  <label class="m-1">Yes</label>
-                </input>
-                <span class="p-1"></span>
-                <input type="radio" name="isFollower" value="no">
-                  <label class="m-1">No</label>
-                </input>
-              </div>
-              <div class="row mt-3 justify-content-between">
-                <div class="col-12 col-lg-5">
-                  <div class="row">
-                    <label name="streamerName">Streamer name</label>
-                  </div>
-                  <div class="row">
-                    <input name="streamerName" type="text" class="w-100">
-                  </div>
-                </div>
-                <div class="col-12 col-lg-5">
-                  <div class="row">
-                    <label name="streamerTwitchUsername">Streamer Twitch username</label>
-                  </div>
-                  <div class="row">
-                    <input name="streamerTwitchUsername" type="text" class="w-100">
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-12">
-                  <div class="row">
-                    <label name="message">Message</label>
-                  </div>
-                  <div class="row">
-                    <textarea name="message" class="w-100" rows="5"></textarea>
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-3 justify-content-center">
-                <button type="submit" class="submit-button">Submit!</button>
-              </div>
-            </form>
-          </div>
-          <div class="col-lg-3 d-none d-lg-block">
-            <img src="/images/mascot.png">
-          </div>
-        </div>
-      </div>
-    </div>!-->
   </main>
   <%- include ("./partials/footer",{
       CopyrightText:  getText('copyright-text'),
