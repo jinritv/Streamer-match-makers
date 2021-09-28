@@ -278,11 +278,14 @@ main {
 }
 
 .timelinecontainer.left .date {
-  right: -100px;
+  right: -25px;
+  width: 0;
 }
 
 .timelinecontainer.right .date {
-  left: -100px;
+  left: -120px;
+  width: 100px;
+  text-align: right;
 }
 
 .timelinecontainer.left .icon {
