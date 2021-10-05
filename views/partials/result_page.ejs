@@ -33,6 +33,35 @@
       </div>
     </div>
   </div>
+  <div class="col" style="text-align:center;">
+    <button id="hide-button" type="button" onclick="toggle()" class="btn btn-quiz-answer btn-quiz-restart">
+      <span><%=getText("more")%></span>
+    </button>
+  </div>
+  <div id="extra" style="display:none">
+    <div class="row mb-3 justify-content-center">
+      <div class="col-xs-12 col-md-3">
+        <div class="streamer-info-container lastrow">
+            <%- include("./tertiary_result",{ rank:6 }) %>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-3">
+        <div class="streamer-info-container lastrow">
+            <%- include("./tertiary_result",{ rank:7}) %>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-3">
+        <div class="streamer-info-container lastrow">
+          <%- include("./tertiary_result",{ rank:8 }) %>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-3">
+        <div class="streamer-info-container lastrow">
+          <%- include("./tertiary_result",{ rank:9 }) %>
+        </div>
+      </div>
+      </div>
+  </div>
   <div class="row mb-5">
     <div class="col"></div>
     <div class="col" style="text-align:center;">

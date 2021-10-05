@@ -269,6 +269,10 @@ function lastQuestion() {
     $(`#generated-quiz-modal-question${CurrentQuestion}-container`).show();
   }, 250);
 }
+function toggle() {
+  $('#extra').show();
+  $('#hide-button').hide();
+}
 
 function restartQuiz() {
   RemoveConfetti();

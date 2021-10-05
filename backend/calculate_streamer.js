@@ -372,7 +372,7 @@ function matchStreamers(prefs, streamers) {
   matchValues.sort(orderStreamers);
 
   // we only want top 5
-  let topStreamers = matchValues.slice(0, 5);
+  let topStreamers = matchValues.slice(0, 9);
   let topStats = collectStats(topStreamers, stats);
   console.log(topStreamers);
   return [topStreamers, topStats];

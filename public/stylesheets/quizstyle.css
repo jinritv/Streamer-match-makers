@@ -168,7 +168,10 @@ body {
   margin-top: 20px;
   height: 600px;
 }
-
+.lastrow {
+  margin-top: 20px;
+  height: 400px;
+}
 .winner {
   border-color: goldenrod !important;
   border-width: 4px;
