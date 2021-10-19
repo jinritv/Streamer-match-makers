@@ -62,8 +62,12 @@ class TwitchApi {
   }
 
   async getUsers(users) {
-    const login = users.join(",");
-    return await this._get(`/users?login=${login}`);
+    const login = users.map((user) => `login=${user}`).join("&");
+    const response = await this._get(`/users?${login}`);
+    return response.data.reduce((usersByLogin, user) => {
+      usersByLogin[user.login] = user;
+      return usersByLogin;
+    }, {});
   }
 }
 

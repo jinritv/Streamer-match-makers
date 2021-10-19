@@ -1,8 +1,7 @@
 const { Op } = require("sequelize");
-const {Streamers} = require("../models/models");
-const { getStreamerLogos } = require("./get_streamers");
-const { getStreamersBio } = require("./get_streamers_bios");
+const { Streamers } = require("../models/models");
 const { getDatabase } = require("./db/get_database");
+const TwitchApi = require("./twitch_api");
 
 // holds the default values for the 'Points' of each attribute.
 const ATTRIBUTE_POINTS_DEFAULTS = {
@@ -12,7 +11,7 @@ const ATTRIBUTE_POINTS_DEFAULTS = {
   subonly: 1.0,
   mature: 1.0,
   chat_vibe: 1.0,
-  streamer_vibe:1.0,
+  streamer_vibe: 1.0,
   gender: 1.0,
 };
 
@@ -55,8 +54,8 @@ const CAT_MAP = {
   tarot: ["Tarot"],
   makeup: ["Make-Up and Style"],
   sleep: ["Just Sleep - Meditate, Focus, Relax"],
-  twitch: ["Twitch Plays"]
-  
+  twitch: ["Twitch Plays"],
+
   /*dancing: ["dancing"],
   irl: ["irl", "irl outdoors"],
   music: ["music & performing arts", "singing", "piano", "music"],
@@ -72,7 +71,6 @@ const CAT_MAP = {
   ASMR: ["asmr"],
   games: ["games", "pepega gaming", "half-life", "pubg"],
   justchatting: ["irl", "just chatting", "pepega chatting"],*/
-
 };
 
 /**
@@ -109,22 +107,19 @@ async function calculateStreamer(quizValues, callback) {
   // Get all the streamers from the database
   const allStreamers = db.getAllStreamers();
 
-
   // for each streamer we run the matchingFunction to get a value
   const matchResult = matchStreamers(prefs, allStreamers);
   let matchedStreamers = matchResult[0];
   let topStats = matchResult[1];
 
-  const streamersMap = {}
-  for(const streamer of matchedStreamers) {
+  const streamersMap = {};
+  for (const streamer of matchedStreamers) {
     streamersMap[streamer.id] = streamer;
   }
 
+  // give updated link to logo and bio
+  await updateStreamerObjWithTwitchData(Object.values(streamersMap));
 
-  // give updated link to logo
-  await updateStreamerObjsWithLogo(Object.values(streamersMap));
-
-  await getStreamersBioFromTwitch(Object.values(streamersMap));
   // add the match value to the result
   const matchedStreamersResult = matchedStreamers.map((streamer) => {
     if (!(streamer.id in streamersMap)) {
@@ -133,7 +128,13 @@ async function calculateStreamer(quizValues, callback) {
     let r = streamersMap[streamer.id];
     let streamerObj = Object.assign(
       {},
-      { id: r.id, user_name: r.user_name, logo: r.logo, bio: r.bio, languages: r.languages }
+      {
+        id: r.id,
+        user_name: r.user_name,
+        logo: r.logo,
+        bio: r.bio,
+        languages: r.languages,
+      }
     );
     streamerObj.match_value = streamer.match_percent; // add our calculated match %
     return streamerObj;
@@ -148,30 +149,16 @@ async function calculateStreamer(quizValues, callback) {
   );
 }
 
-async function getStreamersBioFromTwitch(streamers) {
-  const user_names = streamers.map(streamer => streamer.user_name);
+async function updateStreamerObjWithTwitchData(streamers) {
+  const user_names = streamers.map((streamer) => streamer.user_name);
 
-  // Get the current bios from the twitch profiles
-  const biosDict = await getStreamersBio(user_names);
-  streamers.forEach(streamer => {
-    streamer.bio = biosDict[streamer.user_name];
+  const users = await TwitchApi.getUsers(user_names);
+  streamers.forEach((streamer) => {
+    const user = users[streamer.user_name];
+    streamer.bio = user.description;
+    streamer.logo = user.profile_image_url;
   });
 }
-
-/**
- * Update streamer profile pic (logo) with the current one, using Twitch API
- * TODO: Cache
- */
-async function updateStreamerObjsWithLogo(streamers) {
-  const user_names = streamers.map(streamer => streamer.user_name);
-
-  // Get the current logos
-  const logo_dict = await getStreamerLogos(user_names);
-  streamers.forEach(streamer => {
-    streamer.logo = logo_dict[streamer.user_name] || streamer.logo;  // Update if necessary
-  });
-}
-
 
 /** THIS IS NOT COMPLETE!
 
@@ -244,8 +231,7 @@ function matchStreamers(prefs, streamers) {
     });
     if (preferredLanguages.length != 0) {
       let langScore =
-        (totalLangMatch * RANK_SCORE.languages) /
-        preferredLanguages.length;
+        (totalLangMatch * RANK_SCORE.languages) / preferredLanguages.length;
       scores += langScore;
       stats[streamer.id]["Language"] = Math.round(
         (langScore / RANK_SCORE.languages) * 100
@@ -312,8 +298,7 @@ function matchStreamers(prefs, streamers) {
 
     if (prefs.chat_vibe.length != 0) {
       let vibeScore =
-        (matchVibes * RANK_SCORE.chat_vibe) /
-        prefs.chat_vibe.length;
+        (matchVibes * RANK_SCORE.chat_vibe) / prefs.chat_vibe.length;
       scores += vibeScore;
       stats[streamer.id]["Chat Vibe"] = Math.round(
         (vibeScore / RANK_SCORE.chat_vibe) * 100
@@ -330,25 +315,26 @@ function matchStreamers(prefs, streamers) {
 
     if (prefs.streamer_vibe.length != 0) {
       let vibeScore_S =
-        (matchVibes_S * RANK_SCORE.streamer_vibe) /
-        prefs.streamer_vibe.length;
+        (matchVibes_S * RANK_SCORE.streamer_vibe) / prefs.streamer_vibe.length;
       scores += vibeScore_S;
       stats[streamer.id]["Streamer Vibe"] = Math.round(
         (vibeScore_S / RANK_SCORE.streamer_vibe) * 100
-      )
+      );
     }
 
     //check for gender preference
     // if they chose male and female, its 100% match anyways, or 0
-    
-    if(prefs.gender[0].toUpperCase() == streamer.gender || prefs.gender == "nopreference"){ // we receive a string of 'male', 'female', or "no preference" so we convert to M or F
-      scores += (1 * RANK_SCORE.gender);
+
+    if (
+      prefs.gender[0].toUpperCase() == streamer.gender ||
+      prefs.gender == "nopreference"
+    ) {
+      // we receive a string of 'male', 'female', or "no preference" so we convert to M or F
+      scores += 1 * RANK_SCORE.gender;
       stats[streamer.id]["Gender"] = 100; // set 100% match
-    }
-    else{
+    } else {
       stats[streamer.id]["Gender"] = 0; // set 100% match
     }
-    
 
     // // check for watch time
     // let watchtimeScore =
@@ -415,7 +401,7 @@ function getMinMaxViewers(average_viewers) {
   // frontend doesnt' send over 2000 for max value (it said 2000+ on the UI)
   // so we modify max value if user submit 2000+ to also include large streamers
   if (maxAvgViewer == 2000) {
-    maxAvgViewer = 10000
+    maxAvgViewer = 10000;
   }
   return [minAvgViewer, maxAvgViewer];
 }
@@ -493,7 +479,6 @@ function getYesOrNo(condition) {
 // only handle weekdays because thats all we have
 // on DB
 function normalizeWatchtime(input) {
-
   if (input == undefined || !input.weekdays) {
     return null;
   }
