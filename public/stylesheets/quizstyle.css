@@ -617,6 +617,13 @@ Unique elements (id)
   max-width: 800px;
 }
 
+.add-streamer {
+  color: white;
+  padding: 4px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 @media (min-width: 345px) {
   #animated-words-label {
     font-size: 35px !important ;
