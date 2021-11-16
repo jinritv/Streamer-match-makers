@@ -476,4 +476,11 @@
   opacity: 1;
 }
 
+@media (max-width: 568px) {
+  .slider.slider.slider-horizontal .slider-track {
+    width: 110%;
+    left: -10px;
+  }
+}
+
 /*# sourceMappingURL=bootstrap-slider.css.map */

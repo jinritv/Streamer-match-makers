@@ -748,7 +748,7 @@ Unique elements (id)
   }
 
   .animated-words {
-    font-size: 2em;
+    font-size: 3em;
   }
 
   .btn-quiz-back {
@@ -765,18 +765,21 @@ Unique elements (id)
   }
 
   .btn-plus {
-    margin-left: 5px;
-    transform: scale(0.7);
+    margin-left: 1px;
+    transform: scale(0.5);
   }
 
   .btn-minus {
-    margin-right: 5px;
-    transform: scale(0.7);
+    margin-right: 1px;
+    transform: scale(0.5);
   }
 }
 
 @media (max-width: 568px) {
   .btn-back {
     left: 0px;
+  }
+  .loading-msg {
+    font-size: 2rem; 
   }
 }

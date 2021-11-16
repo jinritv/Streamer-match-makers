@@ -117,7 +117,7 @@ main {
 
 @media (max-width: 768px) {
   .submit-channel-text {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .channel-condition {
@@ -131,4 +131,5 @@ main {
   .form-container {
     margin-bottom: 100px;
   }
+
 }
