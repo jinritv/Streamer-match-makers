@@ -566,6 +566,12 @@ body {
   filter: drop-shadow(0px 8px 12px var(--brand-continue-button-dropshadow));
 }
 
+.btn-quiz-more {
+  color: var(--brand-xtra-light-pink);
+  background-color: var(--brand-light-pink);
+  border-color: var(--brand-light-pink);
+  filter: drop-shadow(0px 8px 12px var(--brand-continue-button-dropshadow));
+}
 #current-language-label {
   color: var(--dropdown-label-text);
 }
@@ -602,5 +608,6 @@ body {
   }
   #btn-dropdown {
     padding: 5px;
+  
   }
 }

@@ -121,6 +121,7 @@
     "button-text-gender-male":"남자",
     "button-text-gender-female":"여자",
     "button-text-gender-nopreference":"상관 없음",
+    "About-Us":"트위리",
     "about-twiri-description":"'Twiri'는 오픈소스 공동개발 홈페이지로, 질문들의 답변을 통해서 사용자의 취향에 맞는 스트리머를 추천하는 서비스입니다. 모든 결과값은 크라우드 소싱으로 모인 데이터이며 모든 개발은 친절하고 유능한 JinriCo 인턴(트수)들이 참여하였습니다. 참여하시려면 아래의 링크를 클릭해주세요. [https://discord.gg/RpWjCk7]",
     "about-jinritv-description":"진리TV는 앱 개발/프로그래밍, 주식 공부, 방송분석 등 다양한 주제로 방송하는 다재다능한 스트리머입니다. 또한 게임, 춤, 먹방, 하프, 노래 등을 스트리밍 하는 것을 좋아합니다. SNS 계정: linktr.ee/jinritv  비즈니스 메일주소 : business.jinritv@gmail.com",
     "achievement":"성과",

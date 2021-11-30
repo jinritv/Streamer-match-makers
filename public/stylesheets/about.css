@@ -405,11 +405,11 @@ main {
 /* iPhone 6/7/8 Plus */
 @media (max-width: 414px) {
   .about {
-    font-size: 2.5rem;
+    font-size: 6rem;
   }
 
   .about_small {
-    font-size: 1.5rem;
+    font-size: 4rem;
   }
 
   .timeline::after {
@@ -451,7 +451,7 @@ main {
 
   .timelinecontainer.right .date {
     right: auto;
-    left: 70px;
+    left: 44px;
   }
 
   .timelinecontainer.left .icon,

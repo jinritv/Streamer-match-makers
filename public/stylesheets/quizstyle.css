@@ -245,11 +245,19 @@ body {
 
 .btn-quiz-continue {
   border-radius: 20px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   max-width: 50%;
 }
 
 .btn-quiz-restart {
+  border-radius: 20px;
+  margin-bottom: 12px;
+  max-width: 35%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-quiz-more {
   border-radius: 20px;
   margin-bottom: 12px;
   max-width: 35%;
@@ -568,6 +576,18 @@ Unique elements (id)
     position: absolute;
     right: 0%;
   }
+
+  .crown-container {
+    position: absolute;
+    width: 83%;
+
+  }
+
+  .crown {
+    position:relative;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .base-circle {
@@ -757,7 +777,12 @@ Unique elements (id)
 
   .btn-quiz-restart {
     width: 250px;
-    max-width: min-content;
+
+  }
+
+  .btn-quiz-more {
+    width: 250px;
+   
   }
 
   .slider.slider-horizontal {
