@@ -255,6 +255,11 @@ we change the theme.
   filter: invert(98%) sepia(100%) saturate(3382%) hue-rotate(279deg)
     brightness(98%) contrast(99%);
 }
+
+.dark-mode #current-language-icon {
+  filter: invert(98%) sepia(100%) saturate(3382%) hue-rotate(279deg)
+    brightness(98%) contrast(99%);
+}
 .background-container {
   background-color: var(--background-color);
 }

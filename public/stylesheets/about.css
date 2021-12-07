@@ -86,13 +86,6 @@ main {
   margin-bottom: 2ex;
 }
 
-@media (max-width: 414px) {
-  .rectangle {
-    border-radius: 20px;
-    margin: 25px 15px;
-    margin-bottom: 2ex;
-  }
-}
 .aboutus_img1 {
   background: url(info.png);
 }
@@ -403,7 +396,7 @@ main {
 }
 
 /* iPhone 6/7/8 Plus */
-@media (max-width: 414px) {
+@media (min-width: 376px) and (max-width: 480px) {
   .about {
     font-size: 6rem;
   }
@@ -462,7 +455,7 @@ main {
 
   .timelinecontainer.left .content {
     padding: 30px 30px 30px 90px;
-    border-radius: 500px 0 0 500px;
+    border-radius: 500px 0 0 590px;
   }
 
   .timelinecontainer.left .content,
@@ -480,10 +473,70 @@ main {
     width: 350px;
     height: 300px;
   }
+
+  .rectangle {
+    border-radius: 20px;
+    margin: 25px 15px;
+    margin-bottom: 2ex;
+  }
+  
+  .background-circle-1 {
+    display: inline-block;
+    position: absolute;
+    top: 300px;
+    right: -50px;
+    width: 150px;
+    height: 300px;
+    border-radius: 300px 0 0 300px;
+    background-color: var(--background-sphere-3);
+    z-index: -1;
+  }
+  
+  .background-circle-2 {
+    display: inline-block;
+    position: absolute;
+    top: 500px;
+    left: -130px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: var(--background-sphere-4);
+    z-index: -1;
+  }
+  
+  .background-circle-3 {
+    display: inline-block;
+    position: absolute;
+    top: 1100px;
+    right: -60px;
+    width: 250px;
+    height: 500px;
+    border-radius: 500px 0 0 500px;
+    background-color: var(--background-sphere-5);
+    z-index: -1;
+  }
+  
+  .background-circle-4 {
+    display: inline-block;
+    position: absolute;
+    top: 1850px;
+    right: 0px;
+    width: 200px;
+    height: 400px;
+    border-radius: 400px 0 0 400px;
+    background-color: var(--background-sphere-6);
+    z-index: -1;
+  }
+  .background {
+    /* Rectangle 39 */
+    width: 110%;
+    margin-top: 3em;
+    background: var(--about-background);
+  }
 }
 
 /* iPhone 6/7/8 */
-@media (max-width: 375px) {
+@media (min-width: 321px) and (max-width: 375px) {
   .timeline::after {
     left: 180px;
   }
@@ -553,4 +606,29 @@ main {
     width: 300px;
     height: 280px;
   }
+
+  .background-circle-1 {
+    display: inline-block;
+    position: absolute;
+    top: 300px;
+    right: -50px;
+    width: 150px;
+    height: 300px;
+    border-radius: 300px 0 0 300px;
+    background-color: var(--background-sphere-3);
+    z-index: -1;
+  }
+
+  .background-circle-3 {
+    display: inline-block;
+    position: absolute;
+    top: 1100px;
+    right: -50px;
+    width: 250px;
+    height: 500px;
+    border-radius: 500px 0 0 500px;
+    background-color: var(--background-sphere-5);
+    z-index: -1;
+  }
+
 }

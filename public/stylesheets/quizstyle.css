@@ -569,7 +569,7 @@ Unique elements (id)
   height: 60px;
 }
 
-@media (max-width: 414px) {
+@media (max-width: 480px) {
   .img_detective {
     width: 180px;
     margin: auto;
@@ -644,7 +644,7 @@ Unique elements (id)
   cursor: pointer;
 }
 
-@media (min-width: 345px) {
+@media (min-width: 320px) {
   #animated-words-label {
     font-size: 35px !important ;
   }
@@ -762,7 +762,7 @@ Unique elements (id)
   }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 481px) and (max-width: 768px) {
   #streamer-1-user_name {
     font-size: 2.5rem;
   }
