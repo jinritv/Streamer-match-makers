@@ -30,10 +30,16 @@ After installation, verify that Node was successfully installed by opening up a 
 
 It should display the version number of Node installed (v12.18.3).
 
-
 ### Environment setup
 
 Please go to the project root directory and make a copy of the `.sample-env` file, renaming it to `.env`. Open your newly created `.env` file with a text editor and enter your local DB credentials. Please make sure to not commit the `.env` file that contains the connection string.
+
+You will need a Twitch API client id and secret to run the application locally. To generate a key follow these steps:
+
+1. Go to https://dev.twitch.tv/console/apps/create and register an application
+2. For the "OAuth Redirect URLs" just add one and set URL to "https://"
+3. You can set the Name and Category to whatever you like.
+4. After clicking create copy the client ID and client secret into your .env file (TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET)
 
 ### Install dependencies
 
@@ -42,7 +48,6 @@ Open Command Prompt and `cd` to the location of this project. First we must inst
 `npm install`
 
 And it should install the required packages we need (which are defined in the package.json file).
-
 
 ## Download CSV file from Google spreadsheet
 
@@ -84,15 +89,15 @@ I tried to keep the structure as simple as possible, so that anyone who wants to
 
 For now, the temporary database is CSV file, which is a copy of Twiri Data Collection sheet v2.
 
-## 2021-02-01 
+## 2021-02-01
 
 _EJS view engine_
 
-- implemented the EJS templating engine 
+- implemented the EJS templating engine
 - divided the quiz into reusable partials, stored in the /partials folder
 - changed how the website is loaded on the client-side
 - renders the html on the server with the proper language text before sending it back to the client
-- fixed german/french language 
+- fixed german/french language
 - removed translated names for languages, now all languages are just simply called what they are in their native language (for example English will always display as English, French will always display as Français, etc)
 - removed html_helpers.js
 - removed create_quiz.js
