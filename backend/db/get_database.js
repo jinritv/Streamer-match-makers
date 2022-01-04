@@ -8,7 +8,6 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config({ path: envPath });
 }
 
-
 function getDatabase() {
   const dbType = process.env.DB_TYPE || "csv";
   console.log("dbType: " + dbType);

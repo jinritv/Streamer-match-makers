@@ -321,6 +321,16 @@ body {
   position: relative;
 }
 
+.live {
+  border-radius: 5px;
+  background: #f00;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
 .animated-words {
   font-weight: bold;
   font-size: 3em;

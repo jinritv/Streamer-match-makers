@@ -381,6 +381,9 @@ function displayStreamerResults(results) {
   ResultStats = results.stats;
   streamers.forEach((streamer, index) => {
     console.log(streamer);
+    if (!streamer.isLive) {
+      $(`#streamer-${index + 1}-is_live`).hide();
+    }
     $(`#streamer-${index + 1}-user_name`).text(streamer.user_name);
     $(`#streamer-${index + 1}-bio`).text(streamer.bio);
     $(`#streamer-${index + 1}-languages`).text(streamer.languages);

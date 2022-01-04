@@ -69,6 +69,16 @@ class TwitchApi {
       return usersByLogin;
     }, {});
   }
+  async getStream(streamers) {
+    const login = streamers.map((streamer) => `user_login=${streamer}`).join("&");
+    const response = await this._get(`/streams?${login}`);
+    console.log(response);
+
+    return response.data.reduce((usersByLogin, streamer) => {
+      usersByLogin[streamer.login] = streamer;
+      return usersByLogin;
+    }, {});
+  }
 }
 
 module.exports = new TwitchApi(

@@ -134,6 +134,8 @@ async function calculateStreamer(quizValues, callback) {
         logo: r.logo,
         bio: r.bio,
         languages: r.languages,
+        isLive: r.isLive,
+
       }
     );
     streamerObj.match_value = streamer.match_percent; // add our calculated match %
@@ -153,10 +155,16 @@ async function updateStreamerObjWithTwitchData(streamers) {
   const user_names = streamers.map((streamer) => streamer.user_name);
 
   const users = await TwitchApi.getUsers(user_names);
+  const streams = await TwitchApi.getStream(user_names);
+
   streamers.forEach((streamer) => {
     const user = users[streamer.user_name];
+    if (!user) return;
     streamer.bio = user.description;
     streamer.logo = user.profile_image_url;
+
+    streamer.isLive = !!streams[streamer.user_name];
+    
   });
 }
 
