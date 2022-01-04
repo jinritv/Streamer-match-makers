@@ -191,6 +191,21 @@ function selectMultipleButton(question, selection) {
   console.log(UsersAnswers);
 }
 
+/**
+ * isQuestionAnswered checks if question has been answered (has answers)
+ * 
+ * @param {Object} question (specific Question node from quiz_questions.js)
+ * @returns {Boolean}
+ * @api private
+ */
+
+function isQuestionAnswered(question) {
+  const { unique_question_identifier } = question;
+  const answers = UsersAnswers[unique_question_identifier];
+
+  return answers && answers.length;
+}
+
 function nextQuestion() {
   console.log(UsersAnswers);
   $quizContinueButton.prop("disabled", true);
@@ -221,9 +236,10 @@ function nextQuestion() {
       // and unfocus it
       $quizContinueButton.blur();
       // enable or disable the continue button by default for the next question
+      const question = QUIZ_QUESTIONS[CurrentQuestion];
       $quizContinueButton.prop(
         "disabled",
-        QUIZ_QUESTIONS[CurrentQuestion].disableContinueButtonByDefault
+        isQuestionAnswered(question) ? false : question.disableContinueButtonByDefault
       );
       // increment the question
       CurrentQuestion += 1;

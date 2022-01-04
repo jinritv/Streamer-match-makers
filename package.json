@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "prettify": "npx prettier --write ."
+    "prettify": "npx prettier --write .",
+    "build": "curl -o db.csv $DB_DOWNLOAD_URL"
   },
   "dependencies": {
     "axios": "^0.21.2",
