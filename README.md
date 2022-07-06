@@ -62,6 +62,15 @@ To start the server, run the command `npm start`
 
 Go to [localhost:3000](http://localhost:3000) in a web browser. Verify there are no errors on the page, or in the console.
 
+## Run using Docker Container 
+
+Install Docker based on your OS next Run the following commands from the project root directory. 
+
+```
+docker build . -t app
+docker run -p 0.0.0.0:3000:3000 app 
+```
+
 ## Play with the website
 
 Now you're ready to start!
